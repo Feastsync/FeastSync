@@ -5,7 +5,9 @@ import "./Css/Howitwork.css"
 const Howitworks = () => {
   return (
     <main className='main-container'>
-
+      <section className='hero-section'>
+        <img src={} alt="" />
+      </section>
     </main>
   )
 }

@@ -1,5 +1,11 @@
 .main-container{
     width: 100%;
-    height: 300vh;
+    height: 100vh;
+    min-height: max-content;
     background-color: pink;
+}
+.hero-section{
+    width: 100%;
+    height: 87%;
+    background-color: red;
 }
