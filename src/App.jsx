@@ -1,17 +1,17 @@
 import React from 'react'
 import Header from "./Components/Header.jsx"
-import Howitworks from "./Page/Howitworks.jsx"add
-import { HashRouter, Routes, Route } from 'react-router-dom'
+import Howitworks from "./Page/Howitworks.jsx"
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 const App = () => {
   return (
-    <>
-    <HashRouter>
+    <BrowserRouter>
+      <Header />
       <Routes>
-        <Route path="howitworks" element={<Howitworks />} />
+        <Route path="/" element={<Howitworks />} />
+        <Route path="/howitworks" element={<Howitworks />} />
       </Routes>
-    </HashRouter>
-    </>
+    </BrowserRouter>
   )
 }
 
