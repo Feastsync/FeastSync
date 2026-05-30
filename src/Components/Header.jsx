@@ -1,30 +1,35 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import "./Css/Header.css"
-import Headerlogo from "../assets/Headerlogo.png"
-import Button from "./Button.jsx"
+import Headerlogo from '../assets/logos/Headerlogo.png'
+import Button from "../Props/Button.jsx"
 
 const Header = () => {
   return (
-    <main className='header-container'>
-        <section className='header-wrapper'>
-        <section className='header-left'>
-            <img src={Headerlogo} alt="" />
-            <h2>FeastSync</h2>
-        </section>
-        <section className='header-middle'>
-            <h2>Home</h2>
-            <h2>About</h2>
-            <h2>How it works</h2>
-            <h2>Vendors</h2>
-            <h2>Services</h2>
-            <h2>Contact</h2>
-        </section>
-        <section className='header-right'>
-            <h2>Login</h2>
-            <Button btnText="Get Started"  className="header-rightbtn"/>
-        </section>
-        </section>
-    </main>
+    <nav className='header_container'>
+      <div className='header_wrapper'>
+        
+        <div className='header_left'>
+          <img src={Headerlogo} alt="FeastSync Logo" className='logo_img' />
+          <h2 className='logo_text'>FeastSync</h2>
+        </div>
+
+        <div className='header_middle'>
+          <NavLink to="/" className='nav_link' end>Home</NavLink>
+          <NavLink to="/about" className='nav_link'>About</NavLink>
+          <NavLink to="/howitworks" className='nav_link'>How it works</NavLink>
+          <NavLink to="/vendors" className='nav_link'>Vendors</NavLink>
+          <NavLink to="/services" className='nav_link'>Services</NavLink>
+          <NavLink to="/contact" className='nav_link'>Contact</NavLink>
+        </div>
+
+        <div className='header_right'>
+          <Button btnText="Login" className="header_login_btn"/>
+          <Button btnText="Get Started" className="header_getstarted_btn"/>
+        </div>
+
+      </div>
+    </nav>
   )
 }
 

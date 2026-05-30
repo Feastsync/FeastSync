@@ -5,8 +5,9 @@
   font-family: Inter,sans-serif;
 }
 :root{
-  --primary-color: rgba(51, 1, 89, 1);
-  --secondary-color:rgba(196, 98, 45, 1);
+
+ --primary-color: #330159;
+  --secondary-color: #C4622D;
   --background-color: #F0F0F0;
   --text-color: #333333;
 }
