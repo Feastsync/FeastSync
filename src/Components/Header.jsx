@@ -24,7 +24,7 @@ const Header = () => {
         </div>
 
         <div className='header_right'>
-          <Button btnText="Login" className="header_login_btn"/>
+         <h2 className='header_login'> Login </h2>
           <Button btnText="Get Started" className="header_getstarted_btn"/>
         </div>
 

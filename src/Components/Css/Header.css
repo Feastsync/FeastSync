@@ -24,13 +24,13 @@
 }
 
 .logo_img {
-  height: 50px;
+  height: 70px;
   object-fit: contain;
 }
 
 .logo_text {
   color: var(--secondary-color);
-  font-size: 24px;
+  font-size: 25px;
   font-weight: 600;
 }
 
@@ -44,7 +44,7 @@
 .nav_link {
   text-decoration: none;
   color: var(--primary-color);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   padding: 8px 16px;
   display: flex;
@@ -71,7 +71,7 @@
 .nav_link.active::after {
   content: "";
   position: absolute;
-  bottom: 6px;
+  bottom: 3px;
   left: 16px;
   right: 16px;
   height: 3px;
@@ -85,13 +85,25 @@
 }
 
 .nav_link.active:hover::after {
-  background-color: #ffffff;
+  background-color: var(--primary-color);
 }
 
 .header_right {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 40px;
+}
+
+.header_login{
+  color: var(--secondary-color);
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+
+}
+
+.header_login:hover {
+  font-weight: bold;
 }
 
 .header_getstarted_btn {
@@ -100,18 +112,6 @@
   height: 55px;
   padding: 8px 16px;
 }
-
-.header_login_btn {
-  color: var(--secondary-color);
-  border: 2px solid var(--secondary-color);
-  height: 55px;
-  padding: 8px 16px;
-}
-
-.header_login_btn:hover {
-  font-weight: bold;
-}
-
 .header_getstarted_btn:hover {
   background-color: white;
   border: 1px solid var(--primary-color);
