@@ -1,0 +1,75 @@
+.hero-getStarted{
+    width: 100%;
+    min-height: 65vh;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px 20px;
+    text-align: center;
+}
+.hero-getStarted-wrapper{
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.hero-getStarted h3{
+    font-size: 22px;
+    color: rgba(16, 16, 16, 1);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+.hero-getStarted h1{
+    font-size: 45px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+.hero-getStarted p{
+    font-size: 20px;
+    font-weight: 200;
+    color: rgba(16, 16, 16, 1);
+    margin-bottom: 35px;
+}
+
+.hero-getStarted span{
+    font-weight: bold;
+}
+
+.hero-getStarted-btn-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+.hero-getStarted-btn1{
+    width: 230px;
+    height: 70px;
+    border-radius: 8px;
+    font-size: 22px;
+    background-color: var(--primary-color);
+    color: white;
+
+    &:hover{
+        background-color: white;
+        border: 1px solid var(--primary-color);
+        color: var(--primary-color);
+    }
+}
+.hero-getStarted-btn2{
+    background: transparent;
+    color: var(--secondary-color);
+    width: 230px;
+    height: 70px;
+    border-radius: 8px;
+    border: 1px solid var(--secondary-color);
+    font-size: 22px;
+    &:hover{
+        border: 1px solid var(--secondary-color);
+    }
+    
+}
