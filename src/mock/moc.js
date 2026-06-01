@@ -1,6 +1,6 @@
 export const feastsync =[
     {
-        image:"src/assets/About/chinyere.jpg",
+        image:"src/assets/About/royalty.jpg",
         name:"Toluwaniagbara .R",
         stack:"Product Designer"
     },

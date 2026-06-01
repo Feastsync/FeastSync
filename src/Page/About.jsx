@@ -9,11 +9,13 @@ const About = () => {
     <div className='container'>
      <Header />
      <div className='aboutContainer'> 
+      <div className='aboutContainer1'>
         <p>About FeastSync</p>
         <p className='aboutInfo'>Powering <br />
            entertainment <br />
            across Nigeria.
         </p>
+        </div>
         <p>connect with top rated entainers <br />
            for your next event.Professional service. <br />
            transparent rates.</p>
@@ -21,7 +23,7 @@ const About = () => {
 
     <div className='aboutWrapper'>
         <div className='aboutWrapperleft'>
-        <div>
+        <div className="aboutWrapperHolder">
           <p className='aboutWrapperleftTitle'>About Feastsync</p>
           <p>Feastsync is a premium digital booking platform
             connecting world-class event organisers with Nigeria's
@@ -49,14 +51,14 @@ const About = () => {
       <div className='aboutWrapperRight'>
         <img src="src/assets/About/yoruba mc.png" alt="" className='row-span-1-2' />
         <img src="src/assets/About/photographer.png" alt="" />
-        <img src="src/assets/About/photographer.png" alt="" className='row-span-2-2' />
-        <img src="src/assets/About/joy.jpg" alt="" className='row-span-3-2'/>
+        <img src="src/assets/About/mc.png" alt="" className='row-span-2-2' />
+        <img src="src/assets/About/igbodj.png" alt="" className='row-span-3-2'/>
       </div>
      </div>
 
-     <div className='aboutMission'>
-      <div>
-        <p>Our Mission</p>
+    <div className='aboutMission'>
+       <div>
+         <p>Our Mission</p>
         <p>Our mission is to take the risk out of
           booking entertaiment.By connecting
           host with fully verified top-tier talent
@@ -65,7 +67,7 @@ const About = () => {
           professional execution.
         </p>
       </div>
-      <div><img src="" alt="" />ikhlsfvik.uv</div>
+      <div><img src="src/assets/About/pana.png" alt="" /></div>
       <div>
         <p>Our Vision</p>
         <p> To create a world where booking live
@@ -77,24 +79,27 @@ const About = () => {
      </div>
 
      <div>
-      <div>
-        <p>What we stand for</p>
+      <div className='aboutValuesBox'>
+        <p className='aboutTeamTitle'>What we stand for</p>
         <p>Four values.One platform</p>
       </div>
       <div className='aboutValues'>
           
-          <p className='rows-spans-1-2'><span>Trust</span>Every entertainer is KYC-verified.
+       <div className='aboutValuesText'>
+           <p><span>Trust</span>Every entertainer is KYC-verified.
             Every payment is escrow-protected.
             Trust is not a feature-it is the foundation
             </p>
-            <p className='row-spans-3-2'>
+            <p>
           <span>seamlessness</span>
           From discovery to confermed booking in minutes.No back and forth calls.
             No waiting on a middleman to respond.       
              </p>
+       </div>
 
              <img src="src/assets/About/party.jpg" alt="" className='row-spans-1-2'/>
-        <p className='row-spans-1-2'>
+             <div className='aboutValuesText'>
+        <p>
           <span>excellence</span>
           we curate.not aggregate.Every entertainer on feastsync meets a professional standard
             before their profile goes live
@@ -104,6 +109,7 @@ const About = () => {
           Transparent pricing.Milestone based
             payouts.Dispute resolution with a human touch.Fair both sides,always.
           </p>
+          </div>
              </div>
      </div>
 
