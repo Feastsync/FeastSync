@@ -83,3 +83,25 @@ export const allVendors = [
   { id: 8, name: 'MC Showtime', location: 'Lagos, Nigeria', rating: 4, price: 300000, image: '/src/assets/all2.png' },
   { id: 9, name: 'CineVision Ng', location: 'Lagos, Nigeria', rating: 4, price: 300000, image: '/src/assets/all3.png' },
 ]
+export const djVendors = [
+  { id: 1, name: 'DJ Kolade', location: 'Lagos, Nigeria', rating: 4, price: 300000, image: '/src/assets/BackgroundImage/dj1.png' },
+  { id: 2, name: 'DJ Vicky', location: 'Lagos, Nigeria', rating: 4, price: 300000, image: '/src/assets/BackgroundImage/dj2.png' },
+  { id: 3, name: 'DJ Cosmo', location: 'Abuja, Nigeria', rating: 5, price: 350000, image: '/src/assets/BackgroundImage/dj3.png' },
+  { id: 4, name: 'DJ VibeMaster', location: 'Abuja, Nigeria', rating: 4, price: 250000, image: '/src/assets/BackgroundImage/dj1.png' },
+  { id: 5, name: 'DJ Rhythm King', location: 'Port Harcourt, Nigeria', rating: 4, price: 350000, image: '/src/assets/BackgroundImage/dj2.png' },
+  { id: 6, name: 'DJ Tunde', location: 'Abuja, Nigeria', rating: 4, price: 250000, image: '/src/assets/BackgroundImage/dj3.png' },
+  { id: 7, name: 'DJ Amaka', location: 'Port Harcourt, Nigeria', rating: 4, price: 350000, image: '/src/assets/BackgroundImage/dj1.png' },
+  { id: 8, name: 'DJ Luxe', location: 'Lagos, Nigeria', rating: 5, price: 400000, image: '/src/assets/BackgroundImage/dj2.png' },
+  { id: 9, name: 'DJ Blazer', location: 'Lagos, Nigeria', rating: 3, price: 200000, image: '/src/assets/BackgroundImage/dj3.png' },
+]
+export const mcVendors = [
+  { id: 1, name: 'MC Kolade', location: 'Lagos, Nigeria', rating: 4, price: 300000, image: '/src/assets/BackgroundImage/mc1.png' },
+  { id: 2, name: 'MC Vicky', location: 'Lagos, Nigeria', rating: 4, price: 300000, image: '/src/assets/BackgroundImage/mc2.png' },
+  { id: 3, name: 'MC Cosmo', location: 'Abuja, Nigeria', rating: 5, price: 350000, image: '/src/assets/BackgroundImage/mc3.png' },
+  { id: 4, name: 'MC VibeMaster', location: 'Abuja, Nigeria', rating: 4, price: 250000, image: '/src/assets/BackgroundImage/mc1.png' },
+  { id: 5, name: 'MC Rhythm King', location: 'Port Harcourt, Nigeria', rating: 4, price: 350000, image: '/src/assets/BackgroundImage/mc2.png' },
+  { id: 6, name: 'MC Tunde', location: 'Abuja, Nigeria', rating: 4, price: 250000, image: '/src/assets/BackgroundImage/mc3.png' },
+  { id: 7, name: 'MC Amaka', location: 'Port Harcourt, Nigeria', rating: 4, price: 350000, image: '/src/assets/BackgroundImage/mc1.png' },
+  { id: 8, name: 'MC Luxe', location: 'Lagos, Nigeria', rating: 5, price: 400000, image: '/src/assets/BackgroundImage/mc2.png' },
+  { id: 9, name: 'MC Blazer', location: 'Lagos, Nigeria', rating: 3, price: 200000, image: '/src/assets/BackgroundImage/mc3.png' },
+]
