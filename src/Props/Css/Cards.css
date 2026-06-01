@@ -1,0 +1,44 @@
+.work_card_box {
+  background-color: rgba(59, 7, 100, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  box-sizing: border-box;
+  backdrop-filter: blur(8px);
+  width: 100%;
+}
+
+.work_card_icon_zone {
+  background-color: #3b0764;
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.work_card_text_zone {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.work_card_item_title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.work_card_item_desc {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+}
