@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Input from '../../Props/InPut'
+import Imp from '../../Props/Imp'
 import Button from '../../Props/Button'
 import { LuSearch } from 'react-icons/lu'
 import "./Css/HomeHero.css"
@@ -21,7 +21,7 @@ const HomeHero = () => {
         </p>
 
         <div className="home_hero_search_box">
-          <Input 
+          <Imp 
             type="text"
             placeholder="search all vendors"
             className="hero_input_txt"

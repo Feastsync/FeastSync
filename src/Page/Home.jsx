@@ -4,6 +4,7 @@ import FeaturedVendors from '../Components/HomeComponents/FeaturedVendors'
 import HowItWorks from '../Components/HomeComponents/HowItWork'
 import WhatWeStandFor from '../Components/HomeComponents/WhatWeStandFor'
 import Footer from '../Components/Footer'
+import Readytogetstarted from '../Components/Readytogetstarted'
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
       <FeaturedVendors/>
       <HowItWorks/>
       <WhatWeStandFor/>
+      <Readytogetstarted/>
       <Footer/>
     </div>
   )
