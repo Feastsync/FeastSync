@@ -1,0 +1,32 @@
+
+.servicesContainer {
+  background-image: url(../../assets/About/show.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  gap: 30px;
+  backdrop-filter: blur(100px);
+  -webkit-backdrop-filter: blur(200px);
+}
+.overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(75, 32, 95, 0.55);
+}
+.serviceContainerTitle {
+    font-size: 40px;
+    font-weight: 700px;
+}
+.servicesContainer p{
+    text-align: center;
+}

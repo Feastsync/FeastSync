@@ -1,0 +1,269 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.aboutContainer {
+  height: 90vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+  padding-left: 100px;
+  background-image: url("../../assets/BackgroundImage/8644f49ca66594465885d8daad5f829d0ff32ee3.png");
+}
+.about{
+    font-size: 20px;
+    line-height: 30px;
+}
+.aboutContainer1{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.aboutInfo {
+  font-size: 50px;
+  font-weight: bold;
+   line-height: 56px;
+}
+.aboutWrapper {
+  display: flex;
+  gap: 70px;
+  padding-left: 50px;
+  padding-right: 20px;
+}
+
+.aboutWrapperRight {
+  display: grid;
+  grid-template-columns: repeat(3, 250px);
+  grid-template-rows: 200px 250px;
+  column-gap: 10px;
+  row-gap: 30px;
+}
+.aboutWrapperRight img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.aboutWrapperleft {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  line-height: 25px;
+}
+.aboutWrapperHolder {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.aboutWrapperleftside {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.aboutWrapperleftTitle {
+  font-size: 40px;
+  font-weight: bold;
+}
+.row-span-1-2 {
+  grid-column: 1;
+  grid-row: 1 / span-2;
+  object-position: 80%;
+}
+.row-span-3-2 {
+  grid-column: 3;
+  grid-row: 1 / span-2;
+  object-position: 50%;
+}
+
+.row-span-2-2 {
+  grid-column: 2;
+  grid-row: 2 / span-2;
+  object-position: 50%;
+}
+.aboutMission {
+  display: flex;
+  gap: 80px;
+  justify-content: center;
+  align-items: center;
+  background: #330159;
+}
+.aboutMission div {
+  width: 25vw;
+  height: 80vh;
+  /* background: gray; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  /* text-align: center; */
+}
+.missionHolder{
+    text-align: start;
+}
+.missionQuote{
+    font-size: 30px;
+    font-weight: 550px;
+    text-align: start;
+}
+.aboutMission div p {
+  color: white;
+  line-height: 25px;
+}
+
+.aboutValuesBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.aboutValues {
+  display: flex;
+  gap: 40px;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.aboutValuesText {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+.aboutValues img {
+  width: 30%;
+  height: 73vh;
+   border-radius: 10px;
+}
+.aboutValues p {
+  width: 25vw;
+  height: 35vh;
+  background: #330159;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  border-radius: 10px;
+  line-height: 25px;
+}
+
+.row-spans-3-2 {
+  grid-column: 3;
+  row-gap: 10px;
+  grid-row: 3 / span-2;
+  object-position: 70%;
+}
+.aboutTrust {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  height: 40vh;
+  line-height: 25px;
+}
+.aboutTrustLogo {
+  font-size: 30px;
+  font-weight: bold;
+  color: #330159;
+}
+.aboutTrustText {
+  color: #330159;
+}
+.aboutTrust p {
+  text-align: start;
+}
+.aboutTrustinfo {
+  width: 100px;
+  box-shadow: 5px 5px 5px;
+}
+.aboutTeamText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.aboutTeamTitle {
+  font-size: 30px;
+  font-weight: bold;
+  color: #330159;
+}
+.aboutTeamBox {
+  width: 100%;
+  display: grid;
+  background: #330159;
+  row-gap: 20px;
+  column-gap: 70px;
+  padding: 10px;
+  /* Automatically places items and centers the entire grid track */
+  grid-template-columns: repeat(4 , 200px);
+  justify-content: center;
+}
+.aboutTeamBox >*:nth-child(5){
+    margin-left: 120px;
+}
+.aboutTeamBox >*:nth-child(6){
+    margin-left: 120px;
+}
+.aboutTeamBox >*:nth-child(7){
+    margin-left: 120px;
+}
+.aboutTeam {
+  width: 18vw;
+  border-radius: 80px 80px 0px 0px;
+  height: 50vh;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  background: white;
+  padding: 4px;
+  align-self: center;
+}
+.aboutTeamText{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.aboutTeam img {
+  width: 100%;
+  height: 80%;
+  border-radius: 75px 75px 0px 0px;
+}
+.aboutTeam p {
+  text-align: center;
+}
+.btnmore{
+    display: flex;
+    align-items: center;
+    width: 100px;
+    background: rgb(179, 170, 170);
+}
+
+.about_getstarted_btn_left {
+  background: white;
+  color: orangered;
+  box-shadow: 1px 1px rgb(224, 215, 215);
+}
+.aboutExplore {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.AboutExploreText {
+  font-size: 30px;
+  color: #330159;
+  font-weight: bold;
+}
+.btn {
+  display: flex;
+  gap: 10px;
+}
