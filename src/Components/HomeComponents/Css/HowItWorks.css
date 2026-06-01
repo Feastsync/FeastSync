@@ -1,0 +1,153 @@
+.hiw_sec {
+  width: 100%;
+  padding: 50px 2px;
+  background-color: #0B0017;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hiw_container {
+  width: 90%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.hiw_header {
+  text-align: center;
+  width: 100%;
+}
+
+.hiw_main_title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  margin: 0 0 12px 0;
+}
+
+.hiw_subtitle {
+  font-size: 15px;
+  color: #e2e8f0;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.hiw_grid {
+  width: 100%;
+  height: 80vh;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 60px;
+  row-gap: 40px;
+}
+
+.hiw_item_pair {
+  display: flex;
+  align-items: stretch;
+  gap: 20px;
+  width: 100%;
+}
+
+.hiw_icon_box {
+  background-color: #26004d;
+  width: 110px;
+  /* height: ; */
+  min-width: 120px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hiw_logo_img {
+  width: 45px;
+  height: 90px;
+  object-fit: contain;
+}
+
+.hiw_text_card {
+  background-color: #1e003b;
+  border-radius: 14px;
+  padding: 35px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.hiw_card_title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+.hiw_card_desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #f1f5f9;
+}
+@media (max-width: 768px) {
+
+  .hiw_sec {
+    padding: 30px 0;
+  }
+
+  .hiw_container {
+    width: 90%;
+    gap: 20px;
+  }
+
+  .hiw_main_title {
+    font-size: 22px;
+  }
+
+  .hiw_subtitle {
+    font-size: 13px;
+  }
+
+  
+  .hiw_grid {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+    column-gap: 0;
+  }
+
+  .hiw_item_pair {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .hiw_icon_box {
+    width: 70px;
+    min-width: 70px;
+    border-radius: 10px;
+  }
+
+  .hiw_logo_img {
+    width: 32px;
+    height: 60px;
+  }
+
+  .hiw_text_card {
+    padding: 16px;
+    gap: 8px;
+  }
+
+  .hiw_card_title {
+    font-size: 15px;
+  }
+
+  .hiw_card_desc {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+}
