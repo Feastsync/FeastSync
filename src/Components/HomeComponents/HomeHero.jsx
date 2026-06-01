@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Input from '../../Props/Input'
+import Input from '../../Props/InPut'
 import Button from '../../Props/Button'
 import { LuSearch } from 'react-icons/lu'
 import "./Css/HomeHero.css"
