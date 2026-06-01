@@ -18,6 +18,10 @@
   padding-left: 100px;
   background-image: url("../../assets/BackgroundImage/8644f49ca66594465885d8daad5f829d0ff32ee3.png");
 }
+.about{
+    font-size: 20px;
+    line-height: 30px;
+}
 .aboutContainer1{
     display: flex;
     flex-direction: column;
@@ -34,6 +38,7 @@
   padding-left: 50px;
   padding-right: 20px;
 }
+
 .aboutWrapperRight {
   display: grid;
   grid-template-columns: repeat(3, 250px);
@@ -51,6 +56,7 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
+  line-height: 25px;
 }
 .aboutWrapperHolder {
   display: flex;
@@ -63,7 +69,7 @@
   gap: 20px;
 }
 .aboutWrapperleftTitle {
-  font-size: 30px;
+  font-size: 40px;
   font-weight: bold;
 }
 .row-span-1-2 {
@@ -84,22 +90,33 @@
 }
 .aboutMission {
   display: flex;
-  gap: 20px;
+  gap: 80px;
   justify-content: center;
   align-items: center;
   background: #330159;
 }
 .aboutMission div {
-  width: 30vw;
-  height: 50vh;
+  width: 25vw;
+  height: 80vh;
   /* background: gray; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 30px;
+  /* text-align: center; */
+}
+.missionHolder{
+    text-align: start;
+}
+.missionQuote{
+    font-size: 30px;
+    font-weight: 550px;
+    text-align: start;
 }
 .aboutMission div p {
   color: white;
+  line-height: 25px;
 }
 
 .aboutValuesBox {
@@ -110,8 +127,10 @@
 
 .aboutValues {
   display: flex;
-  gap: 20px;
+  gap: 40px;
   padding: 10px;
+  align-items: center;
+  justify-content: center;
 }
 .aboutValuesText {
   display: flex;
@@ -119,12 +138,13 @@
   flex-direction: column;
 }
 .aboutValues img {
-  width: 100%;
-  height: 53vh;
+  width: 30%;
+  height: 73vh;
+   border-radius: 10px;
 }
 .aboutValues p {
   width: 25vw;
-  height: 25vh;
+  height: 35vh;
   background: #330159;
   display: flex;
   flex-direction: column;
@@ -132,6 +152,8 @@
   justify-content: center;
   text-align: center;
   color: white;
+  border-radius: 10px;
+  line-height: 25px;
 }
 
 .row-spans-3-2 {
@@ -145,6 +167,8 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  height: 40vh;
+  line-height: 25px;
 }
 .aboutTrustLogo {
   font-size: 30px;
@@ -155,7 +179,7 @@
   color: #330159;
 }
 .aboutTrust p {
-  text-align: center;
+  text-align: start;
 }
 .aboutTrustinfo {
   width: 100px;
@@ -177,7 +201,7 @@
   display: grid;
   background: #330159;
   row-gap: 20px;
-  column-gap: 40px;
+  column-gap: 70px;
   padding: 10px;
   /* Automatically places items and centers the entire grid track */
   grid-template-columns: repeat(4 , 200px);
@@ -193,8 +217,8 @@
     margin-left: 120px;
 }
 .aboutTeam {
-  width: 15vw;
-  border-radius: 60px 60px 0px 0px;
+  width: 18vw;
+  border-radius: 80px 80px 0px 0px;
   height: 50vh;
   display: flex;
   justify-content: space-between;
@@ -203,14 +227,26 @@
   padding: 4px;
   align-self: center;
 }
+.aboutTeamText{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 .aboutTeam img {
   width: 100%;
   height: 80%;
-  border-radius: 60px 60px 0px 0px;
+  border-radius: 75px 75px 0px 0px;
 }
 .aboutTeam p {
   text-align: center;
 }
+.btnmore{
+    display: flex;
+    align-items: center;
+    width: 100px;
+    background: rgb(179, 170, 170);
+}
+
 .about_getstarted_btn_left {
   background: white;
   color: orangered;

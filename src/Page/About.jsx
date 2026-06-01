@@ -1,23 +1,27 @@
 import React from 'react'
 import"../Page/Css/About.css"
 import Header from"../Components/Header"
+import Readytogetstarted from "../Components/Readytogetstarted"
+import Footer from "../Components/Footer"
 import Button from '../Props/Button'
 import { feastsync } from '../mock/moc'
 import { div } from 'motion/react-client'
+import { FaArrowRight } from "react-icons/fa6";
+
 const About = () => {
   return (
     <div className='container'>
      <Header />
      <div className='aboutContainer'> 
       <div className='aboutContainer1'>
-        <p>About FeastSync</p>
+        <p className='about'>About FeastSync</p>
         <p className='aboutInfo'>Powering <br />
            entertainment <br />
            across Nigeria.
         </p>
         </div>
-        <p>connect with top rated entainers <br />
-           for your next event.Professional service. <br />
+        <p className='about'>Connect with top rated entainers 
+           for <br /> your next event.Professional service. <br />
            transparent rates.</p>
      </div>
 
@@ -58,18 +62,19 @@ const About = () => {
 
     <div className='aboutMission'>
        <div>
-         <p>Our Mission</p>
+         <p className='missionQuote'>Our Mission</p>
         <p>Our mission is to take the risk out of
           booking entertaiment.By connecting
           host with fully verified top-tier talent
           through a secure payment system.
-          feastsync guarantees that every event-big or small-is built on absolute trust and
+          feastsync guarantees that every
+         event-big or small-is built on absolute trust and
           professional execution.
         </p>
       </div>
       <div><img src="src/assets/About/pana.png" alt="" /></div>
-      <div>
-        <p>Our Vision</p>
+      <div className='missionHolder'>
+        <p className='missionQuote'>Our Vision</p>
         <p> To create a world where booking live
           entertainment is entirely stress-free,
           establishing FeastSync as the global benchmark for secure, verified talent and 
@@ -119,8 +124,10 @@ const About = () => {
       <p>feastsync is designed around one principle no one shoul have to risk to book or perform <br />
         at an event.Our three layer protection system covers identity money and fairness-from the <br />
         first click to the final payout
-      </p>
-      <p className="aboutTrustinfo">learn more</p>
+      </p><span className='btnmore'>
+        <p>learn more</p>
+        <FaArrowRight />
+        </span>
       </div>     
 
       <div className='aboutTeamText'>
@@ -134,7 +141,7 @@ const About = () => {
               <div key={index}>
                 <div className='aboutTeam'>
                   <img src={item.image} alt="" />
-                <div>
+                <div className='aboutTeamText'>
                     <p>{item.name}</p>
                   <p>{item.stack}</p>
                 </div>
@@ -145,16 +152,8 @@ const About = () => {
         </div>
 
       </div>
-
-      <div className='aboutExplore'>
-        <p>Ready to get started?</p>
-        <p className='AboutExploreText'>Your next great event begins here.</p>
-        <p>whether you are planning an event or ready to list your talent -FeastSync is built for you</p>
-       <div className='btn'>
-         <Button btnText="Get Started" className="header_getstarted_btn"/>
-        <Button btnText="Explore Vendors" className="about_getstarted_btn_left"/>
-       </div>
-      </div>
+      <Readytogetstarted />
+      <Footer />
     </div>
   )
 }

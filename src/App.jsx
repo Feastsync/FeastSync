@@ -5,7 +5,6 @@ import Howitworks from "./Page/Howitworks.jsx"
 import Services from './Page/Services.jsx'
 import GetStarted from './Page/GetStarted.jsx'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Howitworks from "./Page/Howitworks.jsx"
 import Layout from "./Page/Layout.jsx"
 import Home from './Page/Home.jsx'
 import VendorsPage from './Page/VendorsPage.jsx'
@@ -32,9 +31,7 @@ const App = () => {
             <Route path="videography" element={<Videography />} />
           </Route>
         </Route>
-        <Route path="/" element={<Howitworks />} />
         <Route path='/about' element={<About />}/>
-        <Route path="/howitworks" element={<Howitworks />} />
         <Route path='/services' element={<Services />} />
         <Route path="/getStarted" element={<GetStarted />} />
       </Routes>

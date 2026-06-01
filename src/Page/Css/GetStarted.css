@@ -1,8 +1,14 @@
 .getStartedContainer{
     display: flex;
     flex-direction: column;
-    gap: 30px;
+
+    gap: 15px;
     padding: 50px;
+}
+.logo_image {
+  height: 70px;
+  object-fit: contain;
+  object-position: left;
 }
 .getStartedContainerText{
     font-size: 30px;
@@ -10,21 +16,30 @@
 }
 .getStartedContainerBox{
     display: flex;
-    gap: 50px;
+      align-items: center;
+    justify-content: center;
+    gap: 250px;
 }
 .getStartedContainerBox div{
-    width: 50vw;
+    width: 35vw;
     height: 60vh;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     border-radius: 10px;
-    box-shadow: 10px 10px 10px 10px rgb(233, 229, 229);
+    line-height: 50px;
+    box-shadow: 2px 2px 2px 2px rgb(233, 229, 229);
+    gap: 50px;
 }
-.box{
-    background:  #330159;
-    color: white;
+.handler{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.getStartedName{
+    font-size: 20px;
 }
 .getStartedContainerbtn{
     display: flex;
@@ -32,4 +47,7 @@
 }
 .getStartedContainer button{
     width: 200px;
+}
+.getStartedicon1{
+    font-size: 40px;
 }
