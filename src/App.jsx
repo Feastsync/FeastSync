@@ -1,4 +1,5 @@
 import React from 'react'
+import Contact from "./Page/Contact.jsx"
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Howitworks from "./Page/Howitworks.jsx"
 import Layout from "./Page/Layout.jsx"
@@ -17,7 +18,7 @@ const App = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/howitworks" element={<Howitworks />} />
+          <Route path="/howitworks/*" element={<Howitworks />} />     
           <Route path="/vendors" element={<VendorsPage />}>
             <Route index element={<AllVendors />} />
             <Route path="djs" element={<DJs />} />
