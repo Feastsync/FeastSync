@@ -1,0 +1,35 @@
+.getStartedContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 50px;
+}
+.getStartedContainerText{
+    font-weight: 30px;
+     font-weight: bold;
+}
+.getStartedContainerBox{
+    display: flex;
+    gap: 50px;
+}
+.getStartedContainerBox div{
+    width: 50vw;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px 10px rgb(233, 229, 229);
+}
+.box{
+    background: purple;
+    color: white;
+}
+.getStartedContainerbtn{
+    display: flex;
+    justify-content: center;
+}
+.getStartedContainer button{
+    width: 200px;
+}
