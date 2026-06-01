@@ -1,10 +1,8 @@
 import React from 'react'
-import Header from "../Components/Header.jsx"
 import "./Css/Howitworkhost.css"
-import Headerlogo from "../assets/logos/Headerlogo.png"
-import Heroimage from "../assets/BackgroundImage/heroimage.jpg"
-import Button from  "../Props/Button.jsx"
-import Readytogetstarted from '../Components/Readytogetstarted.jsx'
+import Heroimage from "../../assets/BackgroundImage/heroimage.jpg"
+// import Button from  "../Props/Button.jsx"
+import Readytogetstarted from '../../Components/Readytogetstarted'
 import { useNavigate } from 'react-router-dom'
 
 const Howitworkshost = () => {
@@ -50,7 +48,6 @@ const Howitworkshost = () => {
   return (
     
     <main className='main-container'>
-      <Header />
       <section className='hero-section'>
         <img src={Heroimage} alt="Hero" />
         <div className='overlay'></div>

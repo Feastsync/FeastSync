@@ -1,15 +1,14 @@
 import React from 'react'
-import Header from "../Components/Header.jsx"
+import Header from "../Header.jsx"
 import "./Css/Howitworksescrow.css"
-import Headerlogo from "../assets/logos/Headerlogo.png"
-import Heroimage from "../assets/BackgroundImage/heroimage.jpg"
-import Button from  "../Props/Button.jsx"
-import Readytogetstarted from '../Components/Readytogetstarted.jsx'
+import Heroimage from "../../assets/BackgroundImage/heroimage.jpg"
+// import Button from  "../../Props/Button.jsx"
+import Readytogetstarted from '../../Components/Readytogetstarted.jsx'
 import { useNavigate } from 'react-router-dom'
 
 const Howitworksvescrow = () => {
     const navigate = useNavigate()
-    const stepsData = [
+    const stepData = [
     {
       stepNumber: 'Step 1',
       title: 'KYC — Identity verification',
@@ -79,7 +78,7 @@ const Howitworksvescrow = () => {
     </section>
     <section className="steps-section">
   <div className="steps-wrapper">
-    {stepsData.map((step, index) => (
+    {stepData.map((step, index) => (
       <div key={index} className="step-card">
         <span className="step-number">{step.stepNumber}</span>
         <h3 className="step-title">{step.title}</h3>

@@ -1,10 +1,9 @@
 import React from 'react'
-import Header from "../Components/Header.jsx"
+
 import "./Css/Howitworksvendor.css"
-import Headerlogo from "../assets/logos/Headerlogo.png"
-import Heroimage from "../assets/BackgroundImage/heroimage.jpg"
-import Button from  "../Props/Button.jsx"
-import Readytogetstarted from '../Components/Readytogetstarted.jsx'
+import Heroimage from "../../assets/BackgroundImage/heroimage.jpg"
+import Button from  "../../Props/Button.jsx"
+import Readytogetstarted from "../../Components/Readytogetstarted.jsx"
 import { useNavigate } from 'react-router-dom'
 
 const Howitworksvendor = () => {
@@ -50,7 +49,6 @@ const Howitworksvendor = () => {
   return (
     
     <main className='main-container'>
-      <Header />
       <section className='hero-section'>
         <img src={Heroimage} alt="Hero" />
         <div className='overlay'></div>
