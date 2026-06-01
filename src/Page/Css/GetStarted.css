@@ -5,7 +5,7 @@
     padding: 50px;
 }
 .getStartedContainerText{
-    font-weight: 30px;
+    font-size: 30px;
      font-weight: bold;
 }
 .getStartedContainerBox{
@@ -14,7 +14,7 @@
 }
 .getStartedContainerBox div{
     width: 50vw;
-    height: 50vh;
+    height: 60vh;
     display: flex;
     align-items: center;
     justify-content: center;
