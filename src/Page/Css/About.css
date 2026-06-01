@@ -1,0 +1,196 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+p{
+    text-align: justify;
+    
+}
+.aboutContainer{
+    height: 90vh;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+    background-position: center;
+    /* background-repeat: no-repeat; */
+    padding-left: 50px;
+    background-image: url("../../assets/BackgroundImage/8644f49ca66594465885d8daad5f829d0ff32ee3.png");
+}
+.aboutInfo{
+    font-size: 50px;
+    font-weight: bolder;
+}
+.aboutWrapper{
+    display: flex;
+    gap: 70px;
+    padding-left: 50px;
+    padding-right: 20px;
+}
+.aboutWrapperRight{
+    display: grid;
+    grid-template-columns: repeat(3, 250px);
+    grid-template-rows: 200px 250px;
+    column-gap: 10px;
+    row-gap: 30px;
+}
+.aboutWrapperRight img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.aboutWrapperleft {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.aboutWrapperleftside{
+     display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.aboutWrapperleftTitle{
+    font-size: 30px;
+    font-weight: bold;
+}
+.row-span-1-2{
+    grid-column: 1;
+    grid-row: 1 / span-2;
+    object-position:87%;
+}
+.row-span-3-2{
+    grid-column: 3;
+    grid-row: 1 / span-2;
+    object-position:85%;
+}
+
+.row-span-2-2{
+    grid-column: 2;
+    grid-row: 2 / span-2;
+    object-position:60%;
+}
+.aboutMission{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    
+}
+.aboutMission div{
+width: 30vw;
+height: 30vh;
+background: gray;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+.aboutValues{
+    display: grid;
+     row-gap: 20px;
+     column-gap: 10px;
+        grid-template-rows: 300px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.aboutValues img{
+    width: 100%;
+    height: 100px;
+}
+.aboutValues p{
+    width: 30vw;
+    /* height: 30vh; */
+    background: purple;
+}
+
+.row-spans-3-2{
+    grid-column: 3;
+   row-gap: 10px;
+    grid-row: 3/ span-2;
+    object-position:87%;  
+}
+.aboutTrust{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.aboutTrustLogo{
+    font-size: 30px;
+    font-weight: bold;
+    color: #330159;
+}
+.aboutTrustText{
+    color: #330159;
+}
+.aboutTrust p{
+    text-align: center;
+}
+.aboutTrustinfo{
+    width: 100px;
+box-shadow: 5px 5px 5px;
+}
+.aboutTeamText{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.aboutTeamTitle{
+    font-size: 30px;
+    font-weight: bold;
+    color: #330159;
+}
+.aboutTeamBox{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    display: grid;
+     background: purple;
+     object-fit: contain;
+     row-gap: 20px;
+     column-gap: 40px;
+     padding: 10px;
+    grid-template-columns: repeat(4, 200px);
+}
+.aboutTeam{
+    width:15vw;
+    border-radius: 50px 50px 0px 0px ;
+    height: 45vh;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    background: white;
+    padding: 4px;
+}
+.aboutTeam img{
+    width: 100%;
+    height: 65%;
+    border-radius: 50px 50px 0px 0px ;
+}
+.aboutTeam p{
+    text-align: center;
+}
+.about_getstarted_btn_left{
+    background: white;
+    color: orangered;
+    box-shadow: 1px 1px rgb(224, 215, 215);
+}
+.aboutExplore{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.AboutExploreText{
+    font-size: 30px;
+    color: #330159;
+    font-weight: bold;
+}
+.btn{
+    display: flex;
+    gap: 10px;
+}
