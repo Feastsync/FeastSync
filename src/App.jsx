@@ -19,7 +19,7 @@ import ForgotPassword from './Auth/ForgetPassword.jsx'
 import ResetPassword from './Auth/ResetPassword.jsx'
 import VendorSignUp from './Auth/Vendor/VedorSignUp.jsx'
 import VendorKYC from './Auth/Vendor/VendorKYC.jsx'
-
+import Contact from './Page/Contact.jsx'
 import UserSignUp from './Auth/User/UserSignUp.jsx'
 
 const App = () => {
