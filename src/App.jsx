@@ -37,6 +37,7 @@ const App = () => {
             <Route path="photography" element={<Photography />} />
             <Route path="videography" element={<Videography />} />
           </Route>
+          <Route path="/contact" element={<Contact />} />
         </Route>
 
         <Route path="/onboarding" element={<Onboarding />} />
@@ -54,7 +55,7 @@ const App = () => {
 
       </Routes>
     </BrowserRouter>
-  )
-}
+  );
+};
 
-export default App
+export default App;
