@@ -1,4 +1,4 @@
-const Imp = ({ type = "text", placeholder, value, onChange, className, icon, style }) => {
+const Imp = ({ type = "text", onBlur, placeholder, value, onChange, className, icon, style }) => {
   return (
     <div className={`inp_group ${className || ""}`}>
       {icon && <span className="inp_icon">{icon}</span>}
@@ -7,6 +7,7 @@ const Imp = ({ type = "text", placeholder, value, onChange, className, icon, sty
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         className="inp_field"
         style={style}
       />

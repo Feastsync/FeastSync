@@ -45,12 +45,8 @@ const App = () => {
         <Route path="/verify-otp" element={<OTP />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-
-     
         <Route path="/vendor/signup" element={<VendorSignUp />} />
         <Route path="/vendor/kyc" element={<VendorKYC />} />
-
- 
         <Route path="/user/signup" element={<UserSignUp />} />
 
       </Routes>
