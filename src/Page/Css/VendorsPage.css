@@ -1,5 +1,3 @@
-
-
 .filter-bar {
   background-color: var(--primary-color);
   padding: 14px 24px;
@@ -32,4 +30,23 @@
   background-color: #ffffff;
   color: #2d0f6b;
   font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .filter-bar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 14px 16px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-btn {
+    flex-shrink: 0;
+  }
 }
