@@ -36,33 +36,36 @@ const Howitworksescrow = () => {
         <img src={Heroimage} alt="Hero" />
         <div className="overlay"></div>
         <div className="hero-content">
-          <h1>
+          <h1 className="hero-title">
             Secure. Transparent.
             <br />
             Seamless: How
             <br />
             FeastSync Works.
           </h1>
-          <p>
-            Whether you are hosting an event or performing at <br />
-            one, FeastSync is built to make the entire process <br />
-            transparent, secure, and effortless — from first click <br />
+          <p className="hero-description">
+            Whether you are hosting an event or performing at
+            one, FeastSync is built to make the entire process
+            transparent, secure, and effortless — from first click
             to final payout.
           </p>
         </div>
       </section>
       <section className="step-container">
-        <div className="step-btn" onClick={() => navigate("/howitworkshost")}>
+        <div className="step-btn" onClick={() => navigate("/howitworks")}>
           <div className="circle-icon check">✓</div>
           <span>For Organizer/Host</span>
         </div>
-        <div className="step-btn" onClick={() => navigate("/howitworksvendor")}>
+        <div
+          className="step-btn"
+          onClick={() => navigate("/howitworks/howitworksvendor")}
+        >
           <div className="circle-icon">02</div>
           <span>Vendors</span>
         </div>
         <div
           className="step-btn active"
-          onClick={() => navigate("/howitworksescrow")}
+          onClick={() => navigate("/howitworks/howitworksescrow")}
         >
           <div className="circle-icon">03</div>
           <span>Escrow/Verification</span>
@@ -70,18 +73,18 @@ const Howitworksescrow = () => {
       </section>
       <section className="hero-findbook">
         <article className="hero-findbook1">
-          <h1>
-            Two systems working together <br /> to protect everyone
-          </h1>
+          <h2>
+            Two systems working together to protect everyone
+          </h2>
         </article>
         <article className="hero-findbook2">
           <p>
             FeastSync's trust layer is built on two pillars — KYC identity
-            verification that confirms who you <br />
+            verification that confirms who you
             are dealing with, and escrow-based payments that protect what you
-            are paying or earning. <br />
+            are paying or earning.
             Together they make FEASTSYNC the only platform in Nigeria where
-            booking entertainment <br />
+            booking entertainment
             carries zero financial risk for either party.
           </p>
         </article>

@@ -1,7 +1,7 @@
 import React from "react";
 import "./Css/Howitworkhost.css";
 import Heroimage from "../../assets/BackgroundImage/heroimage.jpg";
-import Readytogetstarted from "../../Components/Readytogetstarted";
+import Readytogetstarted from "../../Components/Readytogetstarted.jsx";
 import { useNavigate } from "react-router-dom";
 
 const Howitworkshost = () => {
@@ -56,14 +56,14 @@ const Howitworkshost = () => {
         <img src={Heroimage} alt="Hero" />
         <div className="overlay"></div>
         <div className="hero-content">
-          <h1>
+          <h1 className="hero-title">
             Secure. Transparent.
             <br />
             Seamless: How
             <br />
             FeastSync Works.
           </h1>
-          <p>
+          <p className="hero-description">
             Whether you are hosting an event or performing at <br />
             one, FeastSync is built to make the entire process <br />
             transparent, secure, and effortless — from first click <br />
@@ -74,7 +74,7 @@ const Howitworkshost = () => {
       <section className="step-container">
         <div
           className="step-btn active"
-          onClick={() => navigate("/howitworkshost")}
+          onClick={() => navigate("/howitworks")}
         >
           <div className="circle-icon check">✓</div>
           <span>For Organizer/Host</span>
@@ -96,18 +96,15 @@ const Howitworkshost = () => {
       </section>
       <section className="hero-findbook">
         <article className="hero-findbook1">
-          <h1>
-            Find, book, and pay for <br /> entertainment — without the risk.
-          </h1>
+          <h2>Find, book, and pay for entertainment — without the risk.</h2>
         </article>
         <article className="hero-findbook2">
           <p>
             FeastSync gives event organizers access to a curated roster of
-            verified entertainment talent <br />
-            across Lagos. Every booking is straightforward, every payment is
-            protected, and every <br />
-            entertainer on the platform has been identity-checked before you
-            ever see their profile.
+            verified entertainment talent across Lagos. Every booking is
+            straightforward, every payment is protected, and every entertainer
+            on the platform has been identity-checked before you ever see their
+            profile.
           </p>
         </article>
       </section>
