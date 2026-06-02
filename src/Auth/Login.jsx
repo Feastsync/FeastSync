@@ -179,6 +179,14 @@ const Login = () => {
                   checked={role === "client"}
                   onChange={() => setRole("client")}
                   className="vl-checkbox"
+                  onBlur={() => {
+                    if (role === "") {
+                      setRole("user");
+                    } else if (role === "vendor") {
+                      setRole("vendor");
+                    } else {
+                      setRole("client");
+                    } }}  
                 />
                 <span className="vl-role-label">Client/User</span>
               </label>
