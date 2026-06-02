@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useState, useEffect,  } from 'react'
+import { NavLink , useNavigate } from 'react-router-dom'
 import { FaBars, FaTimes } from 'react-icons/fa'
 import "./Css/Header.css"
 import Headerlogo from '../assets/logos/Headerlogo.png'
@@ -7,6 +7,7 @@ import Button from "../Props/Button.jsx"
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const Nav = useNavigate()
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : 'unset'
@@ -35,7 +36,7 @@ const Header = () => {
         </div>
 
         <div className={`header_right ${isOpen ? "active" : ""}`}>
-          <h2 className='header_login'>Login</h2>
+          <h2 onClick={() => Nav('/login')} className='header_login'>Login</h2>
           <Button btnText="Get Started" className="header_getstarted_btn" />
         </div>
       </div>
