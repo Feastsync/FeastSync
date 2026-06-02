@@ -1,42 +1,41 @@
-import { useState, useEffect } from "react"
-import { videographerVendors } from "../DummyData"
-import VendorCard from "../../Props/VendorCard"
-import "./css/All.css"
-import Footer from "../Footer"
+import { useState, useEffect } from "react";
+import { photographyVendors } from "../DummyData";
+import VendorCard from "../../Props/VendorCard";
+import "./css/All.css";
 
 const getItemsPerPage = () => {
-  if (window.innerWidth <= 540) return 4
-  if (window.innerWidth <= 860) return 6
-  return 9
-}
+  if (window.innerWidth <= 540) return 4;
+  if (window.innerWidth <= 860) return 6;
+  return 9;
+};
 
-const VideographerVendors = () => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage)
+const PhotographyVendors = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  }, [currentPage])
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
 
   useEffect(() => {
     const handleResize = () => {
-      setItemsPerPage(getItemsPerPage())
-      setCurrentPage(1)
-    }
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
+      setItemsPerPage(getItemsPerPage());
+      setCurrentPage(1);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  const totalPages = Math.ceil(videographerVendors.length / itemsPerPage)
-  const start = (currentPage - 1) * itemsPerPage
-  const currentVendors = videographerVendors.slice(start, start + itemsPerPage)
+  const totalPages = Math.ceil(photographyVendors.length / itemsPerPage);
+  const start = (currentPage - 1) * itemsPerPage;
+  const currentVendors = photographyVendors.slice(start, start + itemsPerPage);
 
   const changePage = (dir) => {
-    const next = currentPage + dir
+    const next = currentPage + dir;
     if (next >= 1 && next <= totalPages) {
-      setCurrentPage(next)
+      setCurrentPage(next);
     }
-  }
+  };
 
   return (
     <div>
@@ -74,10 +73,8 @@ const VideographerVendors = () => {
           Next
         </button>
       </div>
-
-      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default VideographerVendors
+export default PhotographyVendors;

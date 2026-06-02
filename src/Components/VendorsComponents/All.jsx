@@ -2,7 +2,6 @@ import { useState, useEffect } from "react"
 import { allVendors } from "../DummyData.jsx"
 import VendorCard from "../../Props/VendorCard"
 import "./css/All.css"
-import Footer from "../Footer"
 
 const getItemsPerPage = () => {
   if (window.innerWidth <= 540) return 4
@@ -74,8 +73,6 @@ const AllVendors = () => {
           Next
         </button>
       </div>
-
-      <Footer />
     </div>
   )
 }

@@ -57,18 +57,17 @@ const Howitworksvendor = () => {
         <img src={Heroimage} alt="Hero" />
         <div className="overlay"></div>
         <div className="hero-content">
-          <h1>
+          <h1 className="hero-title">
             Secure. Transparent.
             <br />
             Seamless: How
             <br />
             FeastSync Works.
           </h1>
-          <p>
-            Whether you are hosting an event or performing at <br />
-            one, FeastSync is built to make the entire process <br />
-            transparent, secure, and effortless — from first click <br />
-            to final payout.
+          <p className="hero-description">
+            Whether you are hosting an event or performing at one, FeastSync is
+            built to make the entire process transparent, secure, and effortless
+            — from first click to final payout.
           </p>
         </div>
       </section>
@@ -94,18 +93,14 @@ const Howitworksvendor = () => {
       </section>
       <section className="hero-findbook">
         <article className="hero-findbook1">
-          <h1>
-            Build your reputation. <br /> Get paid without the hassle
-          </h1>
+          <h2>Build your reputation. Get paid without the hassle</h2>
         </article>
         <article className="hero-findbook2">
           <p>
             FeastSync gives entertainment professionals a platform that protects
-            their time, guarantees <br />
-            their payment, and builds their credibility — all in one place. No
-            middlemen. No chasing <br />
-            invoices. Just verified talent, professional bookings, and secured
-            payouts.
+            their time, guarantees their payment, and builds their credibility —
+            all in one place. No middlemen. No chasing invoices. Just verified
+            talent, professional bookings, and secured payouts.
           </p>
         </article>
       </section>

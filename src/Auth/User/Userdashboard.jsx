@@ -78,7 +78,7 @@ const Userdashboard = () => {
           {/* Cleaned up header_right to display the user profile row */}
           <div className={`header_right ${isOpen ? "active" : ""}`}>
             <div className="notification_wrapper">
-              <img className="bell-icon" src={Bell} alt="Notification Bell" />
+              <img className="bell_icon" src={Bell} alt="Notification Bell" />
             </div>
 
             <div className="profile_wrapper">
