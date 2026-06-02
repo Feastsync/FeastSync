@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
-import Input from "../Props/Imp";
+import Imp from "../Props/Imp";
 import Button from "../Props/Button";
 import "./Css/Login.css";
 import HeeaderLogo from "../assets/logos/Headerlogo.png";
@@ -14,17 +14,33 @@ const Login = () => {
   const [role, setRole] = useState("user");
   const [isLoading, setIsLoading] = useState(false);
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
-  const [EmailErrorMsg, setEmailErrorMsg] = useState({ err: false, msg: "", name: "" });
-  const [PasswordErrorMsg, setPasswordErrorMsg] = useState({ err: false, msg: "", name: "" });
+  const [EmailErrorMsg, setEmailErrorMsg] = useState({
+    err: false,
+    msg: "",
+    name: "",
+  });
+  const [PasswordErrorMsg, setPasswordErrorMsg] = useState({
+    err: false,
+    msg: "",
+    name: "",
+  });
 
   const HoldEmail = (e) => {
     const NewEmail = e.target.value;
     setUserInfo({ ...userInfo, email: NewEmail });
 
     if (NewEmail.trim() === "") {
-      setEmailErrorMsg({ err: true, name: "email", msg: "Email must not be empty" });
+      setEmailErrorMsg({
+        err: true,
+        name: "email",
+        msg: "Email must not be empty",
+      });
     } else if (!EmailRegex.test(NewEmail)) {
-      setEmailErrorMsg({ err: true, name: "email", msg: "Please enter a valid Email" });
+      setEmailErrorMsg({
+        err: true,
+        name: "email",
+        msg: "Please enter a valid Email",
+      });
     } else {
       setEmailErrorMsg({ err: false, name: "", msg: "" });
     }
@@ -35,7 +51,11 @@ const Login = () => {
     setUserInfo({ ...userInfo, password: NewPass });
 
     if (NewPass.trim() === "") {
-      setPasswordErrorMsg({ err: true, name: "password", msg: "Password must not be empty" });
+      setPasswordErrorMsg({
+        err: true,
+        name: "password",
+        msg: "Password must not be empty",
+      });
     } else {
       setPasswordErrorMsg({ err: false, name: "", msg: "" });
     }
@@ -45,15 +65,27 @@ const Login = () => {
     let hasError = false;
 
     if (userInfo.email.trim() === "") {
-      setEmailErrorMsg({ err: true, name: "email", msg: "Email must not be empty" });
+      setEmailErrorMsg({
+        err: true,
+        name: "email",
+        msg: "Email must not be empty",
+      });
       hasError = true;
     } else if (!EmailRegex.test(userInfo.email)) {
-      setEmailErrorMsg({ err: true, name: "email", msg: "Please enter a valid Email" });
+      setEmailErrorMsg({
+        err: true,
+        name: "email",
+        msg: "Please enter a valid Email",
+      });
       hasError = true;
     }
 
     if (userInfo.password.trim() === "") {
-      setPasswordErrorMsg({ err: true, name: "password", msg: "Password must not be empty" });
+      setPasswordErrorMsg({
+        err: true,
+        name: "password",
+        msg: "Password must not be empty",
+      });
       hasError = true;
     }
 
@@ -68,7 +100,6 @@ const Login = () => {
       return;
     }
 
-   
     // console.log("Submitting:", { ...userInfo, role });
   };
 
@@ -77,16 +108,22 @@ const Login = () => {
       <div className="vl-left">
         <div className="vl-form-container">
           <div className="vl-logo">
-            <img src={HeeaderLogo} alt="FeastSync Logo" className="vl-logo-img" />
+            <img
+              src={HeeaderLogo}
+              alt="FeastSync Logo"
+              className="vl-logo-img"
+            />
             <div className="vl-logo-text">FeastSync</div>
           </div>
 
           <h1 className="vl-title">LOG IN</h1>
-          <p className="vl-subtitle">Welcome back, please sign in to your account.</p>
+          <p className="vl-subtitle">
+            Welcome back, please sign in to your account.
+          </p>
 
           <div className="vl-field-group">
             <label className="vl-label">Enter email</label>
-            <Input
+            <Imp
               type="email"
               placeholder="Your email address"
               value={userInfo.email}
@@ -101,7 +138,7 @@ const Login = () => {
           <div className="vl-field-group">
             <label className="vl-label">Password</label>
             <div className="vl-password-wrap">
-              <Input
+              <Imp
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 value={userInfo.password}
@@ -113,7 +150,11 @@ const Login = () => {
                 className="vl-eye-btn"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? <FaRegEyeSlash size={18} /> : <FaRegEye size={18} />}
+                {showPassword ? (
+                  <FaRegEyeSlash size={18} />
+                ) : (
+                  <FaRegEye size={18} />
+                )}
               </button>
             </div>
             {PasswordErrorMsg.err && PasswordErrorMsg.name === "password" && (
@@ -155,7 +196,7 @@ const Login = () => {
 
           <p className="vl-register-text">
             Don't have an account yet?{" "}
-            <Link to="/signup" className="vl-register-link">
+            <Link to="/onboarding" className="vl-register-link">
               REGISTER HERE
             </Link>
           </p>
