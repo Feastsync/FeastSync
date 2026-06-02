@@ -1,26 +1,27 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Pages
-import Home from './Page/Home.jsx'
-import Howitworks from "./Page/Howitworks.jsx"
-import VendorsPage from './Page/VendorsPage.jsx'
-import Layout from "./Page/Layout.jsx"
-import AllVendors from './Components/VendorsComponents/All.jsx'
-import DJs from './Components/VendorsComponents/DJs.jsx'
-import MCs from './Components/VendorsComponents/MCs.jsx'
-import LiveBands from './Components/VendorsComponents/LiveBands.jsx'
-import Photography from "./Components/VendorsComponents/Photographty.jsx"
-import Videography from './Components/VendorsComponents/Videography.jsx'
-import Onboarding from './Auth/Onboarding.jsx'
-import Login from './Auth/Login.jsx'
-import OTP from './Auth/OTP.jsx'
-import ForgotPassword from './Auth/ForgetPassword.jsx'
-import ResetPassword from './Auth/ResetPassword.jsx'
-import VendorSignUp from './Auth/Vendor/VedorSignUp.jsx'
-import VendorKYC from './Auth/Vendor/VendorKYC.jsx'
-import Contact from './Page/Contact.jsx'
-import UserSignUp from './Auth/User/UserSignUp.jsx'
+import Home from "./Page/Home.jsx";
+import Howitworks from "./Page/Howitworks.jsx";
+import VendorsPage from "./Page/VendorsPage.jsx";
+import Layout from "./Page/Layout.jsx";
+import AllVendors from "./Components/VendorsComponents/All.jsx";
+import DJs from "./Components/VendorsComponents/DJs.jsx";
+import MCs from "./Components/VendorsComponents/MCs.jsx";
+import LiveBands from "./Components/VendorsComponents/LiveBands.jsx";
+import Photography from "./Components/VendorsComponents/Photographty.jsx";
+import Videography from "./Components/VendorsComponents/Videography.jsx";
+import OnBoarding from "./Auth/OnBoarding.jsx";
+import Login from "./Auth/Login.jsx";
+import OTP from "./Auth/OTP.jsx";
+import ForgotPassword from "./Auth/ForgetPassword.jsx";
+import ResetPassword from "./Auth/ResetPassword.jsx";
+import VendorSignUp from "./Auth/Vendor/VedorSignUp.jsx";
+import VendorKYC from "./Auth/Vendor/VendorKYC.jsx";
+import Contact from "./Page/Contact.jsx";
+import UserSignUp from "./Auth/User/UserSignUp.jsx";
+import Userdashboard from "./Auth/User/Userdashboard.jsx";
 
 const App = () => {
   return (
@@ -40,15 +41,16 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
         </Route>
 
-        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/onboarding" element={<OnBoarding />} />
         <Route path="/login" element={<Login />} />
         <Route path="/verify-otp" element={<OTP />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+
         <Route path="/vendor/signup" element={<VendorSignUp />} />
         <Route path="/vendor/kyc" element={<VendorKYC />} />
+        <Route path="/userdashboard" element={<Userdashboard />} />
         <Route path="/user/signup" element={<UserSignUp />} />
-
       </Routes>
     </BrowserRouter>
   );
