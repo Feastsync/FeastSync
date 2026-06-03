@@ -56,8 +56,9 @@
 }
 .serviceBooking img{
     width: 35vw;
-    height:  65vh;
+    height:  55vh;
     border-radius: 30px;
+    object-fit: cover;
 }
 .serviceName{
     font-size: 20px;
