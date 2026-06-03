@@ -96,15 +96,16 @@ const services = () => {
                    <div className='serviceBooking'>
             <div className='serviceInfo'>
             <div>
-              <p className='serviceName'>DJ Booking</p>
-              <p>Music . Performance</p>
+              <p className='serviceName'>Photography services</p>
+              <p>Event photograph</p>
             </div>
             <div>
               <p className='serviceName'>WHAT'S INCLUDED</p>
-              <li>Professional sound system setup and breakdown</li>
-              <li>Pre-event consultation on music preference and vibe</li>
-              <li>Custom playlist curation for your event type</li>
-              <li>Live mixing across Afrobeats, Amapiano, R&B, Hip-hop, Dancehall, and more</li>
+              <li>Full event coverage from setup to close</li>
+              <li>Professionally edited high-resolution image delivery</li>
+              <li>Online gallery with dowload access within 72 hours</li>
+              <li>Portrait sessions for couple, VIP guests, or key moments</li>
+              <li>Social media-optimized image set for some-day sharing</li>
             </div>
             </div>
              <img src="src/assets/About/photographer.png" alt="" />
