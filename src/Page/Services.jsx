@@ -115,15 +115,16 @@ const services = () => {
             <img src="src/assets/About/cameraman.png" alt="" />
             <div className='serviceInfo'>
             <div>
-              <p className='serviceName'>DJ Booking</p>
-              <p>Music . Performance</p>
+              <p className='serviceName'>Videography services</p>
+              <p>Event film.Highlight reels</p>
             </div>
             <div>
               <p className='serviceName'>WHAT'S INCLUDED</p>
-              <li>Professional sound system setup and breakdown</li>
-              <li>Pre-event consultation on music preference and vibe</li>
-              <li>Custom playlist curation for your event type</li>
-              <li>Live mixing across Afrobeats, Amapiano, R&B, Hip-hop, Dancehall, and more</li>
+              <li>Multi-camera full event coverage</li>
+              <li>Professionally color-graded highlight reel(3-5 minutes)</li>
+              <li>Full-length event film for archive and personal use</li>
+              <li>Instagrem and WhatsApp-optimised teaser cuts delivered within 48 hours</li>
+              <li>Drone coverage available as ad-on</li>
             </div>
             </div>
           </div>
