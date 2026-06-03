@@ -63,15 +63,16 @@ const services = () => {
           <div className='serviceBooking'>
             <div className='serviceInfo'>
             <div>
-              <p className='serviceName'>DJ Booking</p>
-              <p>Music . Performance</p>
+              <p className='serviceName'>MC Booking</p>
+              <p>Host.Compere</p>
             </div>
             <div>
               <p className='serviceName'>WHAT'S INCLUDED</p>
-              <li>Professional sound system setup and breakdown</li>
-              <li>Pre-event consultation on music preference and vibe</li>
-              <li>Custom playlist curation for your event type</li>
-              <li>Live mixing across Afrobeats, Amapiano, R&B, Hip-hop, Dancehall, and more</li>
+              <li>Full event script consultation and programme coordination</li>
+              <li>Billingual hosting-English, yoruba, igbo, pidgin, or hausa</li>
+              <li>Guest engagement, games and crowd interaction where required</li>
+              <li>Coordination with DJ,band and event planner</li>
+              <li>Time management to keep event running on schedule</li>
             </div>
             </div>
              <img src="src/assets/About/host.png" alt="" />
