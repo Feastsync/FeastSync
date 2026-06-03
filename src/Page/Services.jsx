@@ -40,7 +40,7 @@ const services = () => {
         </div>
       </div>
         
-    <div>
+    <div className='servicePage'>
       <div className='serviceBooking'>
             <img src="src/assets/About/dj wirewire.png" alt="" />
             <div className='serviceInfo'>

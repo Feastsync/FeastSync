@@ -103,7 +103,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: 20px;
   /* text-align: center; */
 }
 
@@ -115,7 +115,7 @@
 }
 .aboutMission div p {
   color: white;
-  line-height: 25px;
+  line-height: 30px;
 }
 
 
@@ -169,7 +169,7 @@
   align-items: center;
   gap: 20px;
   height: 40vh;
-  line-height: 25px;
+  line-height: 30px;
 }
 .aboutTrustLogo {
   font-size: 30px;
@@ -217,11 +217,12 @@
     margin-left: 120px;
 }
 .aboutTeam {
-  width: 18vw;
+  width: 15vw;
   border-radius: 80px 80px 0px 0px;
   height: 50vh;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-direction: column;
   background: white;
   padding: 4px;

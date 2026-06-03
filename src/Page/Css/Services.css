@@ -27,10 +27,11 @@
 }
 .serviceContainerTitle {
     font-size: 40px;
-    font-weight: 700px;
+    font-weight:bold;
 }
 .servicesContainer p{
     text-align: center;
+    /* line-height: 25px; */
 }
 .serviceRate{
     display: flex;
@@ -43,14 +44,19 @@
   border-radius: 10px;
   padding: 3px;
 }
+.servicePage{
+    display: flex;
+    gap: 100px;
+    flex-direction: column;
+}
 .serviceBooking{
     display: flex;
-    gap: 60px;
+    gap: 150px;
     padding-left: 50px;
 }
 .serviceBooking img{
-    width: 40%;
-    height:  55vh;
+    width: 35vw;
+    height:  65vh;
     border-radius: 30px;
 }
 .serviceName{
