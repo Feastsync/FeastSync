@@ -21,7 +21,7 @@ const App = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/howitworks/*" element={<Howitworks />} />     
+          <Route path="/howitworks/*" element={<Howitworks />} />
           <Route path="/vendors" element={<VendorsPage />}>
             <Route index element={<AllVendors />} />
             <Route path="djs" element={<DJs />} />
@@ -30,13 +30,14 @@ const App = () => {
             <Route path="photography" element={<Photography />} />
             <Route path="videography" element={<Videography />} />
           </Route>
+          <Route path="/contact" element={<Contact />} />
         </Route>
         <Route path='/about' element={<About />}/>
         <Route path='/services' element={<Services />} />
         <Route path="/getStarted" element={<GetStarted />} />
       </Routes>
     </BrowserRouter>
-  )
-}
+  );
+};
 
-export default App
+export default App;

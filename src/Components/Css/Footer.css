@@ -1,116 +1,99 @@
 .footer_sec {
   width: 100%;
-  background-color: var(--primary-color);
+  background-color: #2A004E; /* Exact deep purple hex from image */
   font-family: "Plus Jakarta Sans", sans-serif;
-  padding: 12vh 0;
+  padding: 60px 0; /* Balanced height distribution */
   box-sizing: border-box;
 }
 
 .footer_container {
-  width: 90%;
+  width: 100%;
+  max-width: 1300px;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: flex-start;
-  gap: 60px;
+  gap: 40px;
 }
-
 
 .footer_brand {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   flex-shrink: 0;
 }
 
 .footer_logo {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
   filter: brightness(0) invert(1);
 }
+
 .footer_brand_name {
-  color:white;
-  font-size: 20px;
+  color: #ffffff;
+  font-size: 21px;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
+
 .footer_links {
   display: flex;
   flex-direction: row;
-  flex: 1;
-  justify-content: space-between;
-  gap: 20px;
+  flex-grow: 1;
+  justify-content: space-around; /* Replicates clean vertical alignment grouping */
+  gap: 120px;
+  max-width: 850px;
 }
+
 .footer_col {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 30px; /* Roomy, clean vertical spacing matching image */
 }
 
 .footer_col_title {
   color: #ffffff;
-  font-size: 16px;
-  font-weight: 700;
-  margin: 0 0 8px 0;
-  letter-spacing: 0.5px;
+  font-size: 19px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  opacity: 0.95;
 }
 
 .footer_link {
-  color: #e0e0e0;
-  font-size: 14px;
+  color: #ffffff;
+  font-size: 18px;
   font-weight: 400;
   text-decoration: none;
   cursor: pointer;
-  transition: color 0.2s ease;
+  opacity: 0.75; /* Smooth, soft-white finish on UI typography */
+  transition: opacity 0.2s ease;
 }
 
 .footer_link:hover {
-  color: #ffffff;
+  opacity: 1;
 }
 
-@media (max-width: 768px) {
-
-  .footer_sec {
-    padding: 5vh 0;
-  }
-
+/* Responsive Fluidity for Handheld Devices */
+@media (max-width: 868px) {
   .footer_container {
     flex-direction: column;
-    gap: 30px;
-    width: 85%;
-  }
-
-  .footer_brand {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .footer_logo {
-    width: 50px;
-    height: 50px;
-  }
-
-  .footer_brand_name {
-    font-size: 18px;
+    gap: 50px;
+    width: 90%;
   }
 
   .footer_links {
-    flex-direction: column;
-    gap: 30px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Clean 2-column mobile structure */
+    gap: 40px 20px;
   }
+}
 
-  .footer_col {
-    gap: 12px;
+@media (max-width: 480px) {
+  .footer_links {
+    grid-template-columns: 1fr; /* Stack layout on tiny screens */
   }
-
-  .footer_col_title {
-    font-size: 14px;
-  }
-
-  .footer_link {
-    font-size: 13px;
-  }
-
 }
