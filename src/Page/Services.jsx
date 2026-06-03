@@ -151,14 +151,9 @@ const services = () => {
             <p>Bundle . Best value</p>
           </div>
         <div>
-            <p>Lorem ipsum dolor sit ame
-            t, consectetur adipisicing elit. 
-            Ipsum assumenda soluta suscipit et 
-            tempora quia facilis 
-            tempore voluptatem. Quod assumenda 
-            possimus repellat ipsam 
-            aliquid omnis animi aut
-            em sequi pariatur rerum?
+            <p>Why book seperately when you can have it all-perfectly coordinated?FeastSync's entertainment packages <br />
+               bundle top-tier vendors into seamless,pre-matched combinations that work together fro the first soundcheck <br />
+               to the last song.Book more, spend less and eliminate the coordination headache entirely.
             </p>
         </div>
          <Button btnText="Get Started" className="header_getstarted_btn" />
