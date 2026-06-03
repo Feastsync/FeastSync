@@ -14,7 +14,7 @@ const services = () => {
             World-class entertainment <br />
             for every kind of event.
           </p>
-          <p>
+          <p className='serviceDeliver'>
             from initimate birthday dinners to large-scale coperate galas, <br />
             feastsync connects you with verified entertainment <br />
             professionals who deliver excellence-everytime. 
@@ -40,7 +40,9 @@ const services = () => {
         </div>
       </div>
         
-    <div className='servicePage'>
+    <div className='service'>
+      <p className='serviceQuote'>Our Services</p>
+
       <div className='serviceBooking'>
             <img src="src/assets/About/dj wirewire.png" alt="" />
             <div className='serviceInfo'>
@@ -75,7 +77,7 @@ const services = () => {
              <img src="src/assets/About/host.png" alt="" />
           </div>
           <div className='serviceBooking'>
-            <img src="src/assets/About/dj wirewire.png" alt="" />
+            <img src="src/assets/About/mcs.png" alt="" />
             <div className='serviceInfo'>
             <div>
               <p className='serviceName'>DJ Booking</p>
@@ -142,7 +144,7 @@ const services = () => {
 
         <div  className='serviceEntertainment'>
           <div>
-            <p>Event Entertainment packages</p>
+            <p className='serviceCoperate'>Event Entertainment packages</p>
             <p>Bundle . Best value</p>
           </div>
         <div>

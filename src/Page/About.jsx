@@ -143,9 +143,9 @@ const About = () => {
             feastsync.map((item, index)=>(
               <div key={index}>
                 <div className='aboutTeam'>
-                  <img src={item.image} alt="" />
+                  <div className='aboutImgHolder'><img src={item.image} alt="" /></div>
                 <div className='aboutTeamText'>
-                    <p>{item.name}</p>
+                    <p className='aboutName'>{item.name}</p>
                   <p>{item.stack}</p>
                 </div>
                 </div>
