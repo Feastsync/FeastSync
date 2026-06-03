@@ -81,15 +81,15 @@ const services = () => {
             <img src="src/assets/About/mcs.png" alt="" />
             <div className='serviceInfo'>
             <div>
-              <p className='serviceName'>DJ Booking</p>
-              <p>Music . Performance</p>
+              <p className='serviceName'>Live Band Booking</p>
+              <p>Live music.Ensemble</p>
             </div>
             <div>
               <p className='serviceName'>WHAT'S INCLUDED</p>
-              <li>Professional sound system setup and breakdown</li>
-              <li>Pre-event consultation on music preference and vibe</li>
-              <li>Custom playlist curation for your event type</li>
-              <li>Live mixing across Afrobeats, Amapiano, R&B, Hip-hop, Dancehall, and more</li>
+              <li>Full band performance-depending on package</li>
+              <li>Pre-event song request and setlist consultation</li>
+              <li>Soundcheck and venue walkthrough before event start</li>
+              <li>Genre flexibility across Afrobeats, highlife, gospel and jazz</li>
             </div>
             </div>
           </div>
