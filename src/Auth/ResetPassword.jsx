@@ -30,22 +30,26 @@ const ResetPassword = () => {
                      <p>Back</p>
                   </div>
 
-              <div className='resetPaswwordContainer'>
+             <div className='resetPaswwordContainer'>
                 <div className='resetPasswordHolder'>
                   <div className='resetPasswordAssurance'>
                     <p className='resetPasswordText'>Reset Password?</p>
-                    <p className='resetPasswordLink'>Enter your email address to recieve a recovery link
-                      link to reset your password.</p>
+                    <p className='resetPasswordLink'>Enter your email address to recieve a recovery link</p>
                   </div>
 
                   <div className='resetpasswordEmail'>
+                       <section>
                          <label htmlFor="">Email Address</label>
+                      <div>
                     <input type="email"
                            name="" id="" 
                            placeholder=' Your email address'
                            />
+                      </div>
+                       </section>
 
-                    <label htmlFor=""> Create Password</label>
+                  <section>
+                      <label htmlFor=""> Create Password</label>
                    <div>
                      <input type={showPassword ? "text" : "password"}
                            name="" id="" 
@@ -53,10 +57,11 @@ const ResetPassword = () => {
                            value={Password}
                            onChange={(e)=>setPassword(e.target.value)}
                            /> <span onClick={handlePassword}>{showPassword ?<FaRegEyeSlash />:<FaRegEye />} </span>
+                             </div>
+                  </section>
 
-                   </div>
-
-                   <label htmlFor=""> Reset Password</label>
+                  <section>
+                     <label htmlFor=""> Reset Password</label>
                    <div>
                      <input type={showConfirm ? "text" : "Confirm password"}
                            name="" id="" 
@@ -65,14 +70,14 @@ const ResetPassword = () => {
                            onChange={(e)=>setConfirmPassword(e.target.value)}
                            /> <span onClick={()=>setShowConfirm(!showConfirm)}>{showConfirm ?<FaRegEyeSlash />:<FaRegEye />} </span>
                    </div>
-
-
-                          
-                    <Button >Submit</Button>
+                  </section>
+               
+                   <Button >Submit</Button>
+              
                  </div>
-                </div>
+          </div>
                 <div className='resetPasswordImage'>
-                  <img src="src/assets/logos/amico.png" alt="" />
+                  <img src="src/assets/logos/amico.png" alt="" className='imageHolder'/>
                 </div>
               </div>
     </div>
