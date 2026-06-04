@@ -1,4 +1,4 @@
-.header_container {
+.feastHeader_container {
   width: 100%;
   height: 13vh;
   display: flex;
@@ -12,7 +12,7 @@
   z-index: 999;
 }
 
-.header_wrapper {
+.feastHeader_wrapper {
   width: 90%;
   height: 100%;
   display: flex;
@@ -20,32 +20,32 @@
   justify-content: space-between;
 }
 
-.header_left {
+.feastHeader_left {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
 }
 
-.logo_img {
+.feastHeader_logoImg {
   height: 70px;
   object-fit: contain;
 }
 
-.logo_text {
+.feastHeader_logoText {
   color: var(--secondary-color);
   font-size: 25px;
   font-weight: 600;
 }
 
-.header_middle {
+.feastHeader_middle {
   display: flex;
   align-items: center;
   gap: 15px;
   height: 100%;
 }
 
-.nav_link {
+.feastHeader_navLink {
   text-decoration: none;
   color: var(--primary-color);
   font-size: 18px;
@@ -61,18 +61,18 @@
   box-sizing: border-box;
 }
 
-.nav_link:hover {
+.feastHeader_navLink:hover {
   background-color: #a281be;
   color: #ffffff;
 }
 
-.nav_link.active {
+.feastHeader_navLink.active {
   font-weight: 600;
   background-color: transparent;
   color: var(--primary-color);
 }
 
-.nav_link.active::after {
+.feastHeader_navLink.active::after {
   content: "";
   position: absolute;
   bottom: 3px;
@@ -83,22 +83,22 @@
   border-radius: 2px;
 }
 
-.nav_link.active:hover {
+.feastHeader_navLink.active:hover {
   background-color: #a281be;
   color: #ffffff;
 }
 
-.nav_link.active:hover::after {
+.feastHeader_navLink.active:hover::after {
   background-color: white;
 }
 
-.header_right {
+.feastHeader_right {
   display: flex;
   align-items: center;
   gap: 40px;
 }
 
-.header_login {
+.feastHeader_login {
   color: var(--secondary-color);
   font-size: 20px;
   display: flex;
@@ -107,25 +107,25 @@
   transition: font-weight 0.2s ease;
 }
 
-.header_login:hover {
+.feastHeader_login:hover {
   font-weight: 600;
 }
 
-.header_getstarted_btn {
+.feastHeader_getstartedBtn {
   background-color: var(--primary-color);
   color: #ffffff;
   height: 55px;
   padding: 8px 16px;
 }
 
-.header_getstarted_btn:hover {
+.feastHeader_getstartedBtn:hover {
   background-color: white;
   border: 1px solid var(--primary-color);
   color: var(--primary-color);
   font-weight: 600;
 }
 
-.menu_icon {
+.feastHeader_menuIcon {
   display: none;
   font-size: 28px;
   cursor: pointer;
@@ -134,30 +134,30 @@
 }
 
 @media (max-width: 768px) {
-  .header_container {
+ .feastHeader_container {
     height: 60px;
   }
 
-  .header_wrapper {
+ .feastHeader_wrapper {
     justify-content: space-between;
   }
 
-  .logo_img {
+ .feastHeader_logoImg {
     height: 36px;
   }
 
-  .logo_text {
+ .feastHeader_logoText {
     font-size: 18px;
   }
 
-  .menu_icon {
+ .feastHeader_menuIcon {
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1001;
   }
 
-  .header_middle {
+ .feastHeader_middle {
     position: fixed;
     top: 60px;
     left: 0;
@@ -175,11 +175,11 @@
     overflow-y: auto;
   }
 
-  .header_middle.active {
+ .feastHeader_middle.active {
     transform: translateX(0);
   }
 
-  .nav_link {
+ .feastHeader_navLink {
     width: 100%;
     padding: 20px 24px;
     font-size: 16px;
@@ -192,32 +192,32 @@
     box-sizing: border-box;
   }
 
-  .nav_link:hover {
+ .feastHeader_navLink:hover {
     background-color: #f5f5f5;
     color: var(--primary-color);
   }
 
-  .nav_link.active {
+ .feastHeader_navLink.active {
     color: var(--primary-color);
     font-weight: 600;
     background-color: #f5f5f5;
   }
 
-  .nav_link.active::after {
-    top: 50%;
-    transform: translateY(-50%);
-    left: 0;
+ .feastHeader_navLink.active::after {
+    top: auto;
+    bottom: 18px;
+    left: 24px;
     right: auto;
-    width: 3px;
-    height: 24px;
-    border-radius: 2px;
+    width: calc(100% - 48px);
+    height: 2px;
+    transform: none;
   }
 
-  .nav_link.active:hover::after {
+ .feastHeader_navLink.active:hover::after {
     background-color: var(--primary-color);
   }
 
-  .header_right {
+ .feastHeader_right {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -230,16 +230,17 @@
     background: #ffffff;
   }
 
-  .header_getstarted_btn {
+ .feastHeader_getstartedBtn {
     flex: 1;
     height: 50px;
     font-size: 16px;
     background-color: #5E2A84;
     color: #ffffff;
     border: none;
+    border-radius: 8px;
   }
 
-  .header_login {
+ .feastHeader_login {
     flex: 1;
     text-align: center;
     font-size: 16px;
@@ -251,7 +252,7 @@
     font-weight: 500;
   }
 
-  .header_login:hover {
+ .feastHeader_login:hover {
     background-color: #fff5ee;
     font-weight: 600;
   }
