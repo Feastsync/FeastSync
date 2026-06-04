@@ -2,7 +2,6 @@ import { useState, useEffect } from "react"
 import { djVendors } from "../DummyData"
 import VendorCard from "../../Props/VendorCard"
 import "./css/All.css"
-import Footer from "../Footer"
 
 const getItemsPerPage = () => {
   if (window.innerWidth <= 540) return 4
@@ -75,7 +74,6 @@ const DjVendors = () => {
         </button>
       </div>
 
-      <Footer />
     </div>
   )
 }

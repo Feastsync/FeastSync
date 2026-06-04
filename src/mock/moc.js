@@ -1,7 +1,7 @@
 export const feastsync =[
     {
         image:"src/assets/About/royalty.jpg",
-        name:"Toluwaniagbara .R",
+        name:"Omotayo Toluwaniagbara.R",
         stack:"Product Designer"
     },
 
@@ -26,7 +26,7 @@ export const feastsync =[
 
        {
         image:"src/assets/About/chioma.jpg",
-        name:"Nnacheta Chioma Gabriella",
+        name:"Nnacheta  Chioma Gabriella",
         stack:"Backend Developer"
     },
 

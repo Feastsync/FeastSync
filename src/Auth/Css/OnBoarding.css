@@ -165,3 +165,125 @@
   width: 60px;
   height: 18px;
 }
+
+/* ==========================================
+   DESKTOP RESPONSIVENESS (max-width: 1200px)
+   ========================================== */
+@media screen and (max-width: 1200px) {
+  .onboarding-content3 {
+    gap: 40px; /* Reduces the large 120px gap */
+  }
+
+  .onboarding-content3-left,
+  .onboarding-content3-right {
+    width: 45%; /* Widens cards slightly as viewport shrinks */
+  }
+
+  .onboarding-content4-container {
+    width: 25%; /* Widens the bottom button */
+  }
+}
+
+/* ==========================================
+   TABLET RESPONSIVENESS (max-width: 786px)
+   ========================================== */
+@media screen and (max-width: 786px) {
+  .onboarding-container {
+    height: auto;
+    min-height: 100vh;
+    padding: 30px 0;
+  }
+
+  .onboarding-content {
+    height: auto;
+  }
+
+  /* Reset fixed percentage heights to allow natural content flow */
+  .onboarding-content1,
+  .onboarding-content2,
+  .onboarding-content3,
+  .onboarding-content4 {
+    height: auto;
+    margin-bottom: 25px;
+  }
+
+  .onboarding-content2 h2 {
+    font-size: 26px;
+  }
+
+  .onboarding-content2 p {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+
+  /* Stack the Personal and Vendor cards vertically */
+  .onboarding-content3 {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .onboarding-content3-left,
+  .onboarding-content3-right {
+    width: 100%;
+    height: auto;
+    padding: 30px 20px;
+  }
+
+  .onboarding-content3-left1,
+  .onboarding-content3-right1 {
+    width: 100%;
+    height: auto;
+  }
+
+  .onboarding-image,
+  .onboarding-image2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+
+  .onboarding-content3-left1 h2,
+  .onboarding-content3-right1 h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+
+  .onboarding-content3-left1 p,
+  .onboarding-content3-right1 p {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .onboarding-content4-container {
+    width: 45%;
+    height: 50px;
+  }
+}
+
+/* ==========================================
+   MOBILE RESPONSIVENESS (max-width: 480px)
+   ========================================== */
+@media screen and (max-width: 480px) {
+  .onboarding-content1 h2 {
+    font-size: 22px;
+  }
+
+  .onboarding-content1 img {
+    height: 60px;
+  }
+
+  .onboarding-content2 h2 {
+    font-size: 20px;
+  }
+
+  .onboarding-content2 p {
+    font-size: 15px;
+  }
+
+  .onboarding-content4-container {
+    width: 70%;
+  }
+
+  .onboarding-content4-container h2 {
+    font-size: 16px;
+  }
+}

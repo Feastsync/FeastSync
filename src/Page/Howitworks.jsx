@@ -1,6 +1,6 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import Howitworkshost from '../Components/HowitWorksComponents/Howitworkshost'
+import HowItWorksHost from '../Components/HowItWorksComponents/Howitworkshost'
 import Howitworksescrow from '../Components/HowitWorksComponents/Howitworksescrow'
 import Howitworksvendor from '../Components/HowitWorksComponents/Howitworksvendor'
 
@@ -8,7 +8,7 @@ const Howitworks = () => {
   return (
     <div>
       <Routes>
-        <Route index element={<Howitworkshost />} />
+        <Route index element={<HowItWorksHost />} />
         <Route path="howitworksescrow" element={<Howitworksescrow />} />
         <Route path="howitworksvendor" element={<Howitworksvendor />} />
       </Routes>
