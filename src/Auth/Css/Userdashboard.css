@@ -141,7 +141,7 @@
   font-size: 23px;
   font-weight: 500;
   color: #333333;
-  white-space: nowrap;
+ white-space: nowrap;
 }
 .menu_icon {
   display: none;
@@ -286,95 +286,230 @@
   color: var(--secondary-color);
 }
 
-@media (max-width: 768px) {
-  .header_container {
-    height: 60px;
+/* =========================
+   1200px and below
+========================= */
+@media screen and (max-width: 1200px) {
+  .header_wrapper {
+    width: 95%;
   }
 
-  .logo_img {
-    height: 40px;
+  .user-dashboard-contentleft1 h2 {
+    font-size: 34px;
   }
 
-  .logo_text {
+  .user-dashboard-contentleft1 p {
     font-size: 18px;
   }
 
-  .menu_icon {
+  .user-dashboard-contentright2 {
+    gap: 20px;
+  }
+
+  .user-dashboard-contentright2-left,
+  .user-dashboard-contentright2-middle,
+  .user-dashboard-contentright2-right {
+    width: 31%;
+  }
+
+  .user-dashboard-hero-wrapper {
+    width: 80%;
+  }
+}
+
+/* =========================
+   768px and below
+========================= */
+@media screen and (max-width: 768px) {
+  .header_container {
+    height: auto;
+    padding: 15px 0;
+  }
+
+  .header_wrapper {
+    width: 95%;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .header_top_row {
+    width: 100%;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    z-index: 1001;
+  }
+
+  .menu_icon {
+    display: block;
   }
 
   .header_middle {
-    position: fixed;
-    top: 60px;
-    left: 0;
-    width: 100%;
-    height: calc(100vh - 60px);
-    background-color: #ffffff;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 0;
-    padding: 0;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    z-index: 1000;
-    display: flex;
+    display: none;
   }
 
   .header_middle.active {
-    transform: translateX(0);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    padding: 15px 0;
   }
 
   .nav_link {
     width: 100%;
-    padding: 20px 24px;
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--primary-color);
-    border-bottom: 1px solid #e8e8e8;
-    border-radius: 0;
-    height: auto;
     justify-content: flex-start;
-    box-sizing: border-box;
+    padding-left: 15px;
   }
 
-  .nav_link:hover {
-    background-color: transparent;
-    color: var(--primary-color);
-  }
-
-  .nav_link.active {
-    color: var(--primary-color);
-    font-weight: 600;
-  }
-
-  .nav_link.active::after {
-    bottom: 18px;
-    left: 24px;
-    right: auto;
-    width: calc(100% - 48px);
-  }
   .header_right {
-    position: fixed;
-    bottom: 0;
-    left: 0;
     width: 100%;
-    background: #ffffff;
-    display: none;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 1px solid #e8e8e8;
-    padding: 16px 24px;
-    z-index: 1000;
-    box-sizing: border-box;
-    gap: 0;
+    justify-content: flex-end;
   }
 
-  .header_right.active {
-    display: flex;
+  .logo_img {
+    height: 50px;
+  }
+
+  .logo_text {
+    font-size: 20px;
+  }
+
+  .avatar_circle {
+    width: 50px;
+    height: 50px;
+    font-size: 14px;
+  }
+
+  .status_dot {
+    width: 15px;
+    height: 15px;
+  }
+
+  .profile_name {
+    font-size: 16px;
+  }
+
+  .user-dashboard-content {
+    height: auto;
+    padding: 30px 0;
+  }
+
+  .user-dashboard-contentleft1 h2 {
+    font-size: 30px;
+  }
+
+  .user-dashboard-contentleft1 p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .user-dashboard-contentright2 {
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  .user-dashboard-contentright2-left,
+  .user-dashboard-contentright2-middle,
+  .user-dashboard-contentright2-right {
+    width: 100%;
+    height: 120px;
+  }
+
+  .user-dashboard-contentright2-left p,
+  .user-dashboard-contentright2-middle p,
+  .user-dashboard-contentright2-right p {
+    font-size: 14px; /* Fixed from 1px to readable size */
+    margin-left: 20px;
+  }
+
+  .user-dashboard-contentright2-left h2,
+  .user-dashboard-contentright2-middle h2,
+  .user-dashboard-contentright2-right h2 {
+    font-size: 30px;
+    margin-left: 20px;
+  }
+
+  .user-dashboard-hero {
+    padding: 40px 0;
+    height: auto;
+  }
+
+  .user-dashboard-hero-wrapper {
+    width: 90%;
+    padding: 30px 20px;
+    text-align: center;
+  }
+
+  .user-dashboard-hero-wrapper h1 {
+    font-size: 20px;
+  }
+
+  .user-dashboard-hero-wrapper h5 {
+    font-size: 16px;
+    margin-bottom: 30px;
+    line-height: 1.6;
+  }
+
+  .user-dashboard-hero-wrapper h2 {
+    font-size: 18px;
   }
 }
+
+/* =========================
+   480px and below
+========================= */
+@media screen and (max-width: 480px) {
+  /* Aligns the 4 stats in a row exactly like your mobile layout image */
+  .user-dashboard-contentright2 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 10px !important;
+    width: 100%;
+    padding: 0 5px;
+  }
+
+  .user-dashboard-contentright2-left,
+  .user-dashboard-contentright2-middle,
+  .user-dashboard-contentright2-right,
+  .user-dashboard-contentright2-response { /* Fits all stats cards side by side */
+    width: 100% !important;
+    height: 75px !important;
+    background: transparent !important; /* Flat transparent backdrop matching image */
+    align-items: center !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  .user-dashboard-contentright2-left p,
+  .user-dashboard-contentright2-middle p,
+  .user-dashboard-contentright2-right p {
+    font-size: 11px !important;
+    color: #666 !important;
+    margin-left: 0 !important;
+    order: 2; /* Pushes the label below the value */
+    margin-top: 4px;
+  }
+
+  .user-dashboard-contentright2-left h2,
+  .user-dashboard-contentright2-middle h2,
+  .user-dashboard-contentright2-right h2 {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #111111 !important;
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+    order: 1;
+  }
+
+  /* Full wide action outline button style matching image */
+  .user-dashboard-hero-wrapper {
+    width: 95% !important;
+    background: #ffffff !important;
+    border: 1px solid #dcdde1 !important;
+    border-radius: 6px !important;
+    padding: 14px 20px !important;
+    height: auto !important;
+  }
+
+  /* Text segment style overrides matching the mobile about description info */
