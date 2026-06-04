@@ -30,29 +30,30 @@ const About = () => {
 
     <div className='aboutWrapper'>
         <div className='aboutWrapperleft'>
-        <div className="aboutWrapperHolder">
-          <p className='aboutWrapperleftTitle'>About Feastsync</p>
-          <p>Feastsync is a premium digital booking platform
+          <div className="aboutWrapperHolder">
+            <p className='aboutWrapperleftTitle'>About Feastsync</p>
+            <p>Feastsync is a premium digital booking platform
             connecting world-class event organisers with Nigeria's
             finest entertainment talent-backed by secure
             technology and build for trust
-          </p>
-        </div>
-      <div className='aboutWrapperleftside'>
+            </p>
+           </div>
 
-          <p className='aboutWrapperleftTitle'>Our story</p>
-          <p>Nigeria's entertainment industry is world-class.The talent
-            is undeniable.But for too long.event entertainers booking
-            has relied on informal networks.Unreliable middlemen and payment system that put both organisers and 
-            entertainers at risk.
-          </p>
-          <p>Developed by a specialized team from the seventh cohort
-          of The Curve Africa's tech trainee program, the platform 
-          replaces fragmented trust deficient booking processes
-          with a structure secured and fully digital ecosystem-
-          one where every transaction is protected, every profile is 
-          verified and every booking has a paper trail.
-          </p>
+            <div className='aboutWrapperleftside'>
+
+             <p className='aboutWrapperleftTitle'>Our story</p>
+             <p>Nigeria's entertainment industry is world-class.The talent
+              is undeniable.But for too long.event entertainers booking
+                has relied on informal networks.Unreliable middlemen and payment system that put both organisers and 
+              entertainers at risk.
+              </p>
+              <p>Developed by a specialized team from the seventh cohort
+                 of The Curve Africa's tech trainee program, the platform 
+               replaces fragmented trust deficient booking processes
+                with a structure secured and fully digital ecosystem-
+               one where every transaction is protected, every profile is 
+               verified and every booking has a paper trail.
+               </p>
         </div>
       </div>
       <div className='aboutWrapperRight'>
@@ -94,12 +95,12 @@ const About = () => {
       <div className='aboutValues'>
           
        <div className='aboutValuesText'>
-           <p><span style={{marginRight: "220px",fontSize: "22px"}}> <FaHandsHelping /> Trust</span>Every entertainer is KYC-verified.
+           <p><span style={{marginRight: "220px"}}> <FaHandsHelping /> Trust</span>Every entertainer is KYC-verified.
             Every payment is escrow-protected.
             Trust is not a feature-it is the foundation
             </p>
             <p>
-          <span style={{marginRight: "150px",fontSize: "22px"}}> <PiStarFour /> seamlessness</span>
+          <span style={{marginRight: "150px"}} > <PiStarFour /> seamlessness</span>
           From discovery to confermed booking in minutes.No back and forth calls.
             No waiting on a middleman to respond.       
              </p>
@@ -108,12 +109,12 @@ const About = () => {
              <img src="src/assets/About/party.jpg" alt="" className='row-spans-1-2'/>
              <div className='aboutValuesText'>
         <p>
-          <span style={{marginRight: "180px",fontSize: "22px"}}><TbTargetArrow /> Excellence</span>
+          <span style={{marginRight: "180px"}}><TbTargetArrow /> Excellence</span>
           We curate.not aggregate.Every entertainer on feastsync meets a professional standard
             before their profile goes live
           </p>
-          <p className='row-span-3-2'>
-          <span style={{marginRight: "160px",fontSize: "22px"}}><FaHandsHelping /> Transparency</span>
+          <p>
+          <span style={{marginRight: "160px"}}><FaHandsHelping /> Transparency</span>
           Transparent pricing.Milestone based
             payouts.Dispute resolution with a human touch.Fair both sides,always.
           </p>
@@ -143,9 +144,9 @@ const About = () => {
             feastsync.map((item, index)=>(
               <div key={index}>
                 <div className='aboutTeam'>
-                  <img src={item.image} alt="" />
+                  <div className='aboutImgHolder'><img src={item.image} alt="" /></div>
                 <div className='aboutTeamText'>
-                    <p>{item.name}</p>
+                    <p className='aboutName'>{item.name}</p>
                   <p>{item.stack}</p>
                 </div>
                 </div>

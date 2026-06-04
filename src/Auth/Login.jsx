@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import Swal from "sweetalert2";
-import Imp from "../Props/Imp";
+// import Swal from "sweetalert2";
+// import Imp from "../Props/Imp";
 import Button from "../Props/Button";
 import "./Css/Login.css";
 import HeeaderLogo from "../assets/logos/Headerlogo.png";

@@ -22,7 +22,9 @@ import VendorKYC from "./Auth/Vendor/VendorKYC.jsx";
 import Contact from "./Page/Contact.jsx";
 import UserSignUp from "./Auth/User/UserSignUp.jsx";
 import Userdashboard from "./Auth/User/Userdashboard.jsx";
-
+import GetStarted from"./Page/GetStarted";
+import About from "./Page/About.jsx"
+import Services from "./Page/Services.jsx";
 const App = () => {
   return (
     <BrowserRouter>
@@ -51,6 +53,9 @@ const App = () => {
         <Route path="/vendor/kyc" element={<VendorKYC />} />
         <Route path="/userdashboard" element={<Userdashboard />} />
         <Route path="/user/signup" element={<UserSignUp />} />
+        <Route path="getStarted" element={<GetStarted />}/>
+        <Route path="about" element={<About />}/>
+        <Route path="services" element={<Services />}/>
       </Routes>
     </BrowserRouter>
   );

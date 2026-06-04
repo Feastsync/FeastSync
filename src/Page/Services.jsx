@@ -14,7 +14,7 @@ const services = () => {
             World-class entertainment <br />
             for every kind of event.
           </p>
-          <p>
+          <p className='serviceDeliver'>
             from initimate birthday dinners to large-scale coperate galas, <br />
             feastsync connects you with verified entertainment <br />
             professionals who deliver excellence-everytime. 
@@ -40,11 +40,13 @@ const services = () => {
         </div>
       </div>
         
-    <div>
+    <div className='service'>
+      <p className='serviceQuote'>Our Services</p>
+
       <div className='serviceBooking'>
             <img src="src/assets/About/dj wirewire.png" alt="" />
             <div className='serviceInfo'>
-            <div>
+            <div className='serviceHolder'>
               <p className='serviceName'>DJ Booking</p>
               <p>Music . Performance</p>
             </div>
@@ -58,50 +60,53 @@ const services = () => {
             </div>
           </div>
 
-          <div className='serviceBooking'>
+          <div className='serviceBookingLeft'>
             <div className='serviceInfo'>
-            <div>
-              <p className='serviceName'>DJ Booking</p>
-              <p>Music . Performance</p>
+            <div className='serviceHolder'>
+              <p className='serviceName'>MC Booking</p>
+              <p>Host.Compere</p>
             </div>
             <div>
               <p className='serviceName'>WHAT'S INCLUDED</p>
-              <li>Professional sound system setup and breakdown</li>
-              <li>Pre-event consultation on music preference and vibe</li>
-              <li>Custom playlist curation for your event type</li>
-              <li>Live mixing across Afrobeats, Amapiano, R&B, Hip-hop, Dancehall, and more</li>
+              <li>Full event script consultation and programme coordination</li>
+              <li>Billingual hosting-English, yoruba, igbo, pidgin, or hausa</li>
+              <li>Guest engagement, games and crowd interaction where required</li>
+              <li>Coordination with DJ,band and event planner</li>
+              <li>Time management to keep event running on schedule</li>
             </div>
+
             </div>
              <img src="src/assets/About/host.png" alt="" />
           </div>
           <div className='serviceBooking'>
-            <img src="src/assets/About/dj wirewire.png" alt="" />
+            <img src="src/assets/About/mcs.png" alt="" />
             <div className='serviceInfo'>
-            <div>
-              <p className='serviceName'>DJ Booking</p>
-              <p>Music . Performance</p>
+            <div className='serviceHolder'>
+              <p className='serviceName'>Live Band Booking</p>
+              <p>Live music.Ensemble</p>
             </div>
             <div>
               <p className='serviceName'>WHAT'S INCLUDED</p>
-              <li>Professional sound system setup and breakdown</li>
-              <li>Pre-event consultation on music preference and vibe</li>
-              <li>Custom playlist curation for your event type</li>
-              <li>Live mixing across Afrobeats, Amapiano, R&B, Hip-hop, Dancehall, and more</li>
+              <li>Full band performance-depending on package</li>
+              <li>Pre-event song request and setlist consultation</li>
+              <li>Soundcheck and venue walkthrough before event start</li>
+              <li>Genre flexibility across Afrobeats, highlife, gospel and jazz</li>
             </div>
             </div>
           </div>
-                   <div className='serviceBooking'>
+                   <div className='serviceBookingLeft'>
             <div className='serviceInfo'>
-            <div>
-              <p className='serviceName'>DJ Booking</p>
-              <p>Music . Performance</p>
+            <div className='serviceHolder'>
+              <p className='serviceName'>Photography services</p>
+              <p>Event photograph</p>
             </div>
             <div>
               <p className='serviceName'>WHAT'S INCLUDED</p>
-              <li>Professional sound system setup and breakdown</li>
-              <li>Pre-event consultation on music preference and vibe</li>
-              <li>Custom playlist curation for your event type</li>
-              <li>Live mixing across Afrobeats, Amapiano, R&B, Hip-hop, Dancehall, and more</li>
+              <li>Full event coverage from setup to close</li>
+              <li>Professionally edited high-resolution image delivery</li>
+              <li>Online gallery with dowload access within 72 hours</li>
+              <li>Portrait sessions for couple, VIP guests, or key moments</li>
+              <li>Social media-optimized image set for some-day sharing</li>
             </div>
             </div>
              <img src="src/assets/About/photographer.png" alt="" />
@@ -110,23 +115,24 @@ const services = () => {
           <div className='serviceBooking'>
             <img src="src/assets/About/cameraman.png" alt="" />
             <div className='serviceInfo'>
-            <div>
-              <p className='serviceName'>DJ Booking</p>
-              <p>Music . Performance</p>
+            <div className='serviceHolder'>
+              <p className='serviceName'>Videography services</p>
+              <p>Event film.Highlight reels</p>
             </div>
             <div>
               <p className='serviceName'>WHAT'S INCLUDED</p>
-              <li>Professional sound system setup and breakdown</li>
-              <li>Pre-event consultation on music preference and vibe</li>
-              <li>Custom playlist curation for your event type</li>
-              <li>Live mixing across Afrobeats, Amapiano, R&B, Hip-hop, Dancehall, and more</li>
+              <li>Multi-camera full event coverage</li>
+              <li>Professionally color-graded highlight reel(3-5 minutes)</li>
+              <li>Full-length event film for archive and personal use</li>
+              <li>Instagrem and WhatsApp-optimised teaser cuts delivered within 48 hours</li>
+              <li>Drone coverage available as ad-on</li>
             </div>
             </div>
           </div>
         </div>
 
         <div className='serviceEntertainment'>
-          <div>
+          <div className='serviceHolder'>
             <p className='serviceCoperate'>Coporate Event Services</p>
             <p>Enterprise Brand events</p>
           </div>
@@ -142,18 +148,13 @@ const services = () => {
 
         <div  className='serviceEntertainment'>
           <div>
-            <p>Event Entertainment packages</p>
+            <p className='serviceCoperate'>Event Entertainment packages</p>
             <p>Bundle . Best value</p>
           </div>
         <div>
-            <p>Lorem ipsum dolor sit ame
-            t, consectetur adipisicing elit. 
-            Ipsum assumenda soluta suscipit et 
-            tempora quia facilis 
-            tempore voluptatem. Quod assumenda 
-            possimus repellat ipsam 
-            aliquid omnis animi aut
-            em sequi pariatur rerum?
+            <p>Why book seperately when you can have it all-perfectly coordinated?FeastSync's entertainment packages <br />
+               bundle top-tier vendors into seamless,pre-matched combinations that work together fro the first soundcheck <br />
+               to the last song.Book more, spend less and eliminate the coordination headache entirely.
             </p>
         </div>
          <Button btnText="Get Started" className="header_getstarted_btn" />
