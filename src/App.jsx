@@ -56,6 +56,7 @@ const App = () => {
         <Route path="getStarted" element={<GetStarted />}/>
         <Route path="about" element={<About />}/>
         <Route path="services" element={<Services />}/>
+        {/* <Route path="forgetPassword" element={<ForgetPassword />}/> */}
       </Routes>
     </BrowserRouter>
   );
