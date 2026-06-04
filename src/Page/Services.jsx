@@ -46,7 +46,7 @@ const services = () => {
       <div className='serviceBooking'>
             <img src="src/assets/About/dj wirewire.png" alt="" />
             <div className='serviceInfo'>
-            <div>
+            <div className='serviceHolder'>
               <p className='serviceName'>DJ Booking</p>
               <p>Music . Performance</p>
             </div>
@@ -60,9 +60,9 @@ const services = () => {
             </div>
           </div>
 
-          <div className='serviceBooking'>
+          <div className='serviceBookingLeft'>
             <div className='serviceInfo'>
-            <div>
+            <div className='serviceHolder'>
               <p className='serviceName'>MC Booking</p>
               <p>Host.Compere</p>
             </div>
@@ -74,13 +74,14 @@ const services = () => {
               <li>Coordination with DJ,band and event planner</li>
               <li>Time management to keep event running on schedule</li>
             </div>
+
             </div>
              <img src="src/assets/About/host.png" alt="" />
           </div>
           <div className='serviceBooking'>
             <img src="src/assets/About/mcs.png" alt="" />
             <div className='serviceInfo'>
-            <div>
+            <div className='serviceHolder'>
               <p className='serviceName'>Live Band Booking</p>
               <p>Live music.Ensemble</p>
             </div>
@@ -93,9 +94,9 @@ const services = () => {
             </div>
             </div>
           </div>
-                   <div className='serviceBooking'>
+                   <div className='serviceBookingLeft'>
             <div className='serviceInfo'>
-            <div>
+            <div className='serviceHolder'>
               <p className='serviceName'>Photography services</p>
               <p>Event photograph</p>
             </div>
@@ -114,7 +115,7 @@ const services = () => {
           <div className='serviceBooking'>
             <img src="src/assets/About/cameraman.png" alt="" />
             <div className='serviceInfo'>
-            <div>
+            <div className='serviceHolder'>
               <p className='serviceName'>Videography services</p>
               <p>Event film.Highlight reels</p>
             </div>
@@ -131,7 +132,7 @@ const services = () => {
         </div>
 
         <div className='serviceEntertainment'>
-          <div>
+          <div className='serviceHolder'>
             <p className='serviceCoperate'>Coporate Event Services</p>
             <p>Enterprise Brand events</p>
           </div>
