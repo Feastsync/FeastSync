@@ -7,7 +7,12 @@ import Headerlogo from '../assets/logos/Headerlogo.png'
 const GetStarted = () => {
   return (
     <div className='getStartedContainer'>
-        <img src={Headerlogo} alt="FeastSync Logo" className='logo_image' />
+
+              <div className='header_left'>
+                <img src={Headerlogo} alt="FeastSync Logo" className='logo_img' />
+                <h2 className='logo_text'>FeastSync</h2>
+              </div>
+     
       <p className='getStartedContainerText'>Create an account and get started with FeastSync</p>
       <p>Choose an account type</p>
       <div className='getStartedContainerBox'>
