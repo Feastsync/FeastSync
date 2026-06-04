@@ -1,0 +1,223 @@
+.vendormediagallery-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px 90px; 
+    background-color: #ffffff;
+    box-sizing: border-box;
+}
+
+.catalog-wrapper-section {
+    margin-bottom: 45px;
+}
+
+.gallery-small-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: #65636a;
+}
+
+.gallery-subtitle {
+    font-size: 13px;
+    font-weight: 500;
+    color: #312e38;
+    margin: 4px 0 16px 0;
+}
+
+.portfolio-white-card-box {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 32px;
+    border: 1px solid #f0f2f5;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.04);
+}
+
+.card-box-main-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1c1a22;
+    margin: 0 0 20px 0;
+}
+
+.gallery-grid-three-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.gallery-thumbnail-wrap {
+    width: 100%;
+    height: 180px;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #f7f7f8;
+}
+
+.gallery-thumbnail-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.showcase-wrapper-section {
+    margin-top: 10px;
+}
+
+.showcase-section-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1c1a22;
+    margin: 0 0 2px 0;
+}
+
+.showcase-section-subtitle {
+    font-size: 12px;
+    font-weight: 400;
+    color: #706e76;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.portfolio-grid-two-columns {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 40px;
+    row-gap: 32px;
+}
+
+.portfolio-detail-item-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.detail-card-image-wrap {
+    width: 100%;
+    height: 240px;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: #f7f7f8;
+    margin-bottom: 12px;
+}
+
+.detail-card-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.detail-card-info-content {
+    padding-left: 2px;
+}
+
+.detail-item-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #211e26;
+    margin: 0 0 4px 0;
+}
+
+.detail-item-metadata {
+    font-size: 13px;
+    font-weight: 400;
+    color: #727077;
+    margin: 0;
+}
+
+/* ==========================================
+   1️⃣ LAPTOP & TABLET LAYOUTS (max-width: 992px)
+   ========================================== */
+@media (max-width: 992px) {
+    .vendormediagallery-container {
+        padding: 20px 40px;
+    }
+    .gallery-thumbnail-wrap {
+        height: 140px;
+    }
+    .detail-card-image-wrap {
+        height: 200px;
+    }
+    .portfolio-grid-two-columns {
+        column-gap: 24px;
+        row-gap: 24px;
+    }
+}
+
+/* ==========================================
+   2️⃣ PORTRAIT TABLETS RESPONSIVENESS (max-width: 768px)
+   ========================================== */
+@media (max-width: 768px) {
+    .vendormediagallery-container {
+        padding: 20px;
+    }
+    
+    /* Stripped background box card padding elements matching mobile layout snapshots flat structure */
+    .portfolio-white-card-box {
+        padding: 0 !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+    
+    /* Configures both top and lower rows into an identical crisp 2-column layout mapping card structure */
+    .gallery-grid-three-columns,
+    .portfolio-grid-two-columns {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+    }
+    
+    .gallery-thumbnail-wrap {
+        height: 110px !important;
+        border-radius: 8px !important;
+    }
+    
+    .detail-card-image-wrap {
+        height: 110px !important;
+        border-radius: 8px !important;
+        margin-bottom: 8px !important;
+    }
+    
+    .detail-item-title {
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        margin-bottom: 2px !important;
+    }
+    
+    .detail-item-metadata {
+        font-size: 9px !important;
+        line-height: 1.3 !important;
+    }
+}
+
+/* ==========================================
+   3️⃣ 📱 SMALL SMARTPHONES CANVASES (max-width: 480px)
+   ========================================== */
+@media (max-width: 480px) {
+    .vendormediagallery-container {
+        padding: 15px 12px;
+    }
+    
+    .gallery-subtitle {
+        font-size: 12px;
+        margin-bottom: 12px;
+    }
+    
+    .card-box-main-title {
+        font-size: 16px;
+        margin-bottom: 14px;
+    }
+    
+    .gallery-grid-three-columns,
+    .portfolio-grid-two-columns {
+        gap: 10px !important;
+    }
+    
+    .gallery-thumbnail-wrap,
+    .detail-card-image-wrap {
+        height: 95px !important; /* Proportions the grid shapes perfectly for smaller handset viewports */
+    }
+    
+    .detail-card-info-content {
+        padding-left: 0;
+    }
+}

@@ -20,63 +20,31 @@ const Userdashboard = () => {
     <main className="user-dashboard-container">
       <nav className="header_container">
         <div className="header_wrapper">
-          <div className="header_left">
-            <img src={Headerlogo} alt="FeastSync Logo" className="logo_img" />
-            <h2 className="logo_text">FeastSync</h2>
+          
+          {/* Top Bar Wrapper: Contains Logo Left & Burger Menu Right on Mobile */}
+          <div className="header_top_row">
+            <div className="header_left">
+              <img src={Headerlogo} alt="FeastSync Logo" className="logo_img" />
+              <h2 className="logo_text">FeastSync</h2>
+            </div>
+
+            <div className="menu_icon" onClick={() => setIsOpen(!isOpen)}>
+              {isOpen ? <FaTimes /> : <FaBars />}
+            </div>
           </div>
 
-          <div className="menu_icon" onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <FaTimes /> : <FaBars />}
-          </div>
-
+          {/* Links navigation wrapper drawer block */}
           <div className={`header_middle ${isOpen ? "active" : ""}`}>
-            <NavLink
-              to="/"
-              className="nav_link"
-              onClick={() => setIsOpen(false)}
-              end
-            >
-              Home
-            </NavLink>
-            <NavLink
-              to="/about"
-              className="nav_link"
-              onClick={() => setIsOpen(false)}
-            >
-              About
-            </NavLink>
-            <NavLink
-              to="/howitworks"
-              className="nav_link"
-              onClick={() => setIsOpen(false)}
-            >
-              How it works
-            </NavLink>
-            <NavLink
-              to="/vendors"
-              className="nav_link"
-              onClick={() => setIsOpen(false)}
-            >
-              Vendors
-            </NavLink>
-            <NavLink
-              to="/services"
-              className="nav_link"
-              onClick={() => setIsOpen(false)}
-            >
-              Services
-            </NavLink>
-            <NavLink
-              to="/contact"
-              className="nav_link"
-              onClick={() => setIsOpen(false)}
-            >
-              Contact
-            </NavLink>
+            <NavLink to="/" className="nav_link" onClick={() => setIsOpen(false)} end>Home</NavLink>
+            <NavLink to="/about" className="nav_link" onClick={() => setIsOpen(false)}>About</NavLink>
+            <NavLink to="/howitworks" className="nav_link" onClick={() => setIsOpen(false)}>How it works</NavLink>
+            <NavLink to="/vendors" className="nav_link" onClick={() => setIsOpen(false)}>Vendors</NavLink>
+            <NavLink to="/services" className="nav_link" onClick={() => setIsOpen(false)}>Services</NavLink>
+            <NavLink to="/contact" className="nav_link" onClick={() => setIsOpen(false)}>Contact</NavLink>
           </div>
 
-          {/* Cleaned up header_right to display the user profile row */}
-          <div className={`header_right ${isOpen ? "active" : ""}`}>
+          {/* Sub-row banner layout containing the profile and notification bell */}
+          <div className="header_right">
             <div className="notification_wrapper">
               <img className="bell_icon" src={Bell} alt="Notification Bell" />
             </div>
@@ -89,14 +57,17 @@ const Userdashboard = () => {
               <span className="profile_name">Doyin Alade</span>
             </div>
           </div>
+
         </div>
       </nav>
+
+      {/* Main Panel Modules Structure */}
       <section className="user-dashboard-content">
         <section className="user-dashboard-wrapper1">
           <section className="user-dashboard-contentleft1">
             <h2>Welcome, Doyin</h2>
             <p>
-              Welcome back! Explore our vendors and start booking the <br />{" "}
+              Welcome back! Explore our vendors and start booking the <br /> 
               industry's best talent right now.
             </p>
           </section>
@@ -116,6 +87,7 @@ const Userdashboard = () => {
           </section>
         </section>
       </section>
+
       <section className="user-dashboard-hero">
         <section className="user-dashboard-hero-wrapper">
           <h1>No Upcoming Event</h1>

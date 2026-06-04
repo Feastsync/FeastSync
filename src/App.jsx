@@ -19,6 +19,7 @@ import ForgotPassword from "./Auth/ForgetPassword.jsx";
 import ResetPassword from "./Auth/ResetPassword.jsx";
 import VendorSignUp from "./Auth/Vendor/VedorSignUp.jsx";
 import VendorKYC from "./Auth/Vendor/VendorKYC.jsx";
+import Vendordashboard from "./Auth/Vendor/Vendordashboard.jsx"
 import Contact from "./Page/Contact.jsx";
 import UserSignUp from "./Auth/User/UserSignUp.jsx";
 import Userdashboard from "./Auth/User/Userdashboard.jsx";
@@ -51,6 +52,7 @@ const App = () => {
 
         <Route path="/vendor/signup" element={<VendorSignUp />} />
         <Route path="/vendor/kyc" element={<VendorKYC />} />
+        <Route path="/vendordashboard" element={<Vendordashboard />} />
         <Route path="/userdashboard" element={<Userdashboard />} />
         <Route path="/user/signup" element={<UserSignUp />} />
         <Route path="getStarted" element={<GetStarted />}/>

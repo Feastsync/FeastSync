@@ -326,3 +326,159 @@
     line-height: 1.6;
     animation: dropdown 0.3s ease;
 }
+
+/* ==========================================
+   DESKTOP RESPONSIVENESS (max-width: 1200px)
+   ========================================== */
+@media screen and (max-width: 1200px) {
+  .contact-content {
+    left: 15%;
+    width: 70%;
+  }
+  .contact-content h1 {
+    font-size: 2.8rem;
+  }
+  .contact-btn1-right h1 {
+    font-size: 24px;
+  }
+  .contact-btn1-right p {
+    font-size: 18px;
+  }
+  .faq-header, .faq-wrapper {
+    width: 90%;
+  }
+}
+
+/* ==========================================
+   TABLET RESPONSIVENESS (max-width: 768px)
+   ========================================== */
+@media screen and (max-width: 768px) {
+  .contact-section {
+    height: 45vh;
+  }
+  .contact-content {
+    left: 5%;
+    width: 90%;
+    text-align: center;
+  }
+  .contact-content h1 {
+    font-size: 2.2rem;
+  }
+  .contact-content p {
+    position: static;
+    font-size: 1.2rem;
+    margin-top: 10px;
+  }
+  
+  /* Stack the left (info cards) and right (form) layout fields */
+  .contact-info {
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 0;
+    gap: 30px;
+  }
+  .contact-info-left, .contact-info-right {
+    width: 90%;
+    height: auto;
+  }
+  .contact-infol-leftwrapper {
+    width: 100%;
+    height: auto;
+    padding: 24px 0;
+    margin-top: 0;
+    box-shadow: none;
+    background: transparent; /* Makes info cards render flat onto background like image */
+  }
+  .contact-info-btn1 {
+    width: 100%;
+    height: auto;
+    min-height: 90px;
+    padding: 15px;
+    margin: 10px 0;
+  }
+  .contact-btn1-right h1 {
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+  .contact-btn1-right p {
+    font-size: 15px;
+  }
+  
+  /* Neutralize desktop percentage-based heights to let form breathe */
+  .contact-info-rightwrapper {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    box-shadow: none;
+    background: transparent; /* Form card box matches baseline colors */
+  }
+  .contact-info-rightup, .contact-info-rightdown {
+    height: auto;
+    width: 100%;
+  }
+  .contact-info-rightup1, .contact-info-rightup2 {
+    flex-direction: column;
+    height: auto;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  .contact-rightup1-left, .contact-rightup1-right,
+  .contact-rightup2-left, .contact-rightup2-right {
+    width: 100%;
+    height: auto;
+  }
+  .contact-rightup1-left h1, .contact-rightup1-right h1,
+  .contact-rightup2-left h1, .contact-rightup2-right h1,
+  .contact-info-rightdown h1 {
+    font-size: 15px;
+    margin-bottom: 8px;
+    margin-left: 0;
+  }
+  .contact-rightup1-left input, .contact-rightup1-right input,
+  .contact-rightup2-left input, .contact-rightup2-right input {
+    width: 100%;
+    height: 48px;
+    font-size: 15px;
+    border-radius: 6px;
+    border: 1px solid #D1D5DC;
+  }
+  .contact-rightdown-text {
+    width: 100%;
+    height: 140px;
+    font-size: 15px;
+    padding: 12px;
+    border: 1px solid #D1D5DC;
+    border-radius: 6px;
+    margin-bottom: 20px;
+  }
+  .contact-info-rightdown-btn {
+    height: 50px;
+    font-size: 16px;
+    border-radius: 6px;
+  }
+  
+  .faq-section {
+    padding: 50px 0;
+  }
+  .faq-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .faq-header h1 {
+    font-size: 2rem;
+  }
+  .faq-header p {
+    font-size: 1.1rem;
+  }
+  .faq-question {
+    min-height: 65px;
+  }
+  .faq-question h3 {
+    font-size: 1.1rem;
+  }
+  .faq-answer {
+    font-size: 15px;
+  }
+}
+

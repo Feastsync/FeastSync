@@ -181,3 +181,152 @@
   height: 100%;
   object-fit: cover;
 }
+
+/* ==========================================================
+   1️⃣ LAPTOPS & SMALL DESKTOPS RESPONSIVENESS (max-width: 1200px)
+   ========================================================== */
+@media screen and (max-width: 1200px) {
+  .steps-wrapper {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for tablet/laptop sizing */
+    gap: 30px;
+    padding: 0 10px;
+  }
+  .hero-title {
+    font-size: 34px; /* Balanced down from 36px to prevent line overflows */
+  }
+  .hero-findbook2 p {
+    font-size: 19px;
+    max-width: 750px;
+  }
+}
+
+/* ==========================================================
+   2️⃣ TABLETS & PORTRAIT PHONES RESPONSIVENESS (max-width: 768px)
+   ========================================================== */
+@media screen and (max-width: 768px) {
+  .hero-section {
+    height: auto;
+    min-height: 65vh; /* Gives the background image cleaner bounds on tablets */
+    display: flex;
+    align-items: center;
+    padding: 50px 0;
+  }
+  .hero-content {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    padding: 0 30px;
+  }
+  .hero-title {
+    font-size: 32px;
+  }
+  .hero-description {
+    font-size: 1rem;
+  }
+  .step-container {
+    gap: 15px;
+    padding: 15px;
+  }
+  .step-btn {
+    flex: none;
+    width: 100%;
+    max-width: 100%;
+    height: 60px;
+    font-size: 16px;
+  }
+  .circle-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  .hero-findbook {
+    padding: 50px 20px;
+  }
+  .hero-findbook1 h2 {
+    font-size: 26px;
+  }
+  .hero-findbook2 p {
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  .steps-section {
+    padding: 40px 20px;
+  }
+  .steps-wrapper {
+    grid-template-columns: 1fr; /* Drops down to full wide single row stacking */
+    gap: 30px;
+  }
+  .step-card {
+    min-height: auto;
+    padding: 30px 25px;
+  }
+  .step-illustration {
+    max-width: 260px; /* Scales down image container to save vertical viewport scroll space */
+  }
+}
+
+/* ==========================================================
+   3️⃣ SMALL MOBILE DEVICES RESPONSIVENESS (max-width: 480px)
+   ========================================================== */
+@media screen and (max-width: 480px) {
+  .hero-section {
+    min-height: 55vh;
+    padding: 40px 0;
+  }
+  .hero-content {
+    padding: 0 20px;
+  }
+  .hero-title {
+    font-size: 26px;
+    margin-bottom: 12px;
+  }
+  .hero-description {
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+  .step-container {
+    gap: 10px;
+    padding: 12px;
+  }
+  .step-btn {
+    height: 55px;
+    font-size: 15px;
+    padding: 0 15px;
+    gap: 12px;
+  }
+  .circle-icon {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+  .hero-findbook {
+    padding: 40px 15px;
+  }
+  .hero-findbook1 h2 {
+    font-size: 22px;
+    line-height: 1.3;
+  }
+  .hero-findbook2 p {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .steps-section {
+    padding: 30px 15px;
+  }
+  .step-card {
+    padding: 20px 15px;
+  }
+  .step-title {
+    font-size: 19px;
+    margin-bottom: 8px;
+  }
+  .step-description {
+    font-size: 14.5px;
+    line-height: 1.4;
+  }
+  .step-illustration {
+    max-width: 220px;
+  }
+}
