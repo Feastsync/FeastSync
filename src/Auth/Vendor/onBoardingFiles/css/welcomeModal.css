@@ -12,7 +12,7 @@
 }
 .welcome-overlay {
   position: fixed;
-  z-index: 99999;  /* ← this is critical */
+  z-index: 99999; 
 }
 
 .welcome-card {
