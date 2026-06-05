@@ -20,7 +20,7 @@ const Header = () => {
     <nav className='feastHeader_container'>
       <div className='feastHeader_wrapper'>
         <div className='feastHeader_left'>
-          <img src={Headerlogo} alt="FeastSync Logo" className='feastHeader_logoImg' />
+          <img onClick={()=> Nav('/')} src={Headerlogo} alt="FeastSync Logo" className='feastHeader_logoImg' />
           <h2 className='feastHeader_logoText'>FeastSync</h2>
         </div>
 
