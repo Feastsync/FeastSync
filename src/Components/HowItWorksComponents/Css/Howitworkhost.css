@@ -255,7 +255,7 @@
     padding: 40px 20px;
   }
   .steps-wrapper {
-    grid-template-columns: 1fr; /* Drops down to full wide single row stacking */
+    grid-template-columns: 1fr;
     gap: 30px;
   }
   .step-card {
@@ -267,9 +267,7 @@
   }
 }
 
-/* ==========================================================
-   3️⃣ SMALL MOBILE DEVICES RESPONSIVENESS (max-width: 480px)
-   ========================================================== */
+
 @media screen and (max-width: 480px) {
   .hero-section {
     min-height: 55vh;
