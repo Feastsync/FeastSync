@@ -1,10 +1,9 @@
 import React from 'react'
-import "./css/WelcomeModal.css"
 
 const WelcomeModal = () => {
   return (
     <div>
-ghhjg
+car
     </div>
   )
 }
