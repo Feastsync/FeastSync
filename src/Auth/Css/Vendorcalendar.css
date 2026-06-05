@@ -219,28 +219,25 @@
   color: #ffffff;
 }
 
-/* ==========================================
-   1️⃣ TABLET & RESPONSIVENESS OVERRIDES
-   ========================================== */
 @media (max-width: 720px) {
   .vendor-calendar-wrap {
     padding-inline: 12px;
   }
 
   .vendor-calendar-card {
-    width: min(100%, 410px); /* Restricts card growth layout slightly on tablet */
+    width: min(100%, 410px); 
     min-height: auto;
   }
 
   .vendor-calendar-header {
     width: calc(100% - 16px);
-    height: 125px; /* Boosted layout slightly from 82px to maintain vertical balance */
+    height: 125px; 
     margin-top: 8px;
     padding: 16px 20px 12px;
   }
 
   .vendor-calendar-title-row h2 {
-    font-size: 14px; /* Fixed from 10px to match standard reading bounds */
+    font-size: 14px; 
   }
 
   .vendor-calendar-close {
@@ -251,12 +248,12 @@
 
   .vendor-calendar-legend {
     gap: 16px;
-    margin-top: 35px; /* Generates clean spacing below month controls line */
+    margin-top: 35px; 
   }
 
   .vendor-calendar-legend-item {
     gap: 8px;
-    font-size: 11px; /* Changed from 5.5px to look exactly like text labels in screenshot */
+    font-size: 11px;
   }
 
   .vendor-calendar-swatch {
@@ -290,28 +287,25 @@
   }
 
   .react-calendar__month-view__weekdays abbr {
-    font-size: 11px; /* Fixed from 5.5px to maintain layout readability */
+    font-size: 11px; 
   }
 
   .react-calendar__month-view__days {
-    row-gap: 14px; /* Fixed from 7px */
+    row-gap: 14px; 
   }
 
   .react-calendar__tile {
-    height: 28px; /* Restructured grid tracking dimensions */
-    font-size: 11px; /* Fixed from 5.8px */
+    height: 28px;
+    font-size: 11px; 
   }
 
-  /* Uses fluid percentage width constraints to fit capsule pill outlines cleanly */
+ 
   .react-calendar__tile abbr {
     width: 85%; 
     height: 28px;
   }
 }
 
-/* ==========================================
-   2️⃣ 📱 PHONE OVERRIDES (max-width: 460px)
-   ========================================== */
 @media (max-width: 460px) {
   .vendor-calendar-wrap {
     padding-inline: 10px;
@@ -319,7 +313,7 @@
   }
 
   .vendor-calendar-card {
-    border-radius: 12px; /* Smooth rounded corners on mobile layout snapshots */
+    border-radius: 12px;
   }
 
   .vendor-calendar-header {
@@ -356,7 +350,7 @@
   }
 
   .react-calendar__tile abbr {
-    width: 80%; /* Contracts capsule shape slightly for tight mobile viewports */
+    width: 80%; 
     height: 26px;
     border-radius: 6px;
   }
