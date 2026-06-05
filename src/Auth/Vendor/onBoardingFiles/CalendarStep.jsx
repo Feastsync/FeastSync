@@ -24,7 +24,7 @@ const CalendarStep = ({ onNext, onBack }) => {
           <p className="cs-subtitle">Configure when you're available for bookings</p>
           
           <div className="cs-calendar-placeholder">
-            <p>Calendar component goes here</p>
+            <p>Calendar</p>
             <span>Mark unavailable dates and set working hours</span>
           </div>
         </div>

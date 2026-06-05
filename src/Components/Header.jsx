@@ -40,7 +40,7 @@ const Header = () => {
           <Button
             btnText="Get Started"
             className="feastHeader_getstartedBtn"
-            onClick={() => { Nav('/signup'); closeMenu(); }}
+            onClick={() => { Nav('/onboarding'); closeMenu(); }}
           />
         </div>
 

@@ -8,6 +8,7 @@ import Button from "../../Props/Button";
 import "../Css/VendorSignUp.css";
 import FeastLogo from "../../assets/logos/Headerlogo.png";
 import GoogleLogo from "../../assets/logos/GoogleLogo.png"
+import signup from "../../assets/BackgroundImage/SignUP.jpeg"
 
 const EmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -248,7 +249,7 @@ const VendorSignUp = () => {
         </div>
 
         <div className="vr-right">
-          <img src="https://img.freepik.com/free-vector/sign-up-concept-illustration_114360-7865.jpg" alt="Sign up" />
+          <img src={signup} alt="Sign up" />
         </div>
       </div>
     </div>

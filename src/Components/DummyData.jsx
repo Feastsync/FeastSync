@@ -12,7 +12,8 @@ import savings from '../assets/logos/savings.png'
 import budget from '../assets/logos/budget.png'
 import contract from '../assets/logos/contract.png'
 import tracking from '../assets/logos/tracking.png'
-
+import Bell from "../assets/logos/Bell.png"
+// import calender from "../assets/logos/calender.png"
 export const dummyVendors = [
   { id: 1, name: "DjReason", location: "Lagos, Nigeria", rating: 4, price: 500000, image: DjTessco },
   { id: 2, name: "Mc_Mo", location: "Lagos, Nigeria", rating: 4, price: 500000, image: DjTessco },
@@ -327,7 +328,7 @@ export const allNotifications = [
     time: "2 hours ago",
     date: "2026-06-04T10:30:00",
     read: false,
-    icon: "💰",
+    icon: savings,
     category: "wallet",
     bookingId: "FS-2026-0604-001"
   },
@@ -339,7 +340,7 @@ export const allNotifications = [
     time: "5 hours ago",
     date: "2026-06-04T07:45:00",
     read: false,
-    icon: "📅",
+    icon: calender,
     category: "bookings",
     bookingId: "FS-2026-0615-002"
   },
@@ -351,7 +352,7 @@ export const allNotifications = [
     time: "1 day ago",
     date: "2026-06-03T16:20:00",
     read: true,
-    icon: "🔓",
+    icon: payout,
     category: "wallet",
     bookingId: "FS-2026-0520-006"
   },
@@ -363,7 +364,7 @@ export const allNotifications = [
     time: "2 days ago",
     date: "2026-06-03T14:15:00",
     read: true,
-    icon: "✅",
+    icon: savings,
     category: "wallet",
     bookingId: "FS-WD-0603-002"
   },
@@ -375,7 +376,7 @@ export const allNotifications = [
     time: "3 days ago",
     date: "2026-06-01T11:30:00",
     read: true,
-    icon: "⭐",
+    icon: verified,
     category: "reviews",
     bookingId: "FS-2026-0528-004"
   },
@@ -387,7 +388,7 @@ export const allNotifications = [
     time: "4 days ago",
     date: "2026-05-31T09:00:00",
     read: true,
-    icon: "🔔",
+    icon:Bell,
     category: "bookings",
     bookingId: "FS-2026-0604-001"
   },
@@ -399,7 +400,7 @@ export const allNotifications = [
     time: "1 week ago",
     date: "2026-05-25T11:10:00",
     read: true,
-    icon: "↩️",
+    icon: "../assets/logos/budget.png",
     category: "wallet",
     bookingId: "FS-RF-0525-005"
   },
@@ -411,7 +412,7 @@ export const allNotifications = [
     time: "2 weeks ago",
     date: "2026-05-20T15:00:00",
     read: true,
-    icon: "📋",
+    icon: calender,
     category: "bookings",
     bookingId: "FS-2026-0528-004"
   }

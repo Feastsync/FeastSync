@@ -34,7 +34,7 @@ const HomeHero = () => {
 
         <div className="home_hero_actions">
           <Button onClick={() => navigate('/onboarding')} className="btn_purple" btnText="Get Started" />
-          <Button className="btn_outline" btnText="Explore the vendors" />
+          <Button onClick={() => navigate('/vendors')}  className="btn_outline" btnText="Explore the vendors" />
         </div>
       </div>
 
