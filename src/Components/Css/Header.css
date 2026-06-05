@@ -145,30 +145,30 @@
 }
 
 @media (max-width: 768px) {
- .feastHeader_container {
+  .feastHeader_container {
     height: 60px;
   }
 
- .feastHeader_wrapper {
+  .feastHeader_wrapper {
     justify-content: space-between;
   }
 
- .feastHeader_logoImg {
+  .feastHeader_logoImg {
     height: 36px;
   }
 
- .feastHeader_logoText {
+  .feastHeader_logoText {
     font-size: 18px;
   }
 
- .feastHeader_menuIcon {
+  .feastHeader_menuIcon {
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1002;
   }
 
- .feastHeader_middle {
+  .feastHeader_middle {
     position: fixed;
     top: 60px;
     left: 0;
@@ -186,8 +186,8 @@
     overflow-y: auto;
   }
 
- .feastHeader_middle.active {
+  .feastHeader_middle.active {
     transform: translateX(0);
   }
-
- .feastHeader_nav
+}
+/* .feastHeader_nav */
