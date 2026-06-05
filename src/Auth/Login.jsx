@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
-import Imp from "../Props/Imp";
+import Input from "../Props/Imp";
 import Button from "../Props/Button";
 import VendorOnboarding from "./Vendor/onBoardingFiles/VendorOnboarding.jsx";
 import "./Css/Login.css";
