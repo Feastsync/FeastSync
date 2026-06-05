@@ -1,5 +1,5 @@
 import React from "react";
-import "../Page/Css/Services.css"
+import "./Css/Services.css";
 import Header from "../Components/Header";
 import Button from "../Props/Button";
 import Footer from "../Components/Footer";
@@ -45,7 +45,7 @@ const services = () => {
         <p className="serviceQuote">Our Services</p>
 
         <div className="serviceBooking">
-           <img src="../assets/About/dj wirewire.png" alt="DJ Booking" />
+          <img src="../assets/About/dj wirewire.png" alt="DJ Booking" />
           <div className="serviceInfo">
             <div className="serviceHolder">
               <p className="serviceName">DJ Booking</p>
