@@ -26,6 +26,10 @@ import Userdashboard from "./Auth/User/Userdashboard.jsx";
 import GetStarted from"./Page/GetStarted";
 import About from "./Page/About.jsx"
 import Services from "./Page/Services.jsx";
+import VendorOnboarding from "./Auth/Vendor/onBoardingFiles/VendorOnboarding.jsx";
+import WalletLedger from "./Page/Wallet/WalletLedger.jsx"
+import VendorWallet from "./Page/Wallet/VendorWallet.jsx";
+import AllNotifications from "./Page/NotitficationsPages/AllNotifications.jsx";
 const App = () => {
   return (
     <BrowserRouter>
@@ -47,6 +51,7 @@ const App = () => {
         <Route path="/onboarding" element={<OnBoarding />} />
         <Route path="/login" element={<Login />} />
         <Route path="/verify-otp" element={<OTP />} />
+         <Route path="/vendor/onboarding" element={<VendorOnboarding />} /> 
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 
@@ -58,7 +63,13 @@ const App = () => {
         <Route path="getStarted" element={<GetStarted />}/>
         <Route path="about" element={<About />}/>
         <Route path="services" element={<Services />}/>
-        {/* <Route path="forgetPassword" element={<ForgetPassword />}/> */}
+
+        
+       <Route path="/wallet/transactions" element={<VendorWallet />} />
+       <Route path="/transaction/histories" element={<WalletLedger />} />
+       {/* <Route path="/transaction/histories" element={<WalletLedger />} /> */}
+
+       <Route path="/notifications/:category?" element={<AllNotifications />} />
       </Routes>
     </BrowserRouter>
   );

@@ -8,6 +8,7 @@ import Yorubamancarryhisbride from "../../assets/logos/Yorubamancarryhisbride.jp
 import Coupleonthedancefloor from "../../assets/logos/Coupleonthedancefloor.jpg";
 
 const Vendormediagallery = () => {
+  
   const mediaGalleryImages = [
     Womanwithmic, 
     Hausamanandwoman, 

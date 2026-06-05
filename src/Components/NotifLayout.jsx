@@ -26,7 +26,7 @@ export default function NotifLayout({ notifications, currentPage, totalPages, on
      
       <div className="notif-header">
         <div className="notif-header-left">
-          <button className="notif-back-btn" onClick={() => navigate(-1)}>
+          <button className="notif-back-btn" onClick={() => navigate("/vendordashboard")}>
             <span>←</span> Back
           </button>
           <div>

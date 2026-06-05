@@ -1,13 +1,14 @@
 import React, { useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "antd";
 import "./Css/OTP.css";
 import FeastLogo from "../assets/logos/Headerlogo.png";
 import Button from "../Props/Button.jsx";
 import { IoArrowBack } from "react-icons/io5";
+// import Imp from "../Props/Imp.jsx";
 const OTPVerification = () => {
   const inputs = useRef([]);
-
+  const Navigate = useNavigate();
   const handleInput = (e, index) => {
     const val = e.target.value;
     if (val.length === 1 && index < 3) {
@@ -53,7 +54,9 @@ const OTPVerification = () => {
             ))}
           </div>
 
-          <Button className="otp-verify-btn">Verify OTP</Button>
+          <Button onClick={() => Navigate("/login")} className="otp-verify-btn">
+            Verify OTP
+          </Button>
           <p className="otp-resend">Didn't receive the code? <span>Resend</span></p>
         </div>
 

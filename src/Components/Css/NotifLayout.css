@@ -12,11 +12,7 @@
 }
 
 
-/* body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  color: var(--text-color);
-  background: var(--white);
-} */
+
 
 .notif-page {
   max-width: 1200px;
@@ -114,6 +110,7 @@
 
 .notif-markread-btn:hover {
   background: var(--background-color);
+  
 }
 
 .notif-check {
@@ -141,7 +138,7 @@
 }
 
 .notif-tab:hover {
-  color: var(--text-color);
+  /* color: var(--text-color); */
 }
 
 .notif-tab--active {
