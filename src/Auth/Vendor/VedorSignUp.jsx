@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-// import Swal from "sweetalert2";
-// import Input from "../../Props/Ip";
+import Swal from "sweetalert2";
+import Input from "../../Props/Input";
 import Button from "../../Props/Button";
 import "../Css/VendorSignUp.css";
 import FeastLogo from "../../assets/logos/Headerlogo.png";
