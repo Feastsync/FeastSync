@@ -63,7 +63,7 @@ const ResetPassword = () => {
                   <section>
                      <label htmlFor=""> Reset Password</label>
                    <div>
-                     <input type={showConfirm ? "text" : "Confirm password"}
+                     <input type={showConfirm ? "text" : "password"}
                            name="" id="" 
                            placeholder='Enter your password'
                            value={confirmPassword}

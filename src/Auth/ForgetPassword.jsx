@@ -3,8 +3,10 @@ import Headerlogo from '../assets/logos/Headerlogo.png'
 import Button from '../Props/Button'
 import { FaArrowLeft } from "react-icons/fa6";
 import "../Auth/Css/ForgotPassword.css"
-import axios from 'axios';
+
 const ForgetPassword = () => {
+  const [email, setEmail] = useState("");
+
   return (
     <div>
          <div className='forgotPasswordLogo'>
@@ -41,7 +43,7 @@ const ForgetPassword = () => {
                   </div>
                 </div>
                 <div className='forgotPasswordImage'>
-                  <img src="src/assets/logos/Icon.png" alt="" />
+                  <img src="../assets/logos/Icon.png" alt="Forgot Password Icon" />
                 </div>
               </div>
     </div>

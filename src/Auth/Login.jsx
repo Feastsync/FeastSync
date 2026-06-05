@@ -1,18 +1,22 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-// import Swal from "sweetalert2";
-// import Imp from "../Props/Imp";
+import Swal from "sweetalert2";
+import Imp from "../Props/Imp";
 import Button from "../Props/Button";
+import VendorOnboarding from "./Vendor/onBoardingFiles/VendorOnboarding.jsx";
 import "./Css/Login.css";
 import HeeaderLogo from "../assets/logos/Headerlogo.png";
+import signup from "../assets/BackgroundImage/SignUP.jpeg"
 
 const EmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const Login = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = useState("user");
   const [isLoading, setIsLoading] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false); // <-- Add thi
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
   const [EmailErrorMsg, setEmailErrorMsg] = useState({
     err: false,
@@ -100,7 +104,17 @@ const Login = () => {
       return;
     }
 
-    // console.log("Submitting:", { ...userInfo, role });
+    // No API yet - just show onboarding for vendors
+    if (role === "vendor") {
+      setShowOnboarding(true); // <-- Show modal instead of navigate
+    } else {
+      navigate("/userdashboard");
+    }
+  };
+
+  const handleOnboardingClose = () => {
+    setShowOnboarding(false);
+    navigate("/vendordashboard"); // Go to dashboard after completing/skipping
   };
 
   return (
@@ -123,7 +137,7 @@ const Login = () => {
 
           <div className="vl-field-group">
             <label className="vl-label">Enter email</label>
-            <Imp
+            <Input
               type="email"
               placeholder="Your email address"
               value={userInfo.email}
@@ -138,7 +152,7 @@ const Login = () => {
           <div className="vl-field-group">
             <label className="vl-label">Password</label>
             <div className="vl-password-wrap">
-              <Imp
+              <Input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 value={userInfo.password}
@@ -179,14 +193,6 @@ const Login = () => {
                   checked={role === "client"}
                   onChange={() => setRole("client")}
                   className="vl-checkbox"
-                  onBlur={() => {
-                    if (role === "") {
-                      setRole("user");
-                    } else if (role === "vendor") {
-                      setRole("vendor");
-                    } else {
-                      setRole("client");
-                    } }}  
                 />
                 <span className="vl-role-label">Client/User</span>
               </label>
@@ -211,7 +217,12 @@ const Login = () => {
         </div>
       </div>
 
-      <div className="vl-right"></div>
+      <img className="vl-right" src="" alt="" />
+
+      <VendorOnboarding
+        isOpen={showOnboarding}
+        onClose={handleOnboardingClose}
+      />
     </div>
   );
 };

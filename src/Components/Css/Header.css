@@ -1,4 +1,4 @@
-.header_container {
+.feastHeader_container {
   width: 100%;
   height: 13vh;
   display: flex;
@@ -7,41 +7,48 @@
   background-color: #ffffff;
   border-bottom: 1px solid #f0f0f0;
   box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 999;
 }
 
-.header_wrapper {
+.feastHeader_wrapper {
   width: 90%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 20px;
 }
 
-.header_left {
+.feastHeader_left {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
 }
 
-.logo_img {
+.feastHeader_logoImg {
   height: 70px;
   object-fit: contain;
 }
 
-.logo_text {
+.feastHeader_logoText {
   color: var(--secondary-color);
   font-size: 25px;
   font-weight: 600;
 }
 
-.header_middle {
+.feastHeader_middle {
   display: flex;
   align-items: center;
   gap: 15px;
   height: 100%;
+  flex: 1;
+  justify-content: center;
 }
 
-.nav_link {
+.feastHeader_navLink {
   text-decoration: none;
   color: var(--primary-color);
   font-size: 18px;
@@ -57,18 +64,18 @@
   box-sizing: border-box;
 }
 
-.nav_link:hover {
+.feastHeader_navLink:hover {
   background-color: #a281be;
   color: #ffffff;
 }
 
-.nav_link.active {
+.feastHeader_navLink.active {
   font-weight: 600;
   background-color: transparent;
   color: var(--primary-color);
 }
 
-.nav_link.active::after {
+.feastHeader_navLink.active::after {
   content: "";
   position: absolute;
   bottom: 3px;
@@ -79,163 +86,108 @@
   border-radius: 2px;
 }
 
-.nav_link.active:hover {
+.feastHeader_navLink.active:hover {
   background-color: #a281be;
   color: #ffffff;
 }
 
-.nav_link.active:hover::after {
+.feastHeader_navLink.active:hover::after {
   background-color: white;
 }
 
-.header_right {
+.feastHeader_right {
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: 20px;
+  flex-shrink: 0;
 }
 
-.header_login {
+.feastHeader_login {
   color: var(--secondary-color);
-  font-size: 20px;
+  font-size: 22px;
+  font-weight: 600;
   display: flex;
   align-items: center;
   cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
 }
 
-.header_login:hover {
-  font-weight: bold;
+.feastHeader_login:hover {
+  color: var(--secondary-color);
+  font-weight: 600;
 }
 
-.header_getstarted_btn {
+.feastHeader_getstartedBtn {
   background-color: var(--primary-color);
   color: #ffffff;
   height: 55px;
-  padding: 8px 16px;
+  padding: 8px 24px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 500;
 }
 
-.header_getstarted_btn:hover {
+.feastHeader_getstartedBtn:hover {
   background-color: white;
   border: 1px solid var(--primary-color);
   color: var(--primary-color);
-  font-weight: 30px;
+  font-weight: 600;
 }
 
-.menu_icon {
+.feastHeader_menuIcon {
   display: none;
   font-size: 28px;
   cursor: pointer;
   color: var(--primary-color);
+  flex-shrink: 0;
 }
 
-
 @media (max-width: 768px) {
-
-  .header_container {
+  .feastHeader_container {
     height: 60px;
   }
 
-  .logo_img {
-    height: 40px;
+  .feastHeader_wrapper {
+    justify-content: space-between;
   }
 
-  .logo_text {
+  .feastHeader_logoImg {
+    height: 36px;
+  }
+
+  .feastHeader_logoText {
     font-size: 18px;
   }
 
-  .menu_icon {
+  .feastHeader_menuIcon {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1001;
+    z-index: 1002;
   }
 
-  .header_middle {
+  .feastHeader_middle {
     position: fixed;
     top: 60px;
     left: 0;
     width: 100%;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 60px - 90px);
     background-color: #ffffff;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     justify-content: flex-start;
     gap: 0;
     padding: 0;
     transform: translateX(-100%);
     transition: transform 0.3s ease;
     z-index: 1000;
-    display: flex;
+    overflow-y: auto;
   }
 
-  .header_middle.active {
+  .feastHeader_middle.active {
     transform: translateX(0);
   }
-
-  .nav_link {
-    width: 100%;
-    padding: 20px 24px;
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--primary-color);
-    border-bottom: 1px solid #e8e8e8;
-    border-radius: 0;
-    height: auto;
-    justify-content: flex-start;
-    box-sizing: border-box;
-  }
-
-  .nav_link:hover {
-    background-color: transparent;
-    color: var(--primary-color);
-  }
-
-  .nav_link.active {
-    color: var(--primary-color);
-    font-weight: 600;
-  }
-
-  .nav_link.active::after {
-    bottom: 18px;
-    left: 24px;
-    right: auto;
-    width: calc(100% - 48px);
-  }
-  .header_right {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #ffffff;
-    display: none;
-    flex-direction: row;
-    align-items: center;
-    gap: 0;
-    border-top: 1px solid #e8e8e8;
-    padding: 16px 24px;
-    z-index: 1000;
-    box-sizing: border-box;
-  }
-
-  .header_right.active {
-    display: flex;
-  }
-
-  .header_getstarted_btn {
-    flex: 1;
-    height: 50px;
-    font-size: 16px;
-    margin-right: 12px;
-  }
-
-  .header_login {
-    flex: 1;
-    text-align: center;
-    font-size: 18px;
-    color: var(--secondary-color);
-    border: 1px solid #e8e8e8;
-    padding: 14px 0;
-    border-radius: 8px;
-    justify-content: center;
-  }
-
 }
+/* .feastHeader_nav */

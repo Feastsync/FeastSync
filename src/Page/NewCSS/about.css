@@ -1,0 +1,420 @@
+.about-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.aboutContainer {
+  height: 90vh;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  padding-left: 100px;
+  background-image: url("../../assets/BackgroundImage/8644f49ca66594465885d8daad5f829d0ff32ee3.png");
+}
+.about {
+  font-size: 20px;
+  line-height: 30px;
+}
+.aboutContainer1 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.aboutInfo {
+  font-size: 50px;
+  font-weight: bold;
+  line-height: 56px;
+}
+.aboutWrapper {
+  display: flex;
+  gap: 70px;
+  padding-left: 50px;
+  padding-right: 20px;
+}
+
+.aboutWrapperRight {
+  display: grid;
+  grid-template-columns: repeat(3, 250px);
+  grid-template-rows: 200px 250px;
+  column-gap: 10px;
+  row-gap: 30px;
+}
+.aboutWrapperRight img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.aboutWrapperleft {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  line-height: 25px;
+}
+.aboutWrapperHolder {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.aboutWrapperleftside {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.aboutWrapperleftTitle {
+  font-size: 40px;
+  font-weight: bold;
+}
+.row-span-1-2 {
+  grid-column: 1;
+  grid-row: 1 / span-2;
+  object-position: 80%;
+}
+.row-span-3-2 {
+  grid-column: 3;
+  grid-row: 1 / span-2;
+  object-position: 50%;
+}
+
+.row-span-2-2 {
+  grid-column: 2;
+  grid-row: 2 / span-2;
+  object-position: 50%;
+}
+.aboutMission {
+  display: flex;
+  gap: 80px;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+    180deg,
+    #0a0015 0%,
+    #0b0017 8.33%,
+    #0d0119 16.67%,
+    #0e011b 25%,
+    #0f021d 33.33%,
+    #11021f 41.67%,
+    #120321 50%,
+    #130423 58.33%,
+    #150525 66.67%,
+    #160628 75%,
+    #17072a 83.33%,
+    #19092c 91.67%,
+    #1a0a2e 100%
+  );
+}
+.aboutMission div {
+  width: 25vw;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.missionQuote {
+  font-size: 30px;
+  font-weight: 550px;
+  text-align: start;
+  margin-right: 180px;
+}
+.aboutMission div p {
+  color: white;
+  line-height: 30px;
+}
+
+.aboutValuesBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.aboutValues {
+  display: flex;
+  gap: 50px;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.aboutValuesText {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+.aboutValues img {
+  width: 30%;
+  height: 75vh;
+  border-radius: 10px;
+}
+.aboutValues p {
+  width: 25vw;
+  height: 35vh;
+  background: #330159;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: start;
+  color: white;
+  border-radius: 10px;
+  line-height: 25px;
+  padding: 10px;
+}
+.aboutValues p span {
+  font-size: 22px;
+}
+
+.row-spans-3-2 {
+  grid-column: 3;
+  row-gap: 10px;
+  grid-row: 3 / span-2;
+  object-position: 70%;
+}
+.aboutTrust {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  height: 40vh;
+  line-height: 30px;
+}
+.aboutTrustLogo {
+  font-size: 30px;
+  font-weight: bold;
+  color: #330159;
+}
+.aboutTrustText {
+  color: #330159;
+}
+.aboutTrust p {
+  text-align: center;
+}
+.aboutTrustinfo {
+  line-height: 50px;
+}
+.aboutTeamText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 100px;
+}
+.aboutTeamTitle {
+  font-size: 30px;
+  font-weight: bold;
+  color: #330159;
+}
+.aboutTeamBox {
+  width: 100%;
+  display: grid;
+  background: linear-gradient(
+    180deg,
+    #0a0015 0%,
+    #0b0017 8.33%,
+    #0d0119 16.67%,
+    #0e011b 25%,
+    #0f021d 33.33%,
+    #11021f 41.67%,
+    #120321 50%,
+    #130423 58.33%,
+    #150525 66.67%,
+    #160628 75%,
+    #17072a 83.33%,
+    #19092c 91.67%,
+    #1a0a2e 100%
+  );
+  row-gap: 50px;
+  column-gap: 70px;
+  padding: 50px;
+  /* Automatically places items and centers the entire grid track */
+  grid-template-columns: repeat(4, 200px);
+  justify-content: center;
+}
+.aboutTeamBox > *:nth-child(5) {
+  margin-left: 120px;
+}
+.aboutTeamBox > *:nth-child(6) {
+  margin-left: 120px;
+}
+.aboutTeamBox > *:nth-child(7) {
+  margin-left: 120px;
+}
+.aboutTeam {
+  width: 15vw;
+  border-radius: 80px 80px 0px 0px;
+  height: 100%;
+  display: flex;
+  /* justify-content: s; */
+  align-items: center;
+  flex-direction: column;
+  justify-content: start;
+  background: white;
+
+  padding: 4px;
+  align-self: center;
+}
+.aboutTeamText {
+  display: flex;
+  flex-direction: column;
+  height: 30%;
+
+  gap: 1px;
+  line-height: 25px;
+}
+.aboutName {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.aboutImgHolder {
+  border-radius: 75px 75px 0px 0px;
+  width: 100%;
+  height: 100%;
+}
+.aboutTeam img {
+  width: 100%;
+  height: auto;
+  border-radius: 75px 75px 0px 0px;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  overflow: hidden;
+  /* object-position:  center; */
+}
+.aboutTeam p {
+  text-align: center;
+  font-size: 17px;
+}
+.btnmore {
+  display: flex;
+  align-items: center;
+  width: 150px;
+  background: white;
+  box-shadow: 3px 3px 3px 3px gainsboro;
+  color: #330159;
+  gap: 5px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  border-radius: 5px;
+  padding: 5px;
+}
+.btnmore:hover {
+  background: #e748ec;
+  border-radius: 5px;
+}
+
+.aboutExplore {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.AboutExploreText {
+  font-size: 30px;
+  color: #330159;
+  font-weight: bold;
+}
+@media (max-width: 450px) {
+  .container {
+    width: 100%;
+  }
+  .aboutContainer {
+    height: 90vh;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    width: 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+
+    padding-left: 50px;
+    background-image: url("../../assets/BackgroundImage/8644f49ca66594465885d8daad5f829d0ff32ee3.png");
+  }
+  .aboutInfo {
+    font-weight: bold;
+    line-height: 56px;
+  }
+
+  .aboutWrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  .aboutMission {
+    flex-direction: column;
+    font-size: 30px;
+  }
+  .aboutWrapperRight {
+    grid-template-columns: repeat(3, 100px);
+  }
+  .row-span-1-2 {
+    object-position: 75.1%;
+  }
+  .row-span-3-2 {
+    object-position: 52%;
+  }
+
+  .row-span-2-2 {
+    object-position: 52%;
+  }
+  .aboutMission div {
+    width: 100vw;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+  }
+
+  .missionQuote {
+    font-size: 30px;
+    text-align: start;
+    line-height: 50px;
+  }
+  .aboutValues {
+    flex-direction: column;
+  }
+  .aboutValues img {
+    width: 100%;
+    height: 75vh;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  .aboutValues p {
+    width: 100%;
+    line-height: 30px;
+    font-size: 25px;
+  }
+  .aboutValues p span {
+    font-size: 25px;
+    font-weight: bold;
+  }
+  .aboutTeamBox {
+    row-gap: 40px;
+    column-gap: 5px;
+    /* Automatically places items and centers the entire grid track */
+    grid-template-columns: repeat(2, 200px);
+  }
+  .aboutTeamBox > *:nth-child(5) {
+    margin-left: 0px;
+  }
+  .aboutTeamBox > *:nth-child(6) {
+    margin-left: 0px;
+  }
+  .aboutTeamBox > *:nth-child(7) {
+    margin-left: 90px;
+  }
+  .aboutTeam {
+    width: 45vw;
+  }
+}
