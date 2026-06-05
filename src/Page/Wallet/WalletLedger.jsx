@@ -33,7 +33,7 @@ export default function WalletLedger() {
       <div className="Wallet_ledger_header">
         <Button 
           className="Wallet_ledger_back" 
-          onClick={() => navigate('/vendor/wallet')} 
+          onClick={() => navigate('/wallet/transactions')} 
           btnText="← Back"
         />
         <div>
@@ -66,7 +66,7 @@ export default function WalletLedger() {
       </div>
 
       <div className="Wallet_ledger_search">
-        <span className="Wallet_search_icon">🔍</span>
+
         <Imp
           type="text"
           placeholder="Search booking ID / event name"

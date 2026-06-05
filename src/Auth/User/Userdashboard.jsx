@@ -21,7 +21,7 @@ const Userdashboard = () => {
       <nav className="header_container">
         <div className="header_wrapper">
           
-          {/* Top Bar Wrapper: Contains Logo Left & Burger Menu Right on Mobile */}
+    
           <div className="header_top_row">
             <div className="header_left">
               <img src={Headerlogo} alt="FeastSync Logo" className="logo_img" />
@@ -33,7 +33,7 @@ const Userdashboard = () => {
             </div>
           </div>
 
-          {/* Links navigation wrapper drawer block */}
+        
           <div className={`header_middle ${isOpen ? "active" : ""}`}>
             <NavLink to="/" className="nav_link" onClick={() => setIsOpen(false)} end>Home</NavLink>
             <NavLink to="/about" className="nav_link" onClick={() => setIsOpen(false)}>About</NavLink>
@@ -43,7 +43,6 @@ const Userdashboard = () => {
             <NavLink to="/contact" className="nav_link" onClick={() => setIsOpen(false)}>Contact</NavLink>
           </div>
 
-          {/* Sub-row banner layout containing the profile and notification bell */}
           <div className="header_right">
             <div className="notification_wrapper">
               <img className="bell_icon" src={Bell} alt="Notification Bell" />
@@ -61,7 +60,7 @@ const Userdashboard = () => {
         </div>
       </nav>
 
-      {/* Main Panel Modules Structure */}
+     
       <section className="user-dashboard-content">
         <section className="user-dashboard-wrapper1">
           <section className="user-dashboard-contentleft1">
