@@ -7,8 +7,7 @@ import "./NewCSS/services.css";
 
 const services = () => {
   return (
-    <div className="service-container">
-      <Header />
+    <main className="service-container">
       <div className="overlayer">
         <div className="servicesContainer">
           <p className="serviceContainerTitle">
@@ -181,9 +180,7 @@ const services = () => {
         </div>
         <Button btnText="Get Started" className="header_getstarted_btn" />
       </div>
-
-      <Footer />
-    </div>
+    </main>
   );
 };
 
