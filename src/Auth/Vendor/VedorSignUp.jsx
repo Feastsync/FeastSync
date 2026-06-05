@@ -152,7 +152,6 @@ const VendorSignUp = () => {
       return;
     }
 
-    // console.log("Submitting:", userInfo);
   };
 
   return (
