@@ -11,9 +11,6 @@ const WelcomeModal = ({ vendorName = "Adeyemi", onContinue, onSkip }) => {
           Complete your vendor verification to start receiving bookings and payouts.
         </p>
 
-        {/* <button type="button" className="welcome-btn-primary" onClick={onContinue}>
-          Continue verification
-        </button> */}
         <button 
   type="button" 
   className="welcome-btn-primary" 
