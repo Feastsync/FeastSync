@@ -30,6 +30,7 @@ import VendorOnboarding from "./Auth/Vendor/onBoardingFiles/VendorOnboarding.jsx
 import WalletLedger from "./Page/Wallet/WalletLedger.jsx"
 import VendorWallet from "./Page/Wallet/VendorWallet.jsx";
 import AllNotifications from "./Page/NotitficationsPages/AllNotifications.jsx";
+import WelcomeModal from "./Auth/Vendor/onBoardingFiles/WelcomeModal.jsx"
 const App = () => {
   return (
     <BrowserRouter>
@@ -66,6 +67,7 @@ const App = () => {
 
         
        <Route path="/wallet/transactions" element={<VendorWallet />} />
+       <Route path="/welcomeModal" element={<WelcomeModal />} />
        <Route path="/transaction/histories" element={<WalletLedger />} />
        {/* <Route path="/transaction/histories" element={<WalletLedger />} /> */}
 

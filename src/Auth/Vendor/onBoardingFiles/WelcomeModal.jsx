@@ -1,4 +1,6 @@
 import React from 'react'
+import "./css/Welcome.css"
+
 
 const WelcomeModal = ({ vendorName = "Adeyemi", onContinue, onSkip }) => {
   return (
