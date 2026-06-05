@@ -13,8 +13,6 @@ import "./NewCSS/about.css";
 
 const About = () => {
   return (
-    <div>
-      <Header />
       <main style={{ minHeight: "80vh" }}>
         <main className="aboutContainer">
           <div className="aboutContainer1">
@@ -196,8 +194,6 @@ const About = () => {
         </section>
         <Readytogetstarted />
       </main>
-      <Footer />
-    </div>
   );
 };
 

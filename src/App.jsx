@@ -47,6 +47,8 @@ const App = () => {
             <Route path="videography" element={<Videography />} />
           </Route>
           <Route path="/contact" element={<Contact />} />
+          <Route path="about" element={<About />} />
+          <Route path="services" element={<Services />} />
         </Route>
 
         <Route path="/onboarding" element={<OnBoarding />} />
@@ -62,8 +64,6 @@ const App = () => {
         <Route path="/userdashboard" element={<Userdashboard />} />
         <Route path="/user/signup" element={<UserSignUp />} />
         <Route path="getStarted" element={<GetStarted />} />
-        <Route path="about" element={<About />} />
-        <Route path="services" element={<Services />} />
 
         <Route path="/wallet/transactions" element={<VendorWallet />} />
         <Route path="/welcomeModal" element={<WelcomeModal />} />
