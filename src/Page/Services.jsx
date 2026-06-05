@@ -1,12 +1,13 @@
 import React from "react";
-import "./Css/Services.css";
 import Header from "../Components/Header";
 import Button from "../Props/Button";
 import Footer from "../Components/Footer";
+// import "./Css/Services.css";
+import "./NewCSS/services.css";
 
 const services = () => {
   return (
-    <div className="service">
+    <div className="service-container">
       <Header />
       <div className="overlayer">
         <div className="servicesContainer">

@@ -1,5 +1,4 @@
 import React from "react";
-import "./Css/About.css";
 import Header from "../Components/Header";
 import Readytogetstarted from "../Components/Readytogetstarted";
 import Footer from "../Components/Footer";
@@ -9,10 +8,12 @@ import { FaArrowRight } from "react-icons/fa6";
 import { FaHandsHelping } from "react-icons/fa";
 import { PiStarFour } from "react-icons/pi";
 import { TbTargetArrow } from "react-icons/tb";
+// import "./Css/About.css";
+import "./NewCSS/about.css";
 
 const About = () => {
   return (
-    <div className="container">
+    <div className="about-container">
       <Header />
       <div className="aboutContainer">
         <div className="aboutContainer1">
