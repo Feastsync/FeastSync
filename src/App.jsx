@@ -19,18 +19,18 @@ import ForgotPassword from "./Auth/ForgetPassword.jsx";
 import ResetPassword from "./Auth/ResetPassword.jsx";
 import VendorSignUp from "./Auth/Vendor/VedorSignUp.jsx";
 import VendorKYC from "./Auth/Vendor/VendorKYC.jsx";
-import Vendordashboard from "./Auth/Vendor/Vendordashboard.jsx"
+import Vendordashboard from "./Auth/Vendor/Vendordashboard.jsx";
 import Contact from "./Page/Contact.jsx";
 import UserSignUp from "./Auth/User/UserSignUp.jsx";
 import Userdashboard from "./Auth/User/Userdashboard.jsx";
-import GetStarted from"./Page/GetStarted";
-import About from "./Page/About.jsx"
+import GetStarted from "./Page/GetStarted.jsx";
+import About from "./Page/About.jsx";
 import Services from "./Page/Services.jsx";
 import VendorOnboarding from "./Auth/Vendor/onBoardingFiles/VendorOnboarding.jsx";
-import WalletLedger from "./Page/Wallet/WalletLedger.jsx"
+import WalletLedger from "./Page/Wallet/WalletLedger.jsx";
 import VendorWallet from "./Page/Wallet/VendorWallet.jsx";
 import AllNotifications from "./Page/NotitficationsPages/AllNotifications.jsx";
-import WelcomeModal from "./Auth/Vendor/onBoardingFiles/WelcomeModal.jsx"
+import WelcomeModal from "./Auth/Vendor/onBoardingFiles/WelcomeModal.jsx";
 const App = () => {
   return (
     <BrowserRouter>
@@ -52,7 +52,7 @@ const App = () => {
         <Route path="/onboarding" element={<OnBoarding />} />
         <Route path="/login" element={<Login />} />
         <Route path="/verify-otp" element={<OTP />} />
-         <Route path="/vendor/onboarding" element={<VendorOnboarding />} /> 
+        <Route path="/vendor/onboarding" element={<VendorOnboarding />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 
@@ -61,17 +61,19 @@ const App = () => {
         <Route path="/vendordashboard" element={<Vendordashboard />} />
         <Route path="/userdashboard" element={<Userdashboard />} />
         <Route path="/user/signup" element={<UserSignUp />} />
-        <Route path="getStarted" element={<GetStarted />}/>
-        <Route path="about" element={<About />}/>
-        <Route path="services" element={<Services />}/>
+        <Route path="getStarted" element={<GetStarted />} />
+        <Route path="about" element={<About />} />
+        <Route path="services" element={<Services />} />
 
-        
-       <Route path="/wallet/transactions" element={<VendorWallet />} />
-       <Route path="/welcomeModal" element={<WelcomeModal />} />
-       <Route path="/transaction/histories" element={<WalletLedger />} />
-       {/* <Route path="/transaction/histories" element={<WalletLedger />} /> */}
+        <Route path="/wallet/transactions" element={<VendorWallet />} />
+        <Route path="/welcomeModal" element={<WelcomeModal />} />
+        <Route path="/transaction/histories" element={<WalletLedger />} />
+        {/* <Route path="/transaction/histories" element={<WalletLedger />} /> */}
 
-       <Route path="/notifications/:category?" element={<AllNotifications />} />
+        <Route
+          path="/notifications/:category?"
+          element={<AllNotifications />}
+        />
       </Routes>
     </BrowserRouter>
   );
