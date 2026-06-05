@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-// import Swal from "sweetalert2";
-// import Imp from "../Props/Imp";
+import Swal from "sweetalert2";
+import Input from "../Props/Input";
 import Button from "../Props/Button";
 import "./Css/Login.css";
 import HeeaderLogo from "../assets/logos/Headerlogo.png";
@@ -123,7 +123,7 @@ const Login = () => {
 
           <div className="vl-field-group">
             <label className="vl-label">Enter email</label>
-            <Imp
+            <Input
               type="email"
               placeholder="Your email address"
               value={userInfo.email}
@@ -138,7 +138,7 @@ const Login = () => {
           <div className="vl-field-group">
             <label className="vl-label">Password</label>
             <div className="vl-password-wrap">
-              <Imp
+              <Input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 value={userInfo.password}
