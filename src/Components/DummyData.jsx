@@ -1,6 +1,6 @@
 import DjTessco from "../assets/BackgroundImage/djTeesco.jpg"
 import plane from "../assets/logos/plane.png"
-import chat from "../assets/logos/chat.png"
+import chat from "../assets/logos/Chat.png"
 import payout from "../assets/logos/payout.png"
 import secure from "../assets/logos/secure.png"
 import verified from '../assets/logos/verified.png'

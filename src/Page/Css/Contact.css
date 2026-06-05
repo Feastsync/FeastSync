@@ -4,7 +4,7 @@
 }
 .contact-section{
     width: 100%;
-    height: 85vh;
+    height: 80vh;
     position: relative;
 }
 .contact-section img{
@@ -22,7 +22,7 @@
 }
 .contact-content{
     position: absolute;
-    top: 50%;
+    top: 49%;
     left: 40%;
     transform: translateY(-50%);
     width: 40%;
@@ -30,13 +30,13 @@
     z-index: 2;
 }
 .contact-content h1{
-    font-size: 3.5rem;
+    font-size: 2.7rem;
     font-weight: 700;
     line-height: 1.1;
-    margin-bottom: 11px;
+    margin-bottom: 8px;
 }
 .contact-content p{
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     position: absolute;
     left: 3%;
 }
@@ -55,7 +55,7 @@
     width: 80%;
     height: 85%;
     /* background-color: blanchedalmond; */
-    margin-top: 45px;
+    margin-top: 18px;
     border-radius: 16px;
     background: var(--linear-faint, linear-gradient(135deg, #FAF5FF 0%, #FFF 50%, #FFF7ED 100%));
     box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.05);
@@ -66,7 +66,7 @@
 }
 .contact-info-btn1{
     width: 85%;
-    height:29%;
+    height:24%;
     border-radius: 8px;
     display: flex;
     border: 1px solid var(--stroke-color, #D1D5DC);
@@ -82,11 +82,11 @@
     align-items: center;
 }
 .contact-btn1-left img{
-   width: 35px;
-   height: 35px;
+   width: 28px;
+   height: 28px;
 }
 .contact-btn1-left h1{
-    font-size: 25px;
+    font-size: 20px;
 }
 .contact-btn1-right{
     width: 83%;
@@ -96,13 +96,13 @@
     justify-content: center;
 }
 .contact-btn1-right h1{
-    font-size: 30px;
+    font-size: 23px;
     margin-bottom: 12px;
     color: var(--primary-color);
 
 }
 .contact-btn1-right p{
-    font-size: 22px;
+    font-size: 18px;
     color: var(--text-color);
 }
 .contact-info-right{
@@ -121,7 +121,7 @@
 }
 .contact-info-rightup{
     width: 100%;
-    height: 52%;
+    height: 50%;
 }
 .contact-info-rightup1{
     width: 100%;
@@ -137,21 +137,24 @@
     flex-direction: column;
 }
 .contact-rightup1-left h1{
-    font-size: 25px;
+    font-size: 22px;
     font-weight: 500;
     color:#32343A;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     margin-left: 15px;
 }
 .contact-rightup1-left input{
-    width: 95%;
-    height:40%;
+    width: 90%;
+    height:43%;
     border: 0.3px solid grey;
     padding-left: 20px;
-    font-size: 25px;
+    font-size: 18px;
     opacity: 0.1px;
-    color: rgba(171, 173, 181, 0.4); 
+    color: black;
     font-weight: 100;
+}
+.contact-rightup1-left input::placeholder {
+    opacity: 1; 
 }
 .contact-rightup1-right{
     width: 50%;
@@ -161,21 +164,24 @@
     flex-direction: column;
 }
 .contact-rightup1-right h1{
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 500;
     color:#32343A;
     margin-bottom: 30px;
     margin-left: 15px;
 }
 .contact-rightup1-right input{
-    width: 95%;
-    height:40%;
+    width: 90%;
+    height:43%;
     border: 0.3px solid grey;
     padding-left: 20px;
-    font-size: 25px;
+    font-size: 18px;
     opacity: 0.1px;
-    color: rgba(171, 173, 181, 0.4); 
+    color: black;
     font-weight: 100;
+}
+.contact-rightup1-right input::placeholder {
+    opacity: 1; 
 }
 .contact-info-rightup2{
     width: 100%;
@@ -191,20 +197,20 @@
     flex-direction: column;
 }
 .contact-rightup2-left h1{
-    font-size: 25px;
+     font-size: 20px;
     font-weight: 500;
     color:#32343A;
     margin-bottom: 30px;
     margin-left: 15px;
 }
 .contact-rightup2-left input{
-    width: 95%;
-    height:40%;
+    width: 90%;
+    height:43%;
     border: 0.3px solid grey;
     padding-left: 20px;
-    font-size: 25px;
+    font-size: 18px;
     opacity: 0.1px;
-    color: rgba(171, 173, 181, 0.4); 
+    color: black;
     font-weight: 100;
 }
 .contact-rightup2-right{
@@ -215,10 +221,10 @@
     flex-direction: column;
 }
 .contact-rightup2-right h1{
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 500;
     color:#32343A;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     margin-left: 15px;
 }
 .contact-rightup2-right input{
@@ -233,20 +239,21 @@
 }
 .contact-info-rightdown{
     width: 100%;
-    height: 48%;
+    height: 50%;
     display: flex;
     flex-direction: column;
 }
 .contact-info-rightdown h1{
-    font-size: 25px;
+    font-size: 22px;
     font-weight: 500;
     color:var(--text-color);
-    margin-bottom: 21px;
+    margin-bottom: 15px;
+    margin-top: 15px;
 }
 .contact-rightdown-text{
     width: 95%;
-    height: 60%;
-    padding-top: 30px;
+    height: 70%;
+    padding-top: 20px;
     padding-left: 20px;
     margin-bottom: 30px;
     align-self: center;
@@ -258,15 +265,15 @@
 }
 .contact-info-rightdown-btn{
     width: 100%;
-    height: 18%;
-    font-size: 25px;
+    height: 22%;
+    font-size: 20px;
     border: none !important;
     color: white;
     background-color: var(--primary-color);
 }
 .faq-section{
     width: 100%;
-    padding: 80px 0;
+    padding: 20px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -277,13 +284,14 @@
     margin-bottom: 50px;
 }
 .faq-header h1{
-    font-size: 3rem;
+    font-size: 1.7rem;
     font-weight: 500;
     color: rgba(51, 1, 89, 1);
     margin-bottom: 15px;
+    margin-top: 15px;
 }
 .faq-header p{
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 500;
     color: #0f0f10;
 }
@@ -291,38 +299,38 @@
     width: 80%;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
 }
 .faq-card{
     width: 100%;
-    height: 50%;
+    height: 7%;
     border-radius: 12px;
     background: white;
     border: 1px solid #E5E7EB;
-    padding: 0 30px;
+    padding: 0 10px;
     transition: 0.3s ease;
 }
 .faq-question{
     width: 100%;
-    min-height: 90px;
+    min-height: 70px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
 }
 .faq-question h3{
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     font-weight: 500;
      color: #0f0f10;
 }
 .faq-question span{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: var(--text-color);
 }
 .faq-answer{
-    padding-bottom: 25px;
+    padding-bottom: 20px;
     color: #666;
-    font-size: 20px;
+    font-size: 16px;
     line-height: 1.6;
     animation: dropdown 0.3s ease;
 }

@@ -124,9 +124,6 @@
     margin: 0;
 }
 
-/* ==========================================
-   1️⃣ LAPTOP & TABLET LAYOUTS (max-width: 992px)
-   ========================================== */
 @media (max-width: 992px) {
     .vendormediagallery-container {
         padding: 20px 40px;
@@ -143,15 +140,11 @@
     }
 }
 
-/* ==========================================
-   2️⃣ PORTRAIT TABLETS RESPONSIVENESS (max-width: 768px)
-   ========================================== */
 @media (max-width: 768px) {
     .vendormediagallery-container {
         padding: 20px;
     }
     
-    /* Stripped background box card padding elements matching mobile layout snapshots flat structure */
     .portfolio-white-card-box {
         padding: 0 !important;
         background: transparent !important;
@@ -159,7 +152,6 @@
         box-shadow: none !important;
     }
     
-    /* Configures both top and lower rows into an identical crisp 2-column layout mapping card structure */
     .gallery-grid-three-columns,
     .portfolio-grid-two-columns {
         grid-template-columns: repeat(2, 1fr) !important;
@@ -189,9 +181,6 @@
     }
 }
 
-/* ==========================================
-   3️⃣ 📱 SMALL SMARTPHONES CANVASES (max-width: 480px)
-   ========================================== */
 @media (max-width: 480px) {
     .vendormediagallery-container {
         padding: 15px 12px;
@@ -214,7 +203,7 @@
     
     .gallery-thumbnail-wrap,
     .detail-card-image-wrap {
-        height: 95px !important; /* Proportions the grid shapes perfectly for smaller handset viewports */
+        height: 95px !important; 
     }
     
     .detail-card-info-content {

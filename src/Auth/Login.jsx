@@ -137,7 +137,7 @@ const Login = () => {
 
           <div className="vl-field-group">
             <label className="vl-label">Enter email</label>
-            <Imp
+            <Input
               type="email"
               placeholder="Your email address"
               value={userInfo.email}
@@ -152,7 +152,7 @@ const Login = () => {
           <div className="vl-field-group">
             <label className="vl-label">Password</label>
             <div className="vl-password-wrap">
-              <Imp
+              <Input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 value={userInfo.password}
