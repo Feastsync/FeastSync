@@ -57,10 +57,10 @@ const About = () => {
         </div>
       </div>
       <div className='aboutWrapperRight'>
-        <img src="src/assets/About/yoruba mc.png" alt="" className='row-span-1-2' />
-        <img src="src/assets/About/photographer.png" alt="" />
-        <img src="src/assets/About/mc.png" alt="" className='row-span-2-2' style={{height:"70vh"}} />
-        <img src="src/assets/About/igbodj.png" alt="" className='row-span-3-2'/>
+        <img src="yoruba mc.png" alt="" className='row-span-1-2' />
+        <img src="photographer.png" alt="" />
+        <img src="mc.png" alt="" className='row-span-2-2' style={{height:"70vh"}} />
+        <img src="igbodj.png" alt="" />
       </div>
      </div>
 
