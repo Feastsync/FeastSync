@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { FaBars, FaTimes } from 'react-icons/fa'
-// import "./Css/Header.css"
+import "./Css/Header.css" // uncomment this back
 import Headerlogo from '../assets/logos/Headerlogo.png'
 import Button from "../Props/Button.jsx"
 
@@ -17,32 +17,32 @@ const Header = () => {
   const closeMenu = () => setIsOpen(false)
 
   return (
-    <nav className='header_container'>
-      <div className='header_wrapper'>
-        <div className='header_left'>
-          <img src={Headerlogo} alt="FeastSync Logo" className='logo_img' />
-          <h2 className='logo_text'>FeastSync</h2>
+    <nav className='feastHeader_container'>
+      <div className='feastHeader_wrapper'>
+        <div className='feastHeader_left'>
+          <img src={Headerlogo} alt="FeastSync Logo" className='feastHeader_logoImg' />
+          <h2 className='feastHeader_logoText'>FeastSync</h2>
         </div>
 
-        <div className='menu_icon' onClick={() => setIsOpen(!isOpen)}>
+        <div className='feastHeader_menuIcon' onClick={() => setIsOpen(!isOpen)}>
           {isOpen? <FaTimes /> : <FaBars />}
         </div>
 
-        <div className={`header_middle ${isOpen? "active" : ""}`}>
-          <NavLink to="/" className='nav_link' onClick={closeMenu} end>Home</NavLink>
-          <NavLink to="/about" className='nav_link' onClick={closeMenu}>About</NavLink>
-          <NavLink to="/howitworks" className='nav_link' onClick={closeMenu}>How it works</NavLink>
-          <NavLink to="/vendors" className='nav_link' onClick={closeMenu}>Vendors</NavLink>
-          <NavLink to="/services" className='nav_link' onClick={closeMenu}>Services</NavLink>
-          <NavLink to="/contact" className='nav_link' onClick={closeMenu}>Contact</NavLink>
+        <div className={`feastHeader_middle ${isOpen? "active" : ""}`}>
+          <NavLink to="/" className='feastHeader_navLink' onClick={closeMenu} end>Home</NavLink>
+          <NavLink to="/about" className='feastHeader_navLink' onClick={closeMenu}>About</NavLink>
+          <NavLink to="/howitworks" className='feastHeader_navLink' onClick={closeMenu}>How it works</NavLink>
+          <NavLink to="/vendors" className='feastHeader_navLink' onClick={closeMenu}>Vendors</NavLink>
+          <NavLink to="/services" className='feastHeader_navLink' onClick={closeMenu}>Services</NavLink>
+          <NavLink to="/contact" className='feastHeader_navLink' onClick={closeMenu}>Contact</NavLink>
 
-          <div className="header_right">
+          <div className="feastHeader_right">
             <Button
               btnText="Get Started"
-              className="header_getstarted_btn"
+              className="feastHeader_getstartedBtn"
               onClick={() => { Nav('/signup'); closeMenu(); }}
             />
-            <h2 onClick={() => { Nav('/login'); closeMenu(); }} className='header_login'>
+            <h2 onClick={() => { Nav('/login'); closeMenu(); }} className='feastHeader_login'>
               Login
             </h2>
           </div>
