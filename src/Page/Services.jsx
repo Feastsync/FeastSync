@@ -3,7 +3,7 @@ import Header from "../Components/Header";
 import Button from "../Props/Button";
 import Footer from "../Components/Footer";
 // import "./Css/Services.css";
-import "./NewCSS/services.css";
+// import "./NewCSS/services.css";
 
 const services = () => {
   return (
