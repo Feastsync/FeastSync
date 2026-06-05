@@ -25,14 +25,14 @@
 }
 
 .success-icon {
-  font-size: 48px;/
+  font-size: 48px;
   line-height: 1;
 }
 
 .success-text {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 15px;
-  color: #1A1A1A;
+  color: #1a1a1a;
   line-height: 1.6;
   margin: 0;
 }

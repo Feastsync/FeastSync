@@ -1,5 +1,4 @@
 import React from "react";
-import "../Page/Css/About.css"
 import Header from "../Components/Header";
 import Readytogetstarted from "../Components/Readytogetstarted";
 import Footer from "../Components/Footer";
@@ -9,12 +8,13 @@ import { FaArrowRight } from "react-icons/fa6";
 import { FaHandsHelping } from "react-icons/fa";
 import { PiStarFour } from "react-icons/pi";
 import { TbTargetArrow } from "react-icons/tb";
+// import "./Css/About.css";
+// import "./NewCSS/about.css";
 
 const About = () => {
   return (
-    <div className="container">
-      <Header />
-      <div className="aboutContainer">
+    <main style={{ minHeight: "80vh" }}>
+      <section className="aboutContainer">
         <div className="aboutContainer1">
           <p className="about">About FeastSync</p>
           <p className="aboutInfo">
@@ -28,9 +28,9 @@ const About = () => {
           event.Professional service. <br />
           transparent rates.
         </p>
-      </div>
+      </section>
 
-      <div className="aboutWrapper">
+      <section className="aboutWrapper">
         <div className="aboutWrapperleft">
           <div className="aboutWrapperHolder">
             <p className="aboutWrapperleftTitle">About Feastsync</p>
@@ -78,9 +78,9 @@ const About = () => {
             className="row-span-3-2"
           />
         </div>
-      </div>
+      </section>
 
-      <div className="aboutMission">
+      <section className="aboutMission">
         <div className="missionbox">
           <p className="missionQuote">Our Mission</p>
           <p>
@@ -102,9 +102,9 @@ const About = () => {
             secure, verified talent and flawless event execution.
           </p>
         </div>
-      </div>
+      </section>
 
-      <div>
+      <section>
         <div className="aboutValuesBox">
           <p className="aboutTeamTitle">What we stand for</p>
           <p>Four values.One platform</p>
@@ -151,9 +151,9 @@ const About = () => {
             </p>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="aboutTrust">
+      <section className="aboutTrust">
         <p className="aboutTrustLogo">Trust & Safety</p>
         <p className="aboutTrustText">
           Your protection is built into every booking.
@@ -169,9 +169,9 @@ const About = () => {
           <p>Learn more</p>
           <FaArrowRight />
         </span>
-      </div>
+      </section>
 
-      <div className="aboutTeamText">
+      <section className="aboutTeamText">
         <div>
           <p className="aboutTeamTitle">Meet the Team</p>
           <p>The brain behind feastsync</p>
@@ -191,10 +191,9 @@ const About = () => {
             </div>
           ))}
         </div>
-      </div>
+      </section>
       <Readytogetstarted />
-      <Footer />
-    </div>
+    </main>
   );
 };
 

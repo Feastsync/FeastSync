@@ -1,13 +1,13 @@
 import React from "react";
-import "../Page/Css/Services.css"
 import Header from "../Components/Header";
 import Button from "../Props/Button";
 import Footer from "../Components/Footer";
+// import "./Css/Services.css";
+// import "./NewCSS/services.css";
 
 const services = () => {
   return (
-    <div className="service">
-      <Header />
+    <main className="service-container">
       <div className="overlayer">
         <div className="servicesContainer">
           <p className="serviceContainerTitle">
@@ -45,7 +45,7 @@ const services = () => {
         <p className="serviceQuote">Our Services</p>
 
         <div className="serviceBooking">
-           <img src="../assets/About/dj wirewire.png" alt="DJ Booking" />
+          <img src="../assets/About/dj wirewire.png" alt="DJ Booking" />
           <div className="serviceInfo">
             <div className="serviceHolder">
               <p className="serviceName">DJ Booking</p>
@@ -180,9 +180,7 @@ const services = () => {
         </div>
         <Button btnText="Get Started" className="header_getstarted_btn" />
       </div>
-
-      <Footer />
-    </div>
+    </main>
   );
 };
 
