@@ -3,9 +3,10 @@ import Imp from '../../Props/Imp'
 import Button from '../../Props/Button'
 import { LuSearch } from 'react-icons/lu'
 import "./Css/HomeHero.css"
-
+import {useNavigate} from 'react-router-dom'
 const HomeHero = () => {
   const [searchQuery, setSearchQuery] = useState("")
+  const navigate = useNavigate()
 
   return (
     <section className="home_hero_container">
@@ -32,7 +33,7 @@ const HomeHero = () => {
         </div>
 
         <div className="home_hero_actions">
-          <Button className="btn_purple" btnText="Get Started" />
+          <Button onClick={() => navigate('/onboarding')} className="btn_purple" btnText="Get Started" />
           <Button className="btn_outline" btnText="Explore the vendors" />
         </div>
       </div>

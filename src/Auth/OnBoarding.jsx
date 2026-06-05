@@ -7,8 +7,9 @@ import Circleiconhost from "../assets/logos/circleiconhost.svg";
 import Circleiconvendor from "../assets/logos/circleiconvendor.svg";
 import Button from "../Props/Button.jsx";
 import Leftarrow from "../assets/logos/Leftarrow.svg";
-
+import { useNavigate } from "react-router-dom";
 const OnBoarding = () => {
+  const navigate = useNavigate();
   return (
     <main className="onboarding-container">
       <section className="onboarding-content">
@@ -21,7 +22,7 @@ const OnBoarding = () => {
           <p>Choose an account type</p>
         </section>
         <section className="onboarding-content3">
-          <article className="onboarding-content3-left">
+          <article onClick={() => navigate('/user/signup')} className="onboarding-content3-left">
             <article className="onboarding-content3-left1">
               <img
                 className="onboarding-image"
@@ -33,7 +34,7 @@ const OnBoarding = () => {
               <img className="onboarding-image1" src={Circleiconhost} alt="" />
             </article>
           </article>
-          <article className="onboarding-content3-right">
+          <article onClick={() => navigate('/vendor/signup')} className="onboarding-content3-right">
             <article className="onboarding-content3-right1">
               <img
                 className="onboarding-image2"

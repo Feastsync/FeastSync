@@ -191,3 +191,238 @@ export const videographerVendors = [
   { id: 17, name: 'Raw Footage NG', location: 'Lagos, Nigeria', rating: 4, price: 310000, image: '/src/assets/BackgroundImage/videographer2.png' },
   { id: 18, name: 'Blockshot Studio', location: 'Kano, Nigeria', rating: 5, price: 380000, image: '/src/assets/BackgroundImage/videographer3.png' },
 ]
+export const walletSummary = {
+  totalBalance: 285500,
+  availableBalance: 241000,
+  escrowBalance: 44500,
+  pendingEscrow: 44500,
+  pendingTransactions: 2,
+  completedBookings: 31,
+  milestones: [
+    {
+      id: "m1",
+      title: "Wedding Catering - Adeola & Kunle",
+      bookingId: "FS-2026-0604-001",
+      received: 105000,
+      escrow: 45000,
+      note: "70% released"
+    },
+    {
+      id: "m2",
+      title: "Birthday Party - Mrs. Johnson",
+      bookingId: "FS-2026-0602-003",
+      received: 59500,
+      escrow: 25500,
+      note: "70% released"
+    },
+    {
+      id: "m3",
+      title: "Corporate Event - TechCorp Ltd",
+      bookingId: "FS-2026-0528-004",
+      received: 320000,
+      escrow: 0,
+      note: ""
+    }
+  ],
+  recentTransactions: [
+    {
+      id: 1,
+      description: "Milestone Payment",
+      eventName: "Wedding - Adeola & Kunle",
+      bookingId: "FS-2026-0604-001",
+      date: "Jun 4, 2026",
+      amount: 150000
+    },
+    {
+      id: 2,
+      description: "Withdrawal to GTBank",
+      eventName: "Payout",
+      bookingId: "FS-WD-0603-002",
+      date: "Jun 3, 2026",
+      amount: -120000
+    },
+    {
+      id: 3,
+      description: "Escrow Hold",
+      eventName: "Birthday Party - Mrs. Johnson",
+      bookingId: "FS-2026-0602-003",
+      date: "Jun 2, 2026",
+      amount: 85000
+    }
+  ]
+};
+
+export const ledgerStats = {
+  vendorName: "Adeyemi Catering",
+  totalCredits: 735000,
+  totalWithdrawn: 320000,
+  inEscrow: 44500,
+  totalTransactions: 6,
+  availableBalance: 370500,
+  pendingRelease: 44500
+};
+
+export const allTransactions = [
+  {
+    id: 1,
+    description: "Milestone Payment",
+    eventName: "Wedding - Adeola & Kunle",
+    bookingId: "FS-2026-0604-001",
+    date: "Jun 4, 2026",
+    amount: 150000,
+    type: "milestone"
+  },
+  {
+    id: 2,
+    description: "Withdrawal to GTBank",
+    eventName: "Payout",
+    bookingId: "FS-WD-0603-002",
+    date: "Jun 3, 2026",
+    amount: -120000,
+    type: "withdrawn"
+  },
+  {
+    id: 3,
+    description: "Escrow Hold",
+    eventName: "Birthday Party - Mrs. Johnson",
+    bookingId: "FS-2026-0602-003",
+    date: "Jun 2, 2026",
+    amount: 85000,
+    type: "escrow"
+  },
+  {
+    id: 4,
+    description: "Milestone Payment",
+    eventName: "Corporate Event - TechCorp Ltd",
+    bookingId: "FS-2026-0528-004",
+    date: "May 28, 2026",
+    amount: 320000,
+    type: "milestone"
+  },
+  {
+    id: 5,
+    description: "Refund - Cancelled Booking",
+    eventName: "Refund",
+    bookingId: "FS-RF-0525-005",
+    date: "May 25, 2026",
+    amount: -45000,
+    type: "refunds"
+  },
+  {
+    id: 6,
+    description: "Escrow Hold",
+    eventName: "Naming Ceremony - The Okoyes",
+    bookingId: "FS-2026-0520-006",
+    date: "May 20, 2026",
+    amount: 65000,
+    type: "escrow"
+  }
+];
+export const allNotifications = [
+  {
+    id: "notif_001",
+    type: "payment",
+    title: "Payment Received",
+    message: "You received ₦105,000 for Wedding Catering - Adeola & Kunle. 70% released to your wallet.",
+    time: "2 hours ago",
+    date: "2026-06-04T10:30:00",
+    read: false,
+    icon: "💰",
+    category: "wallet",
+    bookingId: "FS-2026-0604-001"
+  },
+  {
+    id: "notif_002",
+    type: "booking",
+    title: "New Booking Request",
+    message: "Mrs. Johnson sent you a booking request for Birthday Party on Jun 15, 2026.",
+    time: "5 hours ago",
+    date: "2026-06-04T07:45:00",
+    read: false,
+    icon: "📅",
+    category: "bookings",
+    bookingId: "FS-2026-0615-002"
+  },
+  {
+    id: "notif_003",
+    type: "escrow",
+    title: "Escrow Released",
+    message: "₦45,500 held in escrow for Naming Ceremony has been released to your available balance.",
+    time: "1 day ago",
+    date: "2026-06-03T16:20:00",
+    read: true,
+    icon: "🔓",
+    category: "wallet",
+    bookingId: "FS-2026-0520-006"
+  },
+  {
+    id: "notif_004",
+    type: "withdrawal",
+    title: "Withdrawal Successful",
+    message: "Your withdrawal of ₦120,000 to GTBank ****4521 was successful.",
+    time: "2 days ago",
+    date: "2026-06-03T14:15:00",
+    read: true,
+    icon: "✅",
+    category: "wallet",
+    bookingId: "FS-WD-0603-002"
+  },
+  {
+    id: "notif_005",
+    type: "review",
+    title: "New Review",
+    message: "TechCorp Ltd left you a 5-star review: 'Excellent service and delicious food!'",
+    time: "3 days ago",
+    date: "2026-06-01T11:30:00",
+    read: true,
+    icon: "⭐",
+    category: "reviews",
+    bookingId: "FS-2026-0528-004"
+  },
+  {
+    id: "notif_006",
+    type: "reminder",
+    title: "Event Reminder",
+    message: "Reminder: You have a Wedding Catering event tomorrow for Adeola & Kunle.",
+    time: "4 days ago",
+    date: "2026-05-31T09:00:00",
+    read: true,
+    icon: "🔔",
+    category: "bookings",
+    bookingId: "FS-2026-0604-001"
+  },
+  {
+    id: "notif_007",
+    type: "refund",
+    title: "Refund Processed",
+    message: "Refund of ₦45,000 for cancelled booking has been processed.",
+    time: "1 week ago",
+    date: "2026-05-25T11:10:00",
+    read: true,
+    icon: "↩️",
+    category: "wallet",
+    bookingId: "FS-RF-0525-005"
+  },
+  {
+    id: "notif_008",
+    type: "booking",
+    title: "Booking Confirmed",
+    message: "Your booking for Corporate Event - TechCorp Ltd has been confirmed.",
+    time: "2 weeks ago",
+    date: "2026-05-20T15:00:00",
+    read: true,
+    icon: "📋",
+    category: "bookings",
+    bookingId: "FS-2026-0528-004"
+  }
+];
+
+export const notificationStats = {
+  total: 8,
+  unread: 2,
+  categories: {
+    wallet: 4,
+    bookings: 3,
+    reviews: 1
+  }
+};

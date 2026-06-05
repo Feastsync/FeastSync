@@ -13,7 +13,7 @@ export default function VendorWallet() {
         <div className="Vendor_wallet_header_left">
           <Button 
             className="Vendor_wallet_back" 
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/vendordashboard')}
           >
             <span>←</span> Back
           </Button>
@@ -32,7 +32,7 @@ export default function VendorWallet() {
           </Button>
           <Button 
             className="Vendor_wallet_action_btn" 
-            onClick={() => navigate('/wallet/transactions')}
+            onClick={() => navigate('/transaction/histories')}
           >
             <span>🕓</span> History
           </Button>
@@ -59,7 +59,7 @@ export default function VendorWallet() {
 
       <div className="Vendor_wallet_section">
         <div className="Vendor_wallet_section_header">Milestone tracker</div>
-        {walletSummary.milestones.map(item => (
+        {walletSummary.milestones?.map(item => (
           <div className="Vendor_milestone_item" key={item.id}>
             <div>
               <h3 className="Vendor_milestone_title">{item.title}</h3>
@@ -86,11 +86,11 @@ export default function VendorWallet() {
           <span>Recent transactions</span>
           <Button 
             className="Vendor_wallet_see_more" 
-            onClick={() => navigate('/wallet/transactions')} 
+            onClick={() => navigate('/transaction/histories')} 
             btnText="See more" 
           />
         </div>
-        {walletSummary.recentTransactions.map(tx => (
+        {walletSummary.recentTransactions?.map(tx => (
           <div className="Vendor_recent_tx" key={tx.id}>
             <div>
               <p className="Vendor_recent_tx_title">{tx.description}</p>

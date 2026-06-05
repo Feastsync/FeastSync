@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 // import Swal from "sweetalert2";
 // import Input from "../../Props/Ip";
+import Input from "../../Props/Imp";
 import Button from "../../Props/Button";
 import "../Css/VendorSignUp.css";
 import FeastLogo from "../../assets/logos/Headerlogo.png";
@@ -161,7 +162,7 @@ const VendorSignUp = () => {
          <img src={FeastLogo} alt="Logo" className="vr-logo" />
           <span className="vr-logo-text">FeastSync</span>
                 </div>
-                <Link to="/login" className="vr-back">← Back</Link>         
+                <Link to="/onboarding" className="vr-back">← Back</Link>         
           <div className="vr-header">
             <h1>Vendors Registration</h1>
             <p>Create an Account and get started with <strong>FEASTSYNC</strong></p>

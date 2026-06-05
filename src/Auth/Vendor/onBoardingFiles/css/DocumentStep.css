@@ -1,0 +1,292 @@
+.ds-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  padding: 40px 16px;
+  overflow-y: auto;
+}
+
+.ds-modal {
+  background: #ffffff;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 580px;
+  height: 85vh;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ds-header {
+  background: #5A1F8A;
+  padding: 28px 32px 20px;
+  border-radius: 16px 16px 0 0;
+  flex-shrink: 0;
+}
+
+.ds-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.ds-header h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: #ffffff;
+}
+
+.ds-subtext {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+.ds-close {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  opacity: 0.9;
+  flex-shrink: 0;
+}
+
+.ds-close:hover {
+  opacity: 1;
+}
+
+.ds-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.ds-progress-fill {
+  height: 100%;
+  background: #ffffff;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.ds-body {
+  padding: 28px 32px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #C9A8E8 #f0f0f0;
+}
+
+.ds-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ds-body::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 3px;
+}
+
+.ds-body::-webkit-scrollbar-thumb {
+  background: #C9A8E8;
+  border-radius: 3px;
+}
+
+.ds-instruction {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #1A1A1A;
+  margin: 0;
+}
+
+.ds-upload-section h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1A1A1A;
+  margin: 0 0 4px 0;
+}
+
+.ds-upload-hint {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #888888;
+  margin: 0 0 16px 0;
+}
+
+.ds-dropzone {
+  border: 1.5px dashed #D1D1D1;
+  border-radius: 12px;
+  padding: 48px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #ffffff;
+  gap: 12px;
+}
+
+.ds-dropzone:hover {
+  border-color: #5A1F8A;
+  background: #FAF7FE;
+}
+
+.ds-dropzone.drag-over {
+  border-color: #5A1F8A;
+  background: #F3EFFE;
+}
+
+.ds-dropzone.has-file {
+  border-color: #5A1F8A;
+  background: #F3EFFE;
+}
+
+.ds-upload-icon {
+  width: 44px;
+  height: 44px;
+  background: #F0F0F0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5A1F8A;
+}
+
+.ds-drop-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #888888;
+  margin: 0;
+  text-align: center;
+}
+
+.ds-choose {
+  color: #330159;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.ds-file-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #330159;
+  font-weight: 500;
+  margin: 0;
+}
+
+.ds-max-size {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #999999;
+  margin: 10px 0 0 0;
+}
+
+.ds-footer {
+  padding: 20px 32px 28px;
+  border-top: 1px solid #F0F0F0;
+  background: #ffffff;
+  border-radius: 0 0 16px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.ds-btn-skip {
+  background: transparent;
+  border: none;
+  color: #1A1A1A;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+
+.ds-btn-skip:hover {
+  text-decoration: underline;
+}
+
+.ds-footer-right {
+  display: flex;
+  gap: 12px;
+}
+
+.ds-btn-back {
+  background: #ffffff;
+  color: #1A1A1A;
+  border: 1.5px solid #D1D1D1;
+  border-radius: 10px;
+  padding: 12px 28px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ds-btn-back:hover {
+  background: #F7F7F7;
+}
+
+.ds-btn-upload {
+  background: #330159;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 28px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ds-btn-upload:hover {
+  background: #4a0180;
+}
+
+@media (max-width: 640px) {
+  .ds-overlay {
+    padding: 16px 12px;
+  }
+
+  .ds-header,
+  .ds-body,
+  .ds-footer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .ds-footer {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .ds-footer-right {
+    width: 100%;
+  }
+
+  .ds-btn-back,
+  .ds-btn-upload {
+    flex: 1;
+  }
+}

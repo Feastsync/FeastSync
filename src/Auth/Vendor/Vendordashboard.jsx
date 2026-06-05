@@ -5,9 +5,11 @@ import Vendorhero from "./Vendorhero.jsx"
 import Copyicon from "../../assets/logos/Copyicon.svg"
 import Vendorcalendar from "./Vendorcalendar.jsx"
 import Vendormediagallery from "./Vendormediagallery.jsx"
+import { useNavigate } from 'react-router-dom'
 
 
 const Vendordashboard = () => {
+  const nav = useNavigate()
   const [expandedCards, setExpandedCards] = useState({});
   const toggleExpand = (id) => {
     setExpandedCards((prev) => ({
