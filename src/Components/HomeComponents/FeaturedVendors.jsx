@@ -34,7 +34,7 @@ const FeaturedVendors = () => {
         <div className="fv_carousel_zone">
 
           <button className="btn2 left" onClick={() => scrollRow(row1Ref, "left")}>
-            <IoChevronBackOutline size={20} />
+            <IoChevronBackOutline size={40} />
           </button>
 
           <div className="fv_window" ref={row1Ref}>
@@ -53,7 +53,7 @@ const FeaturedVendors = () => {
           </div>
 
           <button className="btn2 right" onClick={() => scrollRow(row1Ref, "right")}>
-            <IoChevronForwardOutline size={20} />
+            <IoChevronForwardOutline size={40} />
           </button>
 
         </div>
@@ -62,7 +62,7 @@ const FeaturedVendors = () => {
         <div className="fv_carousel_zone">
 
           <button className="btn2 left" onClick={() => scrollRow(row2Ref, "left")}>
-            <IoChevronBackOutline size={20} />
+            <IoChevronBackOutline size={40} />
           </button>
 
           <div className="fv_window" ref={row2Ref}>
@@ -80,7 +80,7 @@ const FeaturedVendors = () => {
           </div>
 
           <button className="btn2 right" onClick={() => scrollRow(row2Ref, "right")}>
-            <IoChevronForwardOutline size={20} />
+            <IoChevronForwardOutline size={40} />
           </button>
 
         </div>
