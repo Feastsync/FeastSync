@@ -1,45 +1,29 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html,
-body,
-#root {
-  width: 100%;
-  overflow-x: hidden;
-}
-
-.main-container {
+.heroescrow-container {
   width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
 }
-
-/* HERO SECTION */
-
-.hero-section {
+.heroescrow-section {
   width: 100%;
   height: 85vh;
   position: relative;
 }
-
-.hero-section img {
+.heroescrow-section img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
-.overlay {
+.escrow-overlay {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(75, 32, 95, 0.55);
 }
-
-.hero-content {
+.heroescrow-content {
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 5%;
   transform: translateY(-50%);
   width: 90%;
@@ -47,310 +31,306 @@ body,
   color: white;
   z-index: 2;
 }
-
-.hero-title {
-  font-size: 2.8rem;
-  font-weight: 800;
-  line-height: 1.2;
-  margin-bottom: 18px;
+.heroescrow-title {
+  font-size: 45px;
+  font-weight: 550;
+  line-height: 1.1;
+  margin-bottom: 11px;
 }
-
-.hero-description {
-  font-size: 1.2rem;
-  line-height: 1.6;
+.heroescrow-description {
+  font-size: 1.1rem;
+  line-height: 1.5;
   font-weight: 400;
 }
-
-/* STEP BUTTONS */
-
-.step-container {
+.stepescrow-container {
   width: 100%;
-  min-height: 18vh;
+  min-height: 18.5vh;
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 30px;
-  padding: 25px;
-  flex-wrap: wrap;
-  background: #fff;
+ 
 }
+.stepescrow-wrapper{
+  width: 90%;
+  min-height: 100%;
+  align-items: flex-end;
+  margin-left: 30px;
+  display: flex;
+  gap: 50px;
 
-.step-btn {
+}
+.stepescrow-btn {
   flex: 1;
-  max-width: 350px;
-  min-width: 250px;
-  height: 75px;
-
+  max-width: 209px;
+  min-width: 190px;
+  height: 60px;
   display: flex;
   align-items: center;
-  gap: 20px;
-
   padding: 0 20px;
-  background: white;
-  border-radius: 8px;
-  cursor: pointer;
-
+  border: 1px solid var(--primary-color);
+  border-radius: 6px;
+  font-size: 14.5px;
   color: #0f0f10;
+  gap: 15px;
+  cursor: pointer;
   transition: 0.3s ease;
 }
-
-.circle-icon {
+.circleescrow-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  width: 50px;
-  height: 50px;
-
-  border: 2px solid var(--text-color);
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--primary-color);
   border-radius: 50%;
-
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 12px;
   flex-shrink: 0;
 }
-
-.step-btn span {
-  font-size: 18px;
-  font-weight: 500;
-}
-
-.step-btn.active {
-  background: #2b0054;
+.stepescrow-btn.active {
+  background-color: #2b0054;
   color: white;
 }
-
-.step-btn.active .circle-icon {
+.stepescrow-btn.active .circleescrow-icon {
   border-color: white;
 }
-
-/* INTRO TEXT */
-
-.hero-findbook {
+.heroescrow-findbook {
   width: 100%;
-  padding: 60px 20px;
+  padding: 40px 20px;
 }
-
-.hero-findbook1 {
+.heroescrow-findbook1 {
   width: 100%;
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
-
-.hero-findbook1 h2 {
+.heroescrow-findbook1 h2 {
   text-align: center;
-  font-size: 30px;
+  font-size: 20px;
   color: var(--text-color);
   font-weight: 700;
   line-height: 1.4;
 }
-
-.hero-findbook2 {
+.heroescrow-findbook2 {
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
-
-.hero-findbook2 p {
+.heroescrow-findbook2b {
+  width:50%;
+}
+.heroescrow-findbook2 p {
   text-align: center;
-  font-size: 21px;
+  font-size: 15px;
+  font-weight: 400;
   color: var(--text-color);
   line-height: 1.7;
-  font-weight: 400;
   max-width: 850px;
   margin: 0 auto;
 }
-
-/* STEPS SECTION */
-
-.steps-section {
+.stepsescrow-section {
   width: 100%;
-  padding: 60px 20px;
+  height: 70%;
+  background-color:white;
+  display: flex;
+  justify-content: center;
 }
-
-.steps-wrapper {
+.stepsescrow-wrapper {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1105px;
   margin: 0 auto;
-
   display: grid;
+  justify-content: center;
   grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+  gap: 13px;
 }
-
-.step-card {
+.stepescrow-card {
   background: white;
   border-radius: 8px;
-  padding: 20px;
-
+  width: 90%;
   display: flex;
   flex-direction: column;
   text-align: center;
-  min-height: 470px;
+  margin-bottom: 20px;
+  min-height: 40px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.05);
 }
-
-.step-number {
+.stepescrow-number {
   text-align: left;
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text-color);
   margin-bottom: 15px;
+  margin-top: 10px;
+  margin-left: 8px;
 }
-
-.step-title {
-  font-size: 22px;
+.stepescrow-title {
+  font-size: 16px;
   font-weight: 500;
   color: var(--text-color);
   line-height: 1.4;
   margin-bottom: 12px;
   margin-top: 10px;
+  text-align: center;
 }
-
-.step-description {
-  font-size: 18px;
-  font-weight: 300;
+.stepescrow-description {
+  font-size: 13px;
   color: var(--text-color);
+  font-weight: 300;
   line-height: 1.45;
-  margin-bottom: 15px;
+  text-align: center;
+  margin: 0px 30px 40px 30px;
 }
-
-.step-image-container {
-  margin-top: auto;
-
+.stepescrow-image-container {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  width: 100%;
 }
-
-.step-illustration {
-  width: 100%;
-  max-width: 300px;
+.stepescrow-illustration {
+  width: 80%;
+  max-width: 250px;
   height: 100%;
   object-fit: cover;
-  display: block;
 }
 
-/* ========================= */
-/* TABLET */
-/* ========================= */
-
-@media (max-width: 768px) {
-  .hero-section {
-    height: 70vh;
+@media screen and (max-width: 1200px) {
+  .stepsescrow-wrapper {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for tablet/laptop sizing */
+    gap: 30px;
+    padding: 0 10px;
   }
-
-  .hero-content {
-    width: 90%;
+  .heroescrow-title {
+    font-size: 34px; /* Balanced down from 36px to prevent line overflows */
   }
-
-  .hero-title {
-    font-size: 2rem;
+  .heroescrow-findbook2 p {
+    font-size: 19px;
+    max-width: 750px;
   }
+}
 
-  .hero-description {
+/* ==========================================================
+   2️⃣ TABLETS & PORTRAIT PHONES RESPONSIVENESS (max-width: 768px)
+   ========================================================== */
+@media screen and (max-width: 768px) {
+  .heroescrow-section {
+    height: auto;
+    min-height: 65vh; /* Gives the background image cleaner bounds on tablets */
+    display: flex;
+    align-items: center;
+    padding: 50px 0;
+  }
+  .heroescrow-content {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    padding: 0 30px;
+  }
+  .heroescrow-title {
+    font-size: 32px;
+  }
+  .heroescrow-description {
     font-size: 1rem;
   }
-
-  .step-container {
-    flex-direction: column;
+  .stepescrow-container {
     gap: 15px;
+    padding: 15px;
   }
-
-  .step-btn {
+  .stepescrow-btn {
+    flex: none;
     width: 100%;
     max-width: 100%;
+    height: 60px;
+    font-size: 16px;
   }
-
-  .hero-findbook1 h2 {
+  .circleescrow-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  .heroescrow-findbook {
+    padding: 50px 20px;
+  }
+  .heroescrow-findbook1 h2 {
     font-size: 26px;
   }
-
-  .hero-findbook2 h5 {
-    font-size: 18px;
+  .heroescrow-findbook2 p {
+    font-size: 17px;
     line-height: 1.6;
   }
-
-  .steps-wrapper {
+  .stepsescrow-section {
+    padding: 40px 20px;
+  }
+  .stepsescrow-wrapper {
     grid-template-columns: 1fr;
+    gap: 30px;
   }
-
-  .step-card {
+  .stepescrow-card {
     min-height: auto;
+    padding: 30px 25px;
   }
-
-  .step-title {
-    font-size: 22px;
-  }
-
-  .step-description {
-    font-size: 18px;
+  .stepescrow-illustration {
+    max-width: 260px; /* Scales down image container to save vertical viewport scroll space */
   }
 }
 
-/* ========================= */
-/* MOBILE */
-/* ========================= */
 
-@media (max-width: 480px) {
-  .hero-section {
-    height: 65vh;
+@media screen and (max-width: 480px) {
+  .heroescrow-section {
+    min-height: 55vh;
+    padding: 40px 0;
   }
-
-  .hero-title {
-    font-size: 1.7rem;
+  .heroescrow-content {
+    padding: 0 20px;
   }
-
-  .hero-description {
+  .heroescrow-title {
+    font-size: 26px;
+    margin-bottom: 12px;
+  }
+  .heroescrow-description {
     font-size: 0.95rem;
+    line-height: 1.45;
   }
-
-  .step-btn {
-    min-width: 100%;
-    height: auto;
-    padding: 15px;
+  .stepescrow-container {
+    gap: 10px;
+    padding: 12px;
   }
-
-  .circle-icon {
-    width: 45px;
-    height: 45px;
-    font-size: 16px;
+  .stepescrow-btn {
+    height: 55px;
+    font-size: 15px;
+    padding: 0 15px;
+    gap: 12px;
   }
-
-  .step-btn span {
-    font-size: 16px;
+  .circleescrow-icon {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
   }
-
-  .hero-findbook {
+  .heroescrow-findbook {
     padding: 40px 15px;
   }
-
-  .hero-findbook1 h2 {
+  .heroescrow-findbook1 h2 {
     font-size: 22px;
+    line-height: 1.3;
+  }
+  .heroescrow-findbook2 p {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .stepsescrow-section {
+    padding: 30px 15px;
+  }
+  .stepescrow-card {
+    padding: 20px 15px;
+  }
+  .stepescrow-title {
+    font-size: 19px;
+    margin-bottom: 8px;
+  }
+  .stepescrow-description {
+    font-size: 14.5px;
     line-height: 1.4;
   }
-
-  .hero-findbook2 h5 {
-    font-size: 16px;
-    line-height: 1.6;
-  }
-
-  .steps-section {
-    padding: 40px 15px;
-  }
-  .step-card {
-    padding: 18px;
-  }
-
-  .step-title {
-    font-size: 20px;
-  }
-
-  .step-description {
-    font-size: 16px;
-  }
-
-  .step-illustration {
+  .stepescrow-illustration {
     max-width: 220px;
   }
 }

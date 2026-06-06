@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const Howitworksescrow = () => {
   const navigate = useNavigate();
-  const stepData = [
+  const stepData3 = [
     {
       stepNumber: "Step 1",
       title: "KYC — Identity verification",
@@ -31,73 +31,83 @@ const Howitworksescrow = () => {
     },
   ];
   return (
-    <main className="main-container">
-      <section className="hero-section">
+    <main className="heroescrow-container">
+      <section className="heroescrow-section">
         <img src={Heroimage} alt="Hero" />
-        <div className="overlay"></div>
-        <div className="hero-content">
-          <h1 className="hero-title">
+        <div className="escrow-overlay"></div>
+        <div className="heroescrow-content">
+          <h1 className="heroescrow-title">
             Secure. Transparent.
             <br />
             Seamless: How
             <br />
             FeastSync Works.
           </h1>
-          <p className="hero-description">
-            Whether you are hosting an event or performing at
-            one, FeastSync is built to make the entire process
-            transparent, secure, and effortless — from first click
+          <p className="heroescrow-description">
+            Whether you are hosting an event or performing at <br />
+            one, FeastSync is built to make the entire process <br />
+            transparent, secure, and effortless — from first click <br />
             to final payout.
           </p>
         </div>
       </section>
-      <section className="step-container">
-        <div className="step-btn" onClick={() => navigate("/howitworks")}>
-          <div className="circle-icon check">✓</div>
-          <span>For Organizer/Host</span>
-        </div>
-        <div
-          className="step-btn"
-          onClick={() => navigate("/howitworks/howitworksvendor")}
-        >
-          <div className="circle-icon">02</div>
-          <span>Vendors</span>
-        </div>
-        <div
-          className="step-btn active"
-          onClick={() => navigate("/howitworks/howitworksescrow")}
-        >
-          <div className="circle-icon">03</div>
-          <span>Escrow/Verification</span>
-        </div>
+      <section className="stepescrow-container">
+        <article className="stepescrow-wrapper">
+          <div
+            className="stepescrow-btn"
+            onClick={() => navigate("/howitworks")}
+          >
+            <div className="circleescrow-icon">01</div>
+            <span>For Organizer/Host</span>
+          </div>
+          <div
+            className="stepescrow-btn"
+            onClick={() => navigate("/howitworks/howitworksvendor")}
+          >
+            <div className="circleescrow-icon">02</div>
+            <span>Vendors</span>
+          </div>
+          <div
+            className="stepescrow-btn active"
+            onClick={() => navigate("/howitworks/howitworksescrow")}
+          >
+            <div className="circleescrow-icon check">✓</div>
+          
+            <span>Escrow/Verification</span>
+          </div>
+        </article>
       </section>
-      <section className="hero-findbook">
-        <article className="hero-findbook1">
+      <section className="heroescrow-findbook">
+        <article className="heroescrow-findbook1">
           <h2>
-            Two systems working together to protect everyone
+            Find, book, and pay for <br /> entertainment — without the risk.
           </h2>
         </article>
-        <article className="hero-findbook2">
-          <p>
-            FeastSync's trust layer is built on two pillars — KYC identity
-            verification that confirms who you
-            are dealing with, and escrow-based payments that protect what you
-            are paying or earning.
-            Together they make FEASTSYNC the only platform in Nigeria where
-            booking entertainment
-            carries zero financial risk for either party.
-          </p>
+        <article className="heroescrow-findbook2">
+          <article className="heroescrow-findbook2b">
+            <p>
+              FeastSync gives event organizers access to a curated roster of
+              verified entertainment talent across Lagos. Every booking is
+              straightforward, every payment is protected, and every entertainer
+              on the platform has been identity-checked before you ever see
+              their profile.
+            </p>
+          </article>
         </article>
       </section>
-      <section className="steps-section">
-        <div className="steps-wrapper">
-          {stepData.map((step, index) => (
-            <div key={index} className="step-card">
-              <span className="step-number">{step.stepNumber}</span>
-              <h3 className="step-title">{step.title}</h3>
-              <p className="step-description">{step.description}</p>
-              <div className="step-image-container">
-                <img src={step.image} alt="" className="step-illustration" />
+      <section className="stepsescrow-section">
+        <div className="stepsescrow-wrapper">
+          {stepData3.map((step, index) => (
+            <div key={index} className="stepescrow-card">
+              <span className="stepescrow-number">{step.stepNumber}</span>
+              <h3 className="stepescrow-title">{step.title}</h3>
+              <p className="stepescrow-description">{step.description}</p>
+              <div className="stepescrow-image-container">
+                <img
+                  src={step.image}
+                  alt=""
+                  className="stepescrow-illustration"
+                />
               </div>
             </div>
           ))}

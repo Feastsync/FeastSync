@@ -52,67 +52,76 @@ const Howitworksvendor = () => {
     },
   ];
   return (
-    <main className="main-container">
-      <section className="hero-section">
+    <main className="herovendor-container">
+      <section className="herovendor-section">
         <img src={Heroimage} alt="Hero" />
-        <div className="overlay"></div>
-        <div className="hero-content">
-          <h1 className="hero-title">
+        <div className="vendor-overlay"></div>
+        <div className="herovendor-content">
+          <h1 className="herovendor-title">
             Secure. Transparent.
             <br />
             Seamless: How
             <br />
             FeastSync Works.
           </h1>
-          <p className="hero-description">
-            Whether you are hosting an event or performing at one, FeastSync is
-            built to make the entire process transparent, secure, and effortless
-            — from first click to final payout.
+          <p className="herovendor-description">
+            Whether you are hosting an event or performing at <br />
+            one, FeastSync is built to make the entire process <br />
+            transparent, secure, and effortless — from first click <br />
+            to final payout.
           </p>
         </div>
       </section>
-      <section className="step-container">
-        <div className="step-btn" onClick={() => navigate("/howitworks")}>
-          <div className="circle-icon check">✓</div>
+      <section className="stepvendor-container">
+        <article className="stepvendor-wrapper">
+        <div
+          className="stepvendor-btn"
+          onClick={() => navigate("/howitworks")}
+        >
+          <div className="circlevendor-icon check">✓</div>
           <span>For Organizer/Host</span>
         </div>
         <div
-          className="step-btn active"
+          className="stepvendor-btn active"
           onClick={() => navigate("/howitworks/howitworksvendor")}
         >
-          <div className="circle-icon">02</div>
+          <div className="circlevendor-icon">02</div>
           <span>Vendors</span>
         </div>
         <div
-          className="step-btn"
+          className="stepvendor-btn"
           onClick={() => navigate("/howitworks/howitworksescrow")}
         >
-          <div className="circle-icon">03</div>
+          <div className="circlevendor-icon">03</div>
           <span>Escrow/Verification</span>
         </div>
-      </section>
-      <section className="hero-findbook">
-        <article className="hero-findbook1">
-          <h2>Build your reputation. Get paid without the hassle</h2>
         </article>
-        <article className="hero-findbook2">
+      </section>
+      <section className="herovendor-findbook">
+        <article className="herovendor-findbook1">
+          <h2>Find, book, and pay for <br /> entertainment — without the risk.</h2>
+        </article>
+        <article className="herovendor-findbook2">
+          <article className="herovendor-findbook2b">
           <p>
-            FeastSync gives entertainment professionals a platform that protects
-            their time, guarantees their payment, and builds their credibility —
-            all in one place. No middlemen. No chasing invoices. Just verified
-            talent, professional bookings, and secured payouts.
+            FeastSync gives event organizers access to a curated roster of
+            verified entertainment talent across Lagos. Every booking is
+            straightforward, every payment is protected, and every entertainer
+            on the platform has been identity-checked before you ever see their
+            profile.
           </p>
+          </article>
         </article>
       </section>
-      <section className="steps-section">
-        <div className="steps-wrapper">
+      <section className="stepsvendor-section">
+        <div className="stepsvendor-wrapper">
           {stepsData.map((step, index) => (
-            <div key={index} className="step-card">
-              <span className="step-number">{step.stepNumber}</span>
-              <h3 className="step-title">{step.title}</h3>
-              <p className="step-description">{step.description}</p>
-              <div className="step-image-container">
-                <img src={step.image} alt="" className="step-illustration" />
+            <div key={index} className="stepvendor-card">
+              <span className="stepvendor-number">{step.stepNumber}</span>
+              <h3 className="stepvendor-title">{step.title}</h3>
+              <p className="stepvendor-description">{step.description}</p>
+              <div className="stepvendor-image-container">
+                <img src={step.image} alt="" className="stepvendor-illustration" />
               </div>
             </div>
           ))}
