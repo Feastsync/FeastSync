@@ -160,7 +160,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--primary-color);
+        color: #330159 !important;
         z-index: 1005;
     }
 
@@ -206,7 +206,7 @@
         display: block;
         margin-left: 15px;
         font-size: 16px;
-        color: var(--primary-color);
+        color: #330159 !important;
         font-weight: 500;
     }
 
@@ -220,7 +220,8 @@
     .notification-badge {
         top: -4px;
         right: -4px;
-        background-color: var(--primary-color);
+        background-color: #330159 !important;
+        font-size: 8px;
         color: white;
     }
 
@@ -247,7 +248,7 @@
         height: 46px;
         border-radius: 8px;
         background-color: #ffffff;
-        color: var(--primary-color);
+        color: #330159 !important;
         border: 1px solid #f0f0f0;
         box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         font-size: 16px;
@@ -256,7 +257,7 @@
     .edit-profile-btn {
         flex: 1;
         height: 46px;
-        background-color: var(--primary-color);
+        background-color: #330159 !important;
         color: #ffffff;
         border: none;
         border-radius: 8px;
