@@ -1,3 +1,9 @@
+.mainAboutContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
 .about-container {
   display: flex;
   flex-direction: column;
@@ -34,9 +40,9 @@
 }
 .aboutWrapper {
   display: flex;
-  gap: 70px;
-  padding-left: 50px;
-  padding-right: 20px;
+  gap: 100px;
+    padding-left: 100px;
+
 }
 
 .aboutWrapperRight {
@@ -55,8 +61,10 @@
 .aboutWrapperleft {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 40px;
   line-height: 25px;
+
+  
 }
 .aboutWrapperHolder {
   display: flex;
@@ -69,8 +77,13 @@
   gap: 20px;
 }
 .aboutWrapperleftTitle {
-  font-size: 40px;
+  font-size: 35px;
   font-weight: bold;
+ 
+}
+.aboutWrapperTexts{
+  line-height: 35px;
+  font-size: 18px;
 }
 .row-span-1-2 {
   grid-column: 1;
@@ -110,6 +123,9 @@
     #1a0a2e 100%
   );
 }
+.missionHolder{
+  line-height: 40px;
+}
 .aboutMission div {
   width: 25vw;
   height: 80vh;
@@ -118,6 +134,7 @@
   justify-content: center;
   align-items: center;
   gap: 20px;
+  line-height: 25px;
 }
 
 .missionQuote {
@@ -128,9 +145,14 @@
 }
 .aboutMission div p {
   color: white;
-  line-height: 30px;
+  line-height: 35px;
 }
 
+.aboutValueWrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
 .aboutValuesBox {
   display: flex;
   flex-direction: column;
@@ -148,9 +170,10 @@
   display: flex;
   gap: 20px;
   flex-direction: column;
+    line-height: 50px;
 }
 .aboutValues img {
-  width: 30%;
+  width: 35%;
   height: 75vh;
   border-radius: 10px;
 }
@@ -165,8 +188,9 @@
   text-align: start;
   color: white;
   border-radius: 10px;
-  line-height: 25px;
+  line-height: 30px;
   padding: 10px;
+  gap: 20px;
 }
 .aboutValues p span {
   font-size: 22px;
@@ -193,6 +217,7 @@
 }
 .aboutTrustText {
   color: #330159;
+  font-size: 20px;
 }
 .aboutTrust p {
   text-align: center;
@@ -200,11 +225,11 @@
 .aboutTrustinfo {
   line-height: 50px;
 }
-.aboutTeamText {
+.aboutTeamWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 100px;
+  gap: 50px;
 }
 .aboutTeamTitle {
   font-size: 30px;
@@ -247,7 +272,7 @@
   margin-left: 120px;
 }
 .aboutTeam {
-  width: 15vw;
+  width: 18vw;
   border-radius: 80px 80px 0px 0px;
   height: 100%;
   display: flex;
@@ -263,6 +288,7 @@
 .aboutTeamText {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   height: 30%;
 
   gap: 1px;
@@ -270,6 +296,7 @@
 }
 .aboutName {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: #330159;
 }
 .aboutImgHolder {
   border-radius: 75px 75px 0px 0px;
@@ -307,8 +334,9 @@
   padding: 5px;
 }
 .btnmore:hover {
-  background: #e748ec;
+  background: #b785f8;
   border-radius: 5px;
+  color: white;
 }
 
 .aboutExplore {
