@@ -9,11 +9,11 @@ import { FaHandsHelping } from "react-icons/fa";
 import { PiStarFour } from "react-icons/pi";
 import { TbTargetArrow } from "react-icons/tb";
 // import "./Css/About.css";
-// import "./NewCSS/about.css";
+import "./NewCSS/about.css";
 
 const About = () => {
   return (
-    <main style={{ minHeight: "80vh" }}>
+    <main style={{ minHeight: "80vh" }} className="mainAboutContainer" >
       <section className="aboutContainer">
         <div className="aboutContainer1">
           <p className="about">About FeastSync</p>
@@ -34,7 +34,7 @@ const About = () => {
         <div className="aboutWrapperleft">
           <div className="aboutWrapperHolder">
             <p className="aboutWrapperleftTitle">About Feastsync</p>
-            <p>
+            <p className="aboutWrapperTexts">
               Feastsync is a premium digital booking platform connecting
               world-class event organisers with Nigeria's finest entertainment
               talent-backed by secure technology and build for trust
@@ -43,13 +43,13 @@ const About = () => {
 
           <div className="aboutWrapperleftside">
             <p className="aboutWrapperleftTitle">Our story</p>
-            <p>
+            <p className="aboutWrapperTexts">
               Nigeria's entertainment industry is world-class.The talent is
               undeniable.But for too long.event entertainers booking has relied
               on informal networks.Unreliable middlemen and payment system that
               put both organisers and entertainers at risk.
             </p>
-            <p>
+            <p className="aboutWrapperTexts">
               Developed by a specialized team from the seventh cohort of The
               Curve Africa's tech trainee program, the platform replaces
               fragmented trust deficient booking processes with a structure
@@ -61,19 +61,19 @@ const About = () => {
         </div>
         <div className="aboutWrapperRight">
           <img
-            src="../assets/About/yoruba mc.png"
+            src="../public/About/yoruba mc.png"
             alt="Yoruba MC"
             className="row-span-1-2"
           />
-          <img src="../assets/About/photographer.png" alt="Photographer" />
+          <img src="../public/About/photographer.png" alt="Photographer" />
           <img
-            src="../assets/About/mc.png"
+            src="../public/About/mc.png"
             alt="MC"
             className="row-span-2-2"
-            style={{ height: "70vh" }}
+            
           />
           <img
-            src="../assets/About/igbodj.png"
+            src="../public/About/igbodj.png"
             alt="Igbo DJ"
             className="row-span-3-2"
           />
@@ -91,12 +91,12 @@ const About = () => {
           </p>
         </div>
         <div>
-          <img src="../assets/About/pana.png" alt="Mission" />
+          <img src="public/About/pana.png" alt="Mission" />
         </div>
         <div className="missionHolder">
           <p className="missionQuote">Our Vision</p>
           <p>
-            {" "}
+            
             To create a world where booking live entertainment is entirely
             stress-free, establishing FeastSync as the global benchmark for
             secure, verified talent and flawless event execution.
@@ -104,7 +104,7 @@ const About = () => {
         </div>
       </section>
 
-      <section>
+      <section className="aboutValueWrapper">
         <div className="aboutValuesBox">
           <p className="aboutTeamTitle">What we stand for</p>
           <p>Four values.One platform</p>
@@ -130,7 +130,7 @@ const About = () => {
           </div>
 
           <img
-            src="../assets/About/party.jpg"
+            src="../public/About/party.jpg"
             alt="Party"
             className="row-spans-1-2"
           />
@@ -171,7 +171,7 @@ const About = () => {
         </span>
       </section>
 
-      <section className="aboutTeamText">
+      <section className="aboutTeamWrapper">
         <div>
           <p className="aboutTeamTitle">Meet the Team</p>
           <p>The brain behind feastsync</p>

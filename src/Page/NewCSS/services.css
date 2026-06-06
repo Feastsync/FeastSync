@@ -1,10 +1,10 @@
 .service-container {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 50px;
 }
 .overlayer {
-  background-image: url(../../assets/About/show.png);
+  background-image: url(../../../public/About/show.png);
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
@@ -23,7 +23,12 @@
   color: white;
   text-align: center;
   gap: 30px;
-  background: rgba(176, 170, 179, 0.55);
+  background: rgba(50, 28, 54, 0.55);
+}
+.service{
+display: flex;
+flex-direction: column;
+gap: 50px;
 }
 .serviceContainerTitle {
   font-size: 40px;
@@ -54,7 +59,7 @@
 .serviceQuote {
   font-size: 30px;
   padding-left: 100px;
-  font-weight: 900px;
+  font-weight: bold;
 }
 .serviceBooking {
   display: flex;
@@ -101,7 +106,25 @@
 .serviceCoperate {
   font-size: 30px;
   font-weight: bold;
-  color: #330159;
+  color: black;
+}
+.serviceBrandWrapper{
+  padding: 10px;
+}
+.serviceBrand{
+  line-height: 35px;
+  font-size: 18px;
+}
+.servicebtn{
+  background:  #330159;
+  width: 180px;
+  height: 50px;
+  color: white;
+}
+.servicebtn:hover{
+  background: transparent;
+  color: black;
+  border: 1px solid black;
 }
 @media (max-width: 480px) {
   .overlayer {
