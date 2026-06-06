@@ -1,25 +1,19 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.main-container {
+.herohost-container {
   width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
 }
-.hero-section {
+.herohost-section {
   width: 100%;
   height: 85vh;
   position: relative;
 }
-.hero-section img {
+.herohost-section img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.overlay {
+.host-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -27,9 +21,9 @@
   height: 100%;
   background: rgba(75, 32, 95, 0.55);
 }
-.hero-content {
+.herohost-content {
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 5%;
   transform: translateY(-50%);
   width: 90%;
@@ -37,123 +31,138 @@
   color: white;
   z-index: 2;
 }
-.hero-title {
-  font-size: 30px;
-  font-weight: 800;
-  line-height: 1.2;
-  margin-bottom: 15px;
+.herohost-title {
+  font-size: 45px;
+  font-weight: 550;
+  line-height: 1.1;
+  margin-bottom: 11px;
 }
-.hero-description {
+.herohost-description {
   font-size: 1.1rem;
   line-height: 1.5;
   font-weight: 400;
 }
-.step-container {
+.stephost-container {
   width: 100%;
-  min-height: 15vh;
+  min-height: 18.5vh;
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 30px;
-  padding: 20px;
-  flex-wrap: wrap;
-  background: #fff;
+ 
 }
-.step-btn {
+.stephost-wrapper{
+  width: 90%;
+  min-height: 100%;
+  align-items: flex-end;
+  margin-left: 30px;
+  display: flex;
+  gap: 50px;
+
+}
+.stephost-btn {
   flex: 1;
-  max-width: 350px;
-  min-width: 250px;
-  height: 70px;
+  max-width: 209px;
+  min-width: 190px;
+  height: 60px;
   display: flex;
   align-items: center;
   padding: 0 20px;
-  background-color: white;
+  border: 1px solid var(--primary-color);
   border-radius: 6px;
-  font-size: 18px;
+  font-size: 14.5px;
   color: #0f0f10;
-  gap: 20px;
+  gap: 15px;
   cursor: pointer;
   transition: 0.3s ease;
 }
-.circle-icon {
+.circlehost-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  height: 50px;
-  border: 2px solid var(--text-color);
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--primary-color);
   border-radius: 50%;
-  font-size: 20px;
+  font-size: 12px;
   flex-shrink: 0;
 }
-.step-btn.active {
+.stephost-btn.active {
   background-color: #2b0054;
   color: white;
 }
-.step-btn.active .circle-icon {
+.stephost-btn.active .circlehost-icon {
   border-color: white;
 }
-.hero-findbook {
+.herohost-findbook {
   width: 100%;
-  padding: 60px 20px;
+  padding: 40px 20px;
 }
-.hero-findbook1 {
+.herohost-findbook1 {
   width: 100%;
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
-.hero-findbook1 h2 {
+.herohost-findbook1 h2 {
   text-align: center;
-  font-size: 30px;
+  font-size: 20px;
   color: var(--text-color);
   font-weight: 700;
   line-height: 1.4;
 }
-.hero-findbook2 {
+.herohost-findbook2 {
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
-.hero-findbook2 p {
+.herohost-findbook2b {
+  width:50%;
+}
+.herohost-findbook2 p {
   text-align: center;
-  font-size: 21px;
+  font-size: 15px;
   font-weight: 400;
   color: var(--text-color);
   line-height: 1.7;
   max-width: 850px;
   margin: 0 auto;
 }
-.steps-section {
+.stepshost-section {
   width: 100%;
-  padding: 60px 20px;
+  background-color:white;
+  display: flex;
+  justify-content: center;
 }
-.steps-wrapper {
+.stepshost-wrapper {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1105px;
   margin: 0 auto;
   display: grid;
+  justify-content: center;
   grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+  gap: 13px;
 }
-.step-card {
+.stephost-card {
   background: white;
   border-radius: 8px;
-  width: 100%;
-  padding: 20px;
+  width: 90%;
   display: flex;
   flex-direction: column;
   text-align: center;
-  min-height: 470px;
+  margin-bottom: 20px;
+  min-height: 20px;
   overflow: hidden;
   box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.05);
 }
-.step-number {
+.stephost-number {
   text-align: left;
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text-color);
   margin-bottom: 15px;
+  margin-top: 10px;
+  margin-left: 8px;
 }
-.step-title {
-  font-size: 22px;
+.stephost-title {
+  font-size: 16px;
   font-weight: 500;
   color: var(--text-color);
   line-height: 1.4;
@@ -161,23 +170,22 @@
   margin-top: 10px;
   text-align: center;
 }
-.step-description {
-  font-size: 18px;
+.stephost-description {
+  font-size: 13px;
   color: var(--text-color);
   font-weight: 300;
   line-height: 1.45;
   text-align: center;
-  margin-bottom: 15px;
+  margin: 0px 30px 40px 30px;
 }
-.step-image-container {
-  margin-top: auto;
+.stephost-image-container {
   display: flex;
   justify-content: center;
   align-items: flex-end;
 }
-.step-illustration {
-  width: 100%;
-  max-width: 300px;
+.stephost-illustration {
+  width: 80%;
+  max-width: 250px;
   height: 100%;
   object-fit: cover;
 }

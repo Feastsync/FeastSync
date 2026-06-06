@@ -6,6 +6,9 @@
     justify-content: center;
     align-items: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 999;
 }
 
 .vendorheader-wrapper {
@@ -21,10 +24,11 @@
     display: flex;
     align-items: center;
     gap: 11px;
+    cursor: pointer;
 }
 
 .logo-img {
-    height: 65px;
+    height: 55px;
     width: auto;
     object-fit: contain;
     filter: none; 
@@ -32,7 +36,7 @@
 
 .logo-text {
     color: #ffffff;
-    font-size: 22px;
+    font-size: 17px;
     font-weight: 600;
     margin: 0;
 }
@@ -40,10 +44,9 @@
 .vendorheader-right {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 16px;
 }
 
-/* CHANGE ICON SIZE HERE */
 :root {
     --icon-size: 32px;
 }
@@ -59,11 +62,10 @@
     position: relative;
 }
 
-/* Bell and Message Icons */
 .nav-icon,
 .nav-icon1 {
     width: var(--icon-size);
-    height: var(--icon-size);
+    height: 25px;
     object-fit: contain;
     filter: brightness(0) invert(1);
 }
@@ -75,13 +77,13 @@
 .notification-badge {
     position: absolute;
     top: 0px;
-    right: -2px;
+    right: 7px;
     background-color: white;
     color: black;
     font-size: 10px;
     font-weight: bold;
-    width: 15px;
-    height: 15px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -90,26 +92,26 @@
 }
 
 .avatar-circle {
-    width: 38px;
-    height: 38px;
+    width: 28px;
+    height: 28px;
     background-color: #ffffff;
     color: var(--primary-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 600;
-    font-size: 14px;
+    font-weight: 500;
+    font-size: 12px;
     letter-spacing: 0.5px;
 }
 
 .edit-profile-btn {
-    background: transparent;
+    background: var(--primary-color);
     color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 8px;
-    padding: 12px 18px;
-    font-size: 14.5px;
+    border: 0.5px solid white;
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 12px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
@@ -117,85 +119,170 @@
 
 .edit-profile-btn:hover {
     background-color: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.8);
 }
 
-/* ==========================================
-   TABLET RESPONSIVENESS (max-width: 768px)
-   ========================================== */
-@media screen and (max-width: 768px) {
+.vendorheader-footerActions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.vendorheader-navLabel {
+    display: none;
+}
+
+.vendorheader_menuIcon {
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+@media (max-width: 1200px) {
     .vendorheader-container {
-        background-color: #ffffff !important; /* Pure white backdrop framework exactly like your image */
         height: 70px;
-        box-shadow: 0 1px 0px rgba(0, 0, 0, 0.06); 
+        background-color: #ffffff !important;
+        border-bottom: 1px solid #f0f0f0;
     }
 
-    /* Set text to use secondary-color variable matching your input */
     .logo-text {
-        color: var(--secondary-color, #c64a0c) !important; 
-        font-size: 18px !important;
+        color: var(--secondary-color) !important;
+        font-size: 18px;
     }
 
-    /* CSS filter matrix to convert your icon asset color to match primary-color (#330159) on mobile viewports */
     .logo-img {
-        height: 45px !important;
-        /* Custom layout filter to transform standard image hues into a sharp matching deep violet purple */
+        height: 38px;
         filter: invert(11%) sepia(85%) saturate(5412%) hue-rotate(269deg) brightness(87%) contrast(106%) !important;
     }
 
+    .vendorheader_menuIcon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-color);
+        z-index: 1005;
+    }
+
     .vendorheader-right {
-        gap: 0 !important;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background-color: #ffffff;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 0;
+        padding: 10px 0 0 0;
+        box-sizing: border-box;
+        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
     }
 
-    /* Clean desktop layouts */
-    .vendorheader-right .icon-btn,
-    .vendorheader-right .avatar-circle,
-    .vendorheader-right .edit-profile-btn {
-        display: none !important;
+    .vendorheader-right.active {
+        transform: translateX(0);
     }
 
-    /* Dark mobile hamburger lines matching layout aesthetics */
-    .vendorheader-right::after {
-        content: "";
-        width: 24px;
-        height: 3px;
-        background-color: #111111; 
+    .icon-btn {
+        width: 100%;
+        height: 55px;
+        justify-content: flex-start;
+        padding: 0 20px;
+        border-bottom: 1px solid #f0f0f0;
+        box-sizing: border-box;
+        border-radius: 0;
+    }
+
+    .nav-icon,
+    .nav-icon1 {
+        filter: none !important;
+    }
+
+    .vendorheader-navLabel {
         display: block;
-        box-shadow: 0 7px 0 #111111, 0 -7px 0 #111111; 
-        cursor: pointer;
-        margin-right: 5px;
+        margin-left: 15px;
+        font-size: 16px;
+        color: var(--primary-color);
+        font-weight: 500;
+    }
+
+    .icon-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .notification-badge {
+        top: -4px;
+        right: -4px;
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .vendorheader-footerActions {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 90px;
+        background-color: #ffffff;
+        display: flex !important;
+        flex-direction: row-reverse !important;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        padding: 15px 20px 25px 20px;
+        box-sizing: border-box;
+        border-top: 1px solid #f0f0f0;
+        z-index: 1001;
+    }
+
+    .avatar-circle {
+        flex: 1;
+        height: 46px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        color: var(--primary-color);
+        border: 1px solid #f0f0f0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        font-size: 16px;
+    }
+
+    .edit-profile-btn {
+        flex: 1;
+        height: 46px;
+        background-color: var(--primary-color);
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
     }
 }
 
-/* ==========================================
-   📱 MOBILE RESPONSIVENESS (max-width: 480px)
-   ========================================== */
-@media screen and (max-width: 480px) {
+@media (max-width: 480px) {
     .vendorheader-container {
-        height: 60px; 
-    }
-
-    .vendorheader-wrapper {
-        width: 90%; 
-    }
-
-    .vendorheader-left {
-        gap: 8px; 
+        height: 65px;
     }
 
     .logo-img {
-        height: 36px !important; 
+        height: 32px;
     }
 
     .logo-text {
-        font-size: 16px !important; 
-        letter-spacing: -0.2px;
+        font-size: 16px;
     }
 
-    .vendorheader-right::after {
-        width: 20px;
-        height: 2.5px;
-        box-shadow: 0 6px 0 #111111, 0 -6px 0 #111111;
-        margin-right: 2px;
+    .vendorheader_menuIcon {
+        font-size: 24px;
+    }
+
+    .vendorheader-right {
+        top: 65px;
+        height: calc(100vh - 65px);
     }
 }
