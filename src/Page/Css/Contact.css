@@ -4,7 +4,7 @@
 }
 .contact-section{
     width: 100%;
-    height: 80vh;
+    height: 85vh;
     position: relative;
 }
 .contact-section img{
@@ -22,27 +22,27 @@
 }
 .contact-content{
     position: absolute;
-    top: 49%;
-    left: 40%;
+    top: 45%;
+    left: 37%;
     transform: translateY(-50%);
     width: 40%;
     color: white;
     z-index: 2;
 }
 .contact-content h1{
-    font-size: 2.7rem;
+    font-size: 2.2rem;
     font-weight: 700;
     line-height: 1.1;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
 }
 .contact-content p{
-    font-size: 1.2rem;
+    font-size: 1rem;
     position: absolute;
-    left: 3%;
+    left: 2%;
 }
 .contact-info{
     width: 100%;
-    height: 100vh;
+    height: 110vh;
     display: flex;
 }
 .contact-info-left{
@@ -54,19 +54,18 @@
 .contact-infol-leftwrapper{
     width: 80%;
     height: 85%;
-    /* background-color: blanchedalmond; */
     margin-top: 18px;
     border-radius: 16px;
     background: var(--linear-faint, linear-gradient(135deg, #FAF5FF 0%, #FFF 50%, #FFF7ED 100%));
     box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.05);
     display: flex;
     justify-content: center;
+    padding-left: 40px;
     flex-direction: column;
-    align-items: center;
 }
 .contact-info-btn1{
-    width: 85%;
-    height:24%;
+    width: 80%;
+    height: 30%;
     border-radius: 8px;
     display: flex;
     border: 1px solid var(--stroke-color, #D1D5DC);
@@ -82,11 +81,11 @@
     align-items: center;
 }
 .contact-btn1-left img{
-   width: 28px;
-   height: 28px;
+   width: 22px;
+   height: 22px;
 }
 .contact-btn1-left h1{
-    font-size: 20px;
+    font-size: 12px;
 }
 .contact-btn1-right{
     width: 83%;
@@ -94,15 +93,16 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-left: 10px;
 }
 .contact-btn1-right h1{
-    font-size: 23px;
+    font-size: 19px;
     margin-bottom: 12px;
     color: var(--primary-color);
 
 }
 .contact-btn1-right p{
-    font-size: 18px;
+    font-size: 14px;
     color: var(--text-color);
 }
 .contact-info-right{
@@ -121,13 +121,12 @@
 }
 .contact-info-rightup{
     width: 100%;
-    height: 50%;
+    height: 40%;
 }
 .contact-info-rightup1{
     width: 100%;
     height: 50%;
     display: flex;
-    gap: 30px;
 }
 .contact-rightup1-left{
     width: 50%;
@@ -137,24 +136,28 @@
     flex-direction: column;
 }
 .contact-rightup1-left h1{
-    font-size: 22px;
+    font-size: 16px;
     font-weight: 500;
-    color:#32343A;
+    color: #32343A;
     margin-bottom: 15px;
     margin-left: 15px;
 }
 .contact-rightup1-left input{
-    width: 90%;
-    height:43%;
-    border: 0.3px solid grey;
+    width: 80%;
+    height: 40%;
+    border: 0.3px solid rgb(180, 177, 177);
+    border-radius: 6px;
+    background: var(--linear-faint, linear-gradient(135deg, #FAF5FF 0%, #FFF 50%));
+    box-shadow: 0 10px 30px 0 rgba(193, 192, 192, 0.05);
     padding-left: 20px;
-    font-size: 18px;
+    margin-left: 15px;
+    font-size: 14px;
     opacity: 0.1px;
     color: black;
     font-weight: 100;
 }
 .contact-rightup1-left input::placeholder {
-    opacity: 1; 
+    opacity: 8; 
 }
 .contact-rightup1-right{
     width: 50%;
@@ -164,7 +167,7 @@
     flex-direction: column;
 }
 .contact-rightup1-right h1{
-    font-size: 20px;
+    font-size: 10px;
     font-weight: 500;
     color:#32343A;
     margin-bottom: 30px;
@@ -175,7 +178,7 @@
     height:43%;
     border: 0.3px solid grey;
     padding-left: 20px;
-    font-size: 18px;
+    font-size: 1px;
     opacity: 0.1px;
     color: black;
     font-weight: 100;
@@ -193,22 +196,26 @@
     width: 50%;
     height: 100%;
     display: flex;
-    justify-content: center;
     flex-direction: column;
+    padding-top: 8px;
 }
 .contact-rightup2-left h1{
-     font-size: 20px;
+    font-size: 16px;
     font-weight: 500;
-    color:#32343A;
-    margin-bottom: 30px;
+    color: #32343A;
+    margin-bottom: 15px;
     margin-left: 15px;
 }
 .contact-rightup2-left input{
-    width: 90%;
-    height:43%;
-    border: 0.3px solid grey;
+    width: 82%;
+    height: 40%;
+    border: 0.3px solid rgb(180, 177, 177);
+    border-radius: 6px;
+    background: var(--linear-faint, linear-gradient(135deg, #FAF5FF 0%, #FFF 50%));
+    box-shadow: 0 10px 30px 0 rgba(193, 192, 192, 0.05);
     padding-left: 20px;
-    font-size: 18px;
+    margin-left: 15px;
+    font-size: 14px;
     opacity: 0.1px;
     color: black;
     font-weight: 100;
@@ -232,7 +239,7 @@
     height:40%;
     border: 0.3px solid grey;
     padding-left: 20px;
-    font-size: 25px;
+    font-size: 2px;
     opacity: 0.1px;
     color: rgba(171, 173, 181, 0.4); 
     font-weight: 100;
@@ -244,36 +251,37 @@
     flex-direction: column;
 }
 .contact-info-rightdown h1{
-    font-size: 22px;
+    font-size: 16px;
     font-weight: 500;
     color:var(--text-color);
     margin-bottom: 15px;
-    margin-top: 15px;
+    margin-left: 20px;;
 }
 .contact-rightdown-text{
-    width: 95%;
-    height: 70%;
+    width: 90%;
+    height: 90%;
     padding-top: 20px;
-    padding-left: 20px;
+    padding-left: 15px;
     margin-bottom: 30px;
-    align-self: center;
+    margin-left: 20px;
+
     display: flex;
-    font-size: 20px;
+    font-size: 16px;
     outline: none;
-    color: var(--text-color);
+    color: #32343A;
     resize: none;
 }
 .contact-info-rightdown-btn{
     width: 100%;
-    height: 22%;
-    font-size: 20px;
+    height: 19%;
+    font-size: 14.5px;
     border: none !important;
     color: white;
     background-color: var(--primary-color);
 }
 .faq-section{
     width: 100%;
-    padding: 20px 0;
+    padding: 60px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -284,14 +292,14 @@
     margin-bottom: 50px;
 }
 .faq-header h1{
-    font-size: 1.7rem;
+    font-size: 1.9rem;
     font-weight: 500;
     color: rgba(51, 1, 89, 1);
     margin-bottom: 15px;
-    margin-top: 15px;
+    margin-top: 8px;
 }
 .faq-header p{
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 500;
     color: #0f0f10;
 }
@@ -304,31 +312,31 @@
 .faq-card{
     width: 100%;
     height: 7%;
-    border-radius: 12px;
+    border-radius: 6px;
     background: white;
     border: 1px solid #E5E7EB;
-    padding: 0 10px;
+    padding: 0 5px;
     transition: 0.3s ease;
 }
 .faq-question{
     width: 100%;
-    min-height: 70px;
+    min-height: 57px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
 }
 .faq-question h3{
-    font-size: 1.2rem;
-    font-weight: 500;
-     color: #0f0f10;
+    font-size: 1.09rem;
+    font-weight: 549;
+     color: #0F0F10;
 }
 .faq-question span{
     font-size: 1.2rem;
     color: var(--text-color);
 }
 .faq-answer{
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     color: #666;
     font-size: 16px;
     line-height: 1.6;

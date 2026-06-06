@@ -6,6 +6,8 @@ import Boxicon from "../assets/logos/boxicons_location.svg";
 import Email from "../assets/logos/Email.svg";
 import Phone from "../assets/logos/Phone.svg";
 import Input from "../Props/Input.jsx";
+import { IoIosArrowDown, IoIosArrowUp  } from "react-icons/io";
+
 
 const Contact = () => {
   const [openFaq, setOpenFaq] = useState(null);
@@ -131,7 +133,7 @@ const Contact = () => {
             <div className="faq-card" key={index}>
               <div className="faq-question" onClick={() => toggleFaq(index)}>
                 <h3>{faq.question}</h3>
-                <span>{openFaq === index ? "▲" : "▼"}</span>
+                <span>{openFaq === index ? <IoIosArrowDown /> : <IoIosArrowUp /> }</span>
               </div>
 
               {openFaq === index && (

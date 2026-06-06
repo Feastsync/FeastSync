@@ -1,6 +1,6 @@
 .feastHeader_container {
   width: 100%;
-  height: 11vh;
+  height: 12.5vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,21 +29,21 @@
 }
 
 .feastHeader_logoImg {
-  height: 70px;
+  height: 50px;
   object-fit: contain;
   cursor: pointer;
 }
 
 .feastHeader_logoText {
   color: var(--secondary-color);
-  font-size: 25px;
+  font-size: 18.5px;
   font-weight: 600;
 }
 
 .feastHeader_middle {
   display: flex;
   align-items: center;
-  gap: 15px;
+  /* gap: 15px; */
   height: 100%;
   flex: 1;
   justify-content: center;
@@ -52,7 +52,7 @@
 .feastHeader_navLink {
   text-decoration: none;
   color: var(--primary-color);
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 500;
   padding: 8px 16px;
   display: flex;
@@ -71,7 +71,7 @@
 }
 
 .feastHeader_navLink.active {
-  font-weight: 600;
+  font-weight: 500;
   background-color: transparent;
   color: var(--primary-color);
 }
@@ -92,21 +92,17 @@
   color: #ffffff;
 }
 
-.feastHeader_navLink.active:hover::after {
-  background-color: white;
-}
-
 .feastHeader_right {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 35px;
   flex-shrink: 0;
 }
 
 .feastHeader_login {
   color: var(--secondary-color);
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 500;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -117,16 +113,16 @@
 
 .feastHeader_login:hover {
   color: var(--secondary-color);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .feastHeader_getstartedBtn {
   background-color: var(--primary-color);
   color: #ffffff;
-  height: 55px;
-  padding: 8px 24px;
-  border-radius: 8px;
-  font-size: 18px;
+  height: 45px;
+  padding: 8px 15px;
+  border-radius: 6px;
+  font-size: 14.5px;
   font-weight: 500;
 }
 
@@ -145,17 +141,18 @@
   flex-shrink: 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
   .feastHeader_container {
-    height: 60px;
+    height: 70px;
   }
 
   .feastHeader_wrapper {
+    width: 90%;
     justify-content: space-between;
   }
 
   .feastHeader_logoImg {
-    height: 36px;
+    height: 38px;
   }
 
   .feastHeader_logoText {
@@ -166,29 +163,128 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1002;
+    z-index: 1005; 
   }
 
   .feastHeader_middle {
     position: fixed;
-    top: 60px;
+    top: 70px;
     left: 0;
     width: 100%;
-    height: calc(100vh - 60px - 90px);
+    max-height: calc(100vh - 70px - 90px); 
+    overflow-y: auto; 
+    -webkit-overflow-scrolling: touch; 
     background-color: #ffffff;
+    display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
-    gap: 0;
-    padding: 0;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
+    padding: 10px 0;
+    box-sizing: border-box;
     z-index: 1000;
-    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
   }
 
-  .feastHeader_middle.active {
+  .feastHeader_right {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 90px; 
+    background-color: #ffffff;
+    display: flex !important; 
+    flex-direction: row-reverse !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 15px 20px 25px 20px;
+    box-sizing: border-box;
+    border-top: 1px solid #f0f0f0; 
+    z-index: 1001; 
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .feastHeader_middle.active,
+  .feastHeader_right.active {
     transform: translateX(0);
   }
+
+  .feastHeader_navLink {
+    width: 100%;
+    height: 55px;
+    justify-content: flex-start; 
+    font-size: 16px;
+    padding: 0 20px;
+    border-bottom: 1px solid #f0f0f0;
+    border-radius: 0;
+    flex-shrink: 0; 
+  }
+
+  .feastHeader_navLink:hover {
+    background-color: transparent;
+    color: var(--primary-color);
+  }
+
+  .feastHeader_navLink.active {
+    background-color: transparent;
+    color: var(--primary-color);
+  }
+
+  .feastHeader_navLink.active::after {
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 3px;
+    bottom: auto;
+    top: 0;
+    border-radius: 0;
+  }
+
+  .feastHeader_login {
+    flex: 1;
+    height: 46px;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    padding: 0;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    box-sizing: border-box;
+  }
+
+  .feastHeader_getstartedBtn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 46px;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
 }
-/* .feastHeader_nav */
+
+@media (max-width: 480px) {
+  .feastHeader_container {
+    height: 65px; 
+  }
+
+  .feastHeader_logoImg {
+    height: 32px;
+  }
+
+  .feastHeader_logoText {
+    font-size: 16px; 
+  }
+
+  .feastHeader_menuIcon {
+    font-size: 24px;
+  }
+
+  .feastHeader_middle {
+    top: 65px;
+    max-height: calc(100vh - 65px - 90px); 
+  }
+}
