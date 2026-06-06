@@ -13,7 +13,7 @@ const ResetPassword = () => {
   const [showConfirm, setShowConfirm] = useState(false);
 
   const handlePassword =()=>{
-    setShowPassword((prevshowPassword)=>!prevshowPassword)
+    setShowPassword((showPassword)=>!showPassword)
   }
   return (
    <div className='resetPasswordBox'>
@@ -67,8 +67,8 @@ const ResetPassword = () => {
                            name="" id="" 
                            placeholder='Enter your password'
                            value={confirmPassword}
-                           onChange={(e)=>setConfirmPassword(e.target.value)}
-                           /> <span onClick={()=>setShowConfirm(!showConfirm)}>{showConfirm ?<FaRegEyeSlash />:<FaRegEye />} </span>
+                           onChange={(e)=>setConfirmPassword(e.target.value)}/>
+                          <span onClick={()=>setShowConfirm(!showConfirm)}>{showConfirm ?<FaRegEyeSlash />:<FaRegEye />} </span>
                    </div>
                   </section>
                
@@ -77,7 +77,7 @@ const ResetPassword = () => {
                  </div>
           </div>
                 <div className='resetPasswordImage'>
-                  <img src="src/assets/logos/amico.png" alt="" className='imageHolder'/>
+                  <img src="assets/logos/amico.png" alt="" className='imageHolder'/>
                 </div>
               </div>
     </div>

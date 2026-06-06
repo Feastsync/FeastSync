@@ -51,19 +51,19 @@ const Howitworkshost = () => {
     },
   ];
   return (
-    <main className="main-container">
-      <section className="hero-section">
+    <main className="herohost-container">
+      <section className="herohost-section">
         <img src={Heroimage} alt="Hero" />
-        <div className="overlay"></div>
-        <div className="hero-content">
-          <h1 className="hero-title">
+        <div className="host-overlay"></div>
+        <div className="herohost-content">
+          <h1 className="herohost-title">
             Secure. Transparent.
             <br />
             Seamless: How
             <br />
             FeastSync Works.
           </h1>
-          <p className="hero-description">
+          <p className="herohost-description">
             Whether you are hosting an event or performing at <br />
             one, FeastSync is built to make the entire process <br />
             transparent, secure, and effortless — from first click <br />
@@ -71,34 +71,37 @@ const Howitworkshost = () => {
           </p>
         </div>
       </section>
-      <section className="step-container">
+      <section className="stephost-container">
+        <article className="stephost-wrapper">
         <div
-          className="step-btn active"
+          className="stephost-btn active"
           onClick={() => navigate("/howitworks")}
         >
-          <div className="circle-icon check">✓</div>
+          <div className="circlehost-icon check">✓</div>
           <span>For Organizer/Host</span>
         </div>
         <div
-          className="step-btn"
+          className="stephost-btn"
           onClick={() => navigate("/howitworks/howitworksvendor")}
         >
-          <div className="circle-icon">02</div>
+          <div className="circlehost-icon">02</div>
           <span>Vendors</span>
         </div>
         <div
-          className="step-btn"
+          className="stephost-btn"
           onClick={() => navigate("/howitworks/howitworksescrow")}
         >
-          <div className="circle-icon">03</div>
+          <div className="circlehost-icon">03</div>
           <span>Escrow/Verification</span>
         </div>
-      </section>
-      <section className="hero-findbook">
-        <article className="hero-findbook1">
-          <h2>Find, book, and pay for entertainment — without the risk.</h2>
         </article>
-        <article className="hero-findbook2">
+      </section>
+      <section className="herohost-findbook">
+        <article className="herohost-findbook1">
+          <h2>Find, book, and pay for <br /> entertainment — without the risk.</h2>
+        </article>
+        <article className="herohost-findbook2">
+          <article className="herohost-findbook2b">
           <p>
             FeastSync gives event organizers access to a curated roster of
             verified entertainment talent across Lagos. Every booking is
@@ -106,17 +109,18 @@ const Howitworkshost = () => {
             on the platform has been identity-checked before you ever see their
             profile.
           </p>
+          </article>
         </article>
       </section>
-      <section className="steps-section">
-        <div className="steps-wrapper">
+      <section className="stepshost-section">
+        <div className="stepshost-wrapper">
           {stepsData.map((step, index) => (
-            <div key={index} className="step-card">
-              <span className="step-number">{step.stepNumber}</span>
-              <h3 className="step-title">{step.title}</h3>
-              <p className="step-description">{step.description}</p>
-              <div className="step-image-container">
-                <img src={step.image} alt="" className="step-illustration" />
+            <div key={index} className="stephost-card">
+              <span className="stephost-number">{step.stepNumber}</span>
+              <h3 className="stephost-title">{step.title}</h3>
+              <p className="stephost-description">{step.description}</p>
+              <div className="stephost-image-container">
+                <img src={step.image} alt="" className="stephost-illustration" />
               </div>
             </div>
           ))}
