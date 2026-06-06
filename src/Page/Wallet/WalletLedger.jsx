@@ -9,7 +9,7 @@ import Pending from "./Pending";
 import Refunds from "./Refunds";
 import Imp from "../../Props/Imp";
 import { ledgerStats } from "../../Components/DummyData";
-import "../Css/WalletLedger.css";
+import "../NewCss1/WalletLedger.css";
 
 const TABS = [
   { key: "all", label: "All types", Component: AllTransactions },

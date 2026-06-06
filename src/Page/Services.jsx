@@ -3,7 +3,7 @@ import Header from "../Components/Header";
 import Button from "../Props/Button";
 import Footer from "../Components/Footer";
 // import "./Css/Services.css";
-// import "./NewCSS/services.css";
+import "./NewCSS/services.css";
 
 const services = () => {
   return (
@@ -45,7 +45,7 @@ const services = () => {
         <p className="serviceQuote">Our Services</p>
 
         <div className="serviceBooking">
-          <img src="../assets/About/dj wirewire.png" alt="DJ Booking" />
+          <img src="../public/About/dj wirewire.png" alt="DJ Booking" />
           <div className="serviceInfo">
             <div className="serviceHolder">
               <p className="serviceName">DJ Booking</p>
@@ -83,10 +83,10 @@ const services = () => {
               <li>Time management to keep event running on schedule</li>
             </div>
           </div>
-          <img src="../assets/About/host.png" alt="MC Host" />
+          <img src="../public/About/host.png" alt="MC Host" />
         </div>
         <div className="serviceBooking">
-          <img src="../assets/About/mcs.png" alt="Live Band" />
+          <img src="../public/About/mcs.png" alt="Live Band" />
           <div className="serviceInfo">
             <div className="serviceHolder">
               <p className="serviceName">Live Band Booking</p>
@@ -118,11 +118,11 @@ const services = () => {
               <li>Social media-optimized image set for some-day sharing</li>
             </div>
           </div>
-          <img src="../assets/About/photographer.png" alt="Photography" />
+          <img src="../public/About/photographer.png" alt="Photography" />
         </div>
 
         <div className="serviceBooking">
-          <img src="../assets/About/cameraman.png" alt="Videography" />
+          <img src="../public/About/cameraman.png" alt="Videography" />
           <div className="serviceInfo">
             <div className="serviceHolder">
               <p className="serviceName">Videography services</p>
@@ -149,7 +149,7 @@ const services = () => {
           <p>Enterprise Brand events</p>
         </div>
         <div>
-          <p>
+          <p className="serviceBrand">
             coperate events demands a different standard-brand appropiate
             entertainment impeccable professionalism <br />
             and zero margin for error FeastSync's connect organisation with
@@ -160,7 +160,7 @@ const services = () => {
             right coperate occasion, everytime.
           </p>
         </div>
-        <Button btnText="Get Started" className="header_getstarted_btn" />
+        <Button btnText="Get Started" className="servicebtn" />
       </div>
 
       <div className="serviceEntertainment">
@@ -168,8 +168,8 @@ const services = () => {
           <p className="serviceCoperate">Event Entertainment packages</p>
           <p>Bundle . Best value</p>
         </div>
-        <div>
-          <p>
+        <div className="serviceBrandWrapper">
+          <p className="serviceBrand">
             Why book seperately when you can have it all-perfectly
             coordinated?FeastSync's entertainment packages <br />
             bundle top-tier vendors into seamless,pre-matched combinations that
@@ -177,8 +177,8 @@ const services = () => {
             to the last song.Book more, spend less and eliminate the
             coordination headache entirely.
           </p>
+           <Button btnText="Get Started" className="servicebtn" />
         </div>
-        <Button btnText="Get Started" className="header_getstarted_btn" />
       </div>
     </main>
   );

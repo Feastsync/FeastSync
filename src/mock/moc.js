@@ -1,45 +1,45 @@
 export const feastsync =[
     {
-        image:"src/assets/About/royalty.jpg",
+        image:"public/About/royalty.jpg",
         name:"Omotayo Toluwaniagbara.R",
         stack:"Product Designer"
     },
 
     {
-        image:"src/assets/About/chinyere.jpg",
+        image:"public/About/chinyere.jpg",
         name:"Ogugua Chinyere",
         stack:"Frontend Developer"
     },
 
     {
-        image:"src/assets/About/taiwo.jpg",
+        image:"public/About/taiwo.jpg",
         name:"Omogunloye Taiwo Adeoluwa",
         stack:"Backend Developer"
     },
 
     
     {
-        image:"src/assets/About/joy.jpg",
+        image:"public/About/joy.jpg",
         name:"Oyem Chidimma Joy",
         stack:"Product Designer"
     },
 
        {
-        image:"src/assets/About/chioma.jpg",
+        image:"public/About/chioma.jpg",
         name:"Nnacheta  Chioma Gabriella",
         stack:"Backend Developer"
     },
 
     
     {
-        image:"src/assets/About/azeez.jpg",
+        image:"public/About/azeez.jpg",
         name:"Azeez Toheeb",
         stack:"Frontend Developer"
     },
 
     
     {
-        image:"src/assets/About/nmeso.jpg",
+        image:"public/About/nmeso.jpg",
         name:"Ezedike Nmesoma Maryjane",
         stack:"Frontend Developer"
     },
