@@ -58,7 +58,7 @@
   gap: 12px;
 }
 
-.Vendor_wallet_action_btn.btn {
+.Vendor_wallet_action_btn {
   background: #FFFFFF;
   border: 1px solid #E0E0E0;
   color: var(--text-color);

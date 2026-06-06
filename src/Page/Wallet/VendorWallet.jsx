@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../../Props/Button";
 import { walletSummary } from "../../Components/DummyData";
-import "../Css/VendorWallet.css";
+import "../NewCss1/VendorWallet.css"
 
 export default function VendorWallet() {
   const navigate = useNavigate();
