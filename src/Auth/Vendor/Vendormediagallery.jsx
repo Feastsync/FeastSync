@@ -21,7 +21,7 @@ const Vendormediagallery = () => {
   const portfolioItems = [
     {
       id: 1,
-      image: "https://i.postimg.cc/NfVhL23D/4bbc686d517abc7a16757a9e6a0bf6eff79f1f7a-(1).jpg", // Changed from Media4
+      image: "https://i.postimg.cc/NfVhL23D/4bbc686d517abc7a16757a9e6a0bf6eff79f1f7a-(1).jpg", 
       title: "Tolu and Femi Wedding",
       venue: "Eko Hotel",
       date: "Jan 2026",
@@ -85,7 +85,7 @@ const Vendormediagallery = () => {
               <div className="detail-card-info-content">
                 <h4 className="detail-item-title">{item.title}</h4>
                 <p className="detail-item-metadata">
-                  {item.venue} • {item.date} • {item.guests}
+                  {item.venue} . {item.date} . {item.guests}
                 </p>
               </div>
             </div>

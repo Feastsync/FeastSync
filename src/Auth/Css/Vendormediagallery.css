@@ -8,32 +8,33 @@
 }
 
 .catalog-wrapper-section {
-    margin-bottom: 45px;
+    margin-bottom: 60px;
 }
 
 .gallery-small-label {
-    font-size: 11px;
+    font-size: 18px;
     font-weight: 500;
-    color: #65636a;
+    color: #000000;
 }
 
 .gallery-subtitle {
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 500;
     color: #312e38;
-    margin: 4px 0 16px 0;
+    margin: 15px 0 16px 0;
 }
 
 .portfolio-white-card-box {
     background: #ffffff;
     border-radius: 20px;
+    width: 100%;
     padding: 32px;
     border: 1px solid #f0f2f5;
     box-shadow: 0 4px 25px rgba(0, 0, 0, 0.04);
-}
+}   
 
 .card-box-main-title {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 600;
     color: #1c1a22;
     margin: 0 0 20px 0;
@@ -42,40 +43,40 @@
 .gallery-grid-three-columns {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    gap: 20px;
 }
 
 .gallery-thumbnail-wrap {
-    width: 100%;
-    height: 180px;
-    border-radius: 12px;
-    overflow: hidden;
+    width: 100%; 
+    height: 250px;
+    border-radius: 12px !important;
+    overflow: hidden !important;
     background-color: #f7f7f8;
+    transform: translateZ(0);
 }
 
 .gallery-thumbnail-wrap img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 12px !important;
 }
-
 .showcase-wrapper-section {
     margin-top: 10px;
 }
 
 .showcase-section-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: #1c1a22;
-    margin: 0 0 2px 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: #000000;
+    margin-bottom: 15px;
 }
 
 .showcase-section-subtitle {
-    font-size: 12px;
-    font-weight: 400;
-    color: #706e76;
-    display: block;
-    margin-bottom: 20px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #312e38;
+    margin: 20px 0 16px 0;
 }
 
 .portfolio-grid-two-columns {
@@ -83,6 +84,8 @@
     grid-template-columns: repeat(2, 1fr);
     column-gap: 40px;
     row-gap: 32px;
+    margin-top: 30px;
+    border-radius: 20px;
 }
 
 .portfolio-detail-item-card {
@@ -94,7 +97,7 @@
 .detail-card-image-wrap {
     width: 100%;
     height: 240px;
-    border-radius: 16px;
+    border-radius: 20px;
     overflow: hidden;
     background-color: #f7f7f8;
     margin-bottom: 12px;
@@ -111,16 +114,16 @@
 }
 
 .detail-item-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: #211e26;
-    margin: 0 0 4px 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: #000000;
+    margin: 0 0 10px 0;
 }
 
 .detail-item-metadata {
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 400;
-    color: #727077;
+    color: #191819;
     margin: 0;
 }
 

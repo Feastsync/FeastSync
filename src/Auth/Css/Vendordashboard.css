@@ -86,7 +86,7 @@
   color: var(--text-color);
   word-break: break-word;
 }
-.copy-link-btn {
+.vendorcopy-link-btn {
   background: none;
   border: none;
   color: var(--text-color);
@@ -95,7 +95,7 @@
   font-weight: 500;
 
 }
-.copy-link-btn img{
+.vendorcopy-link-btn img{
   width: 11px;
   height: 11px;
   stroke-width: 1.5px;
@@ -104,48 +104,85 @@
 }
 .pricing-section {
     width: 100%;
+    height: 95vh;
     max-width: 1400px;
-    margin-left: 90px;
-    padding: 0px 90px;
+    padding: 0px 150px;
 }
+
 .section-title {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 600;
     color: var(--text-color);
-    margin-bottom: 18px;
+    margin-bottom: 20px;
+    margin-left: 20px;
     margin-top: 40px;
     text-align: left;
 }
+
 .pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 45px;
+    display: flex;
+    gap: 40px;
     align-items: start;
+    justify-content: center;
 }
+
 .pricing-card {
     background: white;
-    padding: 32px 24px;
-    border-radius: var(--radius-m, 20px);
+    padding: 20px 15px;
+    border-radius: var(--radius-m, 10px);
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
     border: 1px solid #f0f2f5;
     display: flex;
     flex-direction: column;
-    height: 480px; 
+    height: 430px;
+    width: 300px;
+    transition: all 0.3s ease;
 }
+
 .card-header {
     margin-bottom: 20px;
 }
 
+.pricing-card:hover {
+    background-color: var(--primary-color);
+}
+
+.pricing-card:hover .package-title,
+.pricing-card:hover .package-price,
+.pricing-card:hover .highlights-heading,
+.pricing-card:hover .highlight-item {
+    color: white;
+}
+
+.pricing-card:hover .highlight-item::before {
+    color: white;
+}
+
+.pricing-card:hover .toggle-expand-btn {
+    background: #f0f2f5;
+}
+
+.pricing-card:hover .dropdown-icon,
+.pricing-card:hover .dropdown-icon.open {
+    color: var(--primary-color);
+}
+
+.pricing-card:hover .book-now-btn {
+    background-color: white;
+    color: var(--primary-color);
+}
+
 .package-title {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--text-color);
-    margin: 0 0 10px 0;
+    margin: 0;
 }
+
 .package-price {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
-    color: var(--primary-color); 
+    color: var(--primary-color);
     margin: 0;
 }
 
@@ -153,30 +190,34 @@
     position: relative;
     flex-grow: 1;
     margin-bottom: 25px;
-    overflow: hidden; 
+    overflow: hidden;
 }
+
 .card-body {
     width: 100%;
     height: 100%;
-    max-height: 240px; 
-    overflow: hidden; 
-    padding-bottom: 20px; 
+    max-height: 240px;
+    overflow: hidden;
+    padding-bottom: 20px;
 }
+
 .card-body.scrollable {
-    overflow-y: auto; 
+    overflow-y: auto;
 }
 
 .highlights-heading {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 550;
     color: var(--text-color);
     margin: 8px 0 5px 0;
 }
+
 .highlights-list {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
+
 .highlight-item {
     font-size: 16px;
     line-height: 1.5;
@@ -185,6 +226,7 @@
     position: relative;
     padding-left: 14px;
 }
+
 .highlight-item::before {
     content: "•";
     position: absolute;
@@ -194,42 +236,48 @@
     font-weight: bold;
 }
 
+.pricing-card:hover .highlight-item::before {
+    color: white;
+}
+
 .toggle-expand-btn {
     position: absolute;
     bottom: 2px;
     right: 20px;
     background: #f0f2f5;
     border: none;
-    border-radius: 50%; 
+    border-radius: 50%;
     width: 32px;
     height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0px 2px 4px rgba(0,0,0,0.15);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
     z-index: 10;
     transition: background-color 0.2s ease;
 }
-.toggle-expand-btn:hover {
-    background: #e2e8f0;
-}
+
 .dropdown-icon {
-    width: 16px; 
+    width: 16px;
     height: 16px;
     color: var(--primary-color);
     transition: transform 0.3s ease;
 }
+
 .dropdown-icon.open {
     color: var(--primary-color);
     transform: rotate(180deg);
 }
+
 .card-footer {
     width: 100%;
+    border-radius: 6px;
 }
+
 .book-now-btn {
     width: 100%;
-    background-color: var(--primary-color); 
+    background-color: var(--primary-color);
     color: #ffffff;
     border: 1px solid transparent;
     border-radius: 6px;
@@ -237,81 +285,133 @@
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
-    &:hover{
-      background-color: transparent;
-      border: 1px solid var(--primary-color);
-      color: var(--primary-color)
-    }
+    transition: all 0.3s ease;
 }
 
-/* ==========================================================
-   1️⃣ LAPTOPS & LARGE TABLETS RESPONSIVENESS (max-width: 1200px)
-   ========================================================== */
+
 @media screen and (max-width: 1200px) {
     .pricing-section {
+        height: auto;
         padding: 0 40px;
-        margin-left: 0;
         margin: 0 auto;
     }
     .pricing-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 Columns on desktop layouts */
+        flex-wrap: wrap;
         gap: 30px;
     }
 }
 
-/* ==========================================================
-   2️⃣ PORTRAIT TABLETS RESPONSIVENESS (max-width: 768px)
-   ========================================================== */
 @media screen and (max-width: 768px) {
     .pricing-section {
         padding: 0 30px;
+        height: auto;
     }
     .pricing-grid {
-        grid-template-columns: 1fr; /* Drops down to a clean stacked single row layout column */
+        flex-direction: column;
+        align-items: center;
         gap: 35px;
     }
     .pricing-card {
-        height: auto; /* Neutralizes fixed height boundaries so everything expands fluently */
-    }
-    .card-body {
-        max-height: none !important; /* Disables clip frames on medium ports */
-        overflow: visible !important;
-    }
-    .toggle-expand-btn {
-        display: none !important; /* Hides internal dropdown arrow controllers */
+        width: 100%;
+        max-width: 340px;
     }
 }
 
-/* ==========================================================
-   3️⃣ 📱 PHONE SCREEN RESPONSIVENESS (max-width: 480px)
-   ========================================================== */
 @media screen and (max-width: 480px) {
     .vendor-details-container {
-        padding: 20px 16px;
+        padding: 20px 16px !important;
+        box-sizing: border-box !important;
     }
+
+    .trust-title {
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        margin-bottom: 20px !important;
+        color: #111111 !important;
+    }
+
+    .stats-row {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 0 !important;
+        width: 100% !important;
+    }
+
+    .stat-item {
+        flex: 1 !important;
+        text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    .stat-item h3 {
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        color: #111111 !important;
+        margin: 0 0 6px 0 !important;
+    }
+
+    .stat-item span {
+        font-size: 10px !important;
+        font-weight: 400 !important;
+        color: #666666 !important;
+        white-space: nowrap !important;
+    }
+
+    /* Fixed bottom border cutting behavior */
+    .send-message-btn {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        margin: 20px 0 28px 0 !important; /* Adjusted bottom margin spacing */
+        padding: 14px 12px !important;
+        background-color: #ffffff !important;
+        border: 1px solid #7c5cb7 !important; 
+        border-radius: 8px !important;
+        color: #7c5cb7 !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        box-sizing: border-box !important;
+        overflow: visible !important; /* Forces the border stroke to remain visible */
+    }
+
+    .vendor-bio h3 {
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        margin-bottom: 12px !important;
+    }
+
+    .vendor-bio p {
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+        color: #333333 !important;
+    }
+
     .pricing-section {
         padding: 0 16px;
+        height: auto;
         max-width: 100%;
     }
     .section-title {
         font-size: 20px;
         margin-top: 25px;
         margin-bottom: 15px;
+        margin-left: 0;
         padding-left: 4px;
     }
     .pricing-grid {
         gap: 24px;
     }
-    
-    /* Matches your phone image specifications exactly */
     .pricing-card {
+        width: 100%;
+        max-width: 100%;
         padding: 24px 20px !important;
         border-radius: 14px !important;
-        height: auto !important; /* Lets card wrap around list content cleanly */
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important; /* Soft flat overlay matching target image layout */
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
     }
-    
     .card-header {
         margin-bottom: 14px;
     }
@@ -323,17 +423,13 @@
         font-size: 14px !important;
         font-weight: 600 !important;
     }
-    
     .card-body-wrapper {
         margin-bottom: 20px;
-        overflow: visible;
     }
-    .card-body {
-        max-height: none !important;
-        overflow: visible !important;
-        padding-bottom: 0 !important;
+    .card-body.scrollable {
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
     }
-    
     .highlights-heading {
         font-size: 13px !important;
         margin: 4px 0 8px 0 !important;
@@ -344,8 +440,12 @@
         margin-bottom: 8px !important;
         padding-left: 12px !important;
     }
-    
-    /* Sticky wide solid mobile primary button style layout overrides */
+    .toggle-expand-btn {
+        right: 10px;
+        bottom: 0px;
+        width: 28px;
+        height: 28px;
+    }
     .book-now-btn {
         padding: 12px 10px !important;
         font-size: 14px !important;
