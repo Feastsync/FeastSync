@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import "./Css/NotifLayout.css";
+import "../Page/NewCss1/NotifLayout.css";
 
 const TABS = [
   { label: "All",      path: "/notifications/all" },
