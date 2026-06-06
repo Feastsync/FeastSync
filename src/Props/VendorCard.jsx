@@ -22,10 +22,10 @@ const VendorCard = (props) => {
           onClick={handleLikeClick} 
           btnText={
             isLiked ? (
-              <FaHeart size={16} color="#000000" /> 
+              <FaHeart size={16} color="#330159;" /> 
             ) : (
               <FiHeart size={16} /> 
-            )
+            ) 
           } 
         />
       </div>
@@ -38,7 +38,7 @@ const VendorCard = (props) => {
         <h3 className="vendor_name">{props.name}</h3>
         
         <div className="vendor_location">
-          <IoLocationOutline size={16} />
+          <IoLocationOutline size={22} />
           <span>{props.location}</span>
         </div>
 

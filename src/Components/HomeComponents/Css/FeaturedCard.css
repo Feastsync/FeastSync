@@ -109,12 +109,12 @@
 
   .box .vendor_card {
     flex: 1;             
-    height: auto !important;
+    height: auto ;
   }
 
   .btn2 {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
   }
 
   .left {

@@ -4,10 +4,9 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import Input from "../Props/Imp";
 import Button from "../Props/Button";
-import VendorOnboarding from "./Vendor/onBoardingFiles/VendorOnboarding.jsx";
 import "./Css/Login.css";
 import HeeaderLogo from "../assets/logos/Headerlogo.png";
-import signup from "../assets/BackgroundImage/SignUP.jpeg"
+import LoginPic from "../assets/BackgroundImage/LoginPic.jpeg"
 
 const EmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -15,8 +14,6 @@ const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = useState("user");
-  const [isLoading, setIsLoading] = useState(false);
-  const [showOnboarding, setShowOnboarding] = useState(false); // <-- Add thi
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
   const [EmailErrorMsg, setEmailErrorMsg] = useState({
     err: false,
@@ -29,71 +26,62 @@ const Login = () => {
     name: "",
   });
 
-  const HoldEmail = (e) => {
-    const NewEmail = e.target.value;
-    setUserInfo({ ...userInfo, email: NewEmail });
-
-    if (NewEmail.trim() === "") {
+  const validateEmail = (value) => {
+    if (value.trim() === "") {
       setEmailErrorMsg({
         err: true,
         name: "email",
         msg: "Email must not be empty",
       });
-    } else if (!EmailRegex.test(NewEmail)) {
+      return false;
+    } else if (!EmailRegex.test(value)) {
       setEmailErrorMsg({
         err: true,
         name: "email",
         msg: "Please enter a valid Email",
       });
+      return false;
     } else {
+      setEmailErrorMsg({ err: false, name: "", msg: "" });
+      return true;
+    }
+  };
+
+  const validatePassword = (value) => {
+    if (value.trim() === "") {
+      setPasswordErrorMsg({
+        err: true,
+        name: "password",
+        msg: "Password must not be empty",
+      });
+      return false;
+    } else {
+      setPasswordErrorMsg({ err: false, name: "", msg: "" });
+      return true;
+    }
+  };
+
+  const HoldEmail = (e) => {
+    const NewEmail = e.target.value;
+    setUserInfo({...userInfo, email: NewEmail });
+    if (EmailErrorMsg.err) {
       setEmailErrorMsg({ err: false, name: "", msg: "" });
     }
   };
 
   const HoldPassword = (e) => {
     const NewPass = e.target.value;
-    setUserInfo({ ...userInfo, password: NewPass });
-
-    if (NewPass.trim() === "") {
-      setPasswordErrorMsg({
-        err: true,
-        name: "password",
-        msg: "Password must not be empty",
-      });
-    } else {
+    setUserInfo({...userInfo, password: NewPass });
+    if (PasswordErrorMsg.err) {
       setPasswordErrorMsg({ err: false, name: "", msg: "" });
     }
   };
 
   const handleValidationAndSubmit = () => {
-    let hasError = false;
+    const isEmailValid = validateEmail(userInfo.email);
+    const isPasswordValid = validatePassword(userInfo.password);
 
-    if (userInfo.email.trim() === "") {
-      setEmailErrorMsg({
-        err: true,
-        name: "email",
-        msg: "Email must not be empty",
-      });
-      hasError = true;
-    } else if (!EmailRegex.test(userInfo.email)) {
-      setEmailErrorMsg({
-        err: true,
-        name: "email",
-        msg: "Please enter a valid Email",
-      });
-      hasError = true;
-    }
-
-    if (userInfo.password.trim() === "") {
-      setPasswordErrorMsg({
-        err: true,
-        name: "password",
-        msg: "Password must not be empty",
-      });
-      hasError = true;
-    }
-
-    if (hasError) {
+    if (!isEmailValid ||!isPasswordValid) {
       Swal.fire({
         title: "Error",
         text: "Please fill in all fields correctly.",
@@ -104,17 +92,16 @@ const Login = () => {
       return;
     }
 
-    // No API yet - just show onboarding for vendors
     if (role === "vendor") {
-      setShowOnboarding(true); // <-- Show modal instead of navigate
+      navigate("/vendordashboard", {
+        state: {
+          showOnboarding: true,
+          vendorName: "Adeyemi"
+        }
+      });
     } else {
       navigate("/userdashboard");
     }
-  };
-
-  const handleOnboardingClose = () => {
-    setShowOnboarding(false);
-    navigate("/vendordashboard"); // Go to dashboard after completing/skipping
   };
 
   return (
@@ -142,7 +129,9 @@ const Login = () => {
               placeholder="Your email address"
               value={userInfo.email}
               onChange={HoldEmail}
-              className={`vl-input${EmailErrorMsg.err ? " vl-input--error" : ""}`}
+              onBlur={() => validateEmail(userInfo.email)}
+              onFocus={() => setEmailErrorMsg({ err: false, name: "", msg: "" })}
+              className={`vl-input${EmailErrorMsg.err? " vl-input--error" : ""}`}
             />
             {EmailErrorMsg.err && EmailErrorMsg.name === "email" && (
               <span className="vl-error-text">{EmailErrorMsg.msg}</span>
@@ -153,18 +142,20 @@ const Login = () => {
             <label className="vl-label">Password</label>
             <div className="vl-password-wrap">
               <Input
-                type={showPassword ? "text" : "password"}
+                type={showPassword? "text" : "password"}
                 placeholder="Enter your password"
                 value={userInfo.password}
                 onChange={HoldPassword}
-                className={`vl-input vl-input--password${PasswordErrorMsg.err ? " vl-input--error" : ""}`}
+                onBlur={() => validatePassword(userInfo.password)}
+                onFocus={() => setPasswordErrorMsg({ err: false, name: "", msg: "" })}
+                className={`vl-input vl-input--password${PasswordErrorMsg.err? " vl-input--error" : ""}`}
               />
               <button
                 type="button"
                 className="vl-eye-btn"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? (
+                {showPassword? (
                   <FaRegEyeSlash size={18} />
                 ) : (
                   <FaRegEye size={18} />
@@ -203,7 +194,7 @@ const Login = () => {
           </div>
 
           <Button
-            btnText={isLoading ? "Logging in..." : "Login"}
+            btnText="Login"
             className="vl-login-btn"
             onClick={handleValidationAndSubmit}
           />
@@ -217,12 +208,7 @@ const Login = () => {
         </div>
       </div>
 
-      <img className="vl-right" src="" alt="" />
-
-      <VendorOnboarding
-        isOpen={showOnboarding}
-        onClose={handleOnboardingClose}
-      />
+      <img className="vl-right" src={LoginPic} alt="" />
     </div>
   );
 };

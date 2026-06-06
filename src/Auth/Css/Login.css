@@ -197,15 +197,13 @@
 
 
 .vl-right {
-  flex: 0 0 50%;
-  background-image: url('../../assets/BackgroundImage/SignUP.jpeg');
-  background-size: cover;
-  background-position: center;
-  background-color: #f5f5f5;
-  min-height: 600px; 
-  border-radius: 24px;
-  margin: 48px 48px 48px 0 ;
+  flex: 1;
+  max-width: 500px;     
+  height: auto;
+  object-fit: contain;
+  align-self: center;  
 }
+
 
 @media (max-width: 768px) {
   .vl-right {

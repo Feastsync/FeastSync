@@ -95,10 +95,6 @@
 }
 @media (max-width: 768px) {
 
-  .hiw_sec {
-    padding: 30px 0;
-  }
-
   .hiw_container {
     width: 90%;
     gap: 20px;
