@@ -31,6 +31,7 @@ import WalletLedger from "./Page/Wallet/WalletLedger.jsx";
 import VendorWallet from "./Page/Wallet/VendorWallet.jsx";
 import AllNotifications from "./Page/NotitficationsPages/AllNotifications.jsx";
 import WelcomeModal from "./Auth/Vendor/onBoardingFiles/WelcomeModal.jsx";
+import Error505 from "./Auth/Vendor/Error505.jsx";
 const App = () => {
   return (
     <BrowserRouter>
@@ -74,6 +75,7 @@ const App = () => {
           path="/notifications/:category?"
           element={<AllNotifications />}
         />
+        <Route path="/Error" element={<Error505 />}/>
       </Routes>
     </BrowserRouter>
   );
