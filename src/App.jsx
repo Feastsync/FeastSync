@@ -32,6 +32,7 @@ import VendorWallet from "./Page/Wallet/VendorWallet.jsx";
 import AllNotifications from "./Page/NotitficationsPages/AllNotifications.jsx";
 import WelcomeModal from "./Auth/Vendor/onBoardingFiles/WelcomeModal.jsx";
 import Error505 from "./Auth/Vendor/Error505.jsx";
+import Error404 from "./Auth/Vendor/Error404.jsx";
 const App = () => {
   return (
     <BrowserRouter>
@@ -76,6 +77,7 @@ const App = () => {
           element={<AllNotifications />}
         />
         <Route path="/Error" element={<Error505 />}/>
+        <Route path="/505" element={<Error404 />} />
       </Routes>
     </BrowserRouter>
   );
