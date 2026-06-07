@@ -1,0 +1,21 @@
+.errorContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.error{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+.errorBtn{
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    width: auto;
+    height: 40px;
+    color: blueviolet;
+    box-shadow: 0.5px 0.5px 0.5px 0.5px gray;
+    padding: 10px;
+}
