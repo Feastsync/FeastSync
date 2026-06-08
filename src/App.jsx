@@ -31,6 +31,7 @@ import WalletLedger from "./Page/Wallet/WalletLedger.jsx";
 import VendorWallet from "./Page/Wallet/VendorWallet.jsx";
 import AllNotifications from "./Page/NotitficationsPages/AllNotifications.jsx";
 import WelcomeModal from "./Auth/Vendor/onBoardingFiles/WelcomeModal.jsx";
+import Chat from "./Page/chatPage/Chat.jsx";
 import Error505 from "./Auth/Vendor/Error505.jsx";
 import Error404 from "./Auth/Vendor/Error404.jsx";
 const App = () => {
@@ -71,7 +72,7 @@ const App = () => {
         <Route path="/welcomeModal" element={<WelcomeModal />} />
         <Route path="/transaction/histories" element={<WalletLedger />} />
         {/* <Route path="/transaction/histories" element={<WalletLedger />} /> */}
-
+       <Route path="/chats" element={<Chat />} />    
         <Route
           path="/notifications/:category?"
           element={<AllNotifications />}

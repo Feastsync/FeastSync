@@ -92,51 +92,61 @@
 }
 
 @media (max-width: 768px) {
-
   .wwsf_sec {
-    min-height: 30vh;
-    padding: 4vh 0;
+    padding: 6vh 0;
   }
 
   .wwsf_container {
-    width: 90%;
+    width: 92%;
     gap: 3vh;
   }
 
   .wwsf_title {
-    font-size: 20px;
+    font-size: 22px;
   }
 
   .wwsf_subtitle {
-    font-size: 13px;
-    line-height: 1.6;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 0 8px;
   }
 
   .wwsf_grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
-    padding: 0 8px;
   }
 
   .wwsf_pill {
     width: 100%;
-    height: 5vh;
-    padding: 0 6px;
+    height: auto;
+    min-height: 48px;
+    padding: 12px 14px;
     border-radius: 50px;
-    justify-content: flex-start;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .wwsf_pill_inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-align: center;
   }
 
   .wwsf_icon {
     width: 16px;
     height: 16px;
+    flex-shrink: 0;
   }
 
   .wwsf_label {
-    font-size: 11px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: normal;
   }
-
 }
