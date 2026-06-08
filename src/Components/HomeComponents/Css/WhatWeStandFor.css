@@ -16,30 +16,30 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6vh;
+  gap: 7vh;
 }
 
 .wwsf_header {
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 4vh;
+  gap: 3vh;
   width: 100%;
 }
 
 .wwsf_title {
   font-size: 36px;
   font-weight: 700;
-  color: #0B0017;
+  color:var(--text-color);
   letter-spacing: 0.5px;
   margin: 0;
 }
 
 .wwsf_subtitle {
   font-size: 17px;
-  color: var(--text-color);
+  color:var(--text-color);
   line-height: 1.7;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   text-align: center;
 }
