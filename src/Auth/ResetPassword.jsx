@@ -17,15 +17,17 @@ const ResetPassword = () => {
   }
   return (
    <div className='resetPasswordBox'>
-         <div className='resetPasswordLogo'>
-          <div className='header_left'>
-                <img src={Headerlogo} alt="FeastSync Logo" className='logo_img' />
-                <h2 className='logo_text'>FeastSync</h2>
-              </div>
-         </div>
+        <div className='forgotPasswordLogo'>
+                   <div className='resetPasswordLogo'>
+                           <div className='header_left'>
+                                 <img src={Headerlogo} alt="FeastSync Logo" className='logo_img' />
+                                 <h2 className='logo_text'>FeastSync</h2>
+                               </div>
+                          </div>
+                          </div>
           <div className='resetPasswordButton'>
                      <Button>
-                       <FaArrowLeft />
+                       <p><FaArrowLeft /></p>
                      </Button>
                      <p>Back</p>
                   </div>
@@ -38,16 +40,7 @@ const ResetPassword = () => {
                   </div>
 
                   <div className='resetpasswordEmail'>
-                       <section>
-                         <label htmlFor="">Email Address</label>
-                      <div>
-                    <input type="email"
-                           name="" id="" 
-                           placeholder=' Your email address'
-                           />
-                      </div>
-                       </section>
-
+                  
                   <section>
                       <label htmlFor=""> Create Password</label>
                    <div>
@@ -77,7 +70,7 @@ const ResetPassword = () => {
                  </div>
           </div>
                 <div className='resetPasswordImage'>
-                  <img src="assets/logos/amico.png" alt="" className='imageHolder'/>
+                  <img src="public/About/amico.png" alt="" className='imageHolder'/>
                 </div>
               </div>
     </div>

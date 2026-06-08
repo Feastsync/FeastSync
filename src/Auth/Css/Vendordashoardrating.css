@@ -1,42 +1,42 @@
-.vendordashboard-vendor-dashboard-container{
+.vendordashboardrating-vendor-dashboard-container{
     width: 100%;
     height: 100vh;
     min-height: max-content;
     background-color: white;
 }
-.vendordashboard-vendor-details-container {
+.vendordashboardrating-vendor-details-container {
   width: 100%;
   padding: 20px 80px;
 }
-.vendordashboard-trust-title {
+.vendordashboardrating-trust-title {
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 15px;
   color: var(--text-color);
 }
-.vendordashboard-stats-row {
+.vendordashboardrating-stats-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.vendordashboard-stat-item {
+.vendordashboardrating-stat-item {
   text-align: center;
 }
-.vendordashboard-stat-item h3 {
+.vendordashboardrating-stat-item h3 {
   font-size: 15px;
   font-weight: 500;
   color: var(--text-color);
 }
-.vendordashboard-stat-item span {
+.vendordashboardrating-stat-item span {
   font-size: 10px;
   font-weight: 400;
   color: var(--text-color);
 }
-.vendordashboard-stars {
+.vendordashboardrating-stars {
   font-size: 10px;
   margin-bottom: 2px;
 }
-.vendordashboard-send-message-btn {
+.vendordashboardrating-send-message-btn {
   width: 100%;
   margin-top: 18px;
   margin-bottom: 18px;
@@ -52,26 +52,26 @@
     border:none
   }
 }
-.vendordashboard-vendor-bio h3 {
+.vendordashboardrating-vendor-bio h3 {
   font-size: 15px;
   font-weight: 550;
   margin-bottom: 14px;
   color: var(--text-color);
 }
-.vendordashboard-vendor-bio h4 {
+.vendordashboardrating-vendor-bio h4 {
   font-size: 12px;
   font-weight: 500;
   margin-bottom: 8px;
   color: var(--text-color);
 }
 
-.vendordashboard-vendor-bio p {
+.vendordashboardrating-vendor-bio p {
   font-size: 12px;
   line-height: 1.6;
   color: var(--text-color);
   margin-bottom: 25px;
 }
-.vendordashboard-vendor-link-row {
+.vendordashboardrating-vendor-link-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -80,13 +80,13 @@
   flex-wrap: wrap;
 }
 
-.vendordashboard-vendor-link-row span {
+.vendordashboardrating-vendor-link-row span {
   font-size: 12.5px;
   font-weight: 500;
   color: var(--text-color);
   word-break: break-word;
 }
-.vendordashboard-vendorcopy-link-btn {
+.vendordashboardrating-vendorcopy-link-btn {
   background: none;
   border: none;
   color: var(--text-color);
@@ -95,21 +95,21 @@
   font-weight: 500;
 
 }
-.vendordashboard-vendorcopy-link-btn img{
+.vendordashboardrating-vendorcopy-link-btn img{
   width: 11px;
   height: 11px;
   stroke-width: 1.5px;
   stroke: var(--text-color);
   margin-left: 10px;
 }
-.vendordashboard-pricing-section {
+.vendordashboardrating-pricing-section {
     width: 100%;
     height: 95vh;
     max-width: 1400px;
     padding: 0px 150px;
 }
 
-.vendordashboard-section-title {
+.vendordashboardrating-section-title {
     font-size: 20px;
     font-weight: 600;
     color: var(--text-color);
@@ -119,14 +119,14 @@
     text-align: left;
 }
 
-.vendordashboard-pricing-grid {
+.vendordashboardrating-pricing-grid {
     display: flex;
     gap: 40px;
     align-items: start;
     justify-content: center;
 }
 
-.vendordashboard-pricing-card {
+.vendordashboardrating-pricing-card {
     background: white;
     padding: 20px 15px;
     border-radius: var(--radius-m, 10px);
@@ -139,61 +139,61 @@
     transition: all 0.3s ease;
 }
 
-.vendordashboard-card-header {
+.vendordashboardrating-card-header {
     margin-bottom: 20px;
 }
 
-.vendordashboard-pricing-card:hover {
+.vendordashboardrating-pricing-card:hover {
     background-color: var(--primary-color);
 }
 
-.vendordashboard-pricing-card:hover  .vendordashboard-package-title,
-.vendordashboard-pricing-card:hover  .vendordashboard-package-price,
-.vendordashboard-pricing-card:hover  .vendordashboard-highlights-heading,
-.vendordashboard-pricing-card:hover  .vendordashboard-highlight-item {
+.vendordashboardrating-pricing-card:hover .vendordashboardrating-package-title,
+.vendordashboardrating-pricing-card:hover .vendordashboardrating-package-price,
+.vendordashboardrating-pricing-card:hover .vendordashboardrating-highlights-heading,
+.vendordashboardrating-pricing-card:hover .vendordashboardrating-highlight-item {
     color: white;
 }
 
-.vendordashboard-pricing-card:hover .vendordashboard-highlight-item::before {
+.vendordashboardrating-pricing-card:hover .vendordashboardrating-highlight-item::before {
     color: white;
 }
 
-.vendordashboard-pricing-card:hover .vendordashboard-toggle-expand-btn {
+.vendordashboardrating-pricing-card:hover .vendordashboardrating-toggle-expand-btn {
     background: #f0f2f5;
 }
 
-.vendordashboard-pricing-card:hover .vendordashboard-dropdown-icon,
-.vendordashboard-pricing-card:hover .vendordashboard-dropdown-icon.vendordashboard-open {
+.vendordashboardrating-pricing-card:hover .vendordashboardrating-dropdown-icon,
+.vendordashboardrating-pricing-card:hover .vendordashboardrating-dropdown-icon.vendordashboardrating-open {
     color: var(--primary-color);
 }
 
-.vendordashboard-pricing-card:hover .vendordashboard-book-now-btn {
+.vendordashboardrating-pricing-card:hover .vendordashboardrating-book-now-btn {
     background-color: white;
     color: var(--primary-color);
 }
 
-.vendordashboard-package-title {
+.vendordashboardrating-package-title {
     font-size: 16px;
     font-weight: 700;
     color: var(--text-color);
     margin: 0;
 }
 
-.vendordashboard-package-price {
+.vendordashboardrating-package-price {
     font-size: 16px;
     font-weight: 500;
     color: var(--primary-color);
     margin: 0;
 }
 
-.vendordashboard-card-body-wrapper {
+.vendordashboardrating-card-body-wrapper {
     position: relative;
     flex-grow: 1;
     margin-bottom: 25px;
     overflow: hidden;
 }
 
-.vendordashboard-card-body {
+.vendordashboardrating-card-body {
     width: 100%;
     height: 100%;
     max-height: 240px;
@@ -201,24 +201,24 @@
     padding-bottom: 20px;
 }
 
-.vendordashboard-card-body.vendordashboard-scrollable {
+.vendordashboardrating-card-body.vendordashboardrating-scrollable {
     overflow-y: auto;
 }
 
-.vendordashboard-highlights-heading {
+.vendordashboardrating-highlights-heading {
     font-size: 14px;
     font-weight: 550;
     color: var(--text-color);
     margin: 8px 0 5px 0;
 }
 
-.vendordashboard-highlights-list {
+.vendordashboardrating-highlights-list {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-.vendordashboard-highlight-item {
+.vendordashboardrating-highlight-item {
     font-size: 16px;
     line-height: 1.5;
     color: var(--text-color);
@@ -227,7 +227,7 @@
     padding-left: 14px;
 }
 
-.vendordashboard-highlight-item::before {
+.vendordashboardrating-highlight-item::before {
     content: "•";
     position: absolute;
     left: 0;
@@ -236,11 +236,11 @@
     font-weight: bold;
 }
 
-.vendordashboard-pricing-card:hover .vendordashboard-highlight-item::before {
+.vendordashboardrating-pricing-card:hover .vendordashboardrating-highlight-item::before {
     color: white;
 }
 
-.vendordashboard-toggle-expand-btn {
+.vendordashboardrating-toggle-expand-btn {
     position: absolute;
     bottom: 2px;
     right: 20px;
@@ -258,24 +258,24 @@
     transition: background-color 0.2s ease;
 }
 
-.vendordashboard-dropdown-icon {
+.vendordashboardrating-dropdown-icon {
     width: 16px;
     height: 16px;
     color: var(--primary-color);
     transition: transform 0.3s ease;
 }
 
-.vendordashboard-dropdown-icon.vendordashboard-open {
+.vendordashboardrating-dropdown-icon.vendordashboardrating-open {
     color: var(--primary-color);
     transform: rotate(180deg);
 }
 
-.vendordashboard-card-footer {
+.vendordashboardrating-card-footer {
     width: 100%;
     border-radius: 6px;
 }
 
-.vendordashboard-book-now-btn {
+.vendordashboardrating-book-now-btn {
     width: 100%;
     background-color: var(--primary-color);
     color: #ffffff;
@@ -289,47 +289,47 @@
 }
 
 @media screen and (max-width: 1200px) {
-.vendordashboard-pricing-section {
+.vendordashboardrating-pricing-section {
         height: auto;
         padding: 0 40px;
         margin: 0 auto;
     }
-.vendordashboard-pricing-grid {
+.vendordashboardrating-pricing-grid {
         flex-wrap: wrap;
         gap: 30px;
     }
 }
 
 @media screen and (max-width: 768px) {
-.vendordashboard-pricing-section {
+.vendordashboardrating-pricing-section {
         padding: 0 30px;
         height: auto;
     }
-.vendordashboard-pricing-grid {
+.vendordashboardrating-pricing-grid {
         flex-direction: column;
         align-items: center;
         gap: 35px;
     }
-.vendordashboard-pricing-card {
+.vendordashboardrating-pricing-card {
         width: 100%;
         max-width: 340px;
     }
 }
 
 @media screen and (max-width: 480px) {
-.vendordashboard-vendor-details-container {
+.vendordashboardrating-vendor-details-container {
         padding: 20px 16px !important;
         box-sizing: border-box !important;
     }
 
-.vendordashboard-trust-title {
+.vendordashboardrating-trust-title {
         font-size: 13px !important;
         font-weight: 600 !important;
         margin-bottom: 20px !important;
         color: #111111 !important;
     }
 
-.vendordashboard-stats-row {
+.vendordashboardrating-stats-row {
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
@@ -337,7 +337,7 @@
         width: 100% !important;
     }
 
-.vendordashboard-stat-item {
+.vendordashboardrating-stat-item {
         flex: 1 !important;
         text-align: center !important;
         display: flex !important;
@@ -345,14 +345,14 @@
         align-items: center !important;
     }
 
-.vendordashboard-stat-item h3 {
+.vendordashboardrating-stat-item h3 {
         font-size: 16px !important;
         font-weight: 600 !important;
         color: #111111 !important;
         margin: 0 0 6px 0 !important;
     }
 
-.vendordashboard-stat-item span {
+.vendordashboardrating-stat-item span {
         font-size: 10px !important;
         font-weight: 400 !important;
         color: #666666 !important;
@@ -360,7 +360,7 @@
     }
 
     /* Fixed bottom border cutting behavior */
-.vendordashboard-send-message-btn {
+.vendordashboardrating-send-message-btn {
         display: block !important;
         width: 100% !important;
         max-width: 100% !important;
@@ -377,75 +377,75 @@
         overflow: visible !important; /* Forces the border stroke to remain visible */
     }
 
-.vendordashboard-vendor-bio h3 {
+.vendordashboardrating-vendor-bio h3 {
         font-size: 14px !important;
         font-weight: 600 !important;
         margin-bottom: 12px !important;
     }
 
-.vendordashboard-vendor-bio p {
+.vendordashboardrating-vendor-bio p {
         font-size: 13px !important;
         line-height: 1.5 !important;
         color: #333333 !important;
     }
 
-.vendordashboard-pricing-section {
+.vendordashboardrating-pricing-section {
         padding: 0 16px;
         height: auto;
         max-width: 100%;
     }
-.vendordashboard-section-title {
+.vendordashboardrating-section-title {
         font-size: 20px;
         margin-top: 25px;
         margin-bottom: 15px;
         margin-left: 0;
         padding-left: 4px;
     }
-.vendordashboard-pricing-grid {
+.vendordashboardrating-pricing-grid {
         gap: 24px;
     }
-.vendordashboard-pricing-card {
+.vendordashboardrating-pricing-card {
         width: 100%;
         max-width: 100%;
         padding: 24px 20px !important;
         border-radius: 14px !important;
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
     }
-.vendordashboard-card-header {
+.vendordashboardrating-card-header {
         margin-bottom: 14px;
     }
-.vendordashboard-package-title {
+.vendordashboardrating-package-title {
         font-size: 16px !important;
         margin-bottom: 6px !important;
     }
-.vendordashboard-package-price {
+.vendordashboardrating-package-price {
         font-size: 14px !important;
         font-weight: 600 !important;
     }
-.vendordashboard-card-body-wrapper {
+.vendordashboardrating-card-body-wrapper {
         margin-bottom: 20px;
     }
-.vendordashboard-card-body.vendordashboard-scrollable {
+.vendordashboardrating-card-body.vendordashboardrating-scrollable {
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch;
     }
-.vendordashboard-highlights-heading {
+.vendordashboardrating-highlights-heading {
         font-size: 13px !important;
         margin: 4px 0 8px 0 !important;
     }
-.vendordashboard-highlight-item {
+.vendordashboardrating-highlight-item {
         font-size: 13px !important;
         line-height: 1.4 !important;
         margin-bottom: 8px !important;
         padding-left: 12px !important;
     }
-.vendordashboard-toggle-expand-btn {
+.vendordashboardrating-toggle-expand-btn {
         right: 10px;
         bottom: 0px;
         width: 28px;
         height: 28px;
     }
-.vendordashboard-book-now-btn {
+.vendordashboardrating-book-now-btn {
         padding: 12px 10px !important;
         font-size: 14px !important;
         border-radius: 8px !important;

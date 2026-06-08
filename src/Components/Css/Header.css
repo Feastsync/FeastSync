@@ -43,10 +43,10 @@
 .feastHeader_middle {
   display: flex;
   align-items: center;
-  /* gap: 15px; */
   height: 100%;
   flex: 1;
   justify-content: center;
+  position: sticky;
 }
 
 .feastHeader_navLink {
@@ -82,7 +82,7 @@
   bottom: 3px;
   left: 16px;
   right: 16px;
-  height: 3px;
+  height: 1.8px;
   background-color: var(--primary-color);
   border-radius: 2px;
 }
@@ -105,13 +105,22 @@
   font-weight: 500;
   display: flex;
   align-items: center;
+  justify-content: center; /* Set up layout symmetry in the base state */
   cursor: pointer;
-  padding: 8px 16px;
+  height: 45px; /* Matched to hover dimension */
+  width: 95px; /* Matched to hover dimension */
   border-radius: 6px;
   transition: all 0.2s ease;
+  border: 1px solid transparent; 
+  box-sizing: border-box; 
 }
 
 .feastHeader_login:hover {
+  height: 45px;
+  width: 95px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid var(--secondary-color);
   color: var(--secondary-color);
   font-weight: 500;
 }
@@ -124,13 +133,15 @@
   border-radius: 6px;
   font-size: 14.5px;
   font-weight: 500;
+  border: 1px solid transparent; 
+  box-sizing: border-box;
 }
 
 .feastHeader_getstartedBtn:hover {
   background-color: white;
   border: 1px solid var(--primary-color);
   color: var(--primary-color);
-  font-weight: 600;
+  font-weight: 500; /* Keeps font thickness identical so text width doesn't change */
 }
 
 .feastHeader_menuIcon {
@@ -245,6 +256,7 @@
   .feastHeader_login {
     flex: 1;
     height: 46px;
+    width: auto; /* Restores flexible sizing inside mobile flexboxes */
     justify-content: center;
     align-items: center;
     font-size: 16px;
@@ -266,9 +278,31 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
+  .feastHeader_wrapper {
+    width: 92%;
+  }
+
+  .feastHeader_logoImg {
+    height: 34px;
+  }
+
+  .feastHeader_logoText {
+    font-size: 17px;
+  }
+
+  .feastHeader_menuIcon {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 680px) {
   .feastHeader_container {
     height: 65px; 
+  }
+
+  .feastHeader_wrapper {
+    width: 94%;
   }
 
   .feastHeader_logoImg {
