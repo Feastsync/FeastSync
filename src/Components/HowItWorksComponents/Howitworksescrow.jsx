@@ -80,17 +80,15 @@ const Howitworksescrow = () => {
       <section className="heroescrow-findbook">
         <article className="heroescrow-findbook1">
           <h2>
-            Find, book, and pay for <br /> entertainment — without the risk.
-          </h2>
+            Two systems working together <br /> to protect everyone </h2>
         </article>
         <article className="heroescrow-findbook2">
           <article className="heroescrow-findbook2b">
             <p>
-              FeastSync gives event organizers access to a curated roster of
-              verified entertainment talent across Lagos. Every booking is
-              straightforward, every payment is protected, and every entertainer
-              on the platform has been identity-checked before you ever see
-              their profile.
+             FeastSync's trust layer is built on two pillars — KYC identity verification that confirms who you 
+             are dealing with, and escrow-based payments that protect what you are paying or earning. 
+             Together they make FEASTSYNC the only platform in Nigeria where booking entertainment
+              carries zero financial risk for either party.
             </p>
           </article>
         </article>

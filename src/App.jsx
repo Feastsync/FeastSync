@@ -34,6 +34,9 @@ import AllNotifications from "./Page/NotitficationsPages/AllNotifications.jsx";
 import WelcomeModal from "./Auth/Vendor/onBoardingFiles/WelcomeModal.jsx";
 import Error505 from "./Auth/Vendor/Error505.jsx";
 import Error404 from "./Auth/Vendor/Error404.jsx";
+import BookingRequest from "./Page/BookingRequest.jsx"
+import RatingReview from "./Page/RatingReview.jsx"
+import VendorSetting from "./Auth/Vendor/VendorSetting.jsx"
 const App = () => {
   return (
     <BrowserRouter>
@@ -68,10 +71,13 @@ const App = () => {
         <Route path="/userdashboard" element={<Userdashboard />} />
         <Route path="/user/signup" element={<UserSignUp />} />
         <Route path="getStarted" element={<GetStarted />} />
+        <Route path="/bookingrequest" element={<BookingRequest />} />
+        <Route path="/ratingreview" element={<RatingReview />} />
 
         <Route path="/wallet/transactions" element={<VendorWallet />} />
         <Route path="/welcomeModal" element={<WelcomeModal />} />
         <Route path="/transaction/histories" element={<WalletLedger />} />
+        <Route path="/vendorsetting" element={<VendorSetting />} />
         {/* <Route path="/transaction/histories" element={<WalletLedger />} /> */}
 
         <Route

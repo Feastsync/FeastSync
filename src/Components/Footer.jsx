@@ -11,7 +11,7 @@ const Footer = () => {
           <span className="footer_brand_name">FEASTSYNC</span>
         </div>
 
-        {/* Navigation Content Grid */}
+
         <div className="footer_links">
 
           <div className="footer_col">
@@ -23,7 +23,7 @@ const Footer = () => {
             <a href="#cookies" className="footer_link">Cookies Policy</a>
           </div>
 
-          <div className="footer_col">
+          <div className="footer_col  footer_col1">
             <h4 className="footer_col_title">Company</h4>
             <a href="#about" className="footer_link">About</a>
             <a href="#careers" className="footer_link">Careers</a>

@@ -1,42 +1,42 @@
-.vendor-dashboard-container{
+.vendordashboard-vendor-dashboard-container{
     width: 100%;
     height: 100vh;
     min-height: max-content;
     background-color: white;
 }
-.vendor-details-container {
+.vendordashboard-vendor-details-container {
   width: 100%;
   padding: 20px 80px;
 }
-.trust-title {
+.vendordashboard-trust-title {
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 15px;
   color: var(--text-color);
 }
-.stats-row {
+.vendordashboard-stats-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.stat-item {
+.vendordashboard-stat-item {
   text-align: center;
 }
-.stat-item h3 {
+.vendordashboard-stat-item h3 {
   font-size: 15px;
   font-weight: 500;
   color: var(--text-color);
 }
-.stat-item span {
+.vendordashboard-stat-item span {
   font-size: 10px;
   font-weight: 400;
   color: var(--text-color);
 }
-.stars {
+.vendordashboard-stars {
   font-size: 10px;
   margin-bottom: 2px;
 }
-.send-message-btn {
+.vendordashboard-send-message-btn {
   width: 100%;
   margin-top: 18px;
   margin-bottom: 18px;
@@ -52,26 +52,26 @@
     border:none
   }
 }
-.vendor-bio h3 {
+.vendordashboard-vendor-bio h3 {
   font-size: 15px;
   font-weight: 550;
   margin-bottom: 14px;
   color: var(--text-color);
 }
-.vendor-bio h4 {
+.vendordashboard-vendor-bio h4 {
   font-size: 12px;
   font-weight: 500;
   margin-bottom: 8px;
   color: var(--text-color);
 }
 
-.vendor-bio p {
+.vendordashboard-vendor-bio p {
   font-size: 12px;
   line-height: 1.6;
   color: var(--text-color);
   margin-bottom: 25px;
 }
-.vendor-link-row {
+.vendordashboard-vendor-link-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -80,13 +80,13 @@
   flex-wrap: wrap;
 }
 
-.vendor-link-row span {
+.vendordashboard-vendor-link-row span {
   font-size: 12.5px;
   font-weight: 500;
   color: var(--text-color);
   word-break: break-word;
 }
-.vendorcopy-link-btn {
+.vendordashboard-vendorcopy-link-btn {
   background: none;
   border: none;
   color: var(--text-color);
@@ -95,21 +95,21 @@
   font-weight: 500;
 
 }
-.vendorcopy-link-btn img{
+.vendordashboard-vendorcopy-link-btn img{
   width: 11px;
   height: 11px;
   stroke-width: 1.5px;
   stroke: var(--text-color);
   margin-left: 10px;
 }
-.pricing-section {
+.vendordashboard-pricing-section {
     width: 100%;
     height: 95vh;
     max-width: 1400px;
     padding: 0px 150px;
 }
 
-.section-title {
+.vendordashboard-section-title {
     font-size: 20px;
     font-weight: 600;
     color: var(--text-color);
@@ -119,14 +119,14 @@
     text-align: left;
 }
 
-.pricing-grid {
+.vendordashboard-pricing-grid {
     display: flex;
     gap: 40px;
     align-items: start;
     justify-content: center;
 }
 
-.pricing-card {
+.vendordashboard-pricing-card {
     background: white;
     padding: 20px 15px;
     border-radius: var(--radius-m, 10px);
@@ -139,61 +139,61 @@
     transition: all 0.3s ease;
 }
 
-.card-header {
+.vendordashboard-card-header {
     margin-bottom: 20px;
 }
 
-.pricing-card:hover {
+.vendordashboard-pricing-card:hover {
     background-color: var(--primary-color);
 }
 
-.pricing-card:hover .package-title,
-.pricing-card:hover .package-price,
-.pricing-card:hover .highlights-heading,
-.pricing-card:hover .highlight-item {
+.vendordashboard-pricing-card:hover  .vendordashboard-package-title,
+.vendordashboard-pricing-card:hover  .vendordashboard-package-price,
+.vendordashboard-pricing-card:hover  .vendordashboard-highlights-heading,
+.vendordashboard-pricing-card:hover  .vendordashboard-highlight-item {
     color: white;
 }
 
-.pricing-card:hover .highlight-item::before {
+.vendordashboard-pricing-card:hover .vendordashboard-highlight-item::before {
     color: white;
 }
 
-.pricing-card:hover .toggle-expand-btn {
+.vendordashboard-pricing-card:hover .vendordashboard-toggle-expand-btn {
     background: #f0f2f5;
 }
 
-.pricing-card:hover .dropdown-icon,
-.pricing-card:hover .dropdown-icon.open {
+.vendordashboard-pricing-card:hover .vendordashboard-dropdown-icon,
+.vendordashboard-pricing-card:hover .vendordashboard-dropdown-icon.vendordashboard-open {
     color: var(--primary-color);
 }
 
-.pricing-card:hover .book-now-btn {
+.vendordashboard-pricing-card:hover .vendordashboard-book-now-btn {
     background-color: white;
     color: var(--primary-color);
 }
 
-.package-title {
+.vendordashboard-package-title {
     font-size: 16px;
     font-weight: 700;
     color: var(--text-color);
     margin: 0;
 }
 
-.package-price {
+.vendordashboard-package-price {
     font-size: 16px;
     font-weight: 500;
     color: var(--primary-color);
     margin: 0;
 }
 
-.card-body-wrapper {
+.vendordashboard-card-body-wrapper {
     position: relative;
     flex-grow: 1;
     margin-bottom: 25px;
     overflow: hidden;
 }
 
-.card-body {
+.vendordashboard-card-body {
     width: 100%;
     height: 100%;
     max-height: 240px;
@@ -201,24 +201,24 @@
     padding-bottom: 20px;
 }
 
-.card-body.scrollable {
+.vendordashboard-card-body.vendordashboard-scrollable {
     overflow-y: auto;
 }
 
-.highlights-heading {
+.vendordashboard-highlights-heading {
     font-size: 14px;
     font-weight: 550;
     color: var(--text-color);
     margin: 8px 0 5px 0;
 }
 
-.highlights-list {
+.vendordashboard-highlights-list {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-.highlight-item {
+.vendordashboard-highlight-item {
     font-size: 16px;
     line-height: 1.5;
     color: var(--text-color);
@@ -227,7 +227,7 @@
     padding-left: 14px;
 }
 
-.highlight-item::before {
+.vendordashboard-highlight-item::before {
     content: "•";
     position: absolute;
     left: 0;
@@ -236,11 +236,11 @@
     font-weight: bold;
 }
 
-.pricing-card:hover .highlight-item::before {
+.vendordashboard-pricing-card:hover .vendordashboard-highlight-item::before {
     color: white;
 }
 
-.toggle-expand-btn {
+.vendordashboard-toggle-expand-btn {
     position: absolute;
     bottom: 2px;
     right: 20px;
@@ -258,24 +258,24 @@
     transition: background-color 0.2s ease;
 }
 
-.dropdown-icon {
+.vendordashboard-dropdown-icon {
     width: 16px;
     height: 16px;
     color: var(--primary-color);
     transition: transform 0.3s ease;
 }
 
-.dropdown-icon.open {
+.vendordashboard-dropdown-icon.vendordashboard-open {
     color: var(--primary-color);
     transform: rotate(180deg);
 }
 
-.card-footer {
+.vendordashboard-card-footer {
     width: 100%;
     border-radius: 6px;
 }
 
-.book-now-btn {
+.vendordashboard-book-now-btn {
     width: 100%;
     background-color: var(--primary-color);
     color: #ffffff;
@@ -289,47 +289,47 @@
 }
 
 @media screen and (max-width: 1200px) {
-    .pricing-section {
+.vendordashboard-pricing-section {
         height: auto;
         padding: 0 40px;
         margin: 0 auto;
     }
-    .pricing-grid {
+.vendordashboard-pricing-grid {
         flex-wrap: wrap;
         gap: 30px;
     }
 }
 
 @media screen and (max-width: 768px) {
-    .pricing-section {
+.vendordashboard-pricing-section {
         padding: 0 30px;
         height: auto;
     }
-    .pricing-grid {
+.vendordashboard-pricing-grid {
         flex-direction: column;
         align-items: center;
         gap: 35px;
     }
-    .pricing-card {
+.vendordashboard-pricing-card {
         width: 100%;
         max-width: 340px;
     }
 }
 
 @media screen and (max-width: 480px) {
-    .vendor-details-container {
+.vendordashboard-vendor-details-container {
         padding: 20px 16px !important;
         box-sizing: border-box !important;
     }
 
-    .trust-title {
+.vendordashboard-trust-title {
         font-size: 13px !important;
         font-weight: 600 !important;
         margin-bottom: 20px !important;
         color: #111111 !important;
     }
 
-    .stats-row {
+.vendordashboard-stats-row {
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
@@ -337,7 +337,7 @@
         width: 100% !important;
     }
 
-    .stat-item {
+.vendordashboard-stat-item {
         flex: 1 !important;
         text-align: center !important;
         display: flex !important;
@@ -345,14 +345,14 @@
         align-items: center !important;
     }
 
-    .stat-item h3 {
+.vendordashboard-stat-item h3 {
         font-size: 16px !important;
         font-weight: 600 !important;
         color: #111111 !important;
         margin: 0 0 6px 0 !important;
     }
 
-    .stat-item span {
+.vendordashboard-stat-item span {
         font-size: 10px !important;
         font-weight: 400 !important;
         color: #666666 !important;
@@ -360,7 +360,7 @@
     }
 
     /* Fixed bottom border cutting behavior */
-    .send-message-btn {
+.vendordashboard-send-message-btn {
         display: block !important;
         width: 100% !important;
         max-width: 100% !important;
@@ -377,75 +377,75 @@
         overflow: visible !important; /* Forces the border stroke to remain visible */
     }
 
-    .vendor-bio h3 {
+.vendordashboard-vendor-bio h3 {
         font-size: 14px !important;
         font-weight: 600 !important;
         margin-bottom: 12px !important;
     }
 
-    .vendor-bio p {
+.vendordashboard-vendor-bio p {
         font-size: 13px !important;
         line-height: 1.5 !important;
         color: #333333 !important;
     }
 
-    .pricing-section {
+.vendordashboard-pricing-section {
         padding: 0 16px;
         height: auto;
         max-width: 100%;
     }
-    .section-title {
+.vendordashboard-section-title {
         font-size: 20px;
         margin-top: 25px;
         margin-bottom: 15px;
         margin-left: 0;
         padding-left: 4px;
     }
-    .pricing-grid {
+.vendordashboard-pricing-grid {
         gap: 24px;
     }
-    .pricing-card {
+.vendordashboard-pricing-card {
         width: 100%;
         max-width: 100%;
         padding: 24px 20px !important;
         border-radius: 14px !important;
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
     }
-    .card-header {
+.vendordashboard-card-header {
         margin-bottom: 14px;
     }
-    .package-title {
+.vendordashboard-package-title {
         font-size: 16px !important;
         margin-bottom: 6px !important;
     }
-    .package-price {
+.vendordashboard-package-price {
         font-size: 14px !important;
         font-weight: 600 !important;
     }
-    .card-body-wrapper {
+.vendordashboard-card-body-wrapper {
         margin-bottom: 20px;
     }
-    .card-body.scrollable {
+.vendordashboard-card-body.vendordashboard-scrollable {
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch;
     }
-    .highlights-heading {
+.vendordashboard-highlights-heading {
         font-size: 13px !important;
         margin: 4px 0 8px 0 !important;
     }
-    .highlight-item {
+.vendordashboard-highlight-item {
         font-size: 13px !important;
         line-height: 1.4 !important;
         margin-bottom: 8px !important;
         padding-left: 12px !important;
     }
-    .toggle-expand-btn {
+.vendordashboard-toggle-expand-btn {
         right: 10px;
         bottom: 0px;
         width: 28px;
         height: 28px;
     }
-    .book-now-btn {
+.vendordashboard-book-now-btn {
         padding: 12px 10px !important;
         font-size: 14px !important;
         border-radius: 8px !important;
