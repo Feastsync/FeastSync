@@ -14,7 +14,7 @@
   gap: 40px;
 }
 
-.fv_row_header {
+.fv_row_he ader {
   display: flex;
   align-items: center;
   margin-bottom: -8px;
@@ -45,6 +45,8 @@
 }
 
 
+
+
 .fv_window::-webkit-scrollbar {
   display: none;
 }
@@ -52,7 +54,7 @@
 
 .box {
   flex: 0 0 calc(25% - 18px);
-  box-sizing: border-box;
+  box-sizing: border-box; 
 }
 
 .btn2 {

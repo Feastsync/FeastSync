@@ -1309,9 +1309,6 @@
   transition: all 0.2s;
 }
 
-.notif-tab:hover {
-  /* color: var(--text-color); */
-}
 
 .notif-tab--active {
   background: var(--primary-color);

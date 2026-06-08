@@ -41,7 +41,7 @@ const OTPVerification = () => {
           
           <div className="otp-header">
             <h1>OTP verification</h1>
-            <p>Enter your email address to receive a recovery link</p>
+            <p>Enter OTP code for verification</p>
           </div>
 
           <p className="otp-label">Input OTP</p>

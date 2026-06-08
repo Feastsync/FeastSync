@@ -25,7 +25,7 @@ const services = () => {
           </p>
           <div className="serviceRate">
             <div>
-              <p>7</p>
+              <p >7</p>
               <p className="serviceCategory">service categories</p>
             </div>
             <div>
@@ -147,7 +147,7 @@ const services = () => {
       </div>
 
       <div className="serviceEntertainment">
-        <div className="serviceHolder">
+        <div className="serviceCoperateHolder">
           <p className="serviceCoperate">Coporate Event Services</p>
           <p>Enterprise Brand events</p>
         </div>
@@ -167,7 +167,7 @@ const services = () => {
       </div>
 
       <div className="serviceEntertainment">
-        <div>
+        <div className="serviceCoperateHolder">
           <p className="serviceCoperate">Event Entertainment packages</p>
           <p>Bundle . Best value</p>
         </div>

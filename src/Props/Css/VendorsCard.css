@@ -27,8 +27,8 @@
 }
 
 .see_more_lnk {
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 300;
   color: #0F0F10;
   text-decoration: underline;
   cursor: pointer;
@@ -38,8 +38,8 @@
   background-color: #ffffff;
   border: 1px solid var(--primary-color);
   border-radius: 50%;
-  width: 34px;
-  height: 34px;
+  width: 23px;
+  height: 23px;
   cursor: pointer;
   color: var(--primary-color);
   display: flex;
@@ -64,7 +64,7 @@
 }
 
 .vendor_name {
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 600;
   color: #0F0F10;
   margin: 0;
@@ -73,10 +73,18 @@
 .vendor_location {
   display: flex;
   align-items: center;
-  gap: 4px;
   color: #0F0F10;
   font-size: 15px;
+  margin-left: -2px;
 }
+
+.vendor_location svg {
+  flex-shrink: 0;
+  width: 16px; 
+  height: 16px; 
+}
+
+
 
 .vendor_rating {
   display: flex;
@@ -91,15 +99,19 @@
   justify-content: space-between;
   margin-top: auto;
 }
+.location-text {
+  font-size: 12px;
+
+}
 
 .price_lbl {
-  font-size: 11px;
+  font-size: 10.5px;
   color: #0F0F10;
   margin: 0;
 }
 
 .price_amt {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: #0F0F10;
   margin: 0;
