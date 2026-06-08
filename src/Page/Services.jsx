@@ -180,7 +180,6 @@ const services = () => {
            <Button btnText="Get Started" className="servicebtn" />
         </div>
       </div>
-      <Footer />
     </main>
   );
 };
