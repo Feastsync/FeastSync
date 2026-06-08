@@ -1,0 +1,251 @@
+.userheader {
+  width: 100%;
+  height: 12.5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border-bottom: 1px solid #f0f0f0;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.userheader_wrapper {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.userheader_left {
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ flex-shrink: 0;;
+}
+
+.userheader_logo_img {
+  height: 50px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.userheader_logo_text {
+  color: var(--secondary-color);
+  font-size: 18.5px;
+  font-weight: 600;
+}
+
+.userheader_middle {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex: 1;
+  justify-content: center;
+  position: sticky;
+}
+
+.userheader_nav_link {
+  text-decoration: none;
+  color: var(--primary-color);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  border-radius: 6px;
+  position: relative;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.userheader_nav_link:hover {
+  background-color: #a281be;
+  color: #ffffff;
+}
+
+.userheader_nav_link.active {
+  font-weight: 500;
+  background-color: transparent;
+  color: var(--primary-color);
+}
+
+.useheader_nav-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  left: 16px;
+  right: 16px;
+  height: 1.8px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+}
+
+.userheader_nav-link.active:hover {
+  background-color: #a281be;
+  color: #ffffff;
+}
+
+.userheader_right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0;
+}
+
+.userheader_notification_wrapper {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+/* Reduced Bell Icon */
+.userheader_bell_icon {
+  height: 24px; 
+  color: var(--primary-color);
+}
+
+.userheader_profile_wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px; 
+  cursor: pointer;
+}
+.userheader_bell_icon{
+    width: 20px;
+    height: 20px;
+}
+/* Reduced Avatar Circle */
+.userheader_avatar_circle {
+  width: 40px; /* Reduced from 40px */
+  height: 40px; /* Reduced from 40px */
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  position: relative;
+  font-size: 14px; /* Adjusted font size for smaller circle */
+}
+
+/* Reduced Status Dot */
+.userheader_status_dot {
+  width: 14px; /* Reduced from 15px */
+  height: 14px; /* Reduced from 15px */
+  background-color: #00cc44;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  position: absolute;
+  top: 10;
+  right: 0;
+}
+.menu_icon {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: var(--primary-color);
+}
+
+/* Reduced Profile Name */
+.userheader_profile_name {
+  font-size: 16px; /* Reduced from 23px */
+  font-weight: 500;
+  color: #333333;
+  margin-top: 3px;
+  white-space: nowrap;
+}
+/* .userheader-logout-btn{
+    width: 75px;
+    height: 40px;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer
+} */
+
+/* Media queries for Userheader (adjust as needed for Userdashboard's overall responsiveness) */
+@media (max-width: 1200px) {
+  .userheader {
+    height: 70px;
+  }
+  .userheader_wrapper{
+    width: 94%;
+  }
+  .userheader_logo_img {
+    height: 38px;
+  }
+  .userheader_logo_text {
+    font-size: 18px;
+  }
+  .userheader_middle {
+    display: none;
+  }
+  .userheader_right {
+    display: none;
+  }
+  .menu_icon {
+    display: flex;
+  }
+  .userheader_middle.active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 998;
+  }
+  .userheader_nav_link {
+    width: 100%;
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+}
+
+@media (max-width: 768px) {
+  .userheader_wrapper{
+    width: 94%;
+  }
+  .userheader_logo_img {
+    height: 34px;
+  }
+  .userheader_logo_text {
+    font-size: 17px;
+  }
+  .menu_icon {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 480px) {
+  .userheader {
+    height: 65px;
+  }
+  .userheader_wrapper{
+    width: 94%;
+  }
+  .userheader_logo_img {
+    height: 32px;
+  }
+  .userheader_logo_text {
+    font-size: 16px;
+  }
+  .menu_icon {
+    font-size: 24px;
+  }
+  .userheader_middle.active {
+    top: 65px;
+  }
+}

@@ -8,6 +8,7 @@ import Otpimg from "../assets/BackgroundImage/OtpImage.png"
 import { IoArrowBack } from "react-icons/io5";
 
 const OTPVerification = () => {
+  const navigate = useNavigate();
   const inputs = useRef([]);
   const Navigate = useNavigate();
   const handleInput = (e, index) => {
@@ -32,7 +33,7 @@ const OTPVerification = () => {
             <span className="otp-logo-text">FeastSync</span>
           </div>
          <Link to="/login" className="otp-back-wrap">
-           <span className="otp-back-icon-box">
+           <span className="otp-back-icon-box" onClick={() => navigate("/forgot-password")} >
             <IoArrowBack size={18} />
           </span>
           <span className="otp-back-text">Back</span>

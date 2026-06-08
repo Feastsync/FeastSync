@@ -3,8 +3,10 @@ import Headerlogo from '../assets/logos/Headerlogo.png'
 import Button from '../Props/Button'
 import { FaArrowLeft } from "react-icons/fa6";
 import "../Auth/Css/ForgotPassword.css"
+import { useNavigate } from 'react-router-dom';
 
 const ForgetPassword = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
 
   return (
@@ -19,7 +21,7 @@ const ForgetPassword = () => {
               <div className='forgotPaswwordContainer'>
                 <div className='forgotPasswordHolder'>
                   <div className='forgotPasswordButton'>
-                     <Button>
+                     <Button onClick={() => navigate('signup')}>
                        <FaArrowLeft />
                      </Button>
                      <p>Back</p>
@@ -38,8 +40,8 @@ const ForgetPassword = () => {
                            placeholder='Your email address'
                            onChange={(e)=>setEmail(e.target.value)}
                            />
-                    <Button >Send recovery OTP</Button>
-                    <p>Remember your password? <span style={{color:'#330159', fontWeight:"bold"}}>Sign in</span></p>
+                    <Button onClick={() => navigate('/verify-otp')}>Send recovery OTP</Button>
+                    <p>Remember your password? <span style={{color:'#330159', fontWeight:"bold", cursor:"pointer"}} onClick={() => navigate('/login')}> Sign in </span></p>
                   </div>
                 </div>
                 <div className='forgotPasswordImage'>

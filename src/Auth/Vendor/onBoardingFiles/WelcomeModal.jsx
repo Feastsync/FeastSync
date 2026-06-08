@@ -1,8 +1,10 @@
 import React from 'react'
 import "./css/Welcome.css"
+import { useNavigate } from 'react-router-dom'
 
 
 const WelcomeModal = ({ vendorName = "Adeyemi", onContinue, onSkip }) => {
+  const navigate = useNavigate()
   return (
      <div className="welcome-overlay">
       <div className="welcome-card">
@@ -23,7 +25,7 @@ const WelcomeModal = ({ vendorName = "Adeyemi", onContinue, onSkip }) => {
   Continue verification
 </button>
 
-        <button type="button" className="welcome-btn-text" onClick={onSkip}>
+        <button type="button" className="welcome-btn-text" onClick={() => navigate("/")}   >
           Skip for now
         </button>
       </div>
