@@ -20,6 +20,7 @@ import ResetPassword from "./Auth/ResetPassword.jsx";
 import VendorSignUp from "./Auth/Vendor/VedorSignUp.jsx";
 import VendorKYC from "./Auth/Vendor/VendorKYC.jsx";
 import Vendordashboard from "./Auth/Vendor/Vendordashboard.jsx";
+import Vendordashboardrating from "./Auth/Vendor/Vendordashoardrating.jsx";
 import Contact from "./Page/Contact.jsx";
 import UserSignUp from "./Auth/User/UserSignUp.jsx";
 import Userdashboard from "./Auth/User/Userdashboard.jsx";
@@ -34,6 +35,9 @@ import WelcomeModal from "./Auth/Vendor/onBoardingFiles/WelcomeModal.jsx";
 import Chat from "./Page/chatPage/Chat.jsx";
 import Error505 from "./Auth/Vendor/Error505.jsx";
 import Error404 from "./Auth/Vendor/Error404.jsx";
+import BookingRequest from "./Page/BookingRequest.jsx"
+import RatingReview from "./Page/RatingReview.jsx"
+import VendorSetting from "./Auth/Vendor/VendorSetting.jsx"
 const App = () => {
   return (
     <BrowserRouter>
@@ -64,13 +68,17 @@ const App = () => {
         <Route path="/vendor/signup" element={<VendorSignUp />} />
         <Route path="/vendor/kyc" element={<VendorKYC />} />
         <Route path="/vendordashboard" element={<Vendordashboard />} />
+        <Route path="/vendordashboardrating"  element={<Vendordashboardrating />} />
         <Route path="/userdashboard" element={<Userdashboard />} />
         <Route path="/user/signup" element={<UserSignUp />} />
         <Route path="getStarted" element={<GetStarted />} />
+        <Route path="/bookingrequest" element={<BookingRequest />} />
+        <Route path="/ratingreview" element={<RatingReview />} />
 
         <Route path="/wallet/transactions" element={<VendorWallet />} />
         <Route path="/welcomeModal" element={<WelcomeModal />} />
         <Route path="/transaction/histories" element={<WalletLedger />} />
+        <Route path="/vendorsetting" element={<VendorSetting />} />
         {/* <Route path="/transaction/histories" element={<WalletLedger />} /> */}
        <Route path="/chats" element={<Chat />} />    
         <Route

@@ -41,7 +41,7 @@ const Howitworksvendor = () => {
       title: "Perform and deliver",
       description:
         "Show up, perform, and deliver your best. The in-app chat keeps communication with the organizer clean and documented leading up to the event.",
-      image: "https://i.postimg.cc/76nX7wrn/Character.png",
+      image: "https://i.postimg.cc/63LwghQ8/Character.png",
     },
     {
       stepNumber: "Step 6",
@@ -99,16 +99,14 @@ const Howitworksvendor = () => {
       </section>
       <section className="herovendor-findbook">
         <article className="herovendor-findbook1">
-          <h2>Find, book, and pay for <br /> entertainment — without the risk.</h2>
+          <h2>Build your reputation. <br /> without the hassle</h2>
         </article>
         <article className="herovendor-findbook2">
           <article className="herovendor-findbook2b">
           <p>
-            FeastSync gives event organizers access to a curated roster of
-            verified entertainment talent across Lagos. Every booking is
-            straightforward, every payment is protected, and every entertainer
-            on the platform has been identity-checked before you ever see their
-            profile.
+            FeastSync gives entertainment professionals a platform that protects their time, guarantees 
+            their payment, and builds their credibility — all in one place. No middlemen. No chasing 
+            invoices. Just verified talent, professional bookings, and secured payouts.
           </p>
           </article>
         </article>
