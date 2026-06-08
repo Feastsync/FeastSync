@@ -16,31 +16,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4vh;
+  gap: 7vh;
 }
 
 .wwsf_header {
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 1.5vh;
+  gap: 3vh;
   width: 100%;
 }
 
 .wwsf_title {
   font-size: 36px;
   font-weight: 700;
-  color: #0B0017;
+  color:var(--text-color);
   letter-spacing: 0.5px;
   margin: 0;
 }
 
 .wwsf_subtitle {
   font-size: 17px;
-  color: var(--text-color);
+  color:var(--text-color);
   line-height: 1.7;
-  max-width: 700px;
+  max-width: 900px;
   margin: 0 auto;
+  text-align: center;
 }
 
 .wwsf_grid {
@@ -53,12 +54,11 @@
 
 .wwsf_pill {
   width: auto;
-  height: 9vh;
+  height: 48px;
   background-color: #0F0F10;
   color: #ffffff;
   border-radius: 50px;
   border: none;
-  /* cursor: pointer; */
   transition: background-color 0.2s ease;
   display: flex;
   align-items: center;
@@ -76,8 +76,8 @@
 }
 
 .wwsf_icon {
-  width: 22px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   object-fit: contain;
   filter: brightness(0) invert(1);
   flex-shrink: 0;
@@ -87,8 +87,6 @@
   font-size: 14px;
   font-weight: 500;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 @media (max-width: 768px) {
@@ -109,6 +107,7 @@
     font-size: 14px;
     line-height: 1.5;
     padding: 0 8px;
+    max-width: 100%;
   }
 
   .wwsf_grid {
