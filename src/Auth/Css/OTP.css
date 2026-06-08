@@ -1,19 +1,20 @@
 .otp-page {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 40px;
+  padding: 40px 40px 60px;
   background-color: #ffffff;
-  box-sizing: border-box; 
+  box-sizing: border-box;
+  overflow-y: auto;
 }
 
 .otp-container {
   display: flex;
   width: 100%;
   max-width: 1200px;
-  gap: 100px;
+  gap: 80px;
   align-items: center;
 }
 
@@ -39,7 +40,7 @@
 .otp-logo-text {
   font-size: 20px;
   font-weight: 700;
-  color: #111827;
+  color:var(--secondary-color);
 }
 
 .otp-back-wrap {
@@ -105,7 +106,7 @@
 }
 
 .otp-box.ant-input {
-  width: 80px;
+  width: 70px;
   height: 70px;
   text-align: center;
   font-size: 32px;
@@ -122,7 +123,7 @@
 }
 
 .otp-verify-btn {
-  width: 70%;
+  width: 62%;
   max-width: 450px;
   height: 55px;
   background: #330159;
