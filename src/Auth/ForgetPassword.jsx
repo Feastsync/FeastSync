@@ -10,17 +10,19 @@ const ForgetPassword = () => {
   return (
     <div>
          <div className='forgotPasswordLogo'>
-          <div className='header_left'>
-                <img src={Headerlogo} alt="FeastSync Logo" className='logo_img' />
-                <h2 className='logo_text'>FeastSync</h2>
-              </div>
+            <div className='resetPasswordLogo'>
+                          <div className='feastHeader_left'>
+                            <img onClick={()=> Nav('/')} src={Headerlogo} alt="FeastSync Logo" className='feastHeader_logoImg' />
+                            <h2 className='feastHeader_logoText'>FeastSync</h2>
+                          </div>
+                   </div>
          </div>
 
               <div className='forgotPaswwordContainer'>
                 <div className='forgotPasswordHolder'>
                   <div className='forgotPasswordButton'>
                      <Button>
-                       <FaArrowLeft />
+                      <p> <FaArrowLeft /></p>
                      </Button>
                      <p>Back</p>
                   </div>
@@ -32,18 +34,20 @@ const ForgetPassword = () => {
                   </div>
 
                   <div className='passwordEmail'>
-                    <label htmlFor="">Email Address</label>
+                    <section className='passwordEmailWrapper'>
+                      <label htmlFor="">Email Address</label>
                     <input type="email"
                            name="" id="" 
                            placeholder='Your email address'
                            onChange={(e)=>setEmail(e.target.value)}
                            />
+                    </section>
                     <Button >Send recovery OTP</Button>
                     <p>Remember your password? <span style={{color:'#330159', fontWeight:"bold"}}>Sign in</span></p>
                   </div>
                 </div>
                 <div className='forgotPasswordImage'>
-                  <img src="../assets/logos/Icon.png" alt="Forgot Password Icon" />
+                  <img src="../public/About/Icon.png" alt="Forgot Password Icon" />
                 </div>
               </div>
     </div>

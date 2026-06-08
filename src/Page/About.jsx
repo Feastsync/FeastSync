@@ -83,7 +83,7 @@ const About = () => {
       <section className="aboutMission">
         <div className="missionbox">
           <p className="missionQuote">Our Mission</p>
-          <p>
+          <p className="missionValueText">
             Our mission is to take the risk out of booking entertaiment.By
             connecting host with fully verified top-tier talent through a secure
             payment system. feastsync guarantees that every event-big or
@@ -95,7 +95,7 @@ const About = () => {
         </div>
         <div className="missionHolder">
           <p className="missionQuote">Our Vision</p>
-          <p>
+          <p className="missionValueText">
             
             To create a world where booking live entertainment is entirely
             stress-free, establishing FeastSync as the global benchmark for
