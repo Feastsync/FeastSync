@@ -9,6 +9,9 @@
     align-items: center;
     gap: 40px;
 }
+ .error505 p{
+        text-align: center;
+    }
 .errorBtn{
     display: flex;
     align-items: center;
@@ -18,4 +21,10 @@
     color: blueviolet;
     box-shadow: 0.5px 0.5px 0.5px 0.5px gray;
     padding: 10px;
+}
+@media (max-width: 480px) {
+    .error505 p{
+        font-size: 20px;
+        text-align: center;
+    }
 }

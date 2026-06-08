@@ -21,7 +21,7 @@
   background-position: center;
   background-repeat: no-repeat;
 
-  padding-left: 100px;
+  padding-left: 50px;
   background-image: url("../../assets/BackgroundImage/8644f49ca66594465885d8daad5f829d0ff32ee3.png");
 }
 .about {
@@ -41,15 +41,17 @@
 .aboutWrapper {
   display: flex;
   gap: 100px;
-    padding-left: 100px;
+    padding-left: 50px;
 
 }
 
 .aboutWrapperRight {
   display: grid;
-  grid-template-columns: repeat(3, 250px);
+  grid-template-columns: repeat(3,200px);
   grid-template-rows: 200px 250px;
   column-gap: 10px;
+width: 100%;
+min-height: 100vh;
   row-gap: 30px;
 }
 .aboutWrapperRight img {
@@ -127,8 +129,8 @@
   line-height: 40px;
 }
 .aboutMission div {
-  width: 25vw;
-  height: 80vh;
+  width: 322px;
+  height: 512px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -138,14 +140,17 @@
 }
 
 .missionQuote {
-  font-size: 30px;
+  font-size: 32px;
   font-weight: 550px;
+  width: 20vw;
+  padding-left: 60px;
   text-align: start;
-  margin-right: 180px;
+  /* margin-right: 180px; */
 }
-.aboutMission div p {
+.missionValueText {
   color: white;
   line-height: 35px;
+  font-size: 16px;
 }
 
 .aboutValueWrapper{
@@ -173,9 +178,9 @@
     line-height: 50px;
 }
 .aboutValues img {
-  width: 35%;
-  height: 75vh;
-  border-radius: 10px;
+  width:380px;
+  height: 475px;
+  border-radius: 6px;
 }
 .aboutValues p {
   width: 25vw;
@@ -187,13 +192,15 @@
   justify-content: center;
   text-align: start;
   color: white;
-  border-radius: 10px;
+  border-radius: 6px;
   line-height: 30px;
   padding: 10px;
   gap: 20px;
 }
 .aboutValues p span {
   font-size: 22px;
+ display: flex;
+ align-items: center;
 }
 
 .row-spans-3-2 {
@@ -303,6 +310,33 @@
   width: 100%;
   height: 100%;
 }
+.aboutTeamBox {
+  width: 100%;
+  display: grid;
+  background: linear-gradient(
+    180deg,
+    #0a0015 0%,
+    #0b0017 8.33%,
+    #0d0119 16.67%,
+    #0e011b 25%,
+    #0f021d 33.33%,
+    #11021f 41.67%,
+    #120321 50%,
+    #130423 58.33%,
+    #150525 66.67%,
+    #160628 75%,
+    #17072a 83.33%,
+    #19092c 91.67%,
+    #1a0a2e 100%
+  );
+  row-gap: 50px;
+  column-gap: 70px;
+  /* padding: 50px; */
+  /* Automatically places items and centers the entire grid track */
+  grid-template-columns: repeat(4, 200px);
+  justify-content: center;
+  /* align-items: center; */
+}
 .aboutTeam img {
   width: 100%;
   height: auto;
@@ -353,6 +387,7 @@
 @media (max-width: 450px) {
   .container {
     width: 100%;
+    padding-left: 5px;
   }
   .aboutContainer {
     height: 90vh;
@@ -365,7 +400,7 @@
     background-position: 50%;
     background-repeat: no-repeat;
 
-    padding-left: 50px;
+    /* padding-left: 50px; */
     background-image: url("../../assets/BackgroundImage/8644f49ca66594465885d8daad5f829d0ff32ee3.png");
   }
   .aboutInfo {
@@ -376,13 +411,26 @@
   .aboutWrapper {
     display: flex;
     flex-direction: column;
+    align-items: center;
+ justify-content: center;
+padding-left: 0px;
   }
   .aboutMission {
     flex-direction: column;
-    font-size: 30px;
+    font-size: 20px;
   }
   .aboutWrapperRight {
-    grid-template-columns: repeat(3, 100px);
+    grid-template-columns: repeat(3, 130px);
+    justify-items: center;
+    align-items: center;
+    /* padding-left: 0px; */
+  }
+  .aboutWrapperRight img{
+    /* min-width: 50vw; */
+    height: 100%;
+    display: block;
+
+    
   }
   .row-span-1-2 {
     object-position: 75.1%;
@@ -395,25 +443,28 @@
     object-position: 52%;
   }
   .aboutMission div {
-    width: 100vw;
+    width: 90vw;
     height: 30%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 30px;
+    /* padding: 30px; */
   }
 
   .missionQuote {
-    font-size: 30px;
+    width: 150px;
+    font-size: 25px;
     text-align: start;
+    /* background: red; */
+    font-weight: bold;
     line-height: 50px;
   }
   .aboutValues {
     flex-direction: column;
   }
   .aboutValues img {
-    width: 100%;
+    width: 95%;
     height: 75vh;
     object-fit: cover;
     border-radius: 10px;
@@ -427,11 +478,80 @@
     font-size: 25px;
     font-weight: bold;
   }
+  .aboutTeam {
+  width: 40vw;
+  border-radius: 80px 80px 0px 0px;
+  height: 100%;
+  display: flex;
+  /* justify-content: s; */
+  align-items: center;
+  flex-direction: column;
+  justify-content: start;
+  background: white;
+
+
+  /* padding: 4px; */
+  align-self: center;
+}
+.aboutTeamBox {
+  width: 100%;
+  display: grid;
+  background: linear-gradient(
+    180deg,
+    #0a0015 0%,
+    #0b0017 8.33%,
+    #0d0119 16.67%,
+    #0e011b 25%,
+    #0f021d 33.33%,
+    #11021f 41.67%,
+    #120321 50%,
+    #130423 58.33%,
+    #150525 66.67%,
+    #160628 75%,
+    #17072a 83.33%,
+    #19092c 91.67%,
+    #1a0a2e 100%
+  );
+  row-gap: 50px;
+    grid-template-columns: repeat(2, 200px);
+  column-gap: 70px;
+  padding-right: 100px;
+    margin-right: 20px;
+  justify-content: center;
+}
+.aboutTeamBox > *:nth-child(5) {
+  margin-left: 120px;
+}
+.aboutTeamBox > *:nth-child(6) {
+  margin-left: 120px;
+}
+.aboutTeamBox > *:nth-child(7) {
+  margin-left: 120px;
+}
+
+.aboutTeamText {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 30%;
+
+  gap: 1px;
+  line-height: 25px;
+}
+.aboutName {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: #330159;
+}
+.aboutImgHolder {
+  border-radius: 75px 75px 0px 0px;
+  width: 100%;
+  height: 100%;
+}
   .aboutTeamBox {
     row-gap: 40px;
-    column-gap: 5px;
+    column-gap: 90px;
     /* Automatically places items and centers the entire grid track */
-    grid-template-columns: repeat(2, 200px);
+    grid-template-columns: repeat(2, 90px);
   }
   .aboutTeamBox > *:nth-child(5) {
     margin-left: 0px;
@@ -442,7 +562,6 @@
   .aboutTeamBox > *:nth-child(7) {
     margin-left: 90px;
   }
-  .aboutTeam {
-    width: 45vw;
-  }
+ 
+  
 }

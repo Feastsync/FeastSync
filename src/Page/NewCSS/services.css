@@ -1,7 +1,8 @@
 .service-container {
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 40px;
+  width: 100%;
 }
 .overlayer {
   background-image: url(../../../public/About/show.png);
@@ -31,11 +32,12 @@ flex-direction: column;
 gap: 50px;
 }
 .serviceContainerTitle {
-  font-size: 40px;
+  font-size: 48px;
   font-weight: bold;
 }
 .serviceDeliver {
   line-height: 30px;
+  font-size: 18px;
 }
 .servicesContainer p {
   text-align: center;
@@ -50,6 +52,7 @@ gap: 50px;
   box-shadow: 0px 1px 0px 0px gainsboro;
   border-radius: 10px;
   padding: 5px;
+  font-size: 16px;
 }
 .servicePage {
   display: flex;
@@ -72,19 +75,19 @@ gap: 50px;
   padding-left: 100px;
 }
 .serviceBooking img {
-  width: 35vw;
-  height: 55vh;
-  border-radius: 30px;
+width: 470px;
+height: 396px;
+  /* border-radius: 10px; */
   object-fit: cover;
 }
 .serviceBookingLeft img {
-  width: 35vw;
-  height: 55vh;
-  border-radius: 30px;
+  width: 470px;
+height: 396px;
+  /* border-radius: 30px; */
   object-fit: cover;
 }
 .serviceName {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500px;
 }
 
@@ -103,14 +106,24 @@ gap: 50px;
   line-height: 25px;
   gap: 30px;
 }
+.serviceCoperateHolder{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 .serviceCoperate {
   font-size: 30px;
   font-weight: bold;
   color: black;
 }
+
 .serviceBrandWrapper{
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
 }
+
 .serviceBrand{
   line-height: 35px;
   font-size: 18px;
@@ -129,10 +142,12 @@ gap: 50px;
 @media (max-width: 480px) {
   .overlayer {
     background-position: center;
+    object-fit: cover;
+    background-size: cover;
   }
 
   .serviceContainerTitle {
-    font-size: 10px;
+    font-size: 20px;
     font-weight: bold;
   }
   .serviceBooking {
@@ -153,9 +168,13 @@ gap: 50px;
   }
   .serviceBooking img {
     width: 100%;
+    object-fit: cover;
+     object-position: center;
   }
   .serviceBookingLeft img {
     width: 100%;
+     object-fit: cover;
+     object-position: center;
   }
   .serviceName {
     display: flex;
