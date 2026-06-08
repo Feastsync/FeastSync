@@ -7,11 +7,17 @@
   width: 100%;
   height: 85vh;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 .herohost-section img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 .host-overlay {
   position: absolute;
@@ -20,43 +26,44 @@
   width: 100%;
   height: 100%;
   background: rgba(75, 32, 95, 0.55);
-}
-.herohost-content {
-  position: absolute;
-  top: 45%;
-  left: 5%;
-  transform: translateY(-50%);
-  width: 90%;
-  max-width: 700px;
-  color: white;
   z-index: 2;
 }
+.herohost-content {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  margin-left: 8%;
+  color: #ffffff;
+  z-index: 3;
+  text-align: left;
+}
 .herohost-title {
-  font-size: 45px;
-  font-weight: 550;
-  line-height: 1.1;
-  margin-bottom: 11px;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
 }
 .herohost-description {
-  font-size: 1.1rem;
-  line-height: 1.5;
+  font-size: 1.15rem;
+  line-height: 1.6;
   font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 680px;
 }
 .stephost-container {
   width: 100%;
   min-height: 18.5vh;
   display: flex;
   justify-content: center;
- 
 }
-.stephost-wrapper{
-  width: 90%;
+.stephost-wrapper {
+  width: 100%;
   min-height: 100%;
-  align-items: flex-end;
-  margin-left: 30px;
   display: flex;
+  flex-direction: row;
+  white-space: nowrap;
   gap: 50px;
-
 }
 .stephost-btn {
   flex: 1;
@@ -66,7 +73,6 @@
   display: flex;
   align-items: center;
   padding: 0 20px;
-  border: 1px solid var(--primary-color);
   border-radius: 6px;
   font-size: 14.5px;
   color: #0f0f10;
@@ -115,7 +121,7 @@
   justify-content: center;
 }
 .herohost-findbook2b {
-  width:50%;
+  width: 50%;
 }
 .herohost-findbook2 p {
   text-align: center;
@@ -128,7 +134,7 @@
 }
 .stepshost-section {
   width: 100%;
-  background-color:white;
+  background-color: white;
   display: flex;
   justify-content: center;
 }
@@ -190,149 +196,154 @@
   object-fit: cover;
 }
 
-/* ==========================================================
-   1️⃣ LAPTOPS & SMALL DESKTOPS RESPONSIVENESS (max-width: 1200px)
-   ========================================================== */
 @media screen and (max-width: 1200px) {
-  .steps-wrapper {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns for tablet/laptop sizing */
+  .stepshost-wrapper {
+    grid-template-columns: repeat(2, 1fr);
     gap: 30px;
     padding: 0 10px;
   }
-  .hero-title {
-    font-size: 34px; /* Balanced down from 36px to prevent line overflows */
+  .herohost-title {
+    font-size: 36px;
   }
-  .hero-findbook2 p {
+  .herohost-findbook2 p {
     font-size: 19px;
     max-width: 750px;
   }
 }
 
-/* ==========================================================
-   2️⃣ TABLETS & PORTRAIT PHONES RESPONSIVENESS (max-width: 768px)
-   ========================================================== */
 @media screen and (max-width: 768px) {
-  .hero-section {
+  .herohost-section {
+    min-height: 60vh;
     height: auto;
-    min-height: 65vh; /* Gives the background image cleaner bounds on tablets */
-    display: flex;
-    align-items: center;
-    padding: 50px 0;
+    padding: 60px 0;
   }
-  .hero-content {
-    position: relative;
-    top: 0;
-    left: 0;
-    transform: none;
-    width: 100%;
-    padding: 0 30px;
+  .herohost-content {
+    margin-left: 5%;
+    width: 90%;
   }
-  .hero-title {
+  .herohost-title {
     font-size: 32px;
   }
-  .hero-description {
+  .herohost-description {
     font-size: 1rem;
   }
-  .step-container {
-    gap: 15px;
-    padding: 15px;
-  }
-  .step-btn {
-    flex: none;
+  .stephost-container {
     width: 100%;
-    max-width: 100%;
-    height: 60px;
-    font-size: 16px;
+    min-height: auto;
+    display: flex;
+    justify-content: center;
   }
-  .circle-icon {
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
+  .stephost-wrapper {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow-x: hidden;
+    white-space: nowrap;
+    gap: 8px;
+    margin-left: 0;
+    padding: 10px 8px;
+    align-items: center;
   }
-  .hero-findbook {
+  .stephost-btn {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    height: 55px;
+    font-size: 12.5px;
+    padding: 0 8px;
+    gap: 6px;
+  }
+  .circlehost-icon {
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+  }
+  .herohost-findbook {
     padding: 50px 20px;
   }
-  .hero-findbook1 h2 {
+  .herohost-findbook1 h2 {
     font-size: 26px;
   }
-  .hero-findbook2 p {
+  .herohost-findbook2 p {
     font-size: 17px;
     line-height: 1.6;
   }
-  .steps-section {
+  .stepshost-section {
     padding: 40px 20px;
   }
-  .steps-wrapper {
+  .stepshost-wrapper {
     grid-template-columns: 1fr;
     gap: 30px;
   }
-  .step-card {
+  .stephost-card {
     min-height: auto;
     padding: 30px 25px;
   }
-  .step-illustration {
-    max-width: 260px; /* Scales down image container to save vertical viewport scroll space */
+  .stephost-illustration {
+    max-width: 260px;
   }
 }
 
-
 @media screen and (max-width: 480px) {
-  .hero-section {
-    min-height: 55vh;
-    padding: 40px 0;
+  .herohost-section {
+    min-height: 50vh;
   }
-  .hero-content {
-    padding: 0 20px;
+  .herohost-content {
+    margin-left: 6%;
+    width: 88%;
   }
-  .hero-title {
+  .herohost-title {
     font-size: 26px;
     margin-bottom: 12px;
   }
-  .hero-description {
+  .herohost-description {
     font-size: 0.95rem;
-    line-height: 1.45;
+    line-height: 1.5;
   }
-  .step-container {
-    gap: 10px;
-    padding: 12px;
+  .stephost-wrapper {
+    gap: 6px;
+    padding: 8px 4px;
   }
-  .step-btn {
-    height: 55px;
-    font-size: 15px;
-    padding: 0 15px;
-    gap: 12px;
+  .stephost-btn {
+    height: 50px;
+    font-size: 10.5px;
+    padding: 0 6px;
+    gap: 4px;
+    min-width: 0;
   }
-  .circle-icon {
-    width: 35px;
-    height: 35px;
-    font-size: 14px;
+  .circlehost-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
   }
-  .hero-findbook {
+  .herohost-findbook {
     padding: 40px 15px;
   }
-  .hero-findbook1 h2 {
+  .herohost-findbook1 h2 {
     font-size: 22px;
     line-height: 1.3;
   }
-  .hero-findbook2 p {
+  .herohost-findbook2 p {
     font-size: 15px;
     line-height: 1.55;
   }
-  .steps-section {
+  .stepshost-section {
     padding: 30px 15px;
   }
-  .step-card {
+  .stephost-card {
     padding: 20px 15px;
   }
-  .step-title {
+  .stephost-title {
     font-size: 19px;
     margin-bottom: 8px;
   }
-  .step-description {
+  .stephost-description {
     font-size: 14.5px;
     line-height: 1.4;
   }
-  .step-illustration {
+  .stephost-illustration {
     max-width: 220px;
   }
 }

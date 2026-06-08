@@ -134,10 +134,10 @@ const Vendordashboard = () => {
 
           <div className="vendor-link-row">
             <span>
-              ://feastsync.com
+              www.feastsync.com/fs/djkolade-c-5278e9d7den6
             </span>
 
-            <button className="copy-link-btn">
+            <button className="vendorcopy-link-btn">
               Copy link
               <img src={Copyicon} alt="" />
             </button>

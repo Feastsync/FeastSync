@@ -1,7 +1,8 @@
 import React from "react";
 import "../Css/Vendorhero.css";
 import { IoArrowBack, IoCameraOutline } from "react-icons/io5";
-
+import Vendorprofile from "../../assets/logos/Vendorprofile.png"
+import Vedorprofileview from "../../assets/logos/Vedorprofileview.svg"
 import Vendorbackgroundimage from "../../assets/BackgroundImage/Vendorbackgroundimage.jpg";
 import DjTeesco from "../../assets/BackgroundImage/djTeesco.jpg";
 
@@ -17,20 +18,19 @@ const Vendorhero = () => {
 
       <button className="vendorhero-back" type="button">
         <IoArrowBack />
-        <span>Back</span>
       </button>
+      <span className="vendorhero-back-text">Back</span>
 
       <button className="vendorhero-cover-upload" type="button">
-        <IoCameraOutline />
         <span>Upload Cover</span>
       </button>
 
       <div className="vendorhero-profile">
         <div className="vendorhero-avatar-wrap">
-          <img src={DjTeesco} alt="DJ Kolade" className="vendorhero-avatar" />
+          <img src={Vendorprofile} alt="DJ Kolade" className="vendorhero-avatar" />
           <div className="vendorhero-avatar-overlay">
-            <IoCameraOutline />
             <span>Upload Profile</span>
+            <img src={Vedorprofileview} alt="" />
           </div>
           <button
             className="vendorhero-avatar-upload"

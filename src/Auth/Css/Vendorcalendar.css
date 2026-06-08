@@ -1,6 +1,6 @@
 .vendor-calendar-wrap {
   width: 100%;
-  min-height: 512px;
+  min-height: 540px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -10,7 +10,7 @@
 .vendor-calendar-card {
   position: relative;
   width: min(100%, 690px);
-  min-height: 395px;
+  min-height: 380px;
   overflow: hidden;
   border-radius: 8px;
   background: #ffffff;
@@ -161,7 +161,7 @@
 
 .react-calendar__month-view__weekdays abbr {
   color: var(--text-color);
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 700;
   line-height: 1;
   text-decoration: none;
@@ -180,7 +180,7 @@
   color: var(--text-color);
   background: transparent;
   border: 0;
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 700;
   line-height: 1;
 }
