@@ -1,23 +1,39 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "../Css/Vendordashboard.css"
 import Vendorheader from "./Vendorheader.jsx"
 import Vendorhero from "./Vendorhero.jsx"
 import Copyicon from "../../assets/logos/Copyicon.svg"
 import Vendorcalendar from "./Vendorcalendar.jsx"
 import Vendormediagallery from "./Vendormediagallery.jsx"
-import { useNavigate } from 'react-router-dom'
-
+import VendorOnboarding from "./onBoardingFiles/VendorOnboarding.jsx"
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const Vendordashboard = () => {
   const nav = useNavigate()
+  const location = useLocation()
   const [expandedCards, setExpandedCards] = useState({});
+  const [showOnboarding, setShowOnboarding] = useState(false)
+  const [vendorName, setVendorName] = useState("")
+
+  useEffect(() => {
+    if (location.state?.showOnboarding) {
+      setShowOnboarding(true)
+      setVendorName(location.state?.vendorName || "Vendor")
+      nav(location.pathname, { replace: true, state: {} })
+    }
+  }, [location, nav])
+
+  const handleOnboardingClose = () => {
+    setShowOnboarding(false)
+  }
+
   const toggleExpand = (id) => {
     setExpandedCards((prev) => ({
-      ...prev,
-      [id]: !prev[id],
+     ...prev,
+      [id]:!prev[id],
     }));
   };
-  
+
   const packages = [
     {
       id: 'basic',
@@ -73,7 +89,7 @@ const Vendordashboard = () => {
     <main className='vendor-dashboard-container'>
       <Vendorheader />
       <Vendorhero />
-      
+
       <div className="vendor-details-container">
         <div className="trust-stats">
           <h4 className="trust-title">Trust Stats</h4>
@@ -131,20 +147,20 @@ const Vendordashboard = () => {
 
       <section className="pricing-section">
         <h2 className="section-title">Services & Pricing</h2>
-        
+
         <div className="pricing-grid">
           {packages.map((item) => {
-            const isExpanded = !!expandedCards[item.id];
-            
+            const isExpanded =!!expandedCards[item.id];
+
             return (
               <div key={item.id} className="pricing-card">
                 <div className="card-header">
                   <h3 className="package-title">{item.title}</h3>
                   <p className="package-price">{item.price}</p>
                 </div>
-      
+
                 <div className="card-body-wrapper">
-                  <div className={`card-body ${isExpanded ? 'scrollable' : ''}`}>
+                  <div className={`card-body ${isExpanded? 'scrollable' : ''}`}>
                     <h4 className="highlights-heading">Service Highlights</h4>
                     <ul className="highlights-list">
                       {item.highlights.map((highlight, index) => (
@@ -155,25 +171,25 @@ const Vendordashboard = () => {
                     </ul>
                   </div>
 
-                  <button 
-                    className="toggle-expand-btn" 
+                  <button
+                    className="toggle-expand-btn"
                     onClick={() => toggleExpand(item.id)}
-                    aria-label={isExpanded ? "Disable scroll" : "Enable scroll"}
+                    aria-label={isExpanded? "Disable scroll" : "Enable scroll"}
                   >
-                    <svg 
-                      className={`dropdown-icon ${isExpanded ? "open" : ""}`} 
-                      viewBox="0 0 24 24" 
-                      fill="none" 
-                      stroke="currentColor" 
+                    <svg
+                      className={`dropdown-icon ${isExpanded? "open" : ""}`}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
                       strokeWidth="2.5"
                     >
                       <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                   </button>
                 </div>
-                
+
                 <div className="card-footer">
-                  <button 
+                  <button
                     className="book-now-btn"
                     onClick={() => alert(`Booking initiated for ${item.title}`)}
                   >
@@ -187,6 +203,12 @@ const Vendordashboard = () => {
       </section>
       <Vendorcalendar />
       <Vendormediagallery />
+
+      <VendorOnboarding
+        isOpen={showOnboarding}
+        onClose={handleOnboardingClose}
+        vendorName={vendorName}
+      />
     </main>
   )
 }

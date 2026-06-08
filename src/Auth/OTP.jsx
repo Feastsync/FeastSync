@@ -4,8 +4,9 @@ import { Input } from "antd";
 import "./Css/OTP.css";
 import FeastLogo from "../assets/logos/Headerlogo.png";
 import Button from "../Props/Button.jsx";
+import Otpimg from "../assets/BackgroundImage/OtpImage.png"
 import { IoArrowBack } from "react-icons/io5";
-// import Imp from "../Props/Imp.jsx";
+
 const OTPVerification = () => {
   const inputs = useRef([]);
   const Navigate = useNavigate();
@@ -30,10 +31,12 @@ const OTPVerification = () => {
             <img src={FeastLogo} alt="Logo" className="otp-logo" />
             <span className="otp-logo-text">FeastSync</span>
           </div>
-          <Link to="/login" className="vr-back">
-            <IoArrowBack size={30} /> 
-            <span>Back</span>
-           </Link>
+         <Link to="/login" className="otp-back-wrap">
+           <span className="otp-back-icon-box">
+            <IoArrowBack size={18} />
+          </span>
+          <span className="otp-back-text">Back</span>
+       </Link>
           
           <div className="otp-header">
             <h1>OTP verification</h1>
@@ -61,7 +64,7 @@ const OTPVerification = () => {
         </div>
 
         <div className="otp-right">
-          <img src="https://img.freepik.com/free-vector/authentication-concept-illustration_114360-2168.jpg" alt="Authentication" />
+          <img src={Otpimg}/>
         </div>
       </div>
     </div>

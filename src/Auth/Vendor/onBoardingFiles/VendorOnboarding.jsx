@@ -7,6 +7,7 @@ import PricingStep from "./PricingStep.jsx";
 import DocumentStep from "./DocumentStep.jsx";
 import CalendarStep from "./CalendarStep.jsx";
 import SuccessModal from "./SuccessModal.jsx";
+// import "./VendorOnboarding.css";
 
 const VendorOnboarding = ({ isOpen, onClose, vendorName }) => {
   const [currentStep, setCurrentStep] = useState("welcome");
@@ -21,7 +22,7 @@ const VendorOnboarding = ({ isOpen, onClose, vendorName }) => {
   if (!isOpen) return null;
 
   const completeStep = (stepName) => {
-    setCompletedSteps((prev) => ({ ...prev, [stepName]: true }));
+    setCompletedSteps((prev) => ({...prev, [stepName]: true }));
     const order = ["bank", "media", "pricing", "docs", "calendar"];
     const nextIndex = order.indexOf(stepName) + 1;
     if (nextIndex < order.length) {
@@ -87,7 +88,13 @@ const VendorOnboarding = ({ isOpen, onClose, vendorName }) => {
     ),
   };
 
-  return steps[currentStep] || null;
+  return (
+    <div className="vo-overlay">
+      <div className="vo-modal-container">
+        {steps[currentStep] || null}
+      </div>
+    </div>
+  );
 };
 
 export default VendorOnboarding;
