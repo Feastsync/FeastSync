@@ -1,0 +1,246 @@
+.chat {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--background-color);
+  overflow: hidden;
+  padding: 40px 60px;
+}
+
+
+.chat__header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 32px;
+  background: var(--primary-color);
+  flex-shrink: 0;
+  border-radius: 12px 12px 12px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.chat__avatar {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #e8e4f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.chat__avatar-dot {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 11px;
+  height: 11px;
+  background: #3ecf8e;
+  border-radius: 50%;
+  border: 2px solid var(--primary-color);
+}
+
+.chat__header-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat__vendor-name {
+  color: #fff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+  margin: 0;
+}
+
+.chat__header-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge--kyc {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #c9f0e0;
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+
+.badge__icon {
+  width: 11px;
+  height: 11px;
+}
+
+.badge--online {
+  color: #a0cfb8;
+  font-size: 12px;
+}
+
+.chat__header-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.icon-btn img {
+  width: 17px;
+  height: 17px;
+  filter: brightness(0) invert(1);
+}
+
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+
+.chat__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scrollbar-width: none;
+}
+
+.chat__body::-webkit-scrollbar {
+  display: none;
+}
+
+
+.chat__date-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: #aaa;
+  margin-bottom: 8px;
+}
+
+.chat__date-divider::before,
+.chat__date-divider::after {
+  content: "";
+  flex: 1;
+  height: 0.5px;
+  background: #e0ddd5;
+}
+
+
+.bubble {
+  max-width: 55%;
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+  color: #fff;
+}
+
+.bubble--them {
+  align-self: flex-start;
+  background: var(--primary-color);
+  border-bottom-left-radius: 4px;
+}
+
+.bubble--me {
+  align-self: flex-end;
+  background: #7b2fbe;
+  border-bottom-right-radius: 4px;
+}
+
+.bubble__text {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.bubble__time {
+  display: block;
+  font-size: 11px;
+  opacity: 0.55;
+  margin-top: 4px;
+  text-align: right;
+  line-height: normal;
+}
+
+.bubble--typing {
+  font-size: 20px;
+  letter-spacing: 4px;
+  padding: 10px 16px;
+  line-height: normal;
+}
+
+
+.chat__input-row {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-top: 0.5px solid #e5e3dc;
+  background: transparent;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.chat__input {
+  width: 100%;
+  border: 0.5px solid #e5e3dc;
+  border-radius: 9px;
+  padding: 14px 52px 14px 16px;
+  font-size: 14px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  outline: none;
+  color: var(--text-color);
+  background: #fff;
+  transition: border-color 0.15s;
+}
+
+.chat__input:focus {
+  border-color: var(--primary-color);
+}
+
+.chat__send-btn {
+  position: absolute;
+  right: 8px;
+  width: 34px;
+  height: 34px;
+  background: var(--primary-color);
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.chat__send-btn:hover {
+  opacity: 0.85;
+}
+
+.chat__send-btn img {
+  width: 15px;
+  height: 15px;
+  filter: invert(1);
+}

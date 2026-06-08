@@ -94,24 +94,30 @@
   color: #f1f5f9;
 }
 @media (max-width: 768px) {
+  .hiw_sec {
+    padding: 40px 20px;
+  }
 
   .hiw_container {
-    width: 90%;
-    gap: 20px;
+    width: 92%;
+    gap: 32px;
   }
 
   .hiw_main_title {
-    font-size: 22px;
+    font-size: 24px;
+    margin-bottom: 8px;
   }
 
   .hiw_subtitle {
-    font-size: 13px;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 0 8px;
   }
 
-  
   .hiw_grid {
     grid-template-columns: 1fr;
-    row-gap: 16px;
+    height: auto;
+    row-gap: 14px;
     column-gap: 0;
   }
 
@@ -119,31 +125,36 @@
     flex-direction: row;
     align-items: stretch;
     gap: 12px;
+    min-height: 110px;
   }
 
   .hiw_icon_box {
-    width: 70px;
-    min-width: 70px;
-    border-radius: 10px;
+    width: 80px;
+    min-width: 80px;
+    height: auto;
+    border-radius: 12px;
+    flex-shrink: 0;
   }
 
   .hiw_logo_img {
-    width: 32px;
-    height: 60px;
+    width: 36px;
+    height: 36px;
   }
 
   .hiw_text_card {
-    padding: 16px;
-    gap: 8px;
+    padding: 18px 16px;
+    gap: 6px;
+    justify-content: center;
   }
 
   .hiw_card_title {
-    font-size: 15px;
+    font-size: 16px;
+    line-height: 1.3;
   }
 
   .hiw_card_desc {
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.5;
+    opacity: 0.9;
   }
-
 }

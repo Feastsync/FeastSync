@@ -32,6 +32,7 @@ import WalletLedger from "./Page/Wallet/WalletLedger.jsx";
 import VendorWallet from "./Page/Wallet/VendorWallet.jsx";
 import AllNotifications from "./Page/NotitficationsPages/AllNotifications.jsx";
 import WelcomeModal from "./Auth/Vendor/onBoardingFiles/WelcomeModal.jsx";
+import Chat from "./Page/chatPage/Chat.jsx";
 import Error505 from "./Auth/Vendor/Error505.jsx";
 import Error404 from "./Auth/Vendor/Error404.jsx";
 import BookingRequest from "./Page/BookingRequest.jsx"
@@ -79,7 +80,7 @@ const App = () => {
         <Route path="/transaction/histories" element={<WalletLedger />} />
         <Route path="/vendorsetting" element={<VendorSetting />} />
         {/* <Route path="/transaction/histories" element={<WalletLedger />} /> */}
-
+       <Route path="/chats" element={<Chat />} />    
         <Route
           path="/notifications/:category?"
           element={<AllNotifications />}

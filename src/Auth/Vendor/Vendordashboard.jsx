@@ -1,23 +1,39 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "../Css/Vendordashboard.css"
 import Vendorheader from "./Vendorheader.jsx"
 import Vendorhero from "./Vendorhero.jsx"
 import Copyicon from "../../assets/logos/Copyicon.svg"
 import Vendorcalendar from "./Vendorcalendar.jsx"
 import Vendormediagallery from "./Vendormediagallery.jsx"
-import { useNavigate } from 'react-router-dom'
-
+import VendorOnboarding from "./onBoardingFiles/VendorOnboarding.jsx"
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const Vendordashboard = () => {
   const nav = useNavigate()
+  const location = useLocation()
   const [expandedCards, setExpandedCards] = useState({});
+  const [showOnboarding, setShowOnboarding] = useState(false)
+  const [vendorName, setVendorName] = useState("")
+
+  useEffect(() => {
+    if (location.state?.showOnboarding) {
+      setShowOnboarding(true)
+      setVendorName(location.state?.vendorName || "Vendor")
+      nav(location.pathname, { replace: true, state: {} })
+    }
+  }, [location, nav])
+
+  const handleOnboardingClose = () => {
+    setShowOnboarding(false)
+  }
+
   const toggleExpand = (id) => {
     setExpandedCards((prev) => ({
       ...prev,
       [id]: !prev[id],
     }));
   };
-  
+
   const packages = [
     {
       id: 'basic',
@@ -115,7 +131,6 @@ const Vendordashboard = () => {
             top-tier venues. Known for reading the room and
             keeping energy peaks from intro to send-off.
           </p>
-
           <div className="vendordashboard-vendor-link-row">
             <span>
               www.feastsync.com/fs/djkolade-c-5278e9d7den6
@@ -135,7 +150,7 @@ const Vendordashboard = () => {
         <div className="vendordashboard-pricing-grid">
           {packages.map((item) => {
             const isExpanded = !!expandedCards[item.id];
-            
+
             return (
               <div key={item.id} className="vendordashboard-pricing-card">
                 <div className="vendordashboard-card-header">
@@ -187,6 +202,12 @@ const Vendordashboard = () => {
       </section>
       <Vendorcalendar />
       <Vendormediagallery />
+
+      <VendorOnboarding
+        isOpen={showOnboarding}
+        onClose={handleOnboardingClose}
+        vendorName={vendorName}
+      />
     </main>
   )
 }

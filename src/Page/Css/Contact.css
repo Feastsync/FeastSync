@@ -139,7 +139,7 @@
     font-weight: 500;
     color: #32343A;
     margin-bottom: 15px;
-    margin-left: 35px; 
+    margin-left: 15px; 
 }
 .contact-rightup1-left input{
     width: 80%;
@@ -170,7 +170,7 @@
     font-weight: 500;
     color:#32343A;
     margin-bottom: 30px;
-    margin-left: 35px;
+    margin-left: 15px;
 }
 .contact-rightup1-right input{
     width: 90%;
@@ -203,7 +203,7 @@
     font-weight: 500;
     color: #32343A;
     margin-bottom: 15px;
-    margin-left: 35px;
+    margin-left: 15px;
 }
 .contact-rightup2-left input{
     width: 82%;
@@ -231,7 +231,7 @@
     font-weight: 500;
     color:#32343A;
     margin-bottom: 15px;
-    margin-left: 35px;
+    margin-left: 15px;
 }
 .contact-rightup2-right input{
     width: 95%;
@@ -254,7 +254,7 @@
     font-weight: 500;
     color:var(--text-color);
     margin-bottom: 15px;
-    margin-left: 35px;
+    margin-left: 15px;
 }
 .contact-rightdown-text{
     width: 90%;
