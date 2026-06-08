@@ -9,7 +9,7 @@ import VendorOnboarding from "./onBoardingFiles/VendorOnboarding.jsx"
 import { useNavigate, useLocation } from 'react-router-dom'
 
 const Vendordashboard = () => {
-  const nav = useNavigate()
+  const navigate = useNavigate()
   const location = useLocation()
   const [expandedCards, setExpandedCards] = useState({});
   const [showOnboarding, setShowOnboarding] = useState(false)
@@ -21,7 +21,7 @@ const Vendordashboard = () => {
       setVendorName(location.state?.vendorName || "Vendor")
       nav(location.pathname, { replace: true, state: {} })
     }
-  }, [location, nav])
+  }, [location, navigate])
 
   const handleOnboardingClose = () => {
     setShowOnboarding(false)
@@ -117,7 +117,7 @@ const Vendordashboard = () => {
           </div>
         </div>
 
-        <button className="vendordashboard-send-message-btn">
+        <button className="vendordashboard-send-message-btn" onClick={() => navigate('/chats')}>
           Send a message
         </button>
 
