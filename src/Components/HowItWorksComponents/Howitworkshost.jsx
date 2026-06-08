@@ -104,7 +104,7 @@ const Howitworkshost = () => {
           <article className="herohost-findbook2b">
           <p>
             FeastSync gives event organizers access to a curated roster of
-            verified entertainment talent across Lagos. Every booking is
+            verified entertainment talent across Lagos.Every booking is
             straightforward, every payment is protected, and every entertainer
             on the platform has been identity-checked before you ever see their
             profile.

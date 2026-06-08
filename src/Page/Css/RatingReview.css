@@ -1,0 +1,188 @@
+.ratingreview-container {
+  width: 100%;
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.ratingreview-wrapper {
+  width: calc(100% - 80px);
+  margin: 40px;
+}
+
+.ratingreview-booking-text {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: #101010;
+  margin-bottom: 50px;
+}
+
+.ratingreview-rating-section {
+  text-align: center;
+  margin-bottom: 70px;
+}
+
+.ratingreview-rating-title {
+  font-size: 13px;
+  color: #101010;
+  margin-bottom: 20px;
+}
+
+.ratingreview-stars {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+.ratingreview-stars img {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.ratingreview-note-section {
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.ratingreview-note-section label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 17.5px;
+  font-weight: 500;
+  color: #330159;
+}
+
+.ratingreview-note-input {
+  width: 100%;
+  height: 223px;
+  border: 1px solid #dcdcdc;
+  border-radius: 2px;
+  padding: 12px;
+  resize: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.ratingreview-note-input::placeholder {
+  color: #2b2a2a;
+}
+
+.ratingreview-evidence-section {
+  width: 100%;
+  height: 60%;
+  background-color: yellow;
+  margin-top: 40px;
+}
+
+.ratingreview-evidence-title {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 17.5px;
+  font-weight: 500;
+  color: #330159;
+}
+
+/* Updated to align perfectly with the box edges */
+.ratingreview-media-header {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  height: 30%;
+  margin-left: auto;
+  margin-right: 40px;
+  margin-bottom: 30px;
+  background-color: red;
+  font-size: 13px;
+  color: #101010;
+  box-sizing: border-box;
+}
+
+.ratingreview-upload-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 60px;
+}
+
+.ratingreview-photo-label {
+  font-size: 13px;
+  color: #101010;
+  margin-left: 40px;
+}
+
+.ratingreview-file-input {
+  display: none;
+}
+
+.ratingreview-upload-box {
+  width: 60%;
+  height: 140px;
+  background: #556173;
+  border-radius: 2px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 40px;
+}
+
+.ratingreview-upload-box p {
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.ratingreview-submit-btn {
+  width: 100%;
+  height: 42px;
+  border: none;
+  background: #32005d;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 2px;
+  font-size: 13px;
+}
+
+.ratingreview-submit-btn:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .ratingreview-wrapper {
+    width: calc(100% - 40px);
+    margin: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ratingreview-wrapper {
+    width: calc(100% - 20px);
+    margin: 10px;
+  }
+
+  .ratingreview-media-header {
+    width: 100%;
+    max-width: 320px;
+    margin-right: auto;
+    justify-content: space-between;
+    padding: 0 10px;
+  }
+
+  .ratingreview-upload-area {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .ratingreview-photo-label {
+    margin: 0;
+  }
+
+  .ratingreview-upload-box {
+    width: 100%;
+    max-width: 320px;
+    height: 120px;
+    margin-right: 0;
+  }
+}

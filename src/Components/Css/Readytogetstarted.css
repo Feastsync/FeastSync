@@ -24,14 +24,14 @@
     font-weight: 600;
 }
 .hero-getStarted h1{
-    font-size: 31px;
+    font-size: 26px;
     color: var(--primary-color);
     margin-bottom: 20px;
     font-weight: 700;
 }
 .hero-getStarted p{
     font-size: 16px;
-    font-weight: 200;
+    font-weight: 400;
     color: rgba(16, 16, 16, 1);
     margin-bottom: 35px;
 }
@@ -44,13 +44,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 22px;
+    gap: 18px;
 }
 .hero-getStarted-btn1{
-    width: 178px;
-    height: 60px;
+    width: 165px;
+    height: 55px;
     border-radius: 8px;
-    font-size: 17px;
+    font-size: 15px;
     background-color: var(--primary-color);
     color: white;
 
@@ -63,18 +63,15 @@
 .hero-getStarted-btn2{
     background: transparent;
     color: var(--secondary-color);
-    width: 178px;
-    height: 60px;
+    width: 167px;
+    height: 55px;
     border-radius: 8px;
-    border: 1px solid var(--secondary-color);
-    font-size: 17px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    font-size: 15px;
     &:hover{
         border: 1px solid var(--secondary-color);
     }
-    
-    /* ==========================================================================
-   LAPTOP RESPONSIVENESS (max-width: 1200px)
-   ========================================================================== */
+
 @media screen and (max-width: 1200px) {
   .hero-getStarted {
     padding: 60px 30px;

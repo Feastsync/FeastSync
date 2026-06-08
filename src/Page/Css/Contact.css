@@ -22,8 +22,8 @@
 }
 .contact-content{
     position: absolute;
-    top: 45%;
-    left: 37%;
+    top: 48%;
+    left: 40%;
     transform: translateY(-50%);
     width: 40%;
     color: white;
@@ -99,7 +99,6 @@
     font-size: 19px;
     margin-bottom: 12px;
     color: var(--primary-color);
-
 }
 .contact-btn1-right p{
     font-size: 14px;
@@ -140,7 +139,7 @@
     font-weight: 500;
     color: #32343A;
     margin-bottom: 15px;
-    margin-left: 15px;
+    margin-left: 15px; 
 }
 .contact-rightup1-left input{
     width: 80%;
@@ -175,7 +174,7 @@
 }
 .contact-rightup1-right input{
     width: 90%;
-    height:43%;
+    height:48%;
     border: 0.3px solid grey;
     padding-left: 20px;
     font-size: 1px;
@@ -208,7 +207,7 @@
 }
 .contact-rightup2-left input{
     width: 82%;
-    height: 40%;
+    height: 48%;
     border: 0.3px solid rgb(180, 177, 177);
     border-radius: 6px;
     background: var(--linear-faint, linear-gradient(135deg, #FAF5FF 0%, #FFF 50%));
@@ -236,7 +235,7 @@
 }
 .contact-rightup2-right input{
     width: 95%;
-    height:40%;
+    height:48%;
     border: 0.3px solid grey;
     padding-left: 20px;
     font-size: 2px;
@@ -255,16 +254,15 @@
     font-weight: 500;
     color:var(--text-color);
     margin-bottom: 15px;
-    margin-left: 20px;;
+    margin-left: 15px;
 }
 .contact-rightdown-text{
     width: 90%;
-    height: 90%;
+    height: 100%;
     padding-top: 20px;
     padding-left: 15px;
     margin-bottom: 30px;
     margin-left: 20px;
-
     display: flex;
     font-size: 16px;
     outline: none;
@@ -273,7 +271,7 @@
 }
 .contact-info-rightdown-btn{
     width: 100%;
-    height: 19%;
+    height: 20%;
     font-size: 14.5px;
     border: none !important;
     color: white;
@@ -334,18 +332,17 @@
 .faq-question span{
     font-size: 1.2rem;
     color: var(--text-color);
+    margin-right: 22px;
+    display: inline-block;
+    transform: rotate(180deg);
 }
 .faq-answer{
     padding-bottom: 10px;
     color: #666;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 1.6;
     animation: dropdown 0.3s ease;
 }
-
-/* ==========================================
-   DESKTOP RESPONSIVENESS (max-width: 1200px)
-   ========================================== */
 @media screen and (max-width: 1200px) {
   .contact-content {
     left: 15%;
@@ -364,10 +361,6 @@
     width: 90%;
   }
 }
-
-/* ==========================================
-   TABLET RESPONSIVENESS (max-width: 768px)
-   ========================================== */
 @media screen and (max-width: 768px) {
   .contact-section {
     height: 45vh;
@@ -385,8 +378,6 @@
     font-size: 1.2rem;
     margin-top: 10px;
   }
-  
-  /* Stack the left (info cards) and right (form) layout fields */
   .contact-info {
     height: auto;
     flex-direction: column;
@@ -404,7 +395,7 @@
     padding: 24px 0;
     margin-top: 0;
     box-shadow: none;
-    background: transparent; /* Makes info cards render flat onto background like image */
+    background: transparent;
   }
   .contact-info-btn1 {
     width: 100%;
@@ -420,14 +411,12 @@
   .contact-btn1-right p {
     font-size: 15px;
   }
-  
-  /* Neutralize desktop percentage-based heights to let form breathe */
   .contact-info-rightwrapper {
     width: 100%;
     height: auto;
     padding: 20px;
     box-shadow: none;
-    background: transparent; /* Form card box matches baseline colors */
+    background: transparent;
   }
   .contact-info-rightup, .contact-info-rightdown {
     height: auto;
@@ -449,12 +438,185 @@
   .contact-info-rightdown h1 {
     font-size: 15px;
     margin-bottom: 8px;
-    margin-left: 0;
   }
   .contact-rightup1-left input, .contact-rightup1-right input,
   .contact-rightup2-left input, .contact-rightup2-right input {
     width: 100%;
-    height: 48px;
+    height: 53px;
+    font-size: 15px;
+    border-radius: 6px;
+    border: 1px solid #D1D5DC;
+    padding-left: 20px !important;
+    margin-left: 0 !important;
+  }
+  .contact-rightdown-text {
+    width: 100%;
+    height: 140px;
+    font-size: 15px;
+    padding: 12px 20px !important; 
+    border: 1px solid #D1D5DC;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    margin-left: 0 !important;
+  }
+  .contact-info-rightdown-btn {
+    height: 50px;
+    font-size: 16px;
+    border-radius: 6px;
+  }
+  .faq-section {
+    padding: 50px 0;
+  }
+  .faq-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .faq-header h1 {
+    font-size: 2rem;
+  }
+  .faq-header p {
+    font-size: 1.1rem;
+  }
+  .faq-question {
+    min-height: 65px;
+  }
+  .faq-question h3 {
+    font-size: 1.1rem;
+  }
+  .faq-answer {
+    font-size: 12px;   
+  }
+}
+@media screen and (max-width: 480px) {
+  .contact-info {
+    height: auto !important;
+    flex-direction: column !important;
+    padding: 24px 0 !important; 
+    gap: 16px !important;
+    align-items: center !important;
+  }
+  .contact-info-left {
+    width: 100% !important;
+    height: auto !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+  .contact-infol-leftwrapper {
+    width: 90% !important; 
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important; 
+    background: transparent !important;
+    box-shadow: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .contact-info-btn1 {
+    width: 100% !important; 
+    height: auto !important;
+    min-height: auto !important;
+    margin: 0 !important;
+    padding: 20px !important;
+    background: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02) !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 16px !important;
+    box-sizing: border-box !important;
+  }
+  .contact-btn1-left {
+    width: auto !important;
+    height: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .contact-btn1-left img {
+    width: 24px !important;
+    height: 24px !important;
+  }
+  .contact-btn1-right {
+    width: auto !important;
+    height: auto !important;
+    margin-left: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+    flex: 1 !important;
+  }
+  .contact-btn1-right h1 {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #330159 !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+  }
+  .contact-btn1-right p {
+    font-size: 14px !important;
+    color: #6b7280 !important;
+    margin: 0 !important;
+    line-height: 1.4 !important;
+    white-space: normal !important;
+  }
+  .contact-section {
+    height: 45vh;
+  }
+  .contact-content {
+    left: 5%;
+    width: 90%;
+    text-align: center;
+  }
+  .contact-content h1 {
+    font-size: 2.2rem;
+  }
+  .contact-content p {
+    position: static;
+    font-size: 1.2rem;
+    margin-top: 10px;
+  }
+  .contact-info-right {
+    width: 90%;
+    height: auto;
+  }
+  .contact-info-rightwrapper {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    box-shadow: none;
+    background: transparent;
+  }
+  .contact-info-rightup, .contact-info-rightdown {
+    height: auto;
+    width: 100%;
+  }
+  .contact-info-rightup1, .contact-info-rightup2 {
+    flex-direction: column;
+    height: auto;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  .contact-rightup1-left, .contact-rightup1-right,
+  .contact-rightup2-left, .contact-rightup2-right {
+    width: 100%;
+    height: auto;
+  }
+  .contact-rightup1-left h1, .contact-rightup1-right h1,
+  .contact-rightup2-left h1, .contact-rightup2-right h1,
+  .contact-info-rightdown h1 {
+    font-size: 15px;
+    margin-bottom: 19px;
+    margin-left: 5px !important; 
+  }
+  .contact-rightup1-left input, .contact-rightup1-right input,
+  .contact-rightup2-left input, .contact-rightup2-right input {
+    width: 100%;
+    height: 53px;
     font-size: 15px;
     border-radius: 6px;
     border: 1px solid #D1D5DC;
@@ -463,17 +625,17 @@
     width: 100%;
     height: 140px;
     font-size: 15px;
-    padding: 12px;
+    padding: 12px 20px !important; 
     border: 1px solid #D1D5DC;
     border-radius: 6px;
     margin-bottom: 20px;
+    margin-left: 0 !important;
   }
   .contact-info-rightdown-btn {
     height: 50px;
     font-size: 16px;
     border-radius: 6px;
   }
-  
   .faq-section {
     padding: 50px 0;
   }
@@ -497,4 +659,3 @@
     font-size: 15px;
   }
 }
-

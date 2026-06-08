@@ -39,13 +39,23 @@
 
 .vendorhero-back {
   position: absolute;
-  top: 18px;
-  left: 56px;
+  top: 35px;
+  left: 85px;
   gap: 6px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-size: 12px;
+  padding: 7px 8px;
+  border-radius: 9px;
+  border: 1px solid #ffffff;
+  font-size: 18px;
   font-weight: 500;
+}
+
+.vendorhero-back-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  position: absolute;
+  top: 45px;
+  left: 125px;
 }
 
 .vendorhero-cover-upload {
@@ -55,24 +65,25 @@
   transform: translate(-50%, -50%);
   gap: 7px;
   min-width: 116px;
-  padding: 9px 12px;
+  padding: 14px 12px;
   border-radius: 5px;
+  border: 1px solid #ffffff;
   font-size: 12px;
   font-weight: 500;
 }
 
 .vendorhero-profile {
   position: absolute;
-  left: 100px;
-  bottom: 10px;
+  left: 160px;
+  bottom: 30px;
   display: flex;
   align-items: center;
   color: #ffffff;
 }
 
 .vendorhero-avatar-wrap {
-  width: 230px;
-  height: 230px;
+  width: 165px;
+  height: 165px;
   position: relative;
   border: 4px solid #ffffff;
   border-radius: 50%;
@@ -88,35 +99,28 @@
 }
 
 .vendorhero-avatar-overlay {
-  position: absolute;
-  inset: 0;
+  font-size: 18px;
+  width: 67%;
+  height: 21%;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.08) 48%, rgba(0, 0, 0, 0.38) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.22) 100%);
+  pointer-events: none;
   display: flex;
-  flex-direction: column;
+  position: absolute;
+  top: 77px;
+  left: 25px;
+  font-size: 12px;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.34);
-  color: #ffffff;
-  font-size: 11px;
-  font-weight: 500;
-  text-align: center;
+  border-radius: 4px;
+  border: 1px solid #ffffff;
 }
 
-.vendorhero-avatar-overlay svg {
-  font-size: 18px;
+.vendorhero-avatar-overlay img {
+  width: 13px;
+  height: 13px;
 }
-
-/* .vendorhero-avatar-upload {
-  position: absolute;
-  right: 4px;
-  bottom: 12px;
-  width: 31px;
-  height: 31px;
-  border-radius: 50%;
-  font-size: 15px;
-  border-color: #ffffff;
-} */
 
 @media (max-width: 768px) {
   .vendorhero-container {
@@ -124,8 +128,28 @@
   }
 
   .vendorhero-back {
-    left: 18px;
-    top: 16px;
+    left: 18px !important;
+    top: 16px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 8px !important;
+    border-radius: 9px !important;
+    width: 34px !important;
+    height: 34px !important;
+    box-sizing: border-box !important;
+  }
+
+  .vendorhero-back-text {
+    position: absolute !important;
+    top: 24px !important; 
+    left: 60px !important; 
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    display: block !important;
   }
 
   .vendorhero-profile {
@@ -139,11 +163,19 @@
     flex: 0 0 auto;
   }
 
-  .vendorhero-avatar-upload {
-    width: 30px;
-    height: 30px;
-    right: 0;
-    bottom: 8px;
+  .vendorhero-avatar-overlay {
+    display: flex !important;
+    flex-direction: row !important; 
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    white-space: nowrap !important;
+    width: 76% !important;
+    height: 24px !important;
+    top: 68px !important;
+    left: 18px !important;
+    padding: 2px 4px !important;
+    box-sizing: border-box !important;
   }
 }
 
@@ -157,9 +189,33 @@
     bottom: 10px;
   }
 
+  .vendorhero-back {
+    left: 14px !important;
+    top: 14px !important;
+  }
+
+  .vendorhero-back-text {
+    top: 22px !important;
+    left: 54px !important;
+    font-size: 13px !important;
+  }
+
   .vendorhero-avatar-wrap {
     width: 120px;
     height: 120px;
     border-width: 3px;
+  }
+
+  .vendorhero-avatar-overlay {
+    width: 84% !important;
+    height: 22px !important;
+    top: 54px !important;
+    left: 10px !important;
+    font-size: 10px !important;
+  }
+  
+  .vendorhero-avatar-overlay img {
+    width: 11px !important;
+    height: 11px !important;
   }
 }

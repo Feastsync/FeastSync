@@ -3,16 +3,25 @@
   min-height: 100vh;
   overflow-x: hidden;
 }
+
 .herohost-section {
   width: 100%;
   height: 85vh;
   position: relative;
+  display: flex;
+  align-items: center;
 }
+
 .herohost-section img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
+
 .host-overlay {
   position: absolute;
   top: 0;
@@ -20,44 +29,53 @@
   width: 100%;
   height: 100%;
   background: rgba(75, 32, 95, 0.55);
-}
-.herohost-content {
-  position: absolute;
-  top: 45%;
-  left: 5%;
-  transform: translateY(-50%);
-  width: 90%;
-  max-width: 700px;
-  color: white;
   z-index: 2;
 }
-.herohost-title {
-  font-size: 45px;
-  font-weight: 550;
-  line-height: 1.1;
-  margin-bottom: 11px;
+
+.herohost-content {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  margin-left: 5%;
+  color: #ffffff;
+  z-index: 3;
+  text-align: left;
 }
+
+.herohost-title {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+
 .herohost-description {
   font-size: 1.1rem;
-  line-height: 1.5;
+  line-height: 1.6;
   font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 680px;
 }
+
 .stephost-container {
   width: 100%;
-  min-height: 18.5vh;
+  min-height: 16vh;
   display: flex;
   justify-content: center;
- 
-}
-.stephost-wrapper{
-  width: 90%;
-  min-height: 100%;
   align-items: flex-end;
-  margin-left: 30px;
-  display: flex;
-  gap: 50px;
-
+  margin-left: 70px;
 }
+
+.stephost-wrapper {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+  gap: 50px;
+}
+
 .stephost-btn {
   flex: 1;
   max-width: 209px;
@@ -66,7 +84,6 @@
   display: flex;
   align-items: center;
   padding: 0 20px;
-  border: 1px solid var(--primary-color);
   border-radius: 6px;
   font-size: 14.5px;
   color: #0f0f10;
@@ -74,34 +91,40 @@
   cursor: pointer;
   transition: 0.3s ease;
 }
+
 .circlehost-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
-  border: 2px solid var(--primary-color);
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid var(--primary-color);
   border-radius: 50%;
   font-size: 12px;
   flex-shrink: 0;
 }
+
 .stephost-btn.active {
   background-color: #2b0054;
   color: white;
 }
+
 .stephost-btn.active .circlehost-icon {
   border-color: white;
 }
+
 .herohost-findbook {
   width: 100%;
   padding: 40px 20px;
 }
+
 .herohost-findbook1 {
   width: 100%;
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
+
 .herohost-findbook1 h2 {
   text-align: center;
   font-size: 20px;
@@ -109,14 +132,17 @@
   font-weight: 700;
   line-height: 1.4;
 }
+
 .herohost-findbook2 {
   width: 100%;
   display: flex;
   justify-content: center;
 }
+
 .herohost-findbook2b {
-  width:50%;
+  width: 50%;
 }
+
 .herohost-findbook2 p {
   text-align: center;
   font-size: 15px;
@@ -126,12 +152,14 @@
   max-width: 850px;
   margin: 0 auto;
 }
+
 .stepshost-section {
   width: 100%;
-  background-color:white;
+  background-color: white;
   display: flex;
   justify-content: center;
 }
+
 .stepshost-wrapper {
   width: 100%;
   max-width: 1105px;
@@ -141,6 +169,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 13px;
 }
+
 .stephost-card {
   background: white;
   border-radius: 8px;
@@ -153,6 +182,7 @@
   overflow: hidden;
   box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.05);
 }
+
 .stephost-number {
   text-align: left;
   font-size: 14px;
@@ -161,6 +191,7 @@
   margin-top: 10px;
   margin-left: 8px;
 }
+
 .stephost-title {
   font-size: 16px;
   font-weight: 500;
@@ -170,6 +201,7 @@
   margin-top: 10px;
   text-align: center;
 }
+
 .stephost-description {
   font-size: 13px;
   color: var(--text-color);
@@ -178,11 +210,13 @@
   text-align: center;
   margin: 0px 30px 40px 30px;
 }
+
 .stephost-image-container {
   display: flex;
   justify-content: center;
   align-items: flex-end;
 }
+
 .stephost-illustration {
   width: 80%;
   max-width: 250px;
@@ -190,149 +224,189 @@
   object-fit: cover;
 }
 
-/* ==========================================================
-   1️⃣ LAPTOPS & SMALL DESKTOPS RESPONSIVENESS (max-width: 1200px)
-   ========================================================== */
 @media screen and (max-width: 1200px) {
-  .steps-wrapper {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns for tablet/laptop sizing */
-    gap: 30px;
-    padding: 0 10px;
+  .herohost-section {
+    height: 75vh;
   }
-  .hero-title {
-    font-size: 34px; /* Balanced down from 36px to prevent line overflows */
-  }
-  .hero-findbook2 p {
-    font-size: 19px;
-    max-width: 750px;
-  }
-}
 
-/* ==========================================================
-   2️⃣ TABLETS & PORTRAIT PHONES RESPONSIVENESS (max-width: 768px)
-   ========================================================== */
-@media screen and (max-width: 768px) {
-  .hero-section {
-    height: auto;
-    min-height: 65vh; /* Gives the background image cleaner bounds on tablets */
-    display: flex;
-    align-items: center;
-    padding: 50px 0;
+  .herohost-title {
+    font-size: 36px;
   }
-  .hero-content {
-    position: relative;
-    top: 0;
-    left: 0;
-    transform: none;
-    width: 100%;
-    padding: 0 30px;
-  }
-  .hero-title {
-    font-size: 32px;
-  }
-  .hero-description {
-    font-size: 1rem;
-  }
-  .step-container {
-    gap: 15px;
-    padding: 15px;
-  }
-  .step-btn {
-    flex: none;
-    width: 100%;
-    max-width: 100%;
-    height: 60px;
-    font-size: 16px;
-  }
-  .circle-icon {
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
-  }
-  .hero-findbook {
-    padding: 50px 20px;
-  }
-  .hero-findbook1 h2 {
-    font-size: 26px;
-  }
-  .hero-findbook2 p {
-    font-size: 17px;
-    line-height: 1.6;
-  }
-  .steps-section {
-    padding: 40px 20px;
-  }
-  .steps-wrapper {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-  .step-card {
-    min-height: auto;
-    padding: 30px 25px;
-  }
-  .step-illustration {
-    max-width: 260px; /* Scales down image container to save vertical viewport scroll space */
-  }
-}
 
-
-@media screen and (max-width: 480px) {
-  .hero-section {
-    min-height: 55vh;
-    padding: 40px 0;
+  .stephost-container {
+    margin-left: 0;
+    padding: 0 5%;
   }
-  .hero-content {
+
+  .stephost-wrapper {
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .herohost-findbook2b {
+    width: 80%;
+  }
+
+  .stepshost-wrapper {
+    grid-template-columns: repeat(2, 1fr);
     padding: 0 20px;
+    gap: 20px;
   }
-  .hero-title {
-    font-size: 26px;
-    margin-bottom: 12px;
+}
+
+@media screen and (max-width: 768px) {
+  .herohost-section {
+    height: 60vh;
   }
-  .hero-description {
-    font-size: 0.95rem;
-    line-height: 1.45;
+
+  .herohost-content {
+    width: 92%;
+    margin-left: 4%;
   }
-  .step-container {
-    gap: 10px;
-    padding: 12px;
+
+  .herohost-title {
+    font-size: 28px;
   }
-  .step-btn {
-    height: 55px;
+
+  .herohost-description {
     font-size: 15px;
-    padding: 0 15px;
-    gap: 12px;
   }
-  .circle-icon {
-    width: 35px;
-    height: 35px;
-    font-size: 14px;
+
+  .stephost-container {
+    margin-left: 0;
+    width: 100%;
+    min-height: auto;
+    height: auto;
+    padding: 0 10px;
+    justify-content: center;
+    margin-top: 25px;
   }
-  .hero-findbook {
-    padding: 40px 15px;
+
+  .stephost-wrapper {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
   }
-  .hero-findbook1 h2 {
+
+  .stephost-btn {
+    flex: 1;
+    min-width: 0; 
+    max-width: none;
+    height: 50px;
+    padding: 0 10px;
+    font-size: 12.5px;
+    gap: 8px;
+    justify-content: center;
+    border-radius: 4px;
+  }
+
+  .circlehost-icon {
+    width: 22px;
+    height: 22px;
+    font-size: 10px;
+  }
+
+  .herohost-findbook {
+    padding: 20px 16px 32px 16px;
+  }
+
+  .herohost-findbook1 h2 {
     font-size: 22px;
+  }
+
+  .herohost-findbook2b {
+    width: 100%;
+  }
+
+  .herohost-findbook2 p {
+    font-size: 14.5px;
+  }
+
+  .stepshost-wrapper {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+  }
+
+  .stephost-card {
+    width: 100%;
+    margin-bottom: 12px;
+    padding-bottom: 15px;
+    min-height: auto;
+  }
+
+  .stephost-description {
+    margin: 0px 15px 15px 15px;
+    font-size: 12.5px;
+  }
+
+  .stephost-image-container {
+    max-height: 160px;
+    overflow: hidden;
+  }
+
+  .stephost-illustration {
+    max-width: 180px;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .herohost-section {
+    height: 55vh;
+  }
+
+  .herohost-title {
+    font-size: 24px;
     line-height: 1.3;
   }
-  .hero-findbook2 p {
-    font-size: 15px;
-    line-height: 1.55;
+
+  .herohost-description {
+    font-size: 14px;
+    line-height: 1.5;
   }
-  .steps-section {
-    padding: 30px 15px;
+
+  .stephost-container {
+    margin-top: 15px;
   }
-  .step-card {
-    padding: 20px 15px;
+
+  .stephost-wrapper {
+    padding: 0;
+    gap: 5px;
   }
-  .step-title {
-    font-size: 19px;
-    margin-bottom: 8px;
+
+  .stephost-btn {
+    font-size: 11px;
+    padding: 0 10px;
+    gap: 4px;
   }
-  .step-description {
-    font-size: 14.5px;
-    line-height: 1.4;
+
+  .circlehost-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 9px;
   }
-  .step-illustration {
-    max-width: 220px;
+
+  .herohost-findbook {
+    padding-top: 15px;
+  }
+
+  .herohost-findbook1 h2 {
+    font-size: 20px;
+  }
+
+  .stephost-card {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
+
+  .stephost-description {
+    margin-bottom: 10px;
+  }
+
+  .stephost-image-container {
+    max-height: 130px;
+  }
+
+  .stephost-illustration {
+    max-width: 150px;
   }
 }

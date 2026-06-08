@@ -3,16 +3,25 @@
   min-height: 100vh;
   overflow-x: hidden;
 }
+
 .herovendor-section {
   width: 100%;
   height: 85vh;
   position: relative;
+  display: flex;
+  align-items: center;
 }
+
 .herovendor-section img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
+
 .vendor-overlay {
   position: absolute;
   top: 0;
@@ -20,44 +29,53 @@
   width: 100%;
   height: 100%;
   background: rgba(75, 32, 95, 0.55);
-}
-.herovendor-content {
-  position: absolute;
-  top: 45%;
-  left: 5%;
-  transform: translateY(-50%);
-  width: 90%;
-  max-width: 700px;
-  color: white;
   z-index: 2;
 }
-.herovendor-title {
-  font-size: 45px;
-  font-weight: 550;
-  line-height: 1.1;
-  margin-bottom: 11px;
+
+.herovendor-content {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  margin-left: 5%;
+  color: #ffffff;
+  z-index: 3;
+  text-align: left;
 }
+
+.herovendor-title {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+
 .herovendor-description {
   font-size: 1.1rem;
-  line-height: 1.5;
+  line-height: 1.6;
   font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 680px;
 }
+
 .stepvendor-container {
   width: 100%;
-  min-height: 18.5vh;
+  min-height: 16vh;
   display: flex;
   justify-content: center;
- 
-}
-.stepvendor-wrapper{
-  width: 90%;
-  min-height: 100%;
   align-items: flex-end;
-  margin-left: 30px;
-  display: flex;
-  gap: 50px;
-
+  margin-left: 70px;
 }
+
+.stepvendor-wrapper {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+  gap: 50px;
+}
+
 .stepvendor-btn {
   flex: 1;
   max-width: 209px;
@@ -66,7 +84,6 @@
   display: flex;
   align-items: center;
   padding: 0 20px;
-  border: 1px solid var(--primary-color);
   border-radius: 6px;
   font-size: 14.5px;
   color: #0f0f10;
@@ -74,34 +91,40 @@
   cursor: pointer;
   transition: 0.3s ease;
 }
+
 .circlevendor-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 23px;
-  height: 23px;
-  border: 2px solid var(--primary-color);
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid var(--primary-color);
   border-radius: 50%;
   font-size: 12px;
   flex-shrink: 0;
 }
+
 .stepvendor-btn.active {
   background-color: #2b0054;
   color: white;
 }
+
 .stepvendor-btn.active .circlevendor-icon {
   border-color: white;
 }
+
 .herovendor-findbook {
   width: 100%;
   padding: 40px 20px;
 }
+
 .herovendor-findbook1 {
   width: 100%;
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
+
 .herovendor-findbook1 h2 {
   text-align: center;
   font-size: 20px;
@@ -109,14 +132,17 @@
   font-weight: 700;
   line-height: 1.4;
 }
+
 .herovendor-findbook2 {
   width: 100%;
   display: flex;
   justify-content: center;
 }
+
 .herovendor-findbook2b {
-  width:50%;
+  width: 50%;
 }
+
 .herovendor-findbook2 p {
   text-align: center;
   font-size: 15px;
@@ -126,12 +152,14 @@
   max-width: 850px;
   margin: 0 auto;
 }
+
 .stepsvendor-section {
   width: 100%;
-  background-color:white;
+  background-color: white;
   display: flex;
   justify-content: center;
 }
+
 .stepsvendor-wrapper {
   width: 100%;
   max-width: 1105px;
@@ -141,6 +169,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 13px;
 }
+
 .stepvendor-card {
   background: white;
   border-radius: 8px;
@@ -153,6 +182,7 @@
   overflow: hidden;
   box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.05);
 }
+
 .stepvendor-number {
   text-align: left;
   font-size: 14px;
@@ -161,6 +191,7 @@
   margin-top: 10px;
   margin-left: 8px;
 }
+
 .stepvendor-title {
   font-size: 16px;
   font-weight: 500;
@@ -170,6 +201,7 @@
   margin-top: 10px;
   text-align: center;
 }
+
 .stepvendor-description {
   font-size: 13px;
   color: var(--text-color);
@@ -178,11 +210,13 @@
   text-align: center;
   margin: 0px 30px 40px 30px;
 }
+
 .stepvendor-image-container {
   display: flex;
   justify-content: center;
   align-items: flex-end;
 }
+
 .stepvendor-illustration {
   width: 80%;
   max-width: 250px;
@@ -190,149 +224,189 @@
   object-fit: cover;
 }
 
-/* ==========================================================
-   1️⃣ LAPTOPS & SMALL DESKTOPS RESPONSIVENESS (max-width: 1200px)
-   ========================================================== */
 @media screen and (max-width: 1200px) {
-  .stepsvendor-wrapper {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns for tablet/laptop sizing */
-    gap: 30px;
-    padding: 0 10px;
+  .herovendor-section {
+    height: 75vh;
   }
+
   .herovendor-title {
-    font-size: 34px; /* Balanced down from 36px to prevent line overflows */
+    font-size: 36px;
   }
-  .herovendor-findbook2 p {
-    font-size: 19px;
-    max-width: 750px;
+
+  .stepvendor-container {
+    margin-left: 0;
+    padding: 0 5%;
+  }
+
+  .stepvendor-wrapper {
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .herovendor-findbook2b {
+    width: 80%;
+  }
+
+  .stepsvendor-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 20px;
+    gap: 20px;
   }
 }
 
-/* ==========================================================
-   2️⃣ TABLETS & PORTRAIT PHONES RESPONSIVENESS (max-width: 768px)
-   ========================================================== */
 @media screen and (max-width: 768px) {
   .herovendor-section {
-    height: auto;
-    min-height: 65vh; /* Gives the background image cleaner bounds on tablets */
-    display: flex;
-    align-items: center;
-    padding: 50px 0;
+    height: 60vh;
   }
+
   .herovendor-content {
-    position: relative;
-    top: 0;
-    left: 0;
-    transform: none;
-    width: 100%;
-    padding: 0 30px;
+    width: 92%;
+    margin-left: 4%;
   }
+
   .herovendor-title {
-    font-size: 32px;
+    font-size: 28px;
   }
+
   .herovendor-description {
-    font-size: 1rem;
+    font-size: 15px;
   }
+
   .stepvendor-container {
-    gap: 15px;
-    padding: 15px;
-  }
-  .stepvendor-btn {
-    flex: none;
+    margin-left: 0;
     width: 100%;
-    max-width: 100%;
-    height: 60px;
-    font-size: 16px;
+    min-height: auto;
+    height: auto;
+    padding: 0 10px;
+    justify-content: center;
+    margin-top: 25px;
   }
+
+  .stepvendor-wrapper {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .stepvendor-btn {
+    flex: 1;
+    min-width: 0; 
+    max-width: none;
+    height: 50px;
+    padding: 0 10px;
+    font-size: 12.5px;
+    gap: 8px;
+    justify-content: center;
+    border-radius: 4px;
+  }
+
   .circlevendor-icon {
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
+    width: 22px;
+    height: 22px;
+    font-size: 10px;
   }
+
   .herovendor-findbook {
-    padding: 50px 20px;
+    padding: 20px 16px 32px 16px;
   }
+
   .herovendor-findbook1 h2 {
-    font-size: 26px;
+    font-size: 22px;
   }
+
+  .herovendor-findbook2b {
+    width: 100%;
+  }
+
   .herovendor-findbook2 p {
-    font-size: 17px;
-    line-height: 1.6;
+    font-size: 14.5px;
   }
-  .stepsvendor-section {
-    padding: 40px 20px;
-  }
+
   .stepsvendor-wrapper {
     grid-template-columns: 1fr;
-    gap: 30px;
+    padding: 0 16px;
   }
+
   .stepvendor-card {
+    width: 100%;
+    margin-bottom: 12px;
+    padding-bottom: 15px;
     min-height: auto;
-    padding: 30px 25px;
   }
-  .step-illustration {
-    max-width: 260px; /* Scales down image container to save vertical viewport scroll space */
+
+  .stepvendor-description {
+    margin: 0px 15px 15px 15px;
+    font-size: 12.5px;
+  }
+
+  .stepvendor-image-container {
+    max-height: 160px;
+    overflow: hidden;
+  }
+
+  .stepvendor-illustration {
+    max-width: 180px;
   }
 }
 
-
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 680px) {
   .herovendor-section {
-    min-height: 55vh;
-    padding: 40px 0;
+    height: 55vh;
   }
-  .herovendor-content {
-    padding: 0 20px;
-  }
+
   .herovendor-title {
-    font-size: 26px;
-    margin-bottom: 12px;
-  }
-  .herovendor-description {
-    font-size: 0.95rem;
-    line-height: 1.45;
-  }
-  .stepvendor-container {
-    gap: 10px;
-    padding: 12px;
-  }
-  .stepvendor-btn {
-    height: 55px;
-    font-size: 15px;
-    padding: 0 15px;
-    gap: 12px;
-  }
-  .circlevendor-icon {
-    width: 35px;
-    height: 35px;
-    font-size: 14px;
-  }
-  .herovendor-findbook {
-    padding: 40px 15px;
-  }
-  .herovendor-findbook1 h2 {
-    font-size: 22px;
+    font-size: 24px;
     line-height: 1.3;
   }
-  .herovendor-findbook2 p {
-    font-size: 15px;
-    line-height: 1.55;
+
+  .herovendor-description {
+    font-size: 14px;
+    line-height: 1.5;
   }
-  .stepsvendor-section {
-    padding: 30px 15px;
+
+  .stepvendor-container {
+    margin-top: 15px;
   }
+
+  .stepvendor-wrapper {
+    padding: 0;
+    gap: 5px;
+  }
+
+  .stepvendor-btn {
+    font-size: 11px;
+    padding: 0 10px;
+    gap: 4px;
+  }
+
+  .circlevendor-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 9px;
+  }
+
+  .herovendor-findbook {
+    padding-top: 15px;
+  }
+
+  .herovendor-findbook1 h2 {
+    font-size: 20px;
+  }
+
   .stepvendor-card {
-    padding: 20px 15px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
   }
-  .stepvendor-title {
-    font-size: 19px;
-    margin-bottom: 8px;
-  }
+
   .stepvendor-description {
-    font-size: 14.5px;
-    line-height: 1.4;
+    margin-bottom: 10px;
   }
+
+  .stepvendor-image-container {
+    max-height: 130px;
+  }
+
   .stepvendor-illustration {
-    max-width: 220px;
+    max-width: 150px;
   }
 }

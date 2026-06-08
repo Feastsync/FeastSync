@@ -1,0 +1,213 @@
+.vendorsetting-container {
+  width: 100%;
+  height: 100vh;
+  min-height: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  /* margin: 0 auto; */
+  /* padding-top: 40px; */
+  background-color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #0f172a;
+  box-sizing: border-box;
+}
+.vendorsetting-wrapper{
+  width: 100%;
+  height: 30%;
+}
+
+.vendorsetting-header {
+  width: 100%;
+  height: 25%;
+  display: flex;
+  flex-direction: column;
+}
+
+.vendorsetting-section-title-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(15, 15, 16, 1);
+  letter-spacing: 0.05em;
+  background-color: blue;
+  margin: 0 0 32px 0; 
+  margin-top: 25px;
+  padding-bottom: 17px;
+  padding-left: 5%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  border-bottom: 3px solid #ff0000;
+}
+
+.vendorsetting-account-main-title {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0 0 32px 0; 
+  color: #1e293b;
+  padding-bottom: 12px;
+  padding-left: 5%;
+  box-sizing: border-box;
+  border-bottom: 3px solid #ff0000;
+}
+
+.vendorsetting-profile-card-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px; 
+  padding-bottom: 24px;
+  padding-left: 5%;
+  box-sizing: border-box;
+  border-bottom: 3px solid #ff0000; 
+}
+
+.vendorsetting-profile-avatar-black {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #000000;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.vendorsetting-profile-meta-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.vendorsetting-profile-user-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  color: #000000;
+}
+
+.vendorsetting-profile-user-role {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0;
+}
+
+.vendorsetting-list-wrapper {
+  width: 90%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.vendorsetting-row-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid #f1f5f9;
+  min-height: 52px;
+  box-sizing: border-box;
+}
+
+.vendorsetting-extended-row-height {
+  padding: 10px 0;
+  min-height: 46px;
+}
+
+.vendorsetting-no-border-bottom {
+  border-bottom: none;
+}
+
+.vendorsetting-stacked-label-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.vendorsetting-field-row-label {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #0f172a;
+}
+
+.vendorsetting-field-row-subtitle {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.vendorsetting-field-row-value {
+  flex: 1;
+  text-align: right;
+  padding-right: 48px;
+  font-size: 13px;
+  color: #334155;
+}
+
+.vendorsetting-empty-action-spacer,
+.vendorsetting-action-btn {
+  width: 76px;
+}
+
+.vendorsetting-action-btn {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 6px 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #0f172a;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.15s ease;
+}
+
+.vendorsetting-action-btn:hover {
+  background-color: #f8fafc;
+}
+
+.vendorsetting-copy-btn-layout {
+  width: auto;
+  padding: 6px 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.vendorsetting-copy-icon-svg {
+  color: #64748b;
+}
+
+.vendorsetting-sub-section-break-header {
+  margin: 14px 0 2px 0;
+}
+
+.vendorsetting-kyc-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid #f1f5f9;
+  margin-top: 2px;
+}
+
+.vendorsetting-verification-badge-approved {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #ecfdf5;
+  color: #10b981;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.vendorsetting-check-icon-svg {
+  stroke-width: 2.5px;
+}
