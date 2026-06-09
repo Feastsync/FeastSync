@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-// import Swal from "sweetalert2";
-// import Input from "../../Props/Ip";
+import Swal from 'sweetalert2';
 import Input from "../../Props/Imp";
 import Button from "../../Props/Button";
 import "../Css/VendorSignUp.css";
 import FeastLogo from "../../assets/logos/Headerlogo.png";
-import GoogleLogo from "../../assets/logos/GoogleLogo.png"
-import signup from "../../assets/BackgroundImage/SignUP.jpeg"
+import GoogleLogo from "../../assets/logos/GoogleLogo.png";
+import signup from "../../assets/BackgroundImage/SignUP.jpeg";
 
 const EmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const VendorSignUp = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -89,6 +89,11 @@ const VendorSignUp = () => {
     } else {
       setPasswordError({ err: false, name: "", msg: "" });
     }
+    if (userInfo.confirmPassword && val !== userInfo.confirmPassword) {
+      setConfirmPasswordError({ err: true, name: "confirmPassword", msg: "Passwords do not match" });
+    } else if (userInfo.confirmPassword) {
+      setConfirmPasswordError({ err: false, name: "", msg: "" });
+    }
   };
 
   const HoldConfirmPassword = (e) => {
@@ -103,7 +108,8 @@ const VendorSignUp = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     let hasError = false;
 
     if (userInfo.businessName.trim() === "") {
@@ -152,23 +158,24 @@ const VendorSignUp = () => {
       return;
     }
 
+    navigate("/verify-otp");
   };
 
   return (
     <div className="vr-page">
       <div className="vr-container">
         <div className="vr-left">
-            <div className="vr-logo-container">
-         <img src={FeastLogo} alt="Logo" className="vr-logo" />
-          <span className="vr-logo-text">FeastSync</span>
-                </div>
-                <Link to="/onboarding" className="vr-back">← Back</Link>         
+          <div className="vr-logo-container">
+            <img src={FeastLogo} alt="Logo" className="vr-logo" />
+            <span className="vr-logo-text">FeastSync</span>
+          </div>
+          <Link to="/onboarding" className="vr-back">← Back</Link>
           <div className="vr-header">
             <h1>Vendors Registration</h1>
             <p>Create an Account and get started with <strong>FEASTSYNC</strong></p>
           </div>
 
-          <form className="vr-form">
+          <form onSubmit={handleSubmit} className="vr-form">
             <div className="vr-field">
               <label>Business/Nickname</label>
               <Input placeholder="Your stage name" value={userInfo.businessName} onBlur={() => setBusinessNameError({ err: false, name: "", msg: "" })} onChange={HoldBusinessName} />
@@ -235,15 +242,14 @@ const VendorSignUp = () => {
               )}
             </div>
 
-            <Button btnText="Sign up as a vendor" className="vr-submit-btn" onClick={handleSubmit} />
+            <Button btnText="Sign up as a vendor" className="vr-submit-btn" type="submit" />
             <p className="vr-or">OR</p>
-            {/* <Button  btnText="Continue with Google" className="vr-google-btn" /> */}
-            <Button className="vr-google-btn">
-      <div className="vr-btn-content">
-        <img src={GoogleLogo} alt="Google" className="vr-btn-icon" />
-      <span>Continue with Google</span>
-       </div>
-           </Button>
+            <Button className="vr-google-btn" type="button">
+              <div className="vr-btn-content">
+                <img src={GoogleLogo} alt="Google" className="vr-btn-icon" />
+                <span>Continue with Google</span>
+              </div>
+            </Button>
           </form>
         </div>
 

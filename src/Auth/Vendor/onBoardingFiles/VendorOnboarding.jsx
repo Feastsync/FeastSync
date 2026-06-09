@@ -41,13 +41,13 @@ const VendorOnboarding = ({ isOpen, onClose, vendorName }) => {
     welcome: (
       <WelcomeModal
         vendorName={vendorName}
-        onContinue={() => setCurrentStep("incomplete")} // go to banner
+        onContinue={() => setCurrentStep("incomplete")} 
         onSkip={onClose}
       />
     ),
     incomplete: (
       <IncompleteBanner
-        onComplete={() => setCurrentStep("checklist")} // banner button goes to checklist
+        onComplete={() => setCurrentStep("checklist")} 
         percentComplete={percentComplete}
       />
     ),
