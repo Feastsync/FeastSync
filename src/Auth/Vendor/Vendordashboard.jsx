@@ -19,7 +19,7 @@ const Vendordashboard = () => {
     if (location.state?.showOnboarding) {
       setShowOnboarding(true)
       setVendorName(location.state?.vendorName || "Vendor")
-      nav(location.pathname, { replace: true, state: {} })
+      navigate(location.pathname, { replace: true, state: {} })
     }
   }, [location, navigate])
 
