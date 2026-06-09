@@ -4,7 +4,7 @@ import "./css/CalendarStep.css";
 import { useNavigate } from "react-router-dom";
 
 const CalendarStep = ({ onNext, onBack }) => {
-  const nav = useNavigate()
+  const navigate = useNavigate()
   return (
     <div className="cs-overlay">
       <div className="cs-modal">
@@ -32,7 +32,7 @@ const CalendarStep = ({ onNext, onBack }) => {
         </div>
 
         <div className="cs-footer">
-          <button className="cs-btn-text" onClick={()=> nav("/")} >Skip for Now</button>
+          <button className="cs-btn-text" onClick={()=> navigate("/")} >Skip for Now</button>
           <div className="cs-btn-group">
             <button className="cs-btn-outline" onClick={onBack}>Back</button>
             <button className="cs-btn-primary" onClick={onNext}>Complete Setup</button>

@@ -4,7 +4,7 @@ import "./css/ChecklistModal.css";
 import { useNavigate } from "react-router-dom";
 
 const ChecklistModal = ({ onStart, onLater, completedSteps, percentComplete = 0 }) => {
-  const nav = useNavigate()
+  const navigate = useNavigate()
   const totalSteps = 5;
   const completedCount = Object.values(completedSteps).filter(Boolean).length;
   const progress = (completedCount / totalSteps) * 100 || percentComplete;
@@ -93,7 +93,7 @@ const ChecklistModal = ({ onStart, onLater, completedSteps, percentComplete = 0 
             <button className="profile-btn-primary" onClick={onStart}>
               Complete Profile Now
             </button>
-            <button className="profile-btn-secondary" onClick={()=> nav("/")}>
+            <button className="profile-btn-secondary" onClick={()=> navigate("/")}>
               Remind Me Later
             </button>
           </div>
