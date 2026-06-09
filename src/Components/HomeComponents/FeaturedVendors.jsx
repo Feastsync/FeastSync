@@ -4,7 +4,11 @@ import VendorCard from '../../Props/VendorCard'
 import { dummyVendors } from '../../Components/DummyData'
 import "./Css/FeaturedCard.css"
 import Button from '../../Props/Button'
+import { useNavigate } from 'react-router-dom'
+
 const FeaturedVendors = () => {
+const navigate = useNavigate()
+
 
   const row1Ref = useRef(null)
   const row2Ref = useRef(null)

@@ -25,7 +25,7 @@ const WelcomeModal = ({ vendorName = "Adeyemi", onContinue, onSkip }) => {
   Continue verification  
 </button>
 
-        <button type="button" className="welcome-btn-text" onClick={()=> navigate("/")}>
+        <button type="button" className="welcome-btn-text" onClick={() => navigate("/")}   >
           Skip for now
         </button>
       </div>
