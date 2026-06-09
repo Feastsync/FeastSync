@@ -7,6 +7,9 @@
   justify-content: space-between;
   box-sizing: border-box;
   overflow-x: hidden;
+  position: sticky;
+  top: 0;
+  z-index: 999;
 }
 
 .vendorheader2-left {
