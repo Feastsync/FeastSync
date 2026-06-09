@@ -31,7 +31,7 @@ const Vendorheader = () => {
             <span className='vendorheader-navLabel'>Messages</span>
           </button>
           
-          <button className='icon-btn notification-btn' aria-label="Notifications" onClick={() => { nav("/notifications"); closeMenu(); }}>
+          <button className='icon-btn notification-btn' aria-label="Notifications" onClick={() => { navigate("/notifications"); closeMenu(); }}>
             <div className='icon-wrapper'>
               <img src={Bellicon2} alt="" className='nav-icon' />
               <span className='notification-badge'>1</span>
