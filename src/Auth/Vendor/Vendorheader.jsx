@@ -8,7 +8,7 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 
 const Vendorheader = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const nav = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : 'unset';
@@ -20,13 +20,13 @@ const Vendorheader = () => {
   return (
     <header className='vendorheader-container'>
       <div className='vendorheader-wrapper'>
-        <div className='vendorheader-left' onClick={() => { nav('/'); closeMenu(); }}>
+        <div className='vendorheader-left' onClick={() => { navigate('/'); closeMenu(); }}>
           <img src={Headerlogo2} alt="FeastSync Logo" className='logo-img' />
           <h2 className='logo-text'>FeastSync</h2>
         </div>
         
         <div className={`vendorheader-right ${isOpen ? "active" : ""}`}>
-          <button className='icon-btn' aria-label="Wallet" onClick={() => { nav('/wallet/transactions'); closeMenu(); }}>
+          <button className='icon-btn' aria-label="Wallet" onClick={() => { navigate('/wallet/transactions'); closeMenu(); }}>
             <img src={Messageicon} alt="" className='nav-icon1' />
             <span className='vendorheader-navLabel'>Messages</span>
           </button>
@@ -41,7 +41,7 @@ const Vendorheader = () => {
           
           <div className='vendorheader-footerActions'>
             <div className='avatar-circle'>DK</div>
-            <button className='edit-profile-btn' onClick={() => { nav('/profile/edit'); closeMenu(); }}>Edit Profile</button>
+            <button className='edit-profile-btn' onClick={() => { navigate('/Settings'); closeMenu(); }}>Edit Profile</button>
           </div>
         </div>
 
