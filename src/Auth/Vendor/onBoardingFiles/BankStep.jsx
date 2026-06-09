@@ -7,7 +7,7 @@ const BankStep = ({ onNext, onBack, onSkip, percentComplete = 20 }) => {
   const [state, setState] = useState("");
   const [bank, setBank] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
-  const nav = useNavigate()
+  const navigate = useNavigate()
 
   const handleContinue = () => {
     onNext();
@@ -90,7 +90,7 @@ const BankStep = ({ onNext, onBack, onSkip, percentComplete = 20 }) => {
         </div>
 
         <div className="bank-modal-footer">
-          <button className="bank-btn-text" onClick={()=> nav("/")}>
+          <button className="bank-btn-text" onClick={()=> navigate("/")}>
             Skip for Now
           </button>
           <div className="bank-footer-actions">

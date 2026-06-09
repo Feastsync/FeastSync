@@ -4,7 +4,7 @@ import "./css/MediaStep.css";
 import { useNavigate } from "react-router-dom";
 
 const MediaStep = ({ onNext, onBack, onSkip, percentComplete = 40 }) => {
-  const nav = useNavigate()
+  const navigate = useNavigate()
   const [workExperience, setWorkExperience] = useState("");
   const [servicesOffered, setServicesOffered] = useState("");
   const wordCount = workExperience.trim() === "" ? 0 : workExperience.trim().split(/\s+/).length;
@@ -72,7 +72,7 @@ const MediaStep = ({ onNext, onBack, onSkip, percentComplete = 40 }) => {
         </div>
 
         <div className="media-footer">
-          <button className="media-btn-skip" onClick={()=> nav("/")}>Skip for Now</button>
+          <button className="media-btn-skip" onClick={()=> navigate("/")}>Skip for Now</button>
           <div className="media-footer-right">
             <button className="media-btn-back" onClick={onBack}>Back</button>
             <button className="media-btn-continue" onClick={onNext}>Continue</button>
