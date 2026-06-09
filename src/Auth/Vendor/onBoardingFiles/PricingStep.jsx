@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { FiX, FiChevronDown } from "react-icons/fi";
 import "./css/PricingStep.css";
+import { useNavigate } from "react-router-dom";
 
 const PricingStep = ({ onNext, onBack, onSkip, percentComplete = 60 }) => {
+  const navigate = useNavigate()
   const [startingPrice, setStartingPrice] = useState("");
   const [packageName, setPackageName] = useState("");
   const [packageDescription, setPackageDescription] = useState("");
@@ -69,7 +71,7 @@ const PricingStep = ({ onNext, onBack, onSkip, percentComplete = 60 }) => {
         </div>
 
         <div className="ps-footer">
-          <button className="ps-btn-skip" onClick={onSkip}>Skip for Now</button>
+          <button className="ps-btn-skip" onClick={()=> navigate("/")}>Skip for Now</button>
           <div className="ps-footer-right">
             <button className="ps-btn-back" onClick={onBack}>Back</button>
             <button className="ps-btn-continue" onClick={onNext}>Continue</button>

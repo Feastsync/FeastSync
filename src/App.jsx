@@ -38,6 +38,7 @@ import Error404 from "./Auth/Vendor/Error404.jsx";
 import BookingRequest from "./Page/BookingRequest.jsx"
 import RatingReview from "./Page/RatingReview.jsx"
 import VendorSetting from "./Auth/Vendor/VendorSetting.jsx"
+import Settings from "./Page/SettingsPage/Settings.jsx"
 const App = () => {
   return (
     <BrowserRouter>
@@ -81,6 +82,7 @@ const App = () => {
         <Route path="/vendorsetting" element={<VendorSetting />} />
         {/* <Route path="/transaction/histories" element={<WalletLedger />} /> */}
        <Route path="/chats" element={<Chat />} />    
+        <Route path="/Settings" element={<Settings />} />    
         <Route
           path="/notifications/:category?"
           element={<AllNotifications />}

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import WelcomeModal from "./WelcomeModal.jsx";
+import IncompleteBanner from "./IncompleteBanner.jsx";
 import ChecklistModal from "./ChecklistModal.jsx";
 import BankStep from "./BankStep.jsx";
 import MediaStep from "./MediaStep.jsx";
@@ -7,7 +8,6 @@ import PricingStep from "./PricingStep.jsx";
 import DocumentStep from "./DocumentStep.jsx";
 import CalendarStep from "./CalendarStep.jsx";
 import SuccessModal from "./SuccessModal.jsx";
-// import "./VendorOnboarding.css";
 
 const VendorOnboarding = ({ isOpen, onClose, vendorName }) => {
   const [currentStep, setCurrentStep] = useState("welcome");
@@ -20,6 +20,11 @@ const VendorOnboarding = ({ isOpen, onClose, vendorName }) => {
   });
 
   if (!isOpen) return null;
+
+ 
+  const total = Object.keys(completedSteps).length;
+  const done = Object.values(completedSteps).filter(Boolean).length;
+  const percentComplete = total? Math.round((done / total) * 100) : 25;
 
   const completeStep = (stepName) => {
     setCompletedSteps((prev) => ({...prev, [stepName]: true }));
@@ -36,8 +41,14 @@ const VendorOnboarding = ({ isOpen, onClose, vendorName }) => {
     welcome: (
       <WelcomeModal
         vendorName={vendorName}
-        onContinue={() => setCurrentStep("checklist")}
+        onContinue={() => setCurrentStep("incomplete")} // go to banner
         onSkip={onClose}
+      />
+    ),
+    incomplete: (
+      <IncompleteBanner
+        onComplete={() => setCurrentStep("checklist")} // banner button goes to checklist
+        percentComplete={percentComplete}
       />
     ),
     checklist: (
@@ -45,7 +56,7 @@ const VendorOnboarding = ({ isOpen, onClose, vendorName }) => {
         onStart={() => setCurrentStep("bank")}
         onLater={onClose}
         completedSteps={completedSteps}
-        percentComplete={0}
+        percentComplete={percentComplete}
       />
     ),
     bank: (
