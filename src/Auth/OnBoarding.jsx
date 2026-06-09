@@ -53,7 +53,7 @@ const OnBoarding = () => {
         </section>
         <section className="onboarding-content4">
           <div className="onboarding-content4-container">
-            <h2>Go back to home</h2>
+            <h2 onClick={() => navigate("/")} >Go back to home</h2>
             <img src={Leftarrow} alt="Left Arrow" />
           </div>
         </section>

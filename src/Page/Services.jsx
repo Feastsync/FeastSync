@@ -4,8 +4,11 @@ import Button from "../Props/Button";
 import Footer from "../Components/Footer";
 // import "./Css/Services.css";
 import "./NewCSS/services.css";
+import { useNavigate } from "react-router-dom";
 
 const services = () => {
+  const navigate = useNavigate();
+
   return (
     <main className="service-container">
       <div className="overlayer">
@@ -160,7 +163,7 @@ const services = () => {
             right coperate occasion, everytime.
           </p>
         </div>
-        <Button btnText="Get Started" className="servicebtn" />
+        <Button btnText="Get Started" onClick={() => navigate('/onboarding')} className="servicebtn" />
       </div>
 
       <div className="serviceEntertainment">
@@ -177,7 +180,7 @@ const services = () => {
             to the last song.Book more, spend less and eliminate the
             coordination headache entirely.
           </p>
-           <Button btnText="Get Started" className="servicebtn" />
+           <Button btnText="Get Started" onClick={() => navigate('/onboarding')} className="servicebtn" />
         </div>
       </div>
     </main>
