@@ -244,3 +244,164 @@
   height: 15px;
   filter: invert(1);
 }
+
+
+@media (max-width: 768px) {
+  .chat {
+    padding: 0;
+    height: 100vh;
+    height: 100dvh; 
+  }
+
+  .chat__header {
+    padding: 16px 20px;
+    border-radius: 0;
+    gap: 12px;
+  }
+
+  .chat__avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 14px;
+  }
+
+  .chat__avatar-dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .chat__vendor-name {
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  .chat__header-badges {
+    flex-wrap: wrap;
+  }
+
+  .badge--kyc {
+    font-size: 10px;
+    padding: 2px 8px;
+  }
+
+  .badge--online {
+    font-size: 11px;
+  }
+
+  .chat__header-actions {
+    gap: 8px;
+  }
+
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .icon-btn img {
+    width: 16px;
+    height: 16px;
+  }
+
+  .chat__body {
+    padding: 16px 16px 12px;
+    gap: 10px;
+  }
+
+  .bubble {
+    max-width: 75%;
+    padding: 12px 14px;
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  .bubble__time {
+    font-size: 10px;
+  }
+
+  .chat__date-divider {
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+
+  .chat__input-row {
+    padding: 12px 16px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom)); /* iPhone home bar */
+  }
+
+  .chat__input {
+    padding: 12px 48px 12px 14px;
+    font-size: 16px; 
+  }
+
+  .chat__send-btn {
+    right: 24px;
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat__header {
+    padding: 14px 16px;
+  }
+
+  .chat__avatar {
+    width: 44px;
+    height: 44px;
+  }
+
+  .chat__vendor-name {
+    font-size: 14px;
+  }
+
+  .chat__header-actions {
+    gap: 6px;
+  }
+
+  .icon-btn {
+    width: 30px;
+    height: 30px;
+    border-width: 1px;
+  }
+
+  .bubble {
+    max-width: 80%;
+    padding: 10px 12px;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .chat__body {
+    padding: 12px;
+  }
+
+  .chat__input-row {
+    padding: 10px 12px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  }
+
+  .chat__send-btn {
+    right: 20px;
+  }
+}
+
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .chat__header {
+    padding: 10px 16px;
+  }
+
+  .chat__avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .chat__body {
+    padding: 12px 16px;
+  }
+
+  .bubble {
+    padding: 8px 12px;
+    line-height: 20px;
+  }
+}
