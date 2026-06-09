@@ -5,6 +5,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 import "../Auth/Css/ResetPassword.css"
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
+import Header from '../Components/Header';
 
 const ResetPassword = () => {
   const [Password , setPassword]=useState("")
@@ -19,10 +20,7 @@ const ResetPassword = () => {
    <div className='resetPasswordBox'>
         <div className='forgotPasswordLogo'>
                    <div className='resetPasswordLogo'>
-                           <div className='header_left'>
-                                 <img src={Headerlogo} alt="FeastSync Logo" className='logo_img' />
-                                 <h2 className='logo_text'>FeastSync</h2>
-                               </div>
+                         <Header />
                           </div>
                           </div>
           <div className='resetPasswordButton'>

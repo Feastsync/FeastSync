@@ -3,6 +3,7 @@ import Headerlogo from '../assets/logos/Headerlogo.png'
 import Button from '../Props/Button'
 import { FaArrowLeft } from "react-icons/fa6";
 import "../Auth/Css/ForgotPassword.css"
+import Header from '../Components/Header';
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
@@ -11,10 +12,7 @@ const ForgetPassword = () => {
     <div>
          <div className='forgotPasswordLogo'>
             <div className='resetPasswordLogo'>
-                          <div className='feastHeader_left'>
-                            <img onClick={()=> Nav('/')} src={Headerlogo} alt="FeastSync Logo" className='feastHeader_logoImg' />
-                            <h2 className='feastHeader_logoText'>FeastSync</h2>
-                          </div>
+                        <Header />
                    </div>
          </div>
 
