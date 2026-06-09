@@ -12,49 +12,70 @@
 .ib-banner {
   background: #fff;
   border-radius: 12px;
-  padding: 20px 24px;
+  padding: 24px 28px;
   display: flex;
-  align-items: center;
-  gap: 16px;
-  max-width: 900px;
+  flex-direction: column;
+  gap: 5px;
+  max-width: 750px;
   width: 100%;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
+.ib-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .ib-icon {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: #EDE9FE;
   color: #4B0082;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 700;
   flex-shrink: 0;
 }
 
-.ib-content {
-  flex: 1;
-}
-
-.ib-content h4 {
-  font-size: 16px;
+.ib-banner h4 {
+  font-size: 15px;
   font-weight: 600;
   color: #111827;
-  margin: 0 0 4px;
+  margin: 0;
 }
 
-.ib-content p {
-  font-size: 14px;
-  color: #6B7280;
+.ib-banner p {
+  font-size: 13px;
+  color: var(--text-color);
   margin: 0;
   line-height: 1.5;
 }
 
+.ib-progress-bar {
+  width: 90px;
+  height: 8px;
+  background: var(--primary-color);
+  border-radius: 5px;
+  
+}
+
+.ib-progress-fill {
+  height: 100%;
+  background: #4B0082;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
 .ib-btn {
-  height: 44px;
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
   background: #4B0082;
   color: #fff;
   border: none;
@@ -62,8 +83,13 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  padding: 0 24px;
-  white-space: nowrap;
+  padding: 0 20px;
+  margin-top: 4px;
+}
+
+.ib-btn span {
+  font-size: 16px;
+  line-height: 1;
 }
 
 .ib-btn:hover {
