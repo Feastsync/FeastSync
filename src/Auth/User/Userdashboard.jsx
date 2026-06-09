@@ -31,7 +31,7 @@ const Userdashboard = () => {
               <p>Total Spent</p>
               <h2> ₦0.00</h2>
             </div>
-            <div className="user-dashboard-contentright2-right">
+            <div className="user-dashboard-contentright2-right" onClick={() => navigate("/ratingreview")}>
               <p>Review/Rating Given</p>
               <h2>0</h2>
             </div>
