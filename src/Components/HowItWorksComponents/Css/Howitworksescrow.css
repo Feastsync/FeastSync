@@ -374,15 +374,16 @@
   }
 
   .stepescrow-btn {
-    font-size: 11px;
+    max-width: 130px;
+    font-size: 9.5px;
     padding: 0 10px;
     gap: 4px;
   }
 
   .circleescrow-icon {
-    width: 18px;
-    height: 18px;
-    font-size: 9px;
+    width: 16.5px;
+    height: 16.5px;
+    font-size: 6px;
   }
 
   .heroescrow-findbook {
@@ -403,7 +404,7 @@
   }
 
   .stepescrow-image-container {
-    max-height: 130px;
+    max-height: 180px;
   }
 
   .stepescrow-illustration {

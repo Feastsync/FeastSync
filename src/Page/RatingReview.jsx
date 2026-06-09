@@ -2,8 +2,10 @@ import React from "react";
 import "./Css/RatingReview.css";
 import Vendorheader2 from "../Auth/Vendor/Vendorheader2";
 import Rating from "../assets/logos/Rating.svg"
+import { useNavigate } from "react-router-dom";
 
 const RatingReview = () => {
+  const navigate = useNavigate();
   return (
     <div className="ratingreview-container">
       <Vendorheader2 />
@@ -35,37 +37,36 @@ const RatingReview = () => {
           ></textarea>
         </div>
 
-        <div className="ratingreview-evidence-section">
           <p className="ratingreview-evidence-title">
             Add photo evidence
           </p>
 
-          <div className="ratingreview-media-header">
-            <span>Photo</span>
-            <span>Video</span>
-          </div>
-
-          <div className="ratingreview-upload-area">
-            <span className="ratingreview-photo-label">
-              Photo
-            </span>
-
-            <label className="ratingreview-upload-box">
-              <input
-                type="file"
-                multiple
-                accept="image/*,video/*"
-                className="ratingreview-file-input"
-              />
+          <div className="ratingreview-evidence-section">
+            <div className="ratingreview-evidence-left">
+              <span>Photo</span>
+            </div>
+            <div className="ratingreview-evidence-right">
+              <div className="ratingreview-evidence-rightup">
+                <div className="ratingreview-evidence-rightup-left">
+                  <span>Photo</span>
+                </div>
+                <div className="ratingreview-evidence-rightup-right">
+                  <span>Video</span>
+                  <h2>Photo</h2>
+                </div>
+                </div>
+              <div className="ratingreview-evidence-rightdown">
 
               <p>+ add 2 more</p>
-            </label>
-          </div>
+              <h2>Photo</h2>
+              </div>
+            </div>
         </div>
-
-        <button className="ratingreview-submit-btn">
+        <div className="ratingreview-submit">
+        <button className="ratingreview-submit-btn" onClick={() => navigate("/userdashboard")} >
           Submit
         </button>
+        </div>
       </div>
     </div>
   );
