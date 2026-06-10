@@ -1,130 +1,152 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import Swal from "sweetalert2";
-import Button from "../../Props/Button";
-import "../Css/UserSignUp.css";
-import FeastLogo from "../../assets/logos/Headerlogo.png";
-import GoogleLogo from "../../assets/logos/GoogleLogo.png";
-import SignUp from "../../assets/BackgroundImage/SignUP.jpeg";
-import Imp from "../../Props/Imp";
+import { useState, useEffect } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa"
+import Swal from "sweetalert2"
+import { signupUser, resetSignup } from "../../Redux/features/userslice"
+import Button from "../../Props/Button"
+import "../Css/UserSignUp.css"
+import FeastLogo from "../../assets/logos/Headerlogo.png"
+import SignUp from "../../assets/BackgroundImage/SignUP.jpeg"
+import Imp from "../../Props/Imp"
 
-const EmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const UserSignUp = () => {
-  const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { isLoading, error, otpSent, signupEmail } = useSelector(state => state.user)
+
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
 
   const [userInfo, setUserInfo] = useState({
     firstName: "", lastName: "",
     phone: "", email: "", password: "", confirmPassword: "",
-  });
+  })
 
-  const [FirstNameError, setFirstNameError] = useState({ err: false, name: "", msg: "" });
-  const [LastNameError, setLastNameError] = useState({ err: false, name: "", msg: "" });
-  const [PhoneError, setPhoneError] = useState({ err: false, name: "", msg: "" });
-  const [EmailError, setEmailError] = useState({ err: false, name: "", msg: "" });
-  const [PasswordError, setPasswordError] = useState({ err: false, name: "", msg: "" });
-  const [ConfirmPasswordError, setConfirmPasswordError] = useState({ err: false, name: "", msg: "" });
+  const [FirstNameError, setFirstNameError] = useState({ err: false, name: "", msg: "" })
+  const [LastNameError, setLastNameError] = useState({ err: false, name: "", msg: "" })
+  const [PhoneError, setPhoneError] = useState({ err: false, name: "", msg: "" })
+  const [EmailError, setEmailError] = useState({ err: false, name: "", msg: "" })
+  const [PasswordError, setPasswordError] = useState({ err: false, name: "", msg: "" })
+  const [ConfirmPasswordError, setConfirmPasswordError] = useState({ err: false, name: "", msg: "" })
+
+  useEffect(() => {
+    if (otpSent && signupEmail) {
+      navigate('/verify-otp', { state: { email: signupEmail, accountType: 'user' } })
+      dispatch(resetSignup())
+    }
+  }, [otpSent, signupEmail, navigate, dispatch])
+
+  useEffect(() => {
+    if (error) {
+      Swal.fire({
+        title: "Error",
+        text: error,
+        icon: "error",
+        confirmButtonColor: "#330159",
+      })
+    }
+  }, [error])
 
   const HoldFirstName = (e) => {
-    const val = e.target.value;
-    setUserInfo({ ...userInfo, firstName: val });
+    const val = e.target.value
+    setUserInfo({...userInfo, firstName: val })
     if (val.trim() === "") {
-      setFirstNameError({ err: true, name: "firstName", msg: "First name must not be empty" });
+      setFirstNameError({ err: true, name: "firstName", msg: "First name must not be empty" })
     } else {
-      setFirstNameError({ err: false, name: "", msg: "" });
+      setFirstNameError({ err: false, name: "", msg: "" })
     }
-  };
+  }
 
   const HoldLastName = (e) => {
-    const val = e.target.value;
-    setUserInfo({ ...userInfo, lastName: val });
+    const val = e.target.value
+    setUserInfo({...userInfo, lastName: val })
     if (val.trim() === "") {
-      setLastNameError({ err: true, name: "lastName", msg: "Last name must not be empty" });
+      setLastNameError({ err: true, name: "lastName", msg: "Last name must not be empty" })
     } else {
-      setLastNameError({ err: false, name: "", msg: "" });
+      setLastNameError({ err: false, name: "", msg: "" })
     }
-  };
+  }
 
   const HoldPhone = (e) => {
-    const val = e.target.value;
-    setUserInfo({ ...userInfo, phone: val });
+    const val = e.target.value
+    setUserInfo({...userInfo, phone: val })
     if (val.trim() === "") {
-      setPhoneError({ err: true, name: "phone", msg: "Phone number must not be empty" });
+      setPhoneError({ err: true, name: "phone", msg: "Phone number must not be empty" })
     } else {
-      setPhoneError({ err: false, name: "", msg: "" });
+      setPhoneError({ err: false, name: "", msg: "" })
     }
-  };
+  }
 
   const HoldEmail = (e) => {
-    const val = e.target.value;
-    setUserInfo({ ...userInfo, email: val });
+    const val = e.target.value
+    setUserInfo({...userInfo, email: val })
     if (val.trim() === "") {
-      setEmailError({ err: true, name: "email", msg: "Email must not be empty" });
+      setEmailError({ err: true, name: "email", msg: "Email must not be empty" })
     } else if (!EmailRegex.test(val)) {
-      setEmailError({ err: true, name: "email", msg: "Please enter a valid email" });
+      setEmailError({ err: true, name: "email", msg: "Please enter a valid email" })
     } else {
-      setEmailError({ err: false, name: "", msg: "" });
+      setEmailError({ err: false, name: "", msg: "" })
     }
-  };
+  }
 
   const HoldPassword = (e) => {
-    const val = e.target.value;
-    setUserInfo({ ...userInfo, password: val });
+    const val = e.target.value
+    setUserInfo({...userInfo, password: val })
     if (val.trim() === "") {
-      setPasswordError({ err: true, name: "password", msg: "Password must not be empty" });
+      setPasswordError({ err: true, name: "password", msg: "Password must not be empty" })
     } else {
-      setPasswordError({ err: false, name: "", msg: "" });
+      setPasswordError({ err: false, name: "", msg: "" })
     }
-  };
+  }
 
   const HoldConfirmPassword = (e) => {
-    const val = e.target.value;
-    setUserInfo({ ...userInfo, confirmPassword: val });
+    const val = e.target.value
+    setUserInfo({...userInfo, confirmPassword: val })
     if (val.trim() === "") {
-      setConfirmPasswordError({ err: true, name: "confirmPassword", msg: "Please confirm your password" });
-    } else if (val !== userInfo.password) {
-      setConfirmPasswordError({ err: true, name: "confirmPassword", msg: "Passwords do not match" });
+      setConfirmPasswordError({ err: true, name: "confirmPassword", msg: "Please confirm your password" })
+    } else if (val!== userInfo.password) {
+      setConfirmPasswordError({ err: true, name: "confirmPassword", msg: "Passwords do not match" })
     } else {
-      setConfirmPasswordError({ err: false, name: "", msg: "" });
+      setConfirmPasswordError({ err: false, name: "", msg: "" })
     }
-  };
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    let hasError = false;
+    e.preventDefault()
+    let hasError = false
 
     if (userInfo.firstName.trim() === "") {
-      setFirstNameError({ err: true, name: "firstName", msg: "First name must not be empty" });
-      hasError = true;
+      setFirstNameError({ err: true, name: "firstName", msg: "First name must not be empty" })
+      hasError = true
     }
     if (userInfo.lastName.trim() === "") {
-      setLastNameError({ err: true, name: "lastName", msg: "Last name must not be empty" });
-      hasError = true;
+      setLastNameError({ err: true, name: "lastName", msg: "Last name must not be empty" })
+      hasError = true
     }
     if (userInfo.phone.trim() === "") {
-      setPhoneError({ err: true, name: "phone", msg: "Phone number must not be empty" });
-      hasError = true;
+      setPhoneError({ err: true, name: "phone", msg: "Phone number must not be empty" })
+      hasError = true
     }
     if (userInfo.email.trim() === "") {
-      setEmailError({ err: true, name: "email", msg: "Email must not be empty" });
-      hasError = true;
+      setEmailError({ err: true, name: "email", msg: "Email must not be empty" })
+      hasError = true
     } else if (!EmailRegex.test(userInfo.email)) {
-      setEmailError({ err: true, name: "email", msg: "Please enter a valid email" });
-      hasError = true;
+      setEmailError({ err: true, name: "email", msg: "Please enter a valid email" })
+      hasError = true
     }
     if (userInfo.password.trim() === "") {
-      setPasswordError({ err: true, name: "password", msg: "Password must not be empty" });
-      hasError = true;
+      setPasswordError({ err: true, name: "password", msg: "Password must not be empty" })
+      hasError = true
     }
     if (userInfo.confirmPassword.trim() === "") {
-      setConfirmPasswordError({ err: true, name: "confirmPassword", msg: "Please confirm your password" });
-      hasError = true;
-    } else if (userInfo.confirmPassword !== userInfo.password) {
-      setConfirmPasswordError({ err: true, name: "confirmPassword", msg: "Passwords do not match" });
-      hasError = true;
+      setConfirmPasswordError({ err: true, name: "confirmPassword", msg: "Please confirm your password" })
+      hasError = true
+    } else if (userInfo.confirmPassword!== userInfo.password) {
+      setConfirmPasswordError({ err: true, name: "confirmPassword", msg: "Passwords do not match" })
+      hasError = true
     }
 
     if (hasError) {
@@ -134,13 +156,20 @@ const UserSignUp = () => {
         icon: "error",
         confirmButtonColor: "#330159",
         confirmButtonText: "Back to Sign Up",
-      });
-      return;
+      })
+      return
     }
 
-    console.log("Submitting:", userInfo);
-    navigate('/verify-otp'); // Move navigate here after validation passes
-  };
+    const dataToSend = {
+      firstName: userInfo.firstName,
+      lastName: userInfo.lastName,
+      email: userInfo.email,
+      phoneNumber: userInfo.phone,
+      password: userInfo.password,
+      confirmPassword: userInfo.confirmPassword
+    }
+    dispatch(signupUser(dataToSend))
+  }
 
   return (
     <div className="cr-page">
@@ -155,7 +184,7 @@ const UserSignUp = () => {
           
           <div className="cr-header">
             <h1>Client Registration</h1>
-            <p>Create an Account an get started with <strong>FEASTSYNC</strong></p>
+            <p>Create an Account and get started with <strong>FEASTSYNC</strong></p>
           </div>
 
           <form className="cr-form" onSubmit={handleSubmit}>
@@ -216,14 +245,14 @@ const UserSignUp = () => {
               <label>Password</label>
               <div className="cr-password-wrap">
                 <Imp 
-                  type={showPassword ? "text" : "password"} 
+                  type={showPassword? "text" : "password"} 
                   placeholder="Enter your password" 
                   value={userInfo.password} 
                   onBlur={() => setPasswordError({ err: false, name: "", msg: "" })} 
                   onChange={HoldPassword} 
                 />
                 <button type="button" className="cr-eye-btn" onClick={() => setShowPassword(!showPassword)}>
-                  {showPassword ? <FaRegEyeSlash size={18} /> : <FaRegEye size={18} />}
+                  {showPassword? <FaRegEyeSlash size={18} /> : <FaRegEye size={18} />}
                 </button>
               </div>
               {PasswordError.err && PasswordError.name === "password" && (
@@ -235,14 +264,14 @@ const UserSignUp = () => {
               <label>Confirm Password</label>
               <div className="cr-password-wrap">
                 <Imp 
-                  type={showConfirm ? "text" : "password"} 
+                  type={showConfirm? "text" : "password"} 
                   placeholder="Enter your password" 
                   value={userInfo.confirmPassword} 
                   onBlur={() => setConfirmPasswordError({ err: false, name: "", msg: "" })} 
                   onChange={HoldConfirmPassword} 
                 />
                 <button type="button" className="cr-eye-btn" onClick={() => setShowConfirm(!showConfirm)}>
-                  {showConfirm ? <FaRegEyeSlash size={18} /> : <FaRegEye size={18} />}
+                  {showConfirm? <FaRegEyeSlash size={18} /> : <FaRegEye size={18} />}
                 </button>
               </div>
               {ConfirmPasswordError.err && ConfirmPasswordError.name === "confirmPassword" && (
@@ -250,15 +279,8 @@ const UserSignUp = () => {
               )}
             </div>
 
-            <Button btnText="Sign up as a client" className="cr-submit-btn" type="submit" />
-            <p className="cr-or">OR</p>
-            
-            <Button className="cr-google-btn" type="button">
-              <div className="cr-btn-content">
-                <img src={GoogleLogo} alt="Google" className="cr-btn-icon" />
-                <span>Continue with Google</span>
-              </div>
-            </Button>
+            <Button btnText={isLoading? "Signing up..." : "Sign up as a client"} className="cr-submit-btn" type="submit" disabled={isLoading} />
+
           </form>
         </div>
 
@@ -267,7 +289,7 @@ const UserSignUp = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default UserSignUp;
+export default UserSignUp

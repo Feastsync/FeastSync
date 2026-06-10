@@ -39,12 +39,14 @@ import BookingRequest from "./Page/BookingRequest.jsx"
 import RatingReview from "./Page/RatingReview.jsx"
 import VendorSetting from "./Auth/Vendor/VendorSetting.jsx"
 import Settings from "./Page/SettingsPage/Settings.jsx"
+import {ScrollToTop} from "./Components/Highfunction.jsx"
 import Epknorating from "./Auth/Vendor/Epknorating.jsx";
 import Epkrating from "./Auth/Vendor/Epkrating.jsx";
 
 const App = () => {
   return (
     <BrowserRouter>
+    <ScrollToTop />
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
