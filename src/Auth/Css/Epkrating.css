@@ -1,0 +1,453 @@
+.Epknorating-vendor-dashboard-container{
+    width: 100%;
+    height: 100vh;
+    min-height: max-content;
+    background-color: white;
+}
+.Epknorating-vendor-details-container {
+  width: 100%;
+  padding: 20px 80px;
+}
+.Epknorating-trust-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: var(--text-color);
+}
+.Epknorating-stats-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.Epknorating-stat-item {
+  text-align: center;
+}
+.Epknorating-stat-item h3 {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+.Epknorating-stat-item span {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--text-color);
+}
+.Epknorating-stars {
+  font-size: 10px;
+  margin-bottom: 2px;
+}
+.Epknorating-send-message-btn {
+  width: 100%;
+  margin-top: 18px;
+  margin-bottom: 18px;
+  padding: 15px;
+  background-color: white;
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+  color: var(--primary-color);
+  font-size: 14px;
+  cursor: pointer;
+
+  &:hover {
+    border:none
+  }
+}
+.Epknorating-vendor-bio h3 {
+  font-size: 15px;
+  font-weight: 550;
+  margin-bottom: 14px;
+  color: var(--text-color);
+}
+.Epknorating-vendor-bio h4 {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+.Epknorating-vendor-bio p {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-color);
+  margin-bottom: 25px;
+}
+.Epknorating-vendor-link-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  flex-wrap: wrap;
+}
+
+.Epknorating-vendor-link-row span {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-color);
+  word-break: break-word;
+}
+.Epknorating-vendorcopy-link-btn {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+
+}
+.Epknorating-vendorcopy-link-btn img{
+  width: 11px;
+  height: 11px;
+  stroke-width: 1.5px;
+  stroke: var(--text-color);
+  margin-left: 10px;
+}
+.Epknorating-pricing-section {
+    width: 100%;
+    height: 95vh;
+    max-width: 1400px;
+    padding: 0px 150px;
+}
+
+.Epknorating-section-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-top: 40px;
+    text-align: left;
+}
+
+.Epknorating-pricing-grid {
+    display: flex;
+    gap: 40px;
+    align-items: start;
+    justify-content: center;
+}
+
+.Epknorating-pricing-card {
+    background: white;
+    padding: 20px 15px;
+    border-radius: var(--radius-m, 10px);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    border: 1px solid #f0f2f5;
+    display: flex;
+    flex-direction: column;
+    height: 430px;
+    width: 300px;
+    transition: all 0.3s ease;
+}
+
+.Epknorating-card-header {
+    margin-bottom: 20px;
+}
+
+.Epknorating-pricing-card:hover {
+    background-color: var(--primary-color);
+}
+
+.Epknorating-pricing-card:hover  .Epknorating-package-title,
+.Epknorating-pricing-card:hover  .Epknorating-package-price,
+.Epknorating-pricing-card:hover  .Epknorating-highlights-heading,
+.Epknorating-pricing-card:hover  .Epknorating-highlight-item {
+    color: white;
+}
+
+.Epknorating-pricing-card:hover .Epknorating-highlight-item::before {
+    color: white;
+}
+
+.Epknorating-pricing-card:hover .Epknorating-toggle-expand-btn {
+    background: #f0f2f5;
+}
+
+.Epknorating-pricing-card:hover .Epknorating-dropdown-icon,
+.Epknorating-pricing-card:hover .Epknorating-dropdown-icon.Epknorating-open {
+    color: var(--primary-color);
+}
+
+.Epknorating-pricing-card:hover .Epknorating-book-now-btn {
+    background-color: white;
+    color: var(--primary-color);
+}
+
+.Epknorating-package-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.Epknorating-package-price {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.Epknorating-card-body-wrapper {
+    position: relative;
+    flex-grow: 1;
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+
+.Epknorating-card-body {
+    width: 100%;
+    height: 100%;
+    max-height: 240px;
+    overflow: hidden;
+    padding-bottom: 20px;
+}
+
+.Epknorating-card-body.Epknorating-scrollable {
+    overflow-y: auto;
+}
+
+.Epknorating-highlights-heading {
+    font-size: 14px;
+    font-weight: 550;
+    color: var(--text-color);
+    margin: 8px 0 5px 0;
+}
+
+.Epknorating-highlights-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.Epknorating-highlight-item {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-color);
+    margin-bottom: 6px;
+    position: relative;
+    padding-left: 14px;
+}
+
+.Epknorating-highlight-item::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--text-color);
+    font-weight: bold;
+}
+
+.Epknorating-pricing-card:hover .Epknorating-highlight-item::before {
+    color: white;
+}
+
+.Epknorating-toggle-expand-btn {
+    position: absolute;
+    bottom: 2px;
+    right: 20px;
+    background: #f0f2f5;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    transition: background-color 0.2s ease;
+}
+
+.Epknorating-dropdown-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--primary-color);
+    transition: transform 0.3s ease;
+}
+
+.Epknorating-dropdown-icon.Epknorating-open {
+    color: var(--primary-color);
+    transform: rotate(180deg);
+}
+
+.Epknorating-card-footer {
+    width: 100%;
+    border-radius: 6px;
+}
+
+.Epknorating-book-now-btn {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 16px 10px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+@media screen and (max-width: 1200px) {
+.Epknorating-pricing-section {
+        height: auto;
+        padding: 0 40px;
+        margin: 0 auto;
+    }
+.Epknorating-pricing-grid {
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+.Epknorating-pricing-section {
+        padding: 0 30px;
+        height: auto;
+    }
+.Epknorating-pricing-grid {
+        flex-direction: column;
+        align-items: center;
+        gap: 35px;
+    }
+.Epknorating-pricing-card {
+        width: 100%;
+        max-width: 340px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+.Epknorating-vendor-details-container {
+        padding: 20px 16px !important;
+        box-sizing: border-box !important;
+    }
+
+.Epknorating-trust-title {
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        margin-bottom: 20px !important;
+        color: #111111 !important;
+    }
+
+.Epknorating-stats-row {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 0 !important;
+        width: 100% !important;
+    }
+
+.Epknorating-stat-item {
+        flex: 1 !important;
+        text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+.Epknorating-stat-item h3 {
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        color: #111111 !important;
+        margin: 0 0 6px 0 !important;
+    }
+
+.Epknorating-stat-item span {
+        font-size: 10px !important;
+        font-weight: 400 !important;
+        color: #666666 !important;
+        white-space: nowrap !important;
+    }
+
+    /* Fixed bottom border cutting behavior */
+.Epknorating-send-message-btn {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        margin: 20px 0 28px 0 !important; /* Adjusted bottom margin spacing */
+        padding: 14px 12px !important;
+        background-color: #ffffff !important;
+        border: 1px solid #7c5cb7 !important; 
+        border-radius: 8px !important;
+        color: #7c5cb7 !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        box-sizing: border-box !important;
+        overflow: visible !important; /* Forces the border stroke to remain visible */
+    }
+
+.Epknorating-vendor-bio h3 {
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        margin-bottom: 12px !important;
+    }
+
+.Epknorating-vendor-bio p {
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+        color: #333333 !important;
+    }
+
+.Epknorating-pricing-section {
+        padding: 0 16px;
+        height: auto;
+        max-width: 100%;
+    }
+.Epknorating-section-title {
+        font-size: 20px;
+        margin-top: 25px;
+        margin-bottom: 15px;
+        margin-left: 0;
+        padding-left: 4px;
+    }
+.Epknorating-pricing-grid {
+        gap: 24px;
+    }
+.Epknorating-pricing-card {
+        width: 100%;
+        max-width: 100%;
+        padding: 24px 20px !important;
+        border-radius: 14px !important;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
+    }
+.Epknorating-card-header {
+        margin-bottom: 14px;
+    }
+.Epknorating-package-title {
+        font-size: 16px !important;
+        margin-bottom: 6px !important;
+    }
+.Epknorating-package-price {
+        font-size: 14px !important;
+        font-weight: 600 !important;
+    }
+.Epknorating-card-body-wrapper {
+        margin-bottom: 20px;
+    }
+.Epknorating-card-body.Epknorating-scrollable {
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+.Epknorating-highlights-heading {
+        font-size: 13px !important;
+        margin: 4px 0 8px 0 !important;
+    }
+.Epknorating-highlight-item {
+        font-size: 13px !important;
+        line-height: 1.4 !important;
+        margin-bottom: 8px !important;
+        padding-left: 12px !important;
+    }
+.Epknorating-toggle-expand-btn {
+        right: 10px;
+        bottom: 0px;
+        width: 28px;
+        height: 28px;
+    }
+.Epknorating-book-now-btn {
+        padding: 12px 10px !important;
+        font-size: 14px !important;
+        border-radius: 8px !important;
+    }
+}
