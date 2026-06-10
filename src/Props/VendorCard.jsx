@@ -18,7 +18,7 @@ const VendorCard = (props) => {
     <div className="vendor_card">
       
       <div className="card_top_actions">
-        <span className="see_more_lnk" onClick={() => navigate('/onboarding ')}>See More</span>
+        <span className="see_more_lnk" onClick={() => navigate('/epknorating')}>See More</span>
         <Button 
           className="wishlist_btn" 
           onClick={handleLikeClick} 

@@ -40,6 +40,9 @@ import RatingReview from "./Page/RatingReview.jsx"
 import VendorSetting from "./Auth/Vendor/VendorSetting.jsx"
 import Settings from "./Page/SettingsPage/Settings.jsx"
 import {ScrollToTop} from "./Components/Highfunction.jsx"
+import Epknorating from "./Auth/Vendor/Epknorating.jsx";
+import Epkrating from "./Auth/Vendor/Epkrating.jsx";
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -70,6 +73,8 @@ const App = () => {
 
         <Route path="/vendor/signup" element={<VendorSignUp />} />
         <Route path="/vendor/kyc" element={<VendorKYC />} />
+        <Route path="/epknorating" element={<Epknorating />} />
+        <Route path="/epkrating" element={<Epkrating />} />
         <Route path="/vendordashboard" element={<Vendordashboard />} />
         <Route path="/vendordashboardrating"  element={<Vendordashboardrating />} />
         <Route path="/userdashboard" element={<Userdashboard />} />

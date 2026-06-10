@@ -1,6 +1,7 @@
 .ratingreview-container {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
+  min-height: max-content;
   background: #ffffff;
 }
 
@@ -70,119 +71,230 @@
 
 .ratingreview-evidence-section {
   width: 100%;
-  height: 60%;
-  background-color: yellow;
-  margin-top: 40px;
-}
-
-.ratingreview-evidence-title {
-  display: block;
-  margin-bottom: 12px;
-  font-size: 17.5px;
-  font-weight: 500;
-  color: #330159;
-}
-
-/* Updated to align perfectly with the box edges */
-.ratingreview-media-header {
+  height: 65vh;
   display: flex;
-  justify-content: space-between;
-  width: 60%;
-  height: 30%;
-  margin-left: auto;
-  margin-right: 40px;
-  margin-bottom: 30px;
-  background-color: red;
-  font-size: 13px;
-  color: #101010;
-  box-sizing: border-box;
+  margin-top: 20px;
 }
-
-.ratingreview-upload-area {
+.ratingreview-evidence-left{
+  width: 50%;
+  height: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 60px;
+  justify-content: center;
 }
-
-.ratingreview-photo-label {
-  font-size: 13px;
-  color: #101010;
-  margin-left: 40px;
+.ratingreview-evidence-right{
+  width: 50%;
+  height: 100%;
 }
-
-.ratingreview-file-input {
+.ratingreview-evidence-rightup{
+  width: 100%;
+  height: 50%;
+  display: flex;
+}
+.ratingreview-evidence-rightup-left{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ratingreview-evidence-rightup-right{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ratingreview-evidence-rightup-right h2{
   display: none;
 }
-
-.ratingreview-upload-box {
-  width: 60%;
-  height: 140px;
-  background: #556173;
-  border-radius: 2px;
-  cursor: pointer;
+.ratingreview-evidence-rightdown{
+  width: 100%;
+  height: 50%;
+  border-radius: var(--radius-xs, 6px);
+  background: var(--Color-2, #4A5565);
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-right: 40px;
+  justify-content: center;
 }
-
-.ratingreview-upload-box p {
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 400;
+.ratingreview-evidence-rightdown h2{
+  display: none;
+}
+.ratingreview-submit{
+  width: 100%;
+  height: 15vh;
+  display: flex;
+  align-items: center;
 }
 
 .ratingreview-submit-btn {
   width: 100%;
-  height: 42px;
+  height: 45px;
   border: none;
-  background: #32005d;
+  background: var(--primary-color);
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 30px;
   color: #ffffff;
   cursor: pointer;
-  border-radius: 2px;
-  font-size: 13px;
+  border-radius: 3px;
 }
 
 .ratingreview-submit-btn:hover {
-  opacity: 0.9;
+  border: 1px solid var(--primary-color);
+  background: transparent;
+  color: var(--primary-color);
 }
 
-@media (max-width: 768px) {
+
+@media screen and (max-width: 1200px) {
   .ratingreview-wrapper {
     width: calc(100% - 40px);
     margin: 20px;
   }
+
+  .ratingreview-booking-text {
+    margin-bottom: 30px;
+  }
+
+  .ratingreview-rating-section {
+    margin-bottom: 40px;
+  }
+ .ratingreview-evidence-rightup-right span{
+  display: none;
+}
+ .ratingreview-evidence-rightup-right h2{
+  display: flex;
+  font-size: 16px;
+  font-weight: 500;
+}
+  .ratingreview-evidence-rightdown p{
+  display: none;
+}
+  .ratingreview-evidence-rightdown h2{
+   display: flex;
+   font-size: 16px;
+   font-weight: 500;
+ }
 }
 
-@media (max-width: 480px) {
-  .ratingreview-wrapper {
-    width: calc(100% - 20px);
-    margin: 10px;
+@media screen and (max-width: 680px) {
+  .ratingreview-container {
+    height: auto;
   }
 
-  .ratingreview-media-header {
-    width: 100%;
-    max-width: 320px;
-    margin-right: auto;
-    justify-content: space-between;
-    padding: 0 10px;
-  }
-
-  .ratingreview-upload-area {
+  .ratingreview-evidence-section {
     flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    height: auto;
+    gap: 16px;
   }
 
-  .ratingreview-photo-label {
-    margin: 0;
-  }
-
-  .ratingreview-upload-box {
+  .ratingreview-evidence-left {
     width: 100%;
-    max-width: 320px;
-    height: 120px;
-    margin-right: 0;
+    height: 200px;
+    border-radius: var(--radius-xs, 6px);
+    background: var(--Color, #EEE);
   }
+
+  .ratingreview-evidence-right {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .ratingreview-evidence-rightup {
+    flex-direction: column;
+    height: auto;
+    gap: 16px;
+  }
+
+  .ratingreview-evidence-rightup-left {
+    width: 100%;
+    height: 200px;
+    border-radius: var(--radius-xs, 6px);
+    background: var(--Color, #EEE);
+  }
+
+  .ratingreview-evidence-rightup-right {
+    width: 100%;
+    height: 200px;
+    border-radius: var(--radius-xs, 6px);
+    background: var(--Color, #EEE);
+  }
+.ratingreview-evidence-rightup-right span{
+  display: none;
+}
+ .ratingreview-evidence-rightup-right h2{
+  display: flex;
+  font-size: 16px;
+  font-weight: 500;
+}
+  .ratingreview-evidence-rightdown {
+    width: 100%;
+    height: 200px;
+    border-radius: var(--radius-xs, 6px);
+    background: var(--Color, #EEE);   
+  }
+    .ratingreview-evidence-rightdown p{
+  display: none;
+}
+  .ratingreview-evidence-rightdown h2{
+   display: flex;
+   font-size: 16px;
+   font-weight: 500;
+ }
+
+  .ratingreview-submit {
+    height: auto;
+    margin-top: 30px;
+    padding-bottom: 20px;
+  }
+}
+
+@media screen and (max-width: 678px) {
+  .ratingreview-wrapper {
+    width: calc(100% - 32px);
+    margin: 16px;
+  }
+
+  .ratingreview-booking-text {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .ratingreview-stars {
+    gap: 12px;
+  }
+
+  .ratingreview-stars img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .ratingreview-note-section label {
+    font-size: 15px;
+  }
+
+  .ratingreview-note-input {
+    height: 160px;
+  }
+.ratingreview-evidence-rightup-right span{
+  display: none;
+}
+ .ratingreview-evidence-rightup-right h2{
+  display: flex;
+  font-size: 16px;
+  font-weight: 500;
+}
+    .ratingreview-evidence-rightdown p{
+  display: none;
+}
+  .ratingreview-evidence-rightdown h2{
+   display: flex;
+   font-size: 16px;
+   font-weight: 500;
+ }
 }

@@ -6,8 +6,8 @@ import Bell from "../../assets/logos/Bell.png";
 import "../Css/Userheader.css";
 
 const Userheader = () => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const Nav = useNavigate();
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "unset";
@@ -15,7 +15,7 @@ const Userheader = () => {
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
-   const closeMenu = () => setIsOpen(false)
+  const closeMenu = () => setIsOpen(false);
 
   return (
     <nav className="userheader">
@@ -25,12 +25,11 @@ const Userheader = () => {
           <span className="userheader_logo_text">FeastFlow</span>
         </div>
 
-        <div className className={`userheader_middle ${isOpen ? "active" : ""}`}>
-          <NavLink
-            to="/"
-            className="userheader_nav_link"
-            onClick={closeMenu}
-          >
+        <div
+          className
+          className={`userheader_middle ${isOpen ? "active" : ""}`}
+        >
+          <NavLink to="/" className="userheader_nav_link" onClick={closeMenu}>
             Home
           </NavLink>
           <NavLink
@@ -72,19 +71,21 @@ const Userheader = () => {
 
         <div className="userheader_right">
           <div className="userheader_notification_wrapper">
-            <img src={Bell} alt="Notifications" className="userheader_bell_icon" />
+            <img
+              src={Bell}
+              alt="Notifications"
+              className="userheader_bell_icon"
+            />
           </div>
           <div className="userheader_profile_wrapper">
             <div className="userheader_avatar_circle">
               <span>DA</span>
-              <div className="userheader_status_dot"></div>
+            <div className="userheader_status_dot"></div>
             </div>
             <span className="userheader_profile_name">Doyin Alade</span>
           </div>
         </div>
-        {/* <button className="userheader-logout-btn">
-            Logout
-        </button> */}
+        <button className="userheader-logout-btn" onClick={() => navigate("/login")} >Logout</button>
 
         <div className="menu_icon" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <FaTimes /> : <FaBars />}

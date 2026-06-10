@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import "../Css/Vendordashboard.css"
-import Vendorheader from "./Vendorheader.jsx"
-import Vendorhero from "./Vendorhero.jsx"
+import "../Css/Epknorating.css"
+import Epkheader from "./Epkheader.jsx"
+import Epkhero from "./Epkhero.jsx"
 import Copyicon from "../../assets/logos/Copyicon.svg"
 import Vendorcalendar from "./Vendorcalendar.jsx"
 import Vendormediagallery from "./Vendormediagallery.jsx"
 import VendorOnboarding from "./onBoardingFiles/VendorOnboarding.jsx"
 import { useNavigate, useLocation } from 'react-router-dom'
 
-const Vendordashboard = () => {
+const Epknorating = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const [expandedCards, setExpandedCards] = useState({});
@@ -34,7 +34,7 @@ const Vendordashboard = () => {
     }));
   };
 
-  const packages = [
+  const packages3 = [
     {
       id: 'basic',
       title: 'Basic Package',
@@ -86,42 +86,42 @@ const Vendordashboard = () => {
   ];
 
   return (
-    <main className='vendordashboard-vendor-dashboard-container'>
-      <Vendorheader />
-      <Vendorhero />
+    <main className='Epknorating-vendor-dashboard-container'>
+      <Epkheader />
+      <Epkhero />
       
-      <div className="vendordashboard-vendor-details-container">
-        <div className="vendordashboard-trust-stats">
-          <h4 className="vendordashboard-trust-title">Trust Stats</h4>
-          <div className="vendordashboard-stats-row">
-            <div className="vendordashboard-stat-item">
-              <h3>4.9</h3>
-              <div className="vendordashboard-stars">★★★★★</div>
+      <div className="Epknorating-vendor-details-container">
+        <div className="Epknorating-trust-stats">
+          <h4 className="Epknorating-trust-title">Trust Stats</h4>
+          <div className="Epknorating-stats-row">
+            <div className="Epknorating-stat-item">
+              <h3>0</h3>
+              <div className="Epknorating-stars">★★★★★</div>
               <span>Rating</span>
             </div>
 
-            <div className="vendordashboard-stat-item">
-              <h3>84</h3>
+            <div className="Epknorating-stat-item">
+              <h3>0</h3>
               <span>Reviews</span>
             </div>
 
-            <div className="vendordashboard-stat-item">
-              <h3>132</h3>
+            <div className="Epknorating-stat-item">
+              <h3>0</h3>
               <span>Bookings</span>
             </div>
 
-            <div className="vendordashboard-stat-item">
+            <div className="Epknorating-stat-item">
               <h3>98%</h3>
               <span>Response</span>
             </div>
           </div>
         </div>
 
-        <button className="vendordashboard-send-message-btn" onClick={() => navigate('/chats')}>
+        <button className="Epknorating-send-message-btn" onClick={() => navigate('/chats')}>
           Send a message
         </button>
 
-        <div className="vendordashboard-vendor-bio">
+        <div className="Epknorating-vendor-bio">
           <h3>Bio / About</h3>
           <h4>About DJ Kolade, Lagos</h4>
           <p>
@@ -131,12 +131,12 @@ const Vendordashboard = () => {
             top-tier venues. Known for reading the room and
             keeping energy peaks from intro to send-off.
           </p>
-          <div className="vendordashboard-vendor-link-row">
+          <div className="Epknorating-vendor-link-row">
             <span>
               www.feastsync.com/fs/djkolade-c-5278e9d7den6
             </span>
 
-            <button className="vendordashboard-vendorcopy-link-btn">
+            <button className="Epknorating-vendorcopy-link-btn">
               Copy link
               <img src={Copyicon} alt="" />
             </button>
@@ -144,26 +144,26 @@ const Vendordashboard = () => {
         </div>
       </div>
 
-      <section className="vendordashboard-pricing-section">
-        <h2 className="vendordashboard-section-title">Services & Pricing</h2>
+      <section className="Epknorating-pricing-section">
+        <h2 className="Epknorating-section-title">Services & Pricing</h2>
         
-        <div className="vendordashboard-pricing-grid">
-          {packages.map((item) => {
+        <div className="Epknorating-pricing-grid">
+          {packages3.map((item) => {
             const isExpanded = !!expandedCards[item.id];
 
             return (
-              <div key={item.id} className="vendordashboard-pricing-card">
-                <div className="vendordashboard-card-header">
-                  <h3 className="vendordashboard-package-title">{item.title}</h3>
-                  <p className="vendordashboard-package-price">{item.price}</p>
+              <div key={item.id} className="Epknorating-pricing-card">
+                <div className="Epknorating-card-header">
+                  <h3 className="Epknorating-package-title">{item.title}</h3>
+                  <p className="Epknorating-package-price">{item.price}</p>
                 </div>
       
-                <div className="vendordashboard-card-body-wrapper">
-                  <div className={`vendordashboard-card-body ${isExpanded ? 'vendordashboard-scrollable' : ''}`}>
-                    <h4 className="vendordashboard-highlights-heading">Service Highlights</h4>
-                    <ul className="vendordashboard-highlights-list">
+                <div className="Epknorating-card-body-wrapper">
+                  <div className={`Epknorating-card-body ${isExpanded ? 'Epknorating-scrollable' : ''}`}>
+                    <h4 className="Epknorating-highlights-heading">Service Highlights</h4>
+                    <ul className="Epknorating-highlights-list">
                       {item.highlights.map((highlight, index) => (
-                        <li key={index} className="vendordashboard-highlight-item">
+                        <li key={index} className="Epknorating-highlight-item">
                           {highlight}
                         </li>
                       ))}
@@ -171,12 +171,12 @@ const Vendordashboard = () => {
                   </div>
 
                   <button 
-                    className="vendordashboard-toggle-expand-btn" 
+                    className="Epknorating-toggle-expand-btn" 
                     onClick={() => toggleExpand(item.id)}
                     aria-label={isExpanded ? "Disable scroll" : "Enable scroll"}
                   >
                     <svg 
-                      className={`vendordashboard-dropdown-icon ${isExpanded ? "vendordashboard-open" : ""}`} 
+                      className={`Epknorating-dropdown-icon ${isExpanded ? "Epknorating-open" : ""}`} 
                       viewBox="0 0 24 24" 
                       fill="none" 
                       stroke="currentColor" 
@@ -187,9 +187,9 @@ const Vendordashboard = () => {
                   </button>
                 </div>
                 
-                <div className="vendordashboard-card-footer">
+                <div className="Epknorating-card-footer">
                   <button 
-                    className="vendordashboard-book-now-btn"
+                    className="Epknorating-book-now-btn"
                     onClick={() => alert(`Booking initiated for ${item.title}`)}
                   >
                     Book Now
@@ -212,4 +212,4 @@ const Vendordashboard = () => {
   )
 }
 
-export default Vendordashboard
+export default Epknorating
