@@ -21,7 +21,7 @@ export const verifyOTP = createAsyncThunk(
   'auth/verifyOTP',
   async ({ email, otp, accountType }, { rejectWithValue }) => {
     try {
-      const endpoint = accountType === 'user'? '/user/verify' : '/vendor/verify'
+      const endpoint = accountType === 'user'? '/user/verify' : '/vendor/verify' 
       const res = await api.post(endpoint, { email, otp })
       if (res.data.token) {
         localStorage.setItem('token', res.data.token)
