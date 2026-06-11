@@ -41,7 +41,7 @@ const ForgetPassword = () => {
   return (
     <div>
          <div className='forgotPasswordLogo'>
-            <div className='resetPasswordLogo'>
+            <div className='forgetPasswordLogo'>
                         <Header />
                    </div>
          </div>

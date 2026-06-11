@@ -484,6 +484,7 @@ height: 20%;
     height: 100%;
     display: block;
     object-fit: cover;
+    margin-left: 22px;
   }
   .row-span-1-2 {
     object-position: 75.1%;
@@ -562,6 +563,7 @@ height: 20%;
   flex-direction: column;
   justify-content: start;
   background: white;
+     /* margin-left: 20px; */
 
 
   /* padding: 4px; */
@@ -593,7 +595,7 @@ height: 20%;
     grid-template-columns: repeat(2, 200px);
   column-gap: 70px;
   padding-right: 100px;
-  padding-left: 20px;
+  padding-left: 35px;
     margin-right: 20px;
   justify-content: center;
 }
