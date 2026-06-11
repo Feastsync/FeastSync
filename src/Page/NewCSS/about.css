@@ -1,28 +1,32 @@
 .mainAboutContainer{
   display: flex;
+  width:100%;
+  min-height: 100vh;
   flex-direction: column;
   gap: 50px;
+  justify-content: center;
+  align-items: center;
+  /* background: red; */
 }
-
-.about-container {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
 .aboutContainer {
-  height: 90vh;
+width: 80%;
+  /* padding-left: 60px; */
+  /* display: flex;
+  flex-direction: column; */
+  /* gap: 30px; */
+   background-image: url("../../assets/BackgroundImage/8644f49ca66594465885d8daad5f829d0ff32ee3.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  }
+
+.aboutContainer1{
+  /* height: 60%; */
   color: #ffffff;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  justify-content: center;
+  /* justify-content: center; */
   width: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  padding-left: 50px;
-  background-image: url("../../assets/BackgroundImage/8644f49ca66594465885d8daad5f829d0ff32ee3.png");
+  /* background: blue; */ 
 }
 .about {
   font-size: 20px;
@@ -104,8 +108,9 @@ min-height: 100vh;
   object-position: 50%;
 }
 .aboutMission {
+  width: 100%;
   display: flex;
-  gap: 80px;
+  gap: 120px;
   justify-content: center;
   align-items: center;
   background: linear-gradient(
@@ -137,6 +142,7 @@ min-height: 100vh;
   align-items: center;
   gap: 20px;
   line-height: 25px;
+
 }
 
 .missionQuote {
@@ -237,6 +243,7 @@ min-height: 100vh;
   flex-direction: column;
   align-items: center;
   gap: 50px;
+  width: 100%;
 }
 .aboutTeamTitle {
   font-size: 30px;
@@ -264,7 +271,7 @@ min-height: 100vh;
   );
   row-gap: 50px;
   column-gap: 70px;
-  padding: 50px;
+  /* padding: 50px; */
   /* Automatically places items and centers the entire grid track */
   grid-template-columns: repeat(4, 200px);
   justify-content: center;
@@ -358,7 +365,7 @@ min-height: 100vh;
   box-shadow: 3px 3px 3px 3px gainsboro;
   color: #330159;
   gap: 5px;
-  height: 40px;
+  height: 60px;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -384,27 +391,28 @@ min-height: 100vh;
   color: #330159;
   font-weight: bold;
 }
-@media (max-width: 450px) {
+ @media (max-width: 480px) {
   .container {
-    width: 100%;
-    padding-left: 5px;
-  }
-  .aboutContainer {
-    height: 90vh;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    justify-content: center;
-    width: 100%;
-    background-position: 50%;
-    background-repeat: no-repeat;
 
-    /* padding-left: 50px; */
-    background-image: url("../../assets/BackgroundImage/8644f49ca66594465885d8daad5f829d0ff32ee3.png");
+    /* padding-left: 5px; */
+  /* justify-content: center; */
+  width: 100%;
+  /* background: blue; */
   }
+  .aboutContainer{
+    /* padding-left: 5px; */
+    width: 100%;
+    /* height: 100%; */
+
+
+  }
+  .about {
+  font-size: 16px;
+  line-height: 30px;
+}
   .aboutInfo {
     font-weight: bold;
+    font-size: 40px;
     line-height: 56px;
   }
 
@@ -413,30 +421,79 @@ min-height: 100vh;
     flex-direction: column;
     align-items: center;
  justify-content: center;
-padding-left: 0px;
+ padding-left: 0px;
+/* padding: 25px; */
   }
+  .aboutWrapperleftTitle {
+  font-size: 25px;
+  font-weight: bold;
+ 
+}
+.aboutWrapperleftside{
+  padding: 10px;
+}
+  .aboutWrapperHolder {
+padding: 10px;
+width: 90%;
+height: 20%;
+}
+  .aboutWrapperTexts{
+  line-height: 35px;
+  font-size: 15px;
+}
+
+.aboutTeam img {
+  width: 100%;
+  height: auto;
+  border-radius: 75px 75px 0px 0px;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  overflow: hidden;
+  /* object-position:  center; */
+}
   .aboutMission {
-    flex-direction: column;
-    font-size: 20px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  gap: 30px;
+  width: 95%;
+  box-sizing: border-box;
+}
+.missionbox {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
   .aboutWrapperRight {
-    grid-template-columns: repeat(3, 130px);
+    width: 80%;
+    grid-template-columns: repeat(3, 90px);
+    column-gap: 40px;
     justify-items: center;
     align-items: center;
-    /* padding-left: 0px; */
+    padding: 10px;
+  }
+  .aboutWrapperCover{
+    width: 100%;
+    display: flex;
+    justify-items: center;
+    align-items: center;
   }
   .aboutWrapperRight img{
-    /* min-width: 50vw; */
+    width: 120px;
     height: 100%;
     display: block;
-
-    
+    object-fit: cover;
   }
   .row-span-1-2 {
     object-position: 75.1%;
   }
   .row-span-3-2 {
     object-position: 52%;
+    width: 100px;
   }
 
   .row-span-2-2 {
@@ -452,37 +509,57 @@ padding-left: 0px;
     /* padding: 30px; */
   }
 
-  .missionQuote {
-    width: 150px;
-    font-size: 25px;
-    text-align: start;
-    /* background: red; */
-    font-weight: bold;
-    line-height: 50px;
-  }
+ .missionQuote {
+  padding-left: 0px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #330159;
+  margin-bottom: 10px;
+  white-space: nowrap; /* 🔥 Prevents the text from breaking into two lines */
+}
   .aboutValues {
     flex-direction: column;
   }
+  
   .aboutValues img {
     width: 95%;
     height: 75vh;
     object-fit: cover;
     border-radius: 10px;
   }
+  .missionValueText {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #555;
+  margin: 0;
+  text-align: start;
+  display: flex;
+  justify-content: center;
+  max-width: 450px; /* Limits paragraph stretching on wider mobile screens */
+}
   .aboutValues p {
     width: 100%;
     line-height: 30px;
-    font-size: 25px;
+    font-size: 16px;
   }
   .aboutValues p span {
     font-size: 25px;
     font-weight: bold;
   }
+  .aboutTrust{
+    padding: 20px;
+    height: 500px;
+  }
+  .aboutTrustTitles{
+    font-size: 15px;
+    padding: 8px;
+  }
   .aboutTeam {
   width: 40vw;
   border-radius: 80px 80px 0px 0px;
-  height: 100%;
+  height: 350px;
   display: flex;
+  gap: 10px;
   /* justify-content: s; */
   align-items: center;
   flex-direction: column;
@@ -493,8 +570,11 @@ padding-left: 0px;
   /* padding: 4px; */
   align-self: center;
 }
-.aboutTeamBox {
+.aboutTeamWrapper {
   width: 100%;
+}
+.aboutTeamBox {
+  width: 90%;
   display: grid;
   background: linear-gradient(
     180deg,
@@ -516,6 +596,7 @@ padding-left: 0px;
     grid-template-columns: repeat(2, 200px);
   column-gap: 70px;
   padding-right: 100px;
+  padding-left: 20px;
     margin-right: 20px;
   justify-content: center;
 }
@@ -562,6 +643,42 @@ padding-left: 0px;
   .aboutTeamBox > *:nth-child(7) {
     margin-left: 90px;
   }
- 
+ .aboutValues {
+    display: flex;
+    flex-direction: column;
+    gap: 0px; /* Stack elements vertically */
+  }
+
+  /* 1. The Image moves to the very top */
+  .aboutValues img.row-spans-1-2 {
+    order: 1; 
+    width: 100%;
+    object-fit: cover;
+    height: auto;
+    margin-bottom: 14px;
+  }
+
+  /* 2. The First Text Block (Trust/Seamlessness) moves below the image */
+  .aboutValues .aboutValuesText:nth-of-type(1) {
+    order: 2;
+    margin-bottom: 24px;
+  }
+
+  /* 3. The Second Text Block (Excellence/Transparency) stays at the bottom */
+  .aboutValues .aboutValuesText:nth-of-type(2) {
+    order: 3;
+        margin-bottom: 24px;
+  }
+
+  /* CRITICAL MOBILE FIX: 
+     This overrides your inline style (marginRight: "200px") 
+     so your text doesn't break or get crushed on a 480px screen */
+  .aboutValuesText p span {
+    display: block;
+    margin-right: 0px ; 
+    margin-bottom: 6px;
+    font-weight: bold;
+  }
+
   
 }

@@ -13,7 +13,8 @@ import "./NewCSS/about.css";
 
 const About = () => {
   return (
-    <main style={{ minHeight: "80vh" }} className="mainAboutContainer" >
+    <main  className="mainAboutContainer" >
+     
       <section className="aboutContainer">
         <div className="aboutContainer1">
           <p className="about">About FeastSync</p>
@@ -22,13 +23,15 @@ const About = () => {
             entertainment <br />
             across Nigeria.
           </p>
-        </div>
-        <p className="about">
+             <p className="about">
           Connect with top rated entainers for <br /> your next
           event.Professional service. <br />
           transparent rates.
         </p>
+        </div>
+    
       </section>
+     
 
       <section className="aboutWrapper">
         <div className="aboutWrapperleft">
@@ -59,13 +62,15 @@ const About = () => {
             </p>
           </div>
         </div>
-        <div className="aboutWrapperRight">
+          <div className="aboutWrapperCover">
+        <div className="aboutWrapperRight">  
           <img
             src="../public/About/yoruba mc.png"
             alt="Yoruba MC"
             className="row-span-1-2"
           />
-          <img src="../public/About/photographer.png" alt="Photographer" />
+          <img src="../public/About/photographer.png"
+           alt="Photographer" />
           <img
             src="../public/About/mc.png"
             alt="MC"
@@ -77,6 +82,7 @@ const About = () => {
             alt="Igbo DJ"
             className="row-span-3-2"
           />
+        </div>
         </div>
       </section>
 
@@ -112,7 +118,7 @@ const About = () => {
         <div className="aboutValues">
           <div className="aboutValuesText">
             <p>
-              <span style={{ marginRight: "220px" }}>
+              <span style={{ marginRight: "200px" }}>
                 {" "}
                 <FaHandsHelping /> Trust
               </span>
@@ -120,9 +126,9 @@ const About = () => {
               escrow-protected. Trust is not a feature-it is the foundation
             </p>
             <p>
-              <span style={{ marginRight: "150px" }}>
+              <span style={{ marginRight: "120px" }}>
                 {" "}
-                <PiStarFour /> seamlessness
+                <PiStarFour /> Seamlessness
               </span>
               From discovery to confermed booking in minutes.No back and forth
               calls. No waiting on a middleman to respond.
@@ -134,16 +140,17 @@ const About = () => {
             alt="Party"
             className="row-spans-1-2"
           />
+
           <div className="aboutValuesText">
             <p>
-              <span style={{ marginRight: "180px" }}>
+              <span style={{ marginRight: "150px" }}>
                 <TbTargetArrow /> Excellence
               </span>
               We curate.not aggregate.Every entertainer on feastsync meets a
               professional standard before their profile goes live
             </p>
             <p>
-              <span style={{ marginRight: "160px" }}>
+              <span style={{ marginRight: "120px" }}>
                 <FaHandsHelping /> Transparency
               </span>
               Transparent pricing.Milestone based payouts.Dispute resolution
@@ -158,7 +165,7 @@ const About = () => {
         <p className="aboutTrustText">
           Your protection is built into every booking.
         </p>
-        <p className="">
+        <p className="aboutTrustTitles">
           Feastsync is designed around one principle no one shoul have to risk
           to book or perform <br />
           at an event.Our three layer protection system covers identity money

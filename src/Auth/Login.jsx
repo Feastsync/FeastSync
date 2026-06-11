@@ -7,6 +7,7 @@ import Button from "../Props/Button";
 import "./Css/Login.css";
 import HeeaderLogo from "../assets/logos/Headerlogo.png";
 import LoginPic from "../assets/BackgroundImage/LoginPic.jpeg"
+import axios from "axios";
 
 const EmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -77,7 +78,7 @@ const Login = () => {
     }
   };
 
-  const handleValidationAndSubmit = () => {
+  const handleValidationAndSubmit = async() => {
     const isEmailValid = validateEmail(userInfo.email);
     const isPasswordValid = validatePassword(userInfo.password);
 
@@ -91,18 +92,27 @@ const Login = () => {
       });
       return;
     }
-
-    if (role === "vendor") {
-      navigate("/vendordashboard", {
-        state: {
-          showOnboarding: true,
-          vendorName: "Adeyemi"
+    //
+    try {
+      const response = await axios.post("https://onrender.com",{email:userInfo.email, password:userInfo.password})
+      if(response.data.status === 200||response.data.status === 201){
+        if (role === "vendor") {
+        navigate("/vendordashboard", {
+          state: {
+              showOnboarding: true,
+              vendorName: "Adeyemi"
+            }
+          });
+        } else {
+          navigate("/userdashboard");
         }
-      });
-    } else {
-      navigate("/userdashboard");
+      }
+    } catch (error) {
     }
+    const status = error.response
+
   };
+
 
   return (
     <div className="vl-page">

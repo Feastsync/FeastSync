@@ -13,14 +13,14 @@ const services = () => {
           <p className="serviceContainerTitle">
             World-class entertainment <br />
             for every kind of event.
-          </p>
+            </p>
           <p className="serviceDeliver">
             from initimate birthday dinners to large-scale coperate galas,{" "}
             <br />
             feastsync connects you with verified entertainment <br />
             professionals who deliver excellence-everytime.
-          </p>
-          <div className="serviceRate">
+           </p>
+            <div className="serviceRate">
             <div>
               <p >7</p>
               <p className="serviceCategory">service categories</p>
