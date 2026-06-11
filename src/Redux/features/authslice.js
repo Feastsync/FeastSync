@@ -173,6 +173,27 @@ const authSlice = createSlice({
         state.error = action.payload
       })
 
+  .addCase(resendOTP.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+    .addCase(resendOTP.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isLoggedIn = true
+        state.token = action.payload.token
+        state.accountType = action.payload.accountType
+        if (action.payload.accountType === 'user') {
+          state.userInfo = action.payload.user
+        } else {
+          state.vendorInfo = action.payload.vendor
+        }
+      })
+    .addCase(resendOTP.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload
+      })
+
+
     .addCase(forgotPassword.pending, (state) => {
         state.isLoading = true
         state.error = null
