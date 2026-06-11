@@ -65,20 +65,20 @@ const About = () => {
           <div className="aboutWrapperCover">
         <div className="aboutWrapperRight">  
           <img
-            src="../public/About/yoruba mc.png"
+            src="/About/yoruba mc.png"
             alt="Yoruba MC"
             className="row-span-1-2"
           />
-          <img src="../public/About/photographer.png"
+          <img src="/About/photographer.png"
            alt="Photographer" />
           <img
-            src="../public/About/mc.png"
+            src="/About/mc.png"
             alt="MC"
             className="row-span-2-2"
             
           />
           <img
-            src="../public/About/igbodj.png"
+            src="/About/igbodj.png"
             alt="Igbo DJ"
             className="row-span-3-2"
           />
@@ -97,7 +97,7 @@ const About = () => {
           </p>
         </div>
         <div>
-          <img src="public/About/pana.png" alt="Mission" />
+          <img src="/About/pana.png" alt="Mission" />
         </div>
         <div className="missionHolder">
           <p className="missionQuote">Our Vision</p>
@@ -136,7 +136,7 @@ const About = () => {
           </div>
 
           <img
-            src="../public/About/party.jpg"
+            src="/About/party.jpg"
             alt="Party"
             className="row-spans-1-2"
           />
