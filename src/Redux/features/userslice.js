@@ -56,17 +56,17 @@ const userSlice = createSlice({
         state.isLoading = false
         state.error = action.payload
       })
-      .addCase(resendOTP.pending, (state) => {
-        state.resendLoading = true
-        state.error = null
-      })
-      .addCase(resendOTP.fulfilled, (state) => {
-        state.resendLoading = false
-      })
-      .addCase(resendOTP.rejected, (state, action) => {
-        state.resendLoading = false
-        state.error = action.payload
-      })
+      // .addCase(resendOTP.pending, (state) => {
+      //   state.resendLoading = true
+      //   state.error = null
+      // })
+      // .addCase(resendOTP.fulfilled, (state) => {
+      //   state.resendLoading = false
+      // })
+      // .addCase(resendOTP.rejected, (state, action) => {
+      //   state.resendLoading = false
+      //   state.error = action.payload
+      // })
   }
 })
 
