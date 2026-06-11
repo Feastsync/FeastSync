@@ -3,7 +3,6 @@ import Button from '../../Props/Button'
 import "./Css/WhatWeStandFor.css"
 import { features } from '../DummyData'
 
-
 const WhatWeStandFor = () => {
   return (
     <section className="wwsf_sec">
@@ -12,8 +11,8 @@ const WhatWeStandFor = () => {
         <div className="wwsf_header">
           <h2 className="wwsf_title">WHAT WE STAND FOR</h2>
           <p className="wwsf_subtitle">
-            A dedicated platform for professional entertainment ecosystems. Discover top-tier event entertainers and
-            talents. Choose FeastSync for secure, transparent, and seamless bookings.
+            A dedicated platform for professional entertainment ecosystems. Discover top-tier event entertainers and<br />
+            Choose FeastSync for secure, transparent, and seamless bookings.
           </p>
         </div>
 

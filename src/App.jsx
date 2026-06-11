@@ -38,9 +38,15 @@ import Error404 from "./Auth/Vendor/Error404.jsx";
 import BookingRequest from "./Page/BookingRequest.jsx"
 import RatingReview from "./Page/RatingReview.jsx"
 import VendorSetting from "./Auth/Vendor/VendorSetting.jsx"
+import Settings from "./Page/SettingsPage/Settings.jsx"
+import {ScrollToTop} from "./Components/Highfunction.jsx"
+import Epknorating from "./Auth/Vendor/Epknorating.jsx";
+import Epkrating from "./Auth/Vendor/Epkrating.jsx";
+
 const App = () => {
   return (
     <BrowserRouter>
+    <ScrollToTop />
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
@@ -67,6 +73,8 @@ const App = () => {
 
         <Route path="/vendor/signup" element={<VendorSignUp />} />
         <Route path="/vendor/kyc" element={<VendorKYC />} />
+        <Route path="/epknorating" element={<Epknorating />} />
+        <Route path="/epkrating" element={<Epkrating />} />
         <Route path="/vendordashboard" element={<Vendordashboard />} />
         <Route path="/vendordashboardrating"  element={<Vendordashboardrating />} />
         <Route path="/userdashboard" element={<Userdashboard />} />
@@ -81,6 +89,7 @@ const App = () => {
         <Route path="/vendorsetting" element={<VendorSetting />} />
         {/* <Route path="/transaction/histories" element={<WalletLedger />} /> */}
        <Route path="/chats" element={<Chat />} />    
+        <Route path="/Settings" element={<Settings />} />    
         <Route
           path="/notifications/:category?"
           element={<AllNotifications />}

@@ -4,8 +4,10 @@ import { IoLocationOutline } from 'react-icons/io5'
 import { FaStar, FaHeart } from 'react-icons/fa' 
 import { FiHeart } from 'react-icons/fi'
 import "./Css/VendorsCard.css"
+import { useNavigate } from 'react-router-dom'
 
 const VendorCard = (props) => {
+  const navigate = useNavigate()
   const [isLiked, setIsLiked] = useState(false)
 
   const handleLikeClick = () => {
@@ -16,17 +18,17 @@ const VendorCard = (props) => {
     <div className="vendor_card">
       
       <div className="card_top_actions">
-        <span className="see_more_lnk">See More</span>
+        <span className="see_more_lnk" onClick={() => navigate('/epknorating')}>See More</span>
         <Button 
           className="wishlist_btn" 
           onClick={handleLikeClick} 
           btnText={
             isLiked ? (
-              <FaHeart size={16} color="#330159;" /> 
+              <FaHeart size={12} color="#330159;" /> 
             ) : (
-              <FiHeart size={16} /> 
+              <FiHeart size={12} /> 
             ) 
-          } 
+          }
         />
       </div>
 
@@ -38,8 +40,8 @@ const VendorCard = (props) => {
         <h3 className="vendor_name">{props.name}</h3>
         
         <div className="vendor_location">
-          <IoLocationOutline size={22} />
-          <span>{props.location}</span>
+          <IoLocationOutline className='Loc' size={22} />
+          <span className='location-text'>{props.location}</span>
         </div>
 
         <div className="vendor_rating">
@@ -57,7 +59,7 @@ const VendorCard = (props) => {
             <p className="price_lbl">Starting Price</p>
             <p className="price_amt">₦{props.price ? props.price.toLocaleString() : 0}</p>
           </div>
-          <Button className="btn_purple" btnText="Book now" />
+          <Button className="btn_purple" onClick={() => navigate('/onboarding')} btnText="Book now" />
         </div>
 
       </div>

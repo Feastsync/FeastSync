@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { FiX, FiUpload } from "react-icons/fi";
 import "./css/DocumentStep.css";
+import { useNavigate } from "react-router-dom";
 
 const DocumentStep = ({ onNext, onBack, onSkip, percentComplete = 80 }) => {
   const [dragOver, setDragOver] = useState(false);
   const [file, setFile] = useState(null);
-
+   const navigate = useNavigate()
   const handleDrop = (e) => {
     e.preventDefault();
     setDragOver(false);
@@ -77,7 +78,7 @@ const DocumentStep = ({ onNext, onBack, onSkip, percentComplete = 80 }) => {
         </div>
 
         <div className="ds-footer">
-          <button className="ds-btn-skip" onClick={onSkip}>Skip for Now</button>
+          <button className="ds-btn-skip" onClick={()=> navigate("/")}>Skip for Now</button>
           <div className="ds-footer-right">
             <button className="ds-btn-back" onClick={onBack}>Back</button>
             <button className="ds-btn-upload" onClick={onNext}>Upload</button>

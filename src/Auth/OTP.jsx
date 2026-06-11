@@ -1,17 +1,61 @@
-import React, { useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Input } from "antd";
+import React, { useRef, useEffect, useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { verifyOTP, clearError } from "../Redux/features/authslice";
+import { resendOTP } from "../Redux/features/userslice";
+import { Input, message } from "antd";
+import api from "../Redux/app/axios.js";
 import "./Css/OTP.css";
 import FeastLogo from "../assets/logos/Headerlogo.png";
 import Button from "../Props/Button.jsx";
-import Otpimg from "../assets/BackgroundImage/OtpImage.png"
+import Otpimg from "../assets/BackgroundImage/OtpImage.png";
 import { IoArrowBack } from "react-icons/io5";
 
 const OTPVerification = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  const { isLoading, error } = useSelector((state) => state.auth);
+  const { resendLoading } = useSelector((state) => state.user);
+
   const inputs = useRef([]);
-  const Navigate = useNavigate();
+  const [otp, setOtp] = useState(["", "", "", ""]);
+  const [countdown, setCountdown] = useState(60);
+  const [resendingReset, setResendingReset] = useState(false);
+
+  const email = location.state?.email;
+  const accountType = location.state?.accountType || "user";
+  const isForgotPassword = location.state?.isForgotPassword || false;
+
+  useEffect(() => {
+    if (!email) {
+      navigate("/user/signup");
+    }
+  }, [email, navigate]);
+
+  useEffect(() => {
+    if (countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [countdown]);
+
+  useEffect(() => {
+    if (error) {
+      message.error(error);
+      dispatch(clearError());
+    }
+  }, [error, dispatch]);
+
   const handleInput = (e, index) => {
     const val = e.target.value;
+    if (!/^\d*$/.test(val)) return;
+
+    const newOtp = [...otp];
+    newOtp[index] = val;
+    setOtp(newOtp);
+
     if (val.length === 1 && index < 3) {
       inputs.current[index + 1].focus();
     }
@@ -23,6 +67,48 @@ const OTPVerification = () => {
     }
   };
 
+  const handleVerify = async () => {
+    const otpCode = otp.join("");
+    if (otpCode.length!== 4) {
+      message.error("Please enter complete 4-digit OTP");
+      return;
+    }
+
+    if (isForgotPassword) {
+
+      navigate("/reset-password", { state: { email, otp: otpCode } });
+    } else {
+      try {
+        await dispatch(verifyOTP({ email, otp: otpCode, accountType })).unwrap();
+        message.success("Account verified successfully!");
+        navigate("/login");
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  const handleResend = async () => {
+    if (!email) return;
+
+    try {
+      if (isForgotPassword) {
+        setResendingReset(true);
+        await api.post('/user/forgot-password', { email });
+        setResendingReset(false);
+      } else {
+        await dispatch(resendOTP(email)).unwrap();
+      }
+      message.success("New OTP sent to your email");
+      setCountdown(60);
+      setOtp(["", "", "", ""]);
+      inputs.current[0]?.focus();
+    } catch (err) {
+      setResendingReset(false);
+      message.error(err.response?.data?.message || err || "Resend failed");
+    }
+  };
+
   return (
     <div className="otp-page">
       <div className="otp-container">
@@ -31,16 +117,16 @@ const OTPVerification = () => {
             <img src={FeastLogo} alt="Logo" className="otp-logo" />
             <span className="otp-logo-text">FeastSync</span>
           </div>
-         <Link to="/login" className="otp-back-wrap">
-           <span className="otp-back-icon-box">
-            <IoArrowBack size={18} />
-          </span>
-          <span className="otp-back-text">Back</span>
-       </Link>
-          
+          <Link to={isForgotPassword? "/forgot-password" : "/user/signup"} className="otp-back-wrap">
+            <span className="otp-back-icon-box">
+              <IoArrowBack size={18} />
+            </span>
+            <span className="otp-back-text">Back</span>
+          </Link>
+
           <div className="otp-header">
-            <h1>OTP verification</h1>
-            <p>Enter your email address to receive a recovery link</p>
+            <h1>{isForgotPassword? "Reset Password" : "OTP verification"}</h1>
+            <p>Enter OTP code sent to {email}</p>
           </div>
 
           <p className="otp-label">Input OTP</p>
@@ -50,6 +136,7 @@ const OTPVerification = () => {
                 key={index}
                 className="otp-box"
                 maxLength={1}
+                value={otp[index]}
                 ref={(el) => (inputs.current[index] = el)}
                 onChange={(e) => handleInput(e, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
@@ -57,14 +144,31 @@ const OTPVerification = () => {
             ))}
           </div>
 
-          <Button onClick={() => Navigate("/login")} className="otp-verify-btn">
-            Verify OTP
+          <Button
+            onClick={handleVerify}
+            className="otp-verify-btn"
+            disabled={isLoading}
+          >
+            {isLoading? "Verifying..." : isForgotPassword? "Continue" : "Verify OTP"}
           </Button>
-          <p className="otp-resend">Didn't receive the code? <span>Resend</span></p>
+
+          <p className="otp-resend">
+            Didn't receive the code?{" "}
+            {countdown > 0? (
+              <span style={{ color: "#888" }}>Resend in {countdown}s</span>
+            ) : (
+              <span
+                onClick={handleResend}
+                style={{ color: "#330159", cursor: "pointer", fontWeight: 600 }}
+              >
+                {(resendLoading &&!isForgotPassword) || resendingReset? "Sending..." : "Resend"}
+              </span>
+            )}
+          </p>
         </div>
 
         <div className="otp-right">
-          <img src={Otpimg}/>
+          <img src={Otpimg} alt="OTP" />
         </div>
       </div>
     </div>

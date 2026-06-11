@@ -9,6 +9,7 @@
   --secondary-color: #c64a0c;
   --background-color: #f0f0f0;
   --text-color: #0f0f10;
+  --second-color: black;
 }
 
 .about-container {
@@ -1309,9 +1310,6 @@
   transition: all 0.2s;
 }
 
-.notif-tab:hover {
-  /* color: var(--text-color); */
-}
 
 .notif-tab--active {
   background: var(--primary-color);

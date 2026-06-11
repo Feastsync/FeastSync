@@ -1,12 +1,42 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { forgotPassword } from '../Redux/features/authslice'
+import { message } from 'antd'
 import Headerlogo from '../assets/logos/Headerlogo.png'
 import Button from '../Props/Button'
-import { FaArrowLeft } from "react-icons/fa6";
+import { FaArrowLeft } from "react-icons/fa6"
 import "../Auth/Css/ForgotPassword.css"
 import Header from '../Components/Header';
 
+const EmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 const ForgetPassword = () => {
-  const [email, setEmail] = useState("");
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { isLoading } = useSelector((state) => state.auth)
+
+  const [email, setEmail] = useState("")
+
+  const handleSendOTP = async () => {
+    if (email.trim() === "") {
+      message.error("Please enter your email address")
+      return
+    }
+
+    if (!EmailRegex.test(email)) {
+      message.error("Please enter a valid email address")
+      return
+    }
+
+    try {
+      await dispatch(forgotPassword(email)).unwrap()
+      message.success("Recovery OTP sent to your email")
+      navigate('/verify-otp', { state: { email, accountType: 'user', isForgotPassword: true } })
+    } catch (err) {
+      message.error(err || "Failed to send OTP")
+    }
+  }
 
   return (
     <div>
