@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { verifyOTP, clearError } from "../Redux/features/authslice";
-import { resendOTP } from "../Redux/features/userslice";
+import { verifyOTP, clearError, resendOTP  } from "../Redux/features/authslice";
+// import { resendOTP } from "../Redux/";
 import { Input, message } from "antd";
 import api from "../Redux/app/axios.js";
 import "./Css/OTP.css";

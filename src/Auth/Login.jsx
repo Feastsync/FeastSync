@@ -19,6 +19,7 @@ const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
+  const [accountType, setAccountType] = useState("vendor"); // Default to vendor like Figma
   const [EmailErrorMsg, setEmailErrorMsg] = useState({ err: false, msg: "", name: "" });
   const [PasswordErrorMsg, setPasswordErrorMsg] = useState({ err: false, msg: "", name: "" });
 
@@ -65,16 +66,21 @@ const Login = () => {
     }
 
     try {
-      await dispatch(
+      const result = await dispatch(
         login({
           email: userInfo.email,
           password: userInfo.password,
-          accountType: "user",
+          accountType: accountType,
         })
       ).unwrap();
 
       message.success("Login successful!");
-      navigate("/userdashboard");
+      
+      if (result.accountType === 'vendor' || result.vendor) {
+        navigate("/vendordashboard");
+      } else {
+        navigate("/userdashboard");
+      }
     } catch (err) {
       message.error(err || "Invalid email or password");
     }
@@ -135,8 +141,36 @@ const Login = () => {
             )}
           </div>
 
+          {/* THIS MATCHES YOUR FIGMA - CHECKBOXES + FORGOT PASSWORD */}
           <div className="vl-role-row">
-            <Link to="/forgot-password" className="vl-forgot">
+            <div className="vl-checkbox-group">
+              <label className="vl-checkbox-label">
+                <input
+                  type="radio"
+                  name="accountType"
+                  value="vendor"
+                  checked={accountType === "vendor"}
+                  onChange={(e) => setAccountType(e.target.value)}
+                />
+                <span>Vendor</span>
+              </label>
+              
+              <label className="vl-checkbox-label">
+                <input
+                  type="radio"
+                  name="accountType"
+                  value="user"
+                  checked={accountType === "user"}
+                  onChange={(e) => setAccountType(e.target.value)}
+                />
+                <span>Client/User</span>
+              </label>
+            </div>
+            
+            <Link 
+              to={accountType === "vendor" ? "/vendor/forgot-password" : "/forgot-password"} 
+              className="vl-forgot"
+            >
               Forgot password?
             </Link>
           </div>
@@ -150,7 +184,10 @@ const Login = () => {
 
           <p className="vl-register-text">
             Don't have an account yet?{" "}
-            <Link to="/onboarding" className="vl-register-link">
+            <Link 
+              to={accountType === "vendor" ? "/vendor/onboarding" : "/onboarding"} 
+              className="vl-register-link"
+            >
               REGISTER HERE
             </Link>
           </p>
