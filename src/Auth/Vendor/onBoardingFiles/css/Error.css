@@ -1,14 +1,17 @@
-.errorContainer{
+.error505Container{
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
-.error{
+.error505{
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 40px;
 }
+ .error505 p{
+        text-align: center;
+    }
 .errorBtn{
     display: flex;
     align-items: center;
@@ -19,3 +22,10 @@
     box-shadow: 0.5px 0.5px 0.5px 0.5px gray;
     padding: 10px;
 }
+@media (max-width: 480px) {
+    .error505 p{
+        font-size: 20px;
+        text-align: center;
+    }
+}
+
