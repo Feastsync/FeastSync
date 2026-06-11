@@ -23,7 +23,7 @@ const About = () => {
             entertainment <br />
             across Nigeria.
           </p>
-             <p className="about">
+          <p className="about">
           Connect with top rated entainers for <br /> your next
           event.Professional service. <br />
           transparent rates.
