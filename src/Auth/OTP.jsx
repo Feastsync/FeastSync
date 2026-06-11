@@ -1,8 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { verifyOTP, clearError } from "../Redux/features/authslice";
-import { resendOTP } from "../Redux/features/userslice";
+import { verifyOTP, clearError, resendOTP } from "../Redux/features/authslice";
 import { Input, message } from "antd";
 import api from "../Redux/app/axios.js";
 import "./Css/OTP.css";
@@ -17,20 +16,25 @@ const OTPVerification = () => {
   const location = useLocation();
 
   const { isLoading, error } = useSelector((state) => state.auth);
-  const { resendLoading } = useSelector((state) => state.user);
 
   const inputs = useRef([]);
+  const redirectedRef = useRef(false);
+
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [countdown, setCountdown] = useState(60);
   const [resendingReset, setResendingReset] = useState(false);
+
+  console.log(location);
 
   const email = location.state?.email;
   const accountType = location.state?.accountType || "user";
   const isForgotPassword = location.state?.isForgotPassword || false;
 
+  // ✅ FIX: prevent redirect loop
   useEffect(() => {
-    if (!email) {
-      navigate("/user/signup");
+    if (!email && !redirectedRef.current) {
+      redirectedRef.current = true;
+      navigate("/login", { replace: true });
     }
   }, [email, navigate]);
 
@@ -69,22 +73,25 @@ const OTPVerification = () => {
 
   const handleVerify = async () => {
     const otpCode = otp.join("");
-    if (otpCode.length!== 4) {
+
+    if (otpCode.length !== 4) {
       message.error("Please enter complete 4-digit OTP");
       return;
     }
 
-    if (isForgotPassword) {
+    try {
+      await dispatch(
+        verifyOTP({
+          email,
+          otp: otpCode,
+          accountType,
+        }),
+      ).unwrap();
 
-      navigate("/reset-password", { state: { email, otp: otpCode } });
-    } else {
-      try {
-        await dispatch(verifyOTP({ email, otp: otpCode, accountType })).unwrap();
-        message.success("Account verified successfully!");
-        navigate("/login");
-      } catch (err) {
-        console.log(err);
-      }
+      message.success("Account verified successfully!");
+      navigate("/login");
+    } catch (err) {
+      message.error(err || "Verification failed");
     }
   };
 
@@ -94,11 +101,12 @@ const OTPVerification = () => {
     try {
       if (isForgotPassword) {
         setResendingReset(true);
-        await api.post('/user/forgot-password', { email });
+        await api.post("/user/forgot-password", { email });
         setResendingReset(false);
       } else {
-        await dispatch(resendOTP(email)).unwrap();
+        await dispatch(resendOTP({ email, accountType })).unwrap();
       }
+
       message.success("New OTP sent to your email");
       setCountdown(60);
       setOtp(["", "", "", ""]);
@@ -117,7 +125,17 @@ const OTPVerification = () => {
             <img src={FeastLogo} alt="Logo" className="otp-logo" />
             <span className="otp-logo-text">FeastSync</span>
           </div>
-          <Link to={isForgotPassword? "/forgot-password" : "/user/signup"} className="otp-back-wrap">
+
+          <Link
+            to={
+              isForgotPassword
+                ? "/forgot-password"
+                : accountType === "vendor"
+                  ? "/vendor/signup"
+                  : "/user/signup"
+            }
+            className="otp-back-wrap"
+          >
             <span className="otp-back-icon-box">
               <IoArrowBack size={18} />
             </span>
@@ -125,11 +143,12 @@ const OTPVerification = () => {
           </Link>
 
           <div className="otp-header">
-            <h1>{isForgotPassword? "Reset Password" : "OTP verification"}</h1>
+            <h1>{isForgotPassword ? "Reset Password" : "OTP verification"}</h1>
             <p>Enter OTP code sent to {email}</p>
           </div>
 
           <p className="otp-label">Input OTP</p>
+
           <div className="otp-boxes">
             {[0, 1, 2, 3].map((index) => (
               <Input
@@ -149,19 +168,27 @@ const OTPVerification = () => {
             className="otp-verify-btn"
             disabled={isLoading}
           >
-            {isLoading? "Verifying..." : isForgotPassword? "Continue" : "Verify OTP"}
+            {isLoading
+              ? "Verifying..."
+              : isForgotPassword
+                ? "Continue"
+                : "Verify OTP"}
           </Button>
 
           <p className="otp-resend">
             Didn't receive the code?{" "}
-            {countdown > 0? (
+            {countdown > 0 ? (
               <span style={{ color: "#888" }}>Resend in {countdown}s</span>
             ) : (
               <span
                 onClick={handleResend}
-                style={{ color: "#330159", cursor: "pointer", fontWeight: 600 }}
+                style={{
+                  color: "#330159",
+                  cursor: "pointer",
+                  fontWeight: 600,
+                }}
               >
-                {(resendLoading &&!isForgotPassword) || resendingReset? "Sending..." : "Resend"}
+                {resendingReset ? "Sending..." : "Resend"}
               </span>
             )}
           </p>
