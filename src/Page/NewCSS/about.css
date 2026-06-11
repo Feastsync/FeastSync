@@ -6,27 +6,19 @@
   gap: 50px;
   justify-content: center;
   align-items: center;
-  /* background: red; */
 }
 .aboutContainer {
-width: 100%;
-  /* padding-left: 60px; */
-  /* display: flex;
-  flex-direction: column; */
-  /* gap: 30px; */
-   background-image: url("../../assets/BackgroundImage/8644f49ca66594465885d8daad5f829d0ff32ee3.png");
+  width: 100%;
+  background-image: url("../../assets/BackgroundImage/8644f49ca66594465885d8daad5f829d0ff32ee3.png");
   background-position: center;
   background-repeat: no-repeat;
   }
 
 .aboutContainer1{
-  /* height: 60%; */
   color: #ffffff;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   width: 100%;
-  /* background: blue; */ 
 }
 .about {
   font-size: 20px;
@@ -45,17 +37,15 @@ width: 100%;
 .aboutWrapper {
   display: flex;
   gap: 100px;
-    padding-left: 50px;
-
+  padding-left: 50px;
 }
-
 .aboutWrapperRight {
   display: grid;
   grid-template-columns: repeat(3,200px);
   grid-template-rows: 200px 250px;
   column-gap: 10px;
-width: 100%;
-min-height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   row-gap: 30px;
 }
 .aboutWrapperRight img {
@@ -63,14 +53,11 @@ min-height: 100vh;
   height: 100%;
   object-fit: cover;
 }
-
 .aboutWrapperleft {
   display: flex;
   flex-direction: column;
   gap: 40px;
   line-height: 25px;
-
-  
 }
 .aboutWrapperHolder {
   display: flex;
@@ -142,7 +129,6 @@ min-height: 100vh;
   align-items: center;
   gap: 20px;
   line-height: 25px;
-
 }
 
 .missionQuote {
@@ -151,7 +137,6 @@ min-height: 100vh;
   width: 20vw;
   padding-left: 60px;
   text-align: start;
-  /* margin-right: 180px; */
 }
 .missionValueText {
   color: white;
@@ -208,7 +193,6 @@ min-height: 100vh;
  display: flex;
  align-items: center;
 }
-
 .row-spans-3-2 {
   grid-column: 3;
   row-gap: 10px;
@@ -271,8 +255,6 @@ min-height: 100vh;
   );
   row-gap: 50px;
   column-gap: 70px;
-  /* padding: 50px; */
-  /* Automatically places items and centers the entire grid track */
   grid-template-columns: repeat(4, 200px);
   justify-content: center;
 }
@@ -290,12 +272,10 @@ min-height: 100vh;
   border-radius: 80px 80px 0px 0px;
   height: 100%;
   display: flex;
-  /* justify-content: s; */
   align-items: center;
   flex-direction: column;
   justify-content: start;
   background: white;
-
   padding: 4px;
   align-self: center;
 }
@@ -304,7 +284,6 @@ min-height: 100vh;
   flex-direction: column;
   justify-content: space-around;
   height: 30%;
-
   gap: 1px;
   line-height: 25px;
 }
@@ -338,11 +317,9 @@ min-height: 100vh;
   );
   row-gap: 50px;
   column-gap: 70px;
-  /* padding: 50px; */
-  /* Automatically places items and centers the entire grid track */
   grid-template-columns: repeat(4, 200px);
   justify-content: center;
-  /* align-items: center; */
+
 }
 .aboutTeam img {
   width: 100%;
@@ -351,7 +328,6 @@ min-height: 100vh;
   aspect-ratio: 3/4;
   object-fit: cover;
   overflow: hidden;
-  /* object-position:  center; */
 }
 .aboutTeam p {
   text-align: center;
@@ -391,17 +367,16 @@ min-height: 100vh;
   color: #330159;
   font-weight: bold;
 }
- @media (max-width: 480px) {
-  .container {
 
-    /* padding-left: 5px; */
-  /* justify-content: center; */
+
+ @media (max-width: 780px) {
+  .container {
   width: 100%;
-  /* background: blue; */
   }
   .aboutContainer{
     width: 100%;
     background-size: cover;
+    padding-left: 10px;
   }
   .about {
   font-size: 16px;
@@ -427,12 +402,12 @@ min-height: 100vh;
  
 }
 .aboutWrapperleftside{
-  padding: 10px;
+  padding: 30px;
 }
   .aboutWrapperHolder {
-padding: 10px;
+padding: 30px;
 width: 90%;
-height: 20%;
+height: 5%;
 }
   .aboutWrapperTexts{
   line-height: 35px;
@@ -446,7 +421,6 @@ height: 20%;
   aspect-ratio: 3/4;
   object-fit: cover;
   overflow: hidden;
-  /* object-position:  center; */
 }
   .aboutMission {
   display: flex;
@@ -466,12 +440,12 @@ height: 20%;
   align-items: center;
 }
   .aboutWrapperRight {
-    width: 80%;
-    grid-template-columns: repeat(3, 90px);
-    column-gap: 40px;
+    width: 100%;
+    grid-template-columns: repeat(3, 125px);
+    column-gap: 10px;
     justify-items: center;
     align-items: center;
-    padding: 10px;
+
   }
   .aboutWrapperCover{
     width: 100%;
@@ -480,11 +454,11 @@ height: 20%;
     align-items: center;
   }
   .aboutWrapperRight img{
-    width: 120px;
+    width:100%;
     height: 100%;
     display: block;
     object-fit: cover;
-    margin-left: 22px;
+    /* margin-left: 22px; */
   }
   .row-span-1-2 {
     object-position: 75.1%;
@@ -504,7 +478,6 @@ height: 20%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* padding: 30px; */
   }
 
  .missionQuote {
@@ -520,7 +493,7 @@ height: 20%;
   }
   
   .aboutValues img {
-    width: 95%;
+    width:95%;
     height: 75vh;
     object-fit: cover;
     border-radius: 10px;
@@ -533,7 +506,7 @@ height: 20%;
   text-align: start;
   display: flex;
   justify-content: center;
-  max-width: 450px; /* Limits paragraph stretching on wider mobile screens */
+  max-width: 450px; 
 }
   .aboutValues p {
     width: 100%;
@@ -553,27 +526,21 @@ height: 20%;
     padding: 8px;
   }
   .aboutTeam {
-  width: 40vw;
+  width: 45vw;
+    align-items: center;
+  
   border-radius: 80px 80px 0px 0px;
-  height: 350px;
+  height: 400px;
   display: flex;
-  gap: 10px;
-  /* justify-content: s; */
-  align-items: center;
-  flex-direction: column;
-  justify-content: start;
-  background: white;
-     /* margin-left: 20px; */
-
-
-  /* padding: 4px; */
-  align-self: center;
+  gap: 50px;
+ 
 }
 .aboutTeamWrapper {
   width: 100%;
+  padding: 5px;
 }
 .aboutTeamBox {
-  width: 90%;
+  width: 100%;
   display: grid;
   background: linear-gradient(
     180deg,
@@ -592,12 +559,10 @@ height: 20%;
     #1a0a2e 100%
   );
   row-gap: 50px;
-    grid-template-columns: repeat(2, 200px);
-  column-gap: 70px;
-  padding-right: 100px;
-  padding-left: 35px;
-    margin-right: 20px;
-  justify-content: center;
+    grid-template-columns: repeat(2, 250px);
+gap: 100px;
+  align-items: center;
+
 }
 .aboutTeamBox > *:nth-child(5) {
   margin-left: 120px;
@@ -614,7 +579,6 @@ height: 20%;
   flex-direction: column;
   justify-content: space-around;
   height: 30%;
-
   gap: 1px;
   line-height: 25px;
 }
@@ -628,9 +592,6 @@ height: 20%;
   height: 100%;
 }
   .aboutTeamBox {
-    row-gap: 40px;
-    column-gap: 90px;
-    /* Automatically places items and centers the entire grid track */
     grid-template-columns: repeat(2, 90px);
   }
   .aboutTeamBox > *:nth-child(5) {
@@ -640,15 +601,19 @@ height: 20%;
     margin-left: 0px;
   }
   .aboutTeamBox > *:nth-child(7) {
-    margin-left: 90px;
+    margin-left: 150px;
   }
+  .aboutTeamBox {
+    justify-content: center; 
+    justify-items: center;    
+    column-gap: 100px;
+  }
+
  .aboutValues {
     display: flex;
     flex-direction: column;
-    gap: 0px; /* Stack elements vertically */
+    gap: 0px;
   }
-
-  /* 1. The Image moves to the very top */
   .aboutValues img.row-spans-1-2 {
     order: 1; 
     width: 100%;
@@ -656,22 +621,14 @@ height: 20%;
     height: auto;
     margin-bottom: 14px;
   }
-
-  /* 2. The First Text Block (Trust/Seamlessness) moves below the image */
   .aboutValues .aboutValuesText:nth-of-type(1) {
     order: 2;
     margin-bottom: 24px;
   }
-
-  /* 3. The Second Text Block (Excellence/Transparency) stays at the bottom */
   .aboutValues .aboutValuesText:nth-of-type(2) {
     order: 3;
         margin-bottom: 24px;
   }
-
-  /* CRITICAL MOBILE FIX: 
-     This overrides your inline style (marginRight: "200px") 
-     so your text doesn't break or get crushed on a 480px screen */
   .aboutValuesText p span {
     display: block;
     margin-right: 0px ; 

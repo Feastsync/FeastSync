@@ -5,6 +5,7 @@ import { dummyVendors } from '../../Components/DummyData'
 import "./Css/FeaturedCard.css"
 import Button from '../../Props/Button'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 const FeaturedVendors = () => {
 const navigate = useNavigate()
@@ -26,6 +27,13 @@ const navigate = useNavigate()
     }
   }
 
+const topVendors = async()=>{
+ try{
+ const data = await axios.get("")
+ }catch (error){
+  
+ }
+}
   return (
     <section className="fv_sec">
       <div className="fv_container">
