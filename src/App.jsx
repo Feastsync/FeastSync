@@ -74,7 +74,7 @@ const App = () => {
         <Route path="/vendor/signup" element={<VendorSignUp />} />
         <Route path="/vendor/kyc" element={<VendorKYC />} />
         <Route path="/epknorating" element={<Epknorating />} />
-        <Route path="/epkrating" element={<Epkrating />} />
+        <Route path="/epkrating/:id" element={<Epkrating />} />
         <Route path="/vendordashboard" element={<Vendordashboard />} />
         <Route path="/vendordashboardrating"  element={<Vendordashboardrating />} />
         <Route path="/userdashboard" element={<Userdashboard />} />
