@@ -48,7 +48,7 @@ const services = () => {
         <p className="serviceQuote">Our Services</p>
 
         <div className="serviceBooking">
-          <img src="../public/About/dj wirewire.png" alt="DJ Booking" />
+          <img src="/About/dj wirewire.png" alt="DJ Booking" />
           <div className="serviceInfo">
             <div className="serviceHolder">
               <p className="serviceName">DJ Booking</p>
@@ -89,7 +89,7 @@ const services = () => {
           <img src="../public/About/host.png" alt="MC Host" />
         </div>
         <div className="serviceBooking">
-          <img src="../public/About/mcs.png" alt="Live Band" />
+          <img src="/About/mcs.png" alt="Live Band" />
           <div className="serviceInfo">
             <div className="serviceHolder">
               <p className="serviceName">Live Band Booking</p>
@@ -121,11 +121,11 @@ const services = () => {
               <li>Social media-optimized image set for some-day sharing</li>
             </div>
           </div>
-          <img src="../public/About/photographer.png" alt="Photography" />
+          <img src="/About/photographer.png" alt="Photography" />
         </div>
 
         <div className="serviceBooking">
-          <img src="../public/About/cameraman.png" alt="Videography" />
+          <img src="/About/cameraman.png" alt="Videography" />
           <div className="serviceInfo">
             <div className="serviceHolder">
               <p className="serviceName">Videography services</p>

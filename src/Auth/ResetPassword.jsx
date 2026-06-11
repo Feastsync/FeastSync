@@ -8,8 +8,6 @@ import Headerlogo from '../assets/logos/Headerlogo.png'
 import { FaArrowLeft } from "react-icons/fa6"
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa"
 import "../Auth/Css/ResetPassword.css"
-import { FaRegEye } from "react-icons/fa";
-import { FaRegEyeSlash } from "react-icons/fa";
 import Header from '../Components/Header';
 
 const ResetPassword = () => {
@@ -68,98 +66,93 @@ const ResetPassword = () => {
 
   return (
    <div className='resetPasswordBox'>
-        <div className='forgotPasswordLogo'>
-                   <div className='resetPasswordLogo'>
-                         <Header />
-                          </div>
-                          </div>
-          <div className='resetPasswordButton'>
-                     <Button>
-                       <p><FaArrowLeft /></p>
-                     </Button>
-                     <p>Back</p>
-                  </div>
-
-             <div className='resetPaswwordContainer'>
-                <div className='resetPasswordHolder'>
-                  <div className='resetPasswordAssurance'>
-                    <p className='resetPasswordText'>Reset Password?</p>
-                    <p className='resetPasswordLink'>Enter your email address to recieve a recovery link</p>
-                  </div>
-
-                  <div className='resetpasswordEmail'>
-                  
-                  <section>
-                      <label htmlFor=""> Create Password</label>
-                   <div>
-                     <input type={showPassword ? "text" : "password"}
-                           name="" id="" 
-                           placeholder='Enter your password'
-                           value={Password}
-                           onChange={(e)=>setPassword(e.target.value)}
-                           /> <span onClick={handlePassword}>{showPassword ?<FaRegEyeSlash />:<FaRegEye />} </span>
-                             </div>
-                  </section>
-
-                  <section>
-                     <label htmlFor=""> Reset Password</label>
-                   <div>
-                     <input type={showConfirm ? "text" : "password"}
-                           name="" id="" 
-                           placeholder='Enter your password'
-                           value={confirmPassword}
-                           onChange={(e)=>setConfirmPassword(e.target.value)}/>
-                          <span onClick={()=>setShowConfirm(!showConfirm)}>{showConfirm ?<FaRegEyeSlash />:<FaRegEye />} </span>
-                   </div>
-                  </section>
-               
-                   <Button >Submit</Button>
-              
-                 </div>
+      <div className='forgotPasswordLogo'>
+        <div className='resetPasswordLogo'>
+          <Header />
+        </div>
+      </div>
+      <div className='resetPasswordButton'>
+        <Button>
+          <p><FaArrowLeft /></p>
+        </Button>
+        <p>Back</p>
+      </div>
+      <div className='resetPaswwordContainer'>
+        <div className='resetPasswordHolder'>
+          <div className='resetPasswordAssurance'>
+            <p className='resetPasswordText'>Reset Password?</p>
+            <p className='resetPasswordLink'>Enter your email address to recieve a recovery link</p>
           </div>
-
-          <div className='resetpasswordEmail'>
+          <div className='resetpasswordEmail'>        
             <section>
-              <label htmlFor="password">New Password</label>
+              <label htmlFor=""> Create Password</label>
               <div>
-                <input
-                  type={showPassword? "text" : "password"}
-                  id="password"
-                  placeholder='Enter new password'
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <span onClick={() => setShowPassword(!showPassword)}>
-                  {showPassword? <FaRegEyeSlash /> : <FaRegEye />}
-                </span>
+                <input 
+                  type={showPassword ? "text" : "password"}
+                  name="" 
+                  id="" 
+                  placeholder='Enter your password'
+                  value={Password}
+                  onChange={(e)=>setPassword(e.target.value)}
+                /> 
+                <span onClick={handlePassword}>{showPassword ?<FaRegEyeSlash />:<FaRegEye />} </span>
               </div>
             </section>
-
             <section>
-              <label htmlFor="confirmPassword">Confirm Password</label>
+              <label htmlFor=""> Reset Password</label>
               <div>
-                <input
-                  type={showConfirm? "text" : "password"}
-                  id="confirmPassword"
-                  placeholder='Confirm new password'
+                <input 
+                  type={showConfirm ? "text" : "password"}
+                  name="" 
+                  id="" 
+                  placeholder='Enter your password'
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onChange={(e)=>setConfirmPassword(e.target.value)}
                 />
-                <span onClick={() => setShowConfirm(!showConfirm)}>
-                  {showConfirm? <FaRegEyeSlash /> : <FaRegEye />}
-                </span>
+                <span onClick={()=>setShowConfirm(!showConfirm)}>{showConfirm ?<FaRegEyeSlash />:<FaRegEye />} </span>
               </div>
-            </section>
-
-            <Button onClick={handleSubmit} disabled={isLoading}>
-              {isLoading? "Resetting..." : "Reset Password"}
-            </Button>
+            </section>   
+            <Button >Submit</Button>  
           </div>
         </div>
-
-        <div className='resetPasswordImage'>
-          <img src="/About/amico.png" alt="" className='imageHolder' />
+        <div className='resetpasswordEmail'>
+          <section>
+            <label htmlFor="password">New Password</label>
+            <div>
+              <input
+                type={showPassword? "text" : "password"}
+                id="password"
+                placeholder='Enter new password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <span onClick={() => setShowPassword(!showPassword)}>
+                {showPassword? <FaRegEyeSlash /> : <FaRegEye />}
+              </span>
+            </div>
+          </section>
+          <section>
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <div>
+              <input
+                type={showConfirm? "text" : "password"}
+                id="confirmPassword"
+                placeholder='Confirm new password'
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              <span onClick={() => setShowConfirm(!showConfirm)}>
+                {showConfirm? <FaRegEyeSlash /> : <FaRegEye />}
+              </span>
+            </div>
+          </section>
+          <Button onClick={handleSubmit} disabled={isLoading}>
+            {isLoading? "Resetting..." : "Reset Password"}
+          </Button>
         </div>
+      </div>
+      <div className='resetPasswordImage'>
+        <img src="/About/amico.png" alt="" className='imageHolder' />
       </div>
     </div>
   )
