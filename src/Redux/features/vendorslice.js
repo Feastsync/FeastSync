@@ -2,16 +2,37 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import api from '../app/axios'
 
 export const signupVendor = createAsyncThunk(
-  'vendor/signup',
+  'vendor/sign-up',
   async (formData, { rejectWithValue }) => {
     try {
-      await api.post('/vendor/signup', formData)
-      return { email: formData.email }
+      const res = await api.post('/vendor/sign-up', formData);
+      return { email: formData.email };
     } catch (err) {
-      return rejectWithValue(err.response?.data?.message || 'Signup failed')
+      console.log("BACKEND ERROR:", err.response?.data);
+      return rejectWithValue(
+        err.response?.data?.message || 'Signup failed'
+      );
     }
   }
-)
+);
+
+
+// export const resendVendorOTP = createAsyncThunk(
+//   "vendor/resendOTP",
+//   async (email, { rejectWithValue }) => {
+//     try {
+//       const response = await api.post("/vendor/resend-otp", {
+//         email,
+//       });
+
+//       return response.data;
+//     } catch (error) {
+//       return rejectWithValue(
+//         error.response?.data?.message || "Failed to resend OTP"
+//       );
+//     }
+//   }
+// );
 
 const vendorSlice = createSlice({
   name: 'vendor',
