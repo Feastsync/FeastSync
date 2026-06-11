@@ -8,7 +8,8 @@ import Input from "../Props/Imp";
 import Button from "../Props/Button";
 import "./Css/Login.css";
 import HeeaderLogo from "../assets/logos/Headerlogo.png";
-import LoginPic from "../assets/BackgroundImage/LoginPic.jpeg";
+import LoginPic from "../assets/BackgroundImage/LoginPic.jpeg"
+import axios from "axios";
 
 const EmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -56,7 +57,7 @@ const Login = () => {
     if (PasswordErrorMsg.err) setPasswordErrorMsg({ err: false, name: "", msg: "" });
   };
 
-  const handleValidationAndSubmit = async () => {
+  const handleValidationAndSubmit = async() => {
     const isEmailValid = validateEmail(userInfo.email);
     const isPasswordValid = validatePassword(userInfo.password);
 
@@ -84,7 +85,10 @@ const Login = () => {
     } catch (err) {
       message.error(err || "Invalid email or password");
     }
+    const status = error.response
+
   };
+
 
   return (
     <div className="vl-page">

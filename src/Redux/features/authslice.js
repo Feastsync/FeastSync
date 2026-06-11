@@ -34,7 +34,7 @@ export const verifyOTP = createAsyncThunk(
   }
 )
 
-export const resendOTP = createAsyncThunk(
+  export const resendOTP = createAsyncThunk(
   "auth/resendOTP",
   async ({ email, accountType }, { rejectWithValue }) => {
     try {
@@ -53,6 +53,7 @@ export const resendOTP = createAsyncThunk(
     }
   }
 );
+
 export const forgotPassword = createAsyncThunk(
   'auth/forgotPassword',
   async (email, { rejectWithValue }) => {
@@ -123,7 +124,7 @@ const authSlice = createSlice({
       state.userInfo = null
       state.vendorInfo = null
       state.token = null
-      state.accountType = null
+      state.accountType = null 
       state.isLoggedIn = false
     },
     clearError: (state) => {
