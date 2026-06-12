@@ -17,6 +17,7 @@ const Input = (props) => {
         padding: "29px",
         fontSize: "16px",
         border: "1px solid #ccc",
+        outline: "none",
       }}
     />
   );
