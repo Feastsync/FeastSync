@@ -1,7 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { verifyOTP, clearError, resendOTP } from "../Redux/features/authslice";
+import {
+  verifyOTP,
+  clearError,
+  resendOTP,
+  verifyResetPasswordOTP,
+} from "../Redux/features/authslice";
 import { Input, message } from "antd";
 import api from "../Redux/app/axios.js";
 import "./Css/OTP.css";
@@ -30,7 +35,6 @@ const OTPVerification = () => {
   const accountType = location.state?.accountType || "user";
   const isForgotPassword = location.state?.isForgotPassword || false;
 
-  // ✅ FIX: prevent redirect loop
   useEffect(() => {
     if (!email && !redirectedRef.current) {
       redirectedRef.current = true;
@@ -80,16 +84,37 @@ const OTPVerification = () => {
     }
 
     try {
-      await dispatch(
-        verifyOTP({
-          email,
-          otp: otpCode,
-          accountType,
-        }),
-      ).unwrap();
+      if (isForgotPassword) {
+        await dispatch(
+          verifyResetPasswordOTP({
+            email,
+            otp: otpCode,
+          })
+        ).unwrap();
 
-      message.success("Account verified successfully!");
-      navigate("/login");
+        message.success("OTP verified successfully!");
+
+        // ✅ FIXED LINE (ONLY CHANGE)
+        navigate("/reset-password", {
+          state: {
+            email,
+            otp: otpCode,
+            accountType,
+          },
+        });
+      } else {
+        await dispatch(
+          verifyOTP({
+            email,
+            otp: otpCode,
+            accountType,
+          })
+        ).unwrap();
+
+        message.success("Account verified successfully!");
+
+        navigate("/login");
+      }
     } catch (err) {
       message.error(err || "Verification failed");
     }
@@ -131,8 +156,8 @@ const OTPVerification = () => {
               isForgotPassword
                 ? "/forgot-password"
                 : accountType === "vendor"
-                  ? "/vendor/signup"
-                  : "/user/signup"
+                ? "/vendor/signup"
+                : "/user/signup"
             }
             className="otp-back-wrap"
           >
@@ -171,8 +196,8 @@ const OTPVerification = () => {
             {isLoading
               ? "Verifying..."
               : isForgotPassword
-                ? "Continue"
-                : "Verify OTP"}
+              ? "Continue"
+              : "Verify OTP"}
           </Button>
 
           <p className="otp-resend">
