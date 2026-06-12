@@ -13,17 +13,17 @@ export const signupUser = createAsyncThunk(
   }
 )
 
-// export const resendOTP = createAsyncThunk(
-//   'user/resendOTP',
-//   async (email, { rejectWithValue }) => {
-//     try {
-//       const response = await api.post('/user/resend-otp', { email })
-//       return { email, message: response.data?.message }
-//     } catch (err) {
-//       return rejectWithValue(err.response?.data?.message || 'Resend failed')
-//     }
-//   }
-// )
+export const resendOTP = createAsyncThunk(
+  'user/resendOTP',
+  async (email, { rejectWithValue }) => {
+    try {
+      const response = await api.post('/user/resend-otp', { email })
+      return { email, message: response.data?.message }
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || 'Resend failed')
+    }
+  }
+)
 
 const userSlice = createSlice({
   name: 'user',

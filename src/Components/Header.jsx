@@ -1,13 +1,14 @@
-import  { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { FaBars, FaTimes } from 'react-icons/fa'
-// import { logout } from '../Redux/features/authslice'
+import { logout } from '../Redux/features/authslice'
 import Headerlogo from '../assets/logos/Headerlogo.png'
 import Bell from '../assets/logos/Bell.png'
 import Button from '../Props/Button.jsx'
 import "./Css/Header.css"
 import "../Auth/Css/Userheader.css"
+import { persistor } from '../Redux/app/store'
 import { logoutUser } from '../Redux/features/authslice'
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -15,7 +16,6 @@ const Header = () => {
   const dispatch = useDispatch()
 
   const { isLoggedIn, userInfo } = useSelector((state) => state.auth)
-  console.log(userInfo)
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : 'unset'
@@ -33,68 +33,63 @@ const Header = () => {
 
     const handleLogout = () => {
   dispatch(logoutUser()).finally(() => {
+     persistor.purge()
     navigate('/login')
     closeMenu()
   })
 }
-if (isLoggedIn) {
-  return (
-    <nav className="userheader">
-      <div className="userheader_wrapper">
 
-        <div className="userheader_left">
-          <img
-            src={Headerlogo}
-            alt="Logo"
-            className="userheader_logo_img"
-            onClick={() => navigate('/')}
-          />
-          <span className="userheader_logo_text">FeastSync</span>
-        </div>
+  if (isLoggedIn) {
+    return (
+      <nav className="userheader">
+        <div className="userheader_wrapper">
 
-        {/* CHANGE: nav links slide down on mobile when isOpen */}
-        <div className={`userheader_middle ${isOpen ? 'active' : ''}`}>
-          <NavLink to="/" className="userheader_nav_link" onClick={closeMenu} end>Home</NavLink>
-          <NavLink to="/about" className="userheader_nav_link" onClick={closeMenu}>About</NavLink>
-          <NavLink to="/howitworks" className="userheader_nav_link" onClick={closeMenu}>How it works</NavLink>
-          <NavLink to="/vendors" className="userheader_nav_link" onClick={closeMenu}>Vendors</NavLink>
-          <NavLink to="/services" className="userheader_nav_link" onClick={closeMenu}>Services</NavLink>
-          <NavLink to="/contact" className="userheader_nav_link" onClick={closeMenu}>Contact</NavLink>
-          {/* CHANGE: logout lives inside the dropdown on mobile */}
-          <button className="userheader-logout-btn userheader-logout-mobile" onClick={handleLogout}>
-            Logout
-          </button>
-        </div>
-
-        {/* CHANGE: on mobile only logo + bell + avatar + hamburger show on the top bar */}
-        <div className="userheader_right">
-          <div className="userheader_notification_wrapper">
-            <img src={Bell} alt="Notifications" className="userheader_bell_icon" />
+          <div className="userheader_left">
+            <img
+              src={Headerlogo}
+              alt="Logo"
+              className="userheader_logo_img"
+              onClick={() => navigate('/')}
+            />
+            <span className="userheader_logo_text">FeastSync</span>
           </div>
-          <div className="userheader_profile_wrapper">
-            <div className="userheader_avatar_circle">
-              <span>{getInitials(userInfo)}</span>
-              <div className="userheader_status_dot"></div>
+
+          <div className={`userheader_middle ${isOpen ? 'active' : ''}`}>
+            <NavLink to="/" className="userheader_nav_link" onClick={closeMenu} end>Home</NavLink>
+            <NavLink to="/about" className="userheader_nav_link" onClick={closeMenu}>About</NavLink>
+            <NavLink to="/howitworks" className="userheader_nav_link" onClick={closeMenu}>How it works</NavLink>
+            <NavLink to="/vendors" className="userheader_nav_link" onClick={closeMenu}>Vendors</NavLink>
+            <NavLink to="/services" className="userheader_nav_link" onClick={closeMenu}>Services</NavLink>
+            <NavLink to="/contact" className="userheader_nav_link" onClick={closeMenu}>Contact</NavLink>
+          </div>
+
+    
+          <div className="userheader_right">
+            <div className="userheader_notification_wrapper">
+              <img src={Bell} alt="Notifications" className="userheader_bell_icon" />
             </div>
-            <span className="userheader_profile_name">
-              {userInfo?.firstName} {userInfo?.lastName}
-            </span>
+            <div onClick={()=> navigate("/userdashboard")} className="userheader_profile_wrapper">
+              <div className="userheader_avatar_circle">
+                <span>{getInitials(userInfo)}</span>
+                <div className="userheader_status_dot"></div>
+              </div>
+              <span className="userheader_profile_name">
+                {userInfo?.firstName} {userInfo?.lastName}
+              </span>
+            </div>
+            <button className="userheader-logout-btn" onClick={handleLogout}>
+              Logout
+            </button>
           </div>
-          {/* CHANGE: desktop logout — hidden on mobile */}
-          <button className="userheader-logout-btn userheader-logout-desktop" onClick={handleLogout}>
-            Logout
-          </button>
-        </div>
 
-     
-        <div className="menu_icon" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <FaTimes /> : <FaBars />}
-        </div>
+          <div className="menu_icon" onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? <FaTimes /> : <FaBars />}
+          </div>
 
-      </div>
-    </nav>
-  )
-}
+        </div>
+      </nav>
+    )
+  }
 
   return (
     <nav className='feastHeader_container'>
