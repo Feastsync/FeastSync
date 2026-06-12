@@ -8,7 +8,7 @@ import Input from "../Props/Imp";
 import Button from "../Props/Button";
 import "./Css/Login.css";
 import HeeaderLogo from "../assets/logos/Headerlogo.png";
-import LoginPic from "../assets/BackgroundImage/LoginPic.jpeg"
+import LoginPic from "../assets/BackgroundImage/LoginPic.jpeg";
 import axios from "axios";
 
 const EmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -21,15 +21,31 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
   const [accountType, setAccountType] = useState("vendor"); // Default to vendor like Figma
-  const [EmailErrorMsg, setEmailErrorMsg] = useState({ err: false, msg: "", name: "" });
-  const [PasswordErrorMsg, setPasswordErrorMsg] = useState({ err: false, msg: "", name: "" });
+  const [EmailErrorMsg, setEmailErrorMsg] = useState({
+    err: false,
+    msg: "",
+    name: "",
+  });
+  const [PasswordErrorMsg, setPasswordErrorMsg] = useState({
+    err: false,
+    msg: "",
+    name: "",
+  });
 
   const validateEmail = (value) => {
     if (value.trim() === "") {
-      setEmailErrorMsg({ err: true, name: "email", msg: "Email must not be empty" });
+      setEmailErrorMsg({
+        err: true,
+        name: "email",
+        msg: "Email must not be empty",
+      });
       return false;
     } else if (!EmailRegex.test(value)) {
-      setEmailErrorMsg({ err: true, name: "email", msg: "Please enter a valid Email" });
+      setEmailErrorMsg({
+        err: true,
+        name: "email",
+        msg: "Please enter a valid Email",
+      });
       return false;
     } else {
       setEmailErrorMsg({ err: false, name: "", msg: "" });
@@ -39,7 +55,11 @@ const Login = () => {
 
   const validatePassword = (value) => {
     if (value.trim() === "") {
-      setPasswordErrorMsg({ err: true, name: "password", msg: "Password must not be empty" });
+      setPasswordErrorMsg({
+        err: true,
+        name: "password",
+        msg: "Password must not be empty",
+      });
       return false;
     } else {
       setPasswordErrorMsg({ err: false, name: "", msg: "" });
@@ -54,10 +74,11 @@ const Login = () => {
 
   const HoldPassword = (e) => {
     setUserInfo({ ...userInfo, password: e.target.value });
-    if (PasswordErrorMsg.err) setPasswordErrorMsg({ err: false, name: "", msg: "" });
+    if (PasswordErrorMsg.err)
+      setPasswordErrorMsg({ err: false, name: "", msg: "" });
   };
 
-  const handleValidationAndSubmit = async() => {
+  const handleValidationAndSubmit = async () => {
     const isEmailValid = validateEmail(userInfo.email);
     const isPasswordValid = validatePassword(userInfo.password);
 
@@ -72,12 +93,12 @@ const Login = () => {
           email: userInfo.email,
           password: userInfo.password,
           accountType: accountType,
-        })
+        }),
       ).unwrap();
 
       message.success("Login successful!");
-      
-      if (result.accountType === 'vendor' || result.vendor) {
+
+      if (result.accountType === "vendor" || result.vendor) {
         navigate("/vendordashboard");
       } else {
         navigate("/userdashboard");
@@ -85,17 +106,19 @@ const Login = () => {
     } catch (err) {
       message.error(err || "Invalid email or password");
     }
-    const status = error.response
-
+    const status = error.response;
   };
-
 
   return (
     <div className="vl-page">
       <div className="vl-left">
         <div className="vl-form-container">
           <div className="vl-logo">
-            <img src={HeeaderLogo} alt="FeastSync Logo" className="vl-logo-img" />
+            <img
+              src={HeeaderLogo}
+              alt="FeastSync Logo"
+              className="vl-logo-img"
+            />
             <div className="vl-logo-text">FeastSync</div>
           </div>
 
@@ -112,7 +135,9 @@ const Login = () => {
               value={userInfo.email}
               onChange={HoldEmail}
               onBlur={() => validateEmail(userInfo.email)}
-              onFocus={() => setEmailErrorMsg({ err: false, name: "", msg: "" })}
+              onFocus={() =>
+                setEmailErrorMsg({ err: false, name: "", msg: "" })
+              }
               className={`vl-input${EmailErrorMsg.err ? " vl-input--error" : ""}`}
             />
             {EmailErrorMsg.err && EmailErrorMsg.name === "email" && (
@@ -129,7 +154,9 @@ const Login = () => {
                 value={userInfo.password}
                 onChange={HoldPassword}
                 onBlur={() => validatePassword(userInfo.password)}
-                onFocus={() => setPasswordErrorMsg({ err: false, name: "", msg: "" })}
+                onFocus={() =>
+                  setPasswordErrorMsg({ err: false, name: "", msg: "" })
+                }
                 className={`vl-input vl-input--password${PasswordErrorMsg.err ? " vl-input--error" : ""}`}
               />
               <button
@@ -137,7 +164,11 @@ const Login = () => {
                 className="vl-eye-btn"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? <FaRegEyeSlash size={18} /> : <FaRegEye size={18} />}
+                {showPassword ? (
+                  <FaRegEyeSlash size={18} />
+                ) : (
+                  <FaRegEye size={18} />
+                )}
               </button>
             </div>
             {PasswordErrorMsg.err && PasswordErrorMsg.name === "password" && (
@@ -158,7 +189,7 @@ const Login = () => {
                 />
                 <span>Vendor</span>
               </label>
-              
+
               <label className="vl-checkbox-label">
                 <input
                   type="radio"
@@ -170,9 +201,13 @@ const Login = () => {
                 <span>Client/User</span>
               </label>
             </div>
-            
-            <Link 
-              to={accountType === "vendor" ? "/vendor/forgot-password" : "/forgot-password"} 
+
+            <Link
+              to={
+                accountType === "vendor"
+                  ? "/forgot-password?role=vendor"
+                  : "/forgot-password"
+              }
               className="vl-forgot"
             >
               Forgot password?
@@ -188,8 +223,8 @@ const Login = () => {
 
           <p className="vl-register-text">
             Don't have an account yet?{" "}
-            <Link 
-              to={accountType === "vendor" ? "/vendor/onboarding" : "/onboarding"} 
+            <Link
+              to={accountType === "vendor" ? "/vendor/signup" : "/user/signup"}
               className="vl-register-link"
             >
               REGISTER HERE
