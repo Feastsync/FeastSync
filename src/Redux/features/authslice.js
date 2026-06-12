@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import api from "../app/axios"
-
+import { persistor } from '../app/store'
 export const login = createAsyncThunk(
   'auth/login',
   async ({ email, password, accountType }, { rejectWithValue }) => {
@@ -237,6 +237,18 @@ const authSlice = createSlice({
         state.isLoading = false
         state.error = action.payload
       })
+
+            .addCase(resendOTP.pending, (state) => {
+        state.resendLoading = true
+        state.error = null
+      })
+      .addCase(resendOTP.fulfilled, (state) => {
+        state.resendLoading = false
+      })
+      .addCase(resendOTP.rejected, (state, action) => {
+        state.resendLoading = false
+        state.error = action.payload
+      })
  .addCase(logoutUser.fulfilled, (state) => {
   localStorage.removeItem('token')
   state.userInfo = null
@@ -244,6 +256,7 @@ const authSlice = createSlice({
   state.token = null
   state.accountType = null
   state.isLoggedIn = false
+  persistor.purge()
 })  
 .addCase(logoutUser.rejected, (state) => {
   localStorage.removeItem('token')
@@ -252,6 +265,7 @@ const authSlice = createSlice({
   state.token = null
   state.accountType = null
   state.isLoggedIn = false
+  persistor.purge()
 })
   }
 })
