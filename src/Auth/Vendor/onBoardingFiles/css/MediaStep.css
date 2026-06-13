@@ -14,14 +14,13 @@
 .media-modal {
   background: #ffffff;
   border-radius: 16px;
-  width: 90%;
-  max-width: 580px;
-  height: 85vh;
+  width: min(95%, 760px);
   box-shadow: none;
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  max-height: 100%;
 }
 
 .media-header {
@@ -89,9 +88,7 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  overflow-y: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  overflow: visible;
 }
 
 .media-body::-webkit-scrollbar {

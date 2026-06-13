@@ -23,7 +23,7 @@ const Login = () => {
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
   const [accountType, setAccountType] = useState("vendor"); // Default to vendor like Figma
   const [showVendorWelcome, setShowVendorWelcome] = useState(false);
-  const [vendorName, setVendorName] = useState("Vendor");
+  const [vendorName, setVendorName] = useState("");
   const [EmailErrorMsg, setEmailErrorMsg] = useState({
     err: false,
     msg: "",
@@ -99,16 +99,32 @@ const Login = () => {
         }),
       ).unwrap();
 
+      console.log("Login result:", result);
       message.success("Login successful!");
 
-      if (result.accountType === "vendor" || result.vendor) {
-        setVendorName(result.firstName || result.name || "Vendor");
+      if (result.accountType === "vendor") {
+        // Extract vendor name from various possible locations in response
+        const vendorName =
+          result.vendor?.stageName ||
+          result.vendor?.firstName ||
+          result.vendor?.name ||
+          result.stageName ||
+          result.firstName ||
+          result.name ||
+          "Vendor";
+
+        setVendorName(vendorName.toString());
         setShowVendorWelcome(true);
       } else {
         navigate("/userdashboard");
       }
     } catch (err) {
-      message.error(err || "Invalid email or password");
+      console.error("Login error details:", err);
+      const errorMessage =
+        typeof err === "string"
+          ? err
+          : err?.message || "Invalid email or password";
+      message.error(errorMessage);
     }
   };
 
@@ -243,7 +259,9 @@ const Login = () => {
               vendorName={vendorName}
               onContinue={() => {
                 setShowVendorWelcome(false);
-                navigate("/vendor/onboarding");
+                navigate("/vendordashboard", {
+                  state: { showOnboarding: true, vendorName },
+                });
               }}
               onSkip={() => {
                 setShowVendorWelcome(false);

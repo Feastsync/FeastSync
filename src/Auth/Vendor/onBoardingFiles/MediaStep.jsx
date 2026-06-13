@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { FiX, FiUpload } from "react-icons/fi";
 import "./css/MediaStep.css";
-import { useNavigate } from "react-router-dom";
 
 const MediaStep = ({ onNext, onBack, onSkip, percentComplete = 40 }) => {
-  const navigate = useNavigate();
   const [workExperience, setWorkExperience] = useState("");
   const [servicesOffered, setServicesOffered] = useState("");
   const wordCount =
     workExperience.trim() === ""
       ? 0
       : workExperience.trim().split(/\s+/).length;
+
+  const handleContinue = () => {
+    if (typeof onNext === "function") {
+      onNext();
+    }
+  };
 
   return (
     <div className="media-modal">
@@ -80,14 +84,18 @@ const MediaStep = ({ onNext, onBack, onSkip, percentComplete = 40 }) => {
       </div>
 
       <div className="media-footer">
-        <button className="media-btn-skip" onClick={() => navigate("/")}>
+        <button className="media-btn-skip" onClick={onSkip}>
           Skip for Now
         </button>
         <div className="media-footer-right">
-          <button className="media-btn-back" onClick={onBack}>
+          <button className="media-btn-back" type="button" onClick={onBack}>
             Back
           </button>
-          <button className="media-btn-continue" onClick={onNext}>
+          <button
+            className="media-btn-continue"
+            type="button"
+            onClick={handleContinue}
+          >
             Continue
           </button>
         </div>

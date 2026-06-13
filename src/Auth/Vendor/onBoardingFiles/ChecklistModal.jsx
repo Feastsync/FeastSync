@@ -20,19 +20,19 @@ const ChecklistModal = ({ onStart, onLater, completedSteps, percentComplete = 0 
       id: "bank",
       title: "Bank information",
       desc: "Bank details and state of residence",
-      done: completedSteps.bank
+      done: completedSteps.bank,
     },
     {
-      id: "media", 
+      id: "media",
       title: "Portfolio & Gallery",
       desc: "Upload photos and videos of your work",
-      done: completedSteps.media
+      done: completedSteps.media,
     },
     {
       id: "pricing",
-      title: "Pricing & Packages", 
+      title: "Pricing & Packages",
       desc: "Set your pricing and service packages",
-      done: completedSteps.pricing
+      done: completedSteps.pricing,
     },
     {
       id: "docs",
