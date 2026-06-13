@@ -19,7 +19,6 @@ const DocumentStep = ({ onNext, onBack, onSkip, percentComplete = 80 }) => {
   };
 
   return (
-    <div className="ds-overlay">
       <div className="ds-modal">
 
         <div className="ds-header">
@@ -86,7 +85,6 @@ const DocumentStep = ({ onNext, onBack, onSkip, percentComplete = 80 }) => {
         </div>
 
       </div>
-    </div>
   );
 };
 

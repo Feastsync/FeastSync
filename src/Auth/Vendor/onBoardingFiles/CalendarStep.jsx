@@ -4,39 +4,47 @@ import "./css/CalendarStep.css";
 import { useNavigate } from "react-router-dom";
 
 const CalendarStep = ({ onNext, onBack }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
-    <div className="cs-overlay">
-      <div className="cs-modal">
-        <div className="cs-header">
-          <div>
-            <h2>Availability Calendar</h2>
-            <p>You need to complete your profile before accessing vendor features</p>
-            <div className="cs-progress-bar">
-              <div className="cs-progress-fill" style={{width: '100%'}} />
-            </div>
+    <div className="cs-modal">
+      <div className="cs-header">
+        <div>
+          <h2>Availability Calendar</h2>
+          <p>
+            You need to complete your profile before accessing vendor features
+          </p>
+          <div className="cs-progress-bar">
+            <div className="cs-progress-fill" style={{ width: "100%" }} />
           </div>
-          <button className="cs-close" onClick={onBack}>
-            <IoClose size={24} />
+        </div>
+        <button className="cs-close" onClick={onBack}>
+          <IoClose size={24} />
+        </button>
+      </div>
+
+      <div className="cs-body">
+        <h3 className="cs-section-title">Set Your Availability</h3>
+        <p className="cs-subtitle">
+          Configure when you're available for bookings
+        </p>
+
+        <div className="cs-calendar-placeholder">
+          <p>Calendar</p>
+          <span>Mark unavailable dates and set working hours</span>
+        </div>
+      </div>
+
+      <div className="cs-footer">
+        <button className="cs-btn-text" onClick={() => navigate("/")}>
+          Skip for Now
+        </button>
+        <div className="cs-btn-group">
+          <button className="cs-btn-outline" onClick={onBack}>
+            Back
           </button>
-        </div>
-
-        <div className="cs-body">
-          <h3 className="cs-section-title">Set Your Availability</h3>
-          <p className="cs-subtitle">Configure when you're available for bookings</p>
-          
-          <div className="cs-calendar-placeholder">
-            <p>Calendar</p>
-            <span>Mark unavailable dates and set working hours</span>
-          </div>
-        </div>
-
-        <div className="cs-footer">
-          <button className="cs-btn-text" onClick={()=> navigate("/")} >Skip for Now</button>
-          <div className="cs-btn-group">
-            <button className="cs-btn-outline" onClick={onBack}>Back</button>
-            <button className="cs-btn-primary" onClick={onNext}>Complete Setup</button>
-          </div>
+          <button className="cs-btn-primary" onClick={onNext}>
+            Complete Setup
+          </button>
         </div>
       </div>
     </div>
