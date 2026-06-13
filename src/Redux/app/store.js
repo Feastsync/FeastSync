@@ -3,6 +3,7 @@ import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import authReducer from '../features/authslice'
 import userReducer from '../features/userslice'
 import vendorReducer from '../features/vendorslice'
+import bookingReducer from '../features/bookingSlice'  
 
 // CHANGE: custom storage engine — bypasses the broken redux-persist storage import in Vite
 const customStorage = {
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,
   vendor: vendorReducer,
+  booking: bookingReducer,
 })
 
 const persistConfig = {

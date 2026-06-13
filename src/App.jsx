@@ -44,6 +44,7 @@ import Settings from "./Page/SettingsPage/Settings.jsx";
 import { ScrollToTop } from "./Components/Highfunction.jsx";
 import Epknorating from "./Auth/Vendor/Epknorating.jsx";
 import Epkrating from "./Auth/Vendor/Epkrating.jsx";
+import BookingModal from "./Page/Booking/Booking.jsx";
 import IncompleteBanner from "./Auth/Vendor/onBoardingFiles/IncompleteBanner.jsx";
 
 const App = () => {
@@ -78,6 +79,8 @@ const App = () => {
         <Route path="/vendor/signup" element={<VendorSignUp />} />
         <Route path="/user/signup" element={<UserSignUp />} />
         <Route path="getStarted" element={<GetStarted />} />
+        <Route path="bookings" element={<BookingModal />} />
+        
         <Route
           path="/vendor/onboarding"
           element={
@@ -93,7 +96,7 @@ const App = () => {
             </PrivateRoute>
           }
         />
-        <Route path="/epknorating" element={<Epknorating />} />
+        <Route path="/epknorating/:vendorId" element={<Epknorating />} />
         <Route path="/epkrating/:id" element={<Epkrating />} />
         <Route path="/505" element={<Error505 />} />
 
