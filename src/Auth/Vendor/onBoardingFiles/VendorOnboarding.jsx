@@ -27,17 +27,17 @@ const VendorOnboarding = ({ isOpen, onClose, vendorName }) => {
 
   const percentComplete = total ? Math.round((done / total) * 100) : 0;
 
+  const stepMap = {
+    bank: "media",
+    media: "pricing",
+    pricing: "docs",
+    docs: "calendar",
+    calendar: "success",
+  };
+
   const completeStep = (stepName) => {
     setCompletedSteps((prev) => ({ ...prev, [stepName]: true }));
-
-    const order = ["bank", "media", "pricing", "docs", "calendar"];
-    const nextIndex = order.indexOf(stepName) + 1;
-
-    if (nextIndex < order.length) {
-      setCurrentStep(order[nextIndex]);
-    } else {
-      setCurrentStep("success");
-    }
+    setCurrentStep(stepMap[stepName] || "success");
   };
 
   const steps = {

@@ -46,10 +46,22 @@ import Epknorating from "./Auth/Vendor/Epknorating.jsx";
 import Epkrating from "./Auth/Vendor/Epkrating.jsx";
 import IncompleteBanner from "./Auth/Vendor/onBoardingFiles/IncompleteBanner.jsx";
 
-const App = () => {
-  const { user } = useSelector((state) => state.auth);
-  const vendorName = user?.firstName || "Vendor";
+const OnboardingPage = () => {
+  const { vendorInfo } = useSelector((state) => state.auth);
+  const vendorName = vendorInfo?.stageName || vendorInfo?.firstName || "";
+  return (
+    <>
+      <Vendordashboard />
+      <VendorOnboarding
+        isOpen={true}
+        vendorName={vendorName}
+        onClose={() => (window.location.href = "/vendordashboard")}
+      />
+    </>
+  );
+};
 
+const App = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -82,14 +94,7 @@ const App = () => {
           path="/vendor/onboarding"
           element={
             <PrivateRoute>
-              <>
-                <Vendordashboard />
-                <VendorOnboarding
-                  isOpen={true}
-                  vendorName={vendorName}
-                  onClose={() => (window.location.href = "/vendordashboard")}
-                />
-              </>
+              <OnboardingPage />
             </PrivateRoute>
           }
         />
