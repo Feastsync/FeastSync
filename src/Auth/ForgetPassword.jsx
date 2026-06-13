@@ -3,11 +3,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { forgotPassword } from "../Redux/features/authslice";
 import { message } from "antd";
-import Headerlogo from "../assets/logos/Headerlogo.png";
 import Button from "../Props/Button";
 import { FaArrowLeft } from "react-icons/fa6";
 import "../Auth/Css/ForgotPassword.css";
-import Header from "../Components/Header";
 
 const EmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -15,15 +13,14 @@ const ForgetPassword = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+
   const params = new URLSearchParams(location.search);
 
-  const currentRole = params.get("role");
-  console.log(currentRole);
-
+  const accountType = useSelector((state) => state.auth.accountType);
   const { isLoading } = useSelector((state) => state.auth);
 
-  const accountType = useSelector((state) => state.auth.accountType);
-  console.log(accountType);
+  // Fallback to Redux accountType or user
+  const currentRole = params.get("role") || accountType || "user";
 
   const [email, setEmail] = useState("");
 
@@ -39,11 +36,14 @@ const ForgetPassword = () => {
     }
 
     try {
+      console.log("Role:", currentRole);
+      console.log("Email:", email);
+
       await dispatch(
         forgotPassword({
           email,
-          accountType,
-        }),
+          accountType: currentRole,
+        })
       ).unwrap();
 
       message.success("Recovery OTP sent to your email");
@@ -51,11 +51,12 @@ const ForgetPassword = () => {
       navigate("/verify-otp", {
         state: {
           email,
-          accountType,
+          accountType: currentRole,
           isForgotPassword: true,
         },
       });
     } catch (err) {
+      console.error("Forgot Password Error:", err);
       message.error(err || "Failed to send OTP");
     }
   };
@@ -64,14 +65,13 @@ const ForgetPassword = () => {
     <div>
       <div className="forgotPasswordLogo">
         <div className="forgetPasswordLogo">
-          <Header />
         </div>
       </div>
 
       <div className="forgotPaswwordContainer">
         <div className="forgotPasswordHolder">
           <div className="forgotPasswordButton">
-            <Button>
+            <Button onClick={() => navigate(-1)}>
               <p>
                 <FaArrowLeft />
               </p>
@@ -82,17 +82,19 @@ const ForgetPassword = () => {
           <div className="forgotPasswordAssurance">
             <p className="forgotPasswordText">Forgot Password?</p>
             <p className="forgotPasswordLink">
-              No worries Enter your email address and we'll send you a link to
-              reset your password.
+              No worries. Enter your email address and we'll send you an OTP
+              to reset your password.
             </p>
           </div>
 
           <div className="passwordEmail">
             <section className="passwordEmailWrapper">
-              <label htmlFor="">Email Address</label>
+              <label>Email Address</label>
+
               <input
                 type="email"
                 placeholder="Your email address"
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </section>
@@ -102,12 +104,14 @@ const ForgetPassword = () => {
             </Button>
 
             <p>
-              Remember your password?
+              Remember your password?{" "}
               <span
                 style={{
                   color: "#330159",
                   fontWeight: "bold",
+                  cursor: "pointer",
                 }}
+                onClick={() => navigate("/login")}
               >
                 Sign in
               </span>
@@ -116,7 +120,10 @@ const ForgetPassword = () => {
         </div>
 
         <div className="forgotPasswordImage">
-          <img src="../public/About/Icon.png" alt="Forgot Password Icon" />
+          <img
+            src="../public/About/Icon.png"
+            alt="Forgot Password Icon"
+          />
         </div>
       </div>
     </div>

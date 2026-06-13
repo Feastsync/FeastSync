@@ -44,6 +44,76 @@
   min-width: 60px;
   text-align: center;
 }
+/* Error State */
+.fv_error {
+  text-align: center;
+  padding: 100px 20px;
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.fv_error_icon {
+  font-size: 64px;
+  line-height: 1;
+}
+
+.fv_error p {
+  font-size: 18px;
+  color: #4b5563;
+  margin: 0;
+  font-weight: 500;
+}
+
+.fv_error button {
+  background: #4A148C;
+  color: #fff;
+  border: none;
+  padding: 14px 36px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+
+.fv_error button:hover {
+  background: #3a0f6e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 20, 140, 0.3);
+}
+
+.fv_error button:active {
+  transform: translateY(0);
+}
+
+/* Empty State */
+.fv_empty {
+  text-align: center;
+  padding: 100px 20px;
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.fv_empty_icon {
+  font-size: 64px;
+  line-height: 1;
+  opacity: 0.5;
+}
+
+.fv_empty p {
+  color: #6b7280;
+  font-size: 16px;
+  margin: 0;
+}
 
 @media (max-width: 860px) {
   .category_grid {

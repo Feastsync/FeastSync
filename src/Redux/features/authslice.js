@@ -55,20 +55,25 @@ export const verifyOTP = createAsyncThunk(
 );
 
 export const forgotPassword = createAsyncThunk(
-  'auth/forgotPassword',
+  "auth/forgotPassword",
   async ({ email, accountType }, { rejectWithValue }) => {
     try {
       const endpoint =
-        accountType === 'user'
-          ? '/user/forgot-password'
-          : '/vendor/forgot-password';
+        accountType === "user"
+          ? "/user/forgot-password"
+          : "/vendor/forgot-password";
+
+      console.log("ENDPOINT:", endpoint);
+      console.log("EMAIL:", email);
 
       const res = await api.post(endpoint, { email });
 
       return res.data;
     } catch (err) {
+      console.log("FORGOT PASSWORD ERROR:", err.response?.data);
+
       return rejectWithValue(
-        err.response?.data?.message || 'Failed to send OTP'
+        err.response?.data?.message || "Failed to send OTP"
       );
     }
   }
