@@ -9,6 +9,12 @@
   z-index: 9999;
   padding: 40px 16px;
   overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.bank-modal-overlay::-webkit-scrollbar {
+  display: none;
 }
 
 .bank-modal {
@@ -16,14 +22,14 @@
   border-radius: 16px;
   width: 100%;
   max-width: 680px;
-  min-height: 120vh;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-height: 90vh;
+  box-shadow: none;
   display: flex;
   flex-direction: column;
 }
 
 .bank-modal-header {
-  background: linear-gradient(135deg, #5B2C83 0%, #330159 100%);
+  background: linear-gradient(135deg, #5b2c83 0%, #330159 100%);
   padding: 32px 32px 24px;
   border-radius: 16px 16px 0 0;
   color: #ffffff;
@@ -37,7 +43,7 @@
 }
 
 .bank-modal-header h2 {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 28px;
   font-weight: 700;
   margin: 0;
@@ -59,7 +65,7 @@
 }
 
 .bank-subtext {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 15px;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.9);
@@ -84,12 +90,19 @@
 .bank-modal-body {
   padding: 32px;
   flex: 1;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.bank-modal-body::-webkit-scrollbar {
+  display: none;
 }
 
 .bank-warning {
   display: flex;
   gap: 12px;
-  background: #FFF4F4;
+  background: #fff4f4;
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 32px;
@@ -97,25 +110,25 @@
 
 .bank-warning-bar {
   width: 4px;
-  background: #E74C3C;
+  background: #e74c3c;
   border-radius: 2px;
   flex-shrink: 0;
 }
 
 .bank-warning p {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 14px;
   font-weight: 400;
-  color: #C0392B;
+  color: #c0392b;
   margin: 0;
   line-height: 1.5;
 }
 
 .bank-form-section h3 {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 20px;
   font-weight: 600;
-  color: #1A1A1A;
+  color: #1a1a1a;
   margin: 0 0 24px 0;
 }
 
@@ -125,10 +138,10 @@
 
 .bank-field label {
   display: block;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 15px;
   font-weight: 500;
-  color: #1A1A1A;
+  color: #1a1a1a;
   margin-bottom: 8px;
 }
 
@@ -140,12 +153,12 @@
 .bank-field input {
   width: 100%;
   padding: 14px 16px;
-  border: 1px solid #D1D1D1;
+  border: 1px solid #d1d1d1;
   border-radius: 8px;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 15px;
   font-weight: 400;
-  color: #1A1A1A;
+  color: #1a1a1a;
   background: #ffffff;
   appearance: none;
   cursor: pointer;
@@ -172,7 +185,7 @@
 
 .bank-modal-footer {
   padding: 24px 32px 32px;
-  border-top: 1px solid #E5E5E5;
+  border-top: 1px solid #e5e5e5;
   background: #ffffff;
   border-radius: 0 0 16px 16px;
   display: flex;
@@ -183,8 +196,8 @@
 .bank-btn-text {
   background: transparent;
   border: none;
-  color: #1A1A1A;
-  font-family: 'Inter', sans-serif;
+  color: #1a1a1a;
+  font-family: "Inter", sans-serif;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
@@ -202,11 +215,11 @@
 
 .bank-btn-secondary {
   background: #ffffff;
-  color: #1A1A1A;
-  border: 1px solid #D1D1D1;
+  color: #1a1a1a;
+  border: 1px solid #d1d1d1;
   border-radius: 8px;
   padding: 14px 32px;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -214,7 +227,7 @@
 }
 
 .bank-btn-secondary:hover {
-  background: #F5F5F5;
+  background: #f5f5f5;
 }
 
 .bank-btn-primary {
@@ -223,7 +236,7 @@
   border: none;
   border-radius: 8px;
   padding: 14px 32px;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -235,7 +248,7 @@
 }
 
 .bank-btn-primary:disabled {
-  background: #CCCCCC;
+  background: #cccccc;
   cursor: not-allowed;
 }
 
@@ -243,32 +256,32 @@
   .bank-modal-overlay {
     padding: 20px 12px;
   }
-  
+
   .bank-modal-header,
   .bank-modal-body,
   .bank-modal-footer {
     padding-left: 20px;
     padding-right: 20px;
   }
-  
+
   .bank-modal-header h2 {
     font-size: 24px;
   }
-  
+
   .bank-modal-footer {
     flex-direction: column;
     gap: 12px;
   }
-  
+
   .bank-btn-text {
     order: 2;
   }
-  
+
   .bank-footer-actions {
     width: 100%;
     order: 1;
   }
-  
+
   .bank-btn-secondary,
   .bank-btn-primary {
     flex: 1;

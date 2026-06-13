@@ -43,7 +43,6 @@ const ChecklistModal = ({ onStart, onLater, completedSteps, percentComplete = 0 
   ];
 
   return (
-    <div className="profile-modal-overlay">
       <div className="profile-modal">
         <div className="profile-modal-header">
           <div className="profile-header-top">
@@ -103,7 +102,6 @@ const ChecklistModal = ({ onStart, onLater, completedSteps, percentComplete = 0 
         </div>
 
       </div>
-    </div>
   );
 };
 

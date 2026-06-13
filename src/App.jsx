@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./lib/Private.jsx";
+import { useSelector } from "react-redux";
 
 // Pages
 import Home from "./Page/Home.jsx";
@@ -43,14 +44,16 @@ import Settings from "./Page/SettingsPage/Settings.jsx";
 import { ScrollToTop } from "./Components/Highfunction.jsx";
 import Epknorating from "./Auth/Vendor/Epknorating.jsx";
 import Epkrating from "./Auth/Vendor/Epkrating.jsx";
+import IncompleteBanner from "./Auth/Vendor/onBoardingFiles/IncompleteBanner.jsx";
 
 const App = () => {
+  const { user } = useSelector((state) => state.auth);
+  const vendorName = user?.firstName || "Vendor";
+
   return (
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
-
-     
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/howitworks/*" element={<Howitworks />} />
@@ -67,7 +70,6 @@ const App = () => {
           <Route path="services" element={<Services />} />
         </Route>
 
-
         <Route path="/onboarding" element={<OnBoarding />} />
         <Route path="/login" element={<Login />} />
         <Route path="/verify-otp" element={<OTP />} />
@@ -76,49 +78,122 @@ const App = () => {
         <Route path="/vendor/signup" element={<VendorSignUp />} />
         <Route path="/user/signup" element={<UserSignUp />} />
         <Route path="getStarted" element={<GetStarted />} />
-        <Route path="/vendor/onboarding" element={<VendorOnboarding />} />
-        <Route path="/welcomeModal" element={<WelcomeModal />} />
+        <Route
+          path="/vendor/onboarding"
+          element={
+            <PrivateRoute>
+              <>
+                <Vendordashboard />
+                <VendorOnboarding
+                  isOpen={true}
+                  vendorName={vendorName}
+                  onClose={() => (window.location.href = "/vendordashboard")}
+                />
+              </>
+            </PrivateRoute>
+          }
+        />
         <Route path="/epknorating" element={<Epknorating />} />
         <Route path="/epkrating/:id" element={<Epkrating />} />
         <Route path="/505" element={<Error505 />} />
 
-        <Route path="/vendordashboard" element={
-          <PrivateRoute><Vendordashboard /></PrivateRoute>
-        } />
-        <Route path="/vendordashboardrating" element={
-          <PrivateRoute><Vendordashboardrating /></PrivateRoute>
-        } />
-        <Route path="/userdashboard" element={
-          <PrivateRoute><Userdashboard /></PrivateRoute>
-        } />
-        <Route path="/bookingrequest" element={
-          <PrivateRoute><BookingRequest /></PrivateRoute>
-        } />
-        <Route path="/ratingreview" element={
-          <PrivateRoute><RatingReview /></PrivateRoute>
-        } />
-        <Route path="/wallet/transactions" element={
-          <PrivateRoute><VendorWallet /></PrivateRoute>
-        } />
-        <Route path="/transaction/histories" element={
-          <PrivateRoute><WalletLedger /></PrivateRoute>
-        } />
-        <Route path="/notifications/:category?" element={
-          <PrivateRoute><AllNotifications /></PrivateRoute>
-        } />
-        <Route path="/chats" element={
-          <PrivateRoute><Chat /></PrivateRoute>
-        } />
-        <Route path="/Settings" element={
-          <PrivateRoute><Settings /></PrivateRoute>
-        } />
-        <Route path="/vendorsetting" element={
-          <PrivateRoute><VendorSetting /></PrivateRoute>
-        } />
-        <Route path="/vendor/kyc" element={
-          <PrivateRoute><VendorKYC /></PrivateRoute>
-        } />
-       <Route path="*" element={<Error404 />} />
+        <Route
+          path="/vendordashboard"
+          element={
+            <PrivateRoute>
+              <Vendordashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/vendordashboardrating"
+          element={
+            <PrivateRoute>
+              <Vendordashboardrating />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/userdashboard"
+          element={
+            <PrivateRoute>
+              <Userdashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/bookingrequest"
+          element={
+            <PrivateRoute>
+              <BookingRequest />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/ratingreview"
+          element={
+            <PrivateRoute>
+              <RatingReview />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/wallet/transactions"
+          element={
+            <PrivateRoute>
+              <VendorWallet />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/transaction/histories"
+          element={
+            <PrivateRoute>
+              <WalletLedger />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/notifications/:category?"
+          element={
+            <PrivateRoute>
+              <AllNotifications />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/chats"
+          element={
+            <PrivateRoute>
+              <Chat />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/Settings"
+          element={
+            <PrivateRoute>
+              <Settings />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/vendorsetting"
+          element={
+            <PrivateRoute>
+              <VendorSetting />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/vendor/kyc"
+          element={
+            <PrivateRoute>
+              <VendorKYC />
+            </PrivateRoute>
+          }
+        />
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </BrowserRouter>
   );

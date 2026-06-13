@@ -93,8 +93,6 @@ const OTPVerification = () => {
         ).unwrap();
 
         message.success("OTP verified successfully!");
-
-        // ✅ FIXED LINE (ONLY CHANGE)
         navigate("/reset-password", {
           state: {
             email,

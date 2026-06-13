@@ -6,6 +6,7 @@ import { login } from "../Redux/features/authslice";
 import { message } from "antd";
 import Input from "../Props/Imp";
 import Button from "../Props/Button";
+import WelcomeModal from "./Vendor/onBoardingFiles/WelcomeModal.jsx";
 import "./Css/Login.css";
 import HeeaderLogo from "../assets/logos/Headerlogo.png";
 import LoginPic from "../assets/BackgroundImage/LoginPic.jpeg";
@@ -21,6 +22,8 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
   const [accountType, setAccountType] = useState("vendor"); // Default to vendor like Figma
+  const [showVendorWelcome, setShowVendorWelcome] = useState(false);
+  const [vendorName, setVendorName] = useState("Vendor");
   const [EmailErrorMsg, setEmailErrorMsg] = useState({
     err: false,
     msg: "",
@@ -99,14 +102,14 @@ const Login = () => {
       message.success("Login successful!");
 
       if (result.accountType === "vendor" || result.vendor) {
-        navigate("/vendordashboard");
+        setVendorName(result.firstName || result.name || "Vendor");
+        setShowVendorWelcome(true);
       } else {
         navigate("/userdashboard");
       }
     } catch (err) {
       message.error(err || "Invalid email or password");
     }
-    const status = error.response;
   };
 
   return (
@@ -232,6 +235,24 @@ const Login = () => {
           </p>
         </div>
       </div>
+
+      {showVendorWelcome && (
+        <div className="vl-popup-overlay">
+          <div className="vl-popup-card">
+            <WelcomeModal
+              vendorName={vendorName}
+              onContinue={() => {
+                setShowVendorWelcome(false);
+                navigate("/vendor/onboarding");
+              }}
+              onSkip={() => {
+                setShowVendorWelcome(false);
+                navigate("/");
+              }}
+            />
+          </div>
+        </div>
+      )}
 
       <img className="vl-right" src={LoginPic} alt="" />
     </div>
