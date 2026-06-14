@@ -80,16 +80,16 @@
 
 .cs-subtitle {
   font-size: 14px;
-  color: #6B7280;
+  color: #6b7280;
   margin: 0 0 24px;
 }
 
 .cs-calendar-placeholder {
-  border: 2px dashed #E5E7EB;
+  border: 2px dashed #e5e7eb;
   border-radius: 8px;
   padding: 80px 24px;
   text-align: center;
-  color: #6B7280;
+  color: #6b7280;
 }
 
 .cs-calendar-placeholder p {
@@ -103,9 +103,41 @@
   font-size: 14px;
 }
 
+.cs-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.cs-day-btn.available {
+  background: #ffffff;
+  color: #333;
+  border: 1px solid #ddd;
+  padding: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.cs-day-btn.booked {
+  background: #c64a00;
+  color: #fff;
+  border: 1px solid #c64a00;
+  padding: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.cs-day-btn.available:hover {
+  border-color: #c64a00;
+}
+
 .cs-footer {
   padding: 24px 32px;
-  border-top: 1px solid #E5E7EB;
+  border-top: 1px solid #e5e7eb;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -143,7 +175,7 @@
 .cs-btn-text {
   background: none;
   border: none;
-  color: #6B7280;
+  color: #6b7280;
   font-size: 16px;
   cursor: pointer;
 }

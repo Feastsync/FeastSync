@@ -6,9 +6,8 @@ export const login = createAsyncThunk(
   "auth/login",
   async ({ email, password, accountType }, { rejectWithValue }) => {
     try {
-      const endpoint = accountType === "user"? "/user/login" : "/vendor/login";
+      const endpoint = accountType === "user" ? "/user/login" : "/vendor/login";
       const res = await api.post(endpoint, { email, password });
-     
 
       const responseData = res.data?.data || res.data;
       const token = responseData?.token || res.data?.token;
@@ -27,11 +26,11 @@ export const login = createAsyncThunk(
       //   vendor: responseData?.vendor || responseData,
       // };
       const payload = {
-  token,                                        // token from localStorage
-  accountType,
-  user:       responseData?.user   || null,
-  vendor:     responseData?.vendor || responseData || null,
-};
+        token, // token from localStorage
+        accountType,
+        user: responseData?.user || null,
+        vendor: responseData?.vendor || responseData || null,
+      };
 
       return payload;
     } catch (err) {
@@ -46,18 +45,17 @@ export const login = createAsyncThunk(
   },
 );
 
-
 export const verifyOTP = createAsyncThunk(
   "auth/verifyOTP",
   async ({ email, otp, accountType }, { rejectWithValue }) => {
     try {
       const endpoint =
-        accountType === "user"? "/user/verify" : "/vendor/verify";
+        accountType === "user" ? "/user/verify" : "/vendor/verify";
       const res = await api.post(endpoint, { email, otp });
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
       }
-      return {...res.data, accountType };
+      return { ...res.data, accountType };
     } catch (err) {
       return rejectWithValue(
         err.response?.data?.message || "OTP verification failed",
@@ -71,7 +69,7 @@ export const resendOTP = createAsyncThunk(
   async ({ email, accountType }, { rejectWithValue }) => {
     try {
       const endpoint =
-        accountType === "user"? "/user/resend-otp" : "/vendor/resend-otp";
+        accountType === "user" ? "/user/resend-otp" : "/vendor/resend-otp";
 
       const res = await api.post(endpoint, { email });
       return res.data;
@@ -89,7 +87,7 @@ export const forgotPassword = createAsyncThunk(
     try {
       const endpoint =
         accountType === "user"
-         ? "/user/forgot-password"
+          ? "/user/forgot-password"
           : "/vendor/forgot-password";
 
       const res = await api.post(endpoint, { email });
@@ -102,14 +100,16 @@ export const forgotPassword = createAsyncThunk(
   },
 );
 
-
 export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
-  async ({ email, otp, password, confirmPassword, accountType }, { rejectWithValue }) => {
+  async (
+    { email, otp, password, confirmPassword, accountType },
+    { rejectWithValue },
+  ) => {
     try {
       const endpoint =
         accountType === "user"
-         ? "/user/reset-password"
+          ? "/user/reset-password"
           : "/vendor/reset-password";
 
       const res = await api.post(endpoint, {
@@ -163,23 +163,50 @@ export const getAllPricing = createAsyncThunk(
   },
 );
 
+export const updatePricing = createAsyncThunk(
+  "auth/updatePricing",
+  async (
+    { pricingId, packagePrice, packageDescription, packageName },
+    { rejectWithValue },
+  ) => {
+    try {
+      const res = await api.put(`/new-pricing/${pricingId}`, {
+        packagePrice,
+        packageDescription,
+        packageName,
+      });
+
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || "Failed to update pricing package",
+      );
+    }
+  },
+);
+
 export const updateVendorProfile = createAsyncThunk(
   "vendor/updateProfile",
-  async (profileData, { rejectWithValue }) => {
+  async ({ id, profileData }, { rejectWithValue }) => {
     try {
       const response = await api.put(
-        "/vendor/update-profile",
-        profileData
+        `/vendor/update-profile/${id}`,
+        profileData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        },
       );
 
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to update profile"
+        error.response?.data?.message || "Failed to update profile",
       );
     }
-  }
-); 
+  },
+);
 
 export const logoutUser = createAsyncThunk(
   "auth/logout",
@@ -187,7 +214,7 @@ export const logoutUser = createAsyncThunk(
     try {
       const { accountType } = getState().auth;
       const endpoint =
-        accountType === "user"? "/user/logout" : "/vendor/logout";
+        accountType === "user" ? "/user/logout" : "/vendor/logout";
       await api.post(endpoint);
     } catch (err) {
       return rejectWithValue(err.response?.data?.message);
@@ -202,7 +229,7 @@ const authSlice = createSlice({
     vendorInfo: null,
     token: localStorage.getItem("token") || null,
     accountType: null,
-    isLoggedIn:!!localStorage.getItem("token"),
+    isLoggedIn: !!localStorage.getItem("token"),
     isLoading: false,
     loading: false,
     error: null,
@@ -221,17 +248,17 @@ const authSlice = createSlice({
     clearError: (state) => {
       state.error = null;
     },
-     updateVendorInfo: (state, action) => {
-    state.vendorInfo = { ...state.vendorInfo, ...action.payload };
-  },
+    updateVendorInfo: (state, action) => {
+      state.vendorInfo = { ...state.vendorInfo, ...action.payload };
+    },
   },
   extraReducers: (builder) => {
     builder
-     .addCase(login.pending, (state) => {
+      .addCase(login.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-     .addCase(login.fulfilled, (state, action) => {
+      .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isLoggedIn = true;
         state.token = action.payload.token;
@@ -243,16 +270,16 @@ const authSlice = createSlice({
           state.vendorInfo = action.payload.vendor || action.payload;
         }
       })
-     .addCase(login.rejected, (state, action) => {
+      .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
 
-     .addCase(verifyOTP.pending, (state) => {
+      .addCase(verifyOTP.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-     .addCase(verifyOTP.fulfilled, (state, action) => {
+      .addCase(verifyOTP.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isLoggedIn = true;
         state.token = action.payload.token;
@@ -263,58 +290,58 @@ const authSlice = createSlice({
           state.vendorInfo = action.payload.vendor;
         }
       })
-     .addCase(verifyOTP.rejected, (state, action) => {
+      .addCase(verifyOTP.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
 
-     .addCase(resendOTP.pending, (state) => {
+      .addCase(resendOTP.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-     .addCase(resendOTP.fulfilled, (state) => {
+      .addCase(resendOTP.fulfilled, (state) => {
         state.isLoading = false;
       })
-     .addCase(resendOTP.rejected, (state, action) => {
+      .addCase(resendOTP.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
 
-     .addCase(forgotPassword.pending, (state) => {
+      .addCase(forgotPassword.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-     .addCase(forgotPassword.fulfilled, (state) => {
+      .addCase(forgotPassword.fulfilled, (state) => {
         state.isLoading = false;
       })
-     .addCase(forgotPassword.rejected, (state, action) => {
+      .addCase(forgotPassword.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
 
       // DELETED verifyResetPasswordOTP cases
 
-     .addCase(resetPassword.pending, (state) => {
+      .addCase(resetPassword.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-     .addCase(resetPassword.fulfilled, (state) => {
+      .addCase(resetPassword.fulfilled, (state) => {
         state.isLoading = false;
       })
-     .addCase(resetPassword.rejected, (state, action) => {
+      .addCase(resetPassword.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
 
-     .addCase(createPricing.pending, (state) => {
+      .addCase(createPricing.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-     .addCase(createPricing.fulfilled, (state, action) => {
+      .addCase(createPricing.fulfilled, (state, action) => {
         state.isLoading = false;
         const savedPricing = {
-         ...(action.payload || {}),
-         ...(action.meta?.arg || {}),
+          ...(action.payload || {}),
+          ...(action.meta?.arg || {}),
         };
         state.pricing = savedPricing;
         if (!Array.isArray(state.pricingPackages)) {
@@ -326,47 +353,76 @@ const authSlice = createSlice({
         );
         if (existingIndex >= 0) {
           state.pricingPackages[existingIndex] = {
-           ...state.pricingPackages[existingIndex],
-           ...savedPricing,
+            ...state.pricingPackages[existingIndex],
+            ...savedPricing,
           };
         } else {
           state.pricingPackages.push(savedPricing);
         }
       })
-     .addCase(createPricing.rejected, (state, action) => {
+      .addCase(createPricing.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
 
-     .addCase(getAllPricing.pending, (state) => {
+      .addCase(getAllPricing.pending, (state) => {
         state.loading = true;
       })
-     .addCase(getAllPricing.fulfilled, (state, action) => {
+      .addCase(getAllPricing.fulfilled, (state, action) => {
         state.loading = false;
         const payload = action.payload?.data || action.payload;
         state.pricingPackages = Array.isArray(payload)
-         ? payload
+          ? payload
           : [payload].filter(Boolean);
       })
-     .addCase(getAllPricing.rejected, (state, action) => {
+      .addCase(getAllPricing.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
 
-     .addCase(updateVendorProfile.pending, (state) => {
+      .addCase(updatePricing.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updatePricing.fulfilled, (state, action) => {
+        state.isLoading = false;
+
+        const updatedPricing = action.payload?.data || action.payload;
+
+        const index = state.pricingPackages.findIndex(
+          (item) => item.id === updatedPricing.id,
+        );
+
+        if (index !== -1) {
+          state.pricingPackages[index] = updatedPricing;
+        }
+
+        state.pricing = updatedPricing;
+      })
+      .addCase(updatePricing.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(updateVendorProfile.pending, (state) => {
         state.loading = true;
       })
-     .addCase(updateVendorProfile.fulfilled, (state, action) => {
+      .addCase(updateVendorProfile.fulfilled, (state, action) => {
         state.loading = false;
         state.vendorProfile = action.payload;
         state.success = true;
       })
-     .addCase(updateVendorProfile.rejected, (state, action) => {
+      .addCase(updateVendorProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+
+
+
+
+        
       })
 
-     .addCase(logoutUser.fulfilled, (state) => {
+      .addCase(logoutUser.fulfilled, (state) => {
         localStorage.removeItem("token");
         state.userInfo = null;
         state.vendorInfo = null;
@@ -375,7 +431,7 @@ const authSlice = createSlice({
         state.isLoggedIn = false;
         persistor.purge();
       })
-     .addCase(logoutUser.rejected, (state) => {
+      .addCase(logoutUser.rejected, (state) => {
         localStorage.removeItem("token");
         state.userInfo = null;
         state.vendorInfo = null;
