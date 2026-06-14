@@ -31,10 +31,10 @@ const FeaturedVendors = () => {
           image: vendor.secureUrl || vendor.avatar || vendor.image || ''
         }))
         setVendors(mappedVendors)
-        console.log("res", res)
+    
       } catch (err) {
         setError(err.response?.data?.message || 'Failed to fetch vendors')
-        console.error("err", err)
+     
       } finally {
         setLoading(false)
       }

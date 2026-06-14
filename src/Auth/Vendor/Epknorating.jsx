@@ -40,7 +40,7 @@ const Epknorating = () => {
         setPackages(vendorPackages)
       } catch (err) {
         setPricingError(err.response?.data?.message || 'Failed to load pricing')
-        console.error('Pricing fetch error:', err)
+    
       } finally {
         setPricingLoading(false)
       }
