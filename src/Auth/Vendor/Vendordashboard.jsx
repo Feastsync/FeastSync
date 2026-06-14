@@ -57,14 +57,7 @@ const Vendordashboard = () => {
       price: "₦550,000",
       highlights: [
         "Professional DJ performance",
-        "Up to 6 hours of playtime",
-        "Enhanced sound system",
-        "Customized playlist and song requests",
-        "Wireless microphone for announcements",
-        "Basic event coordination with MC",
-        "Dance floor crowd engagement",
-        "Early venue setup and sound check",
-        "Backup music equipments",
+
       ],
     },
     {
