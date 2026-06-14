@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiX, FiChevronDown } from "react-icons/fi";
-import { createPricing } from "../../../Redux/features/authslice";
+import {createPricing,getAllPricing,} from "../../../Redux/features/authslice";
 import { useDispatch } from "react-redux";
 import { message } from "antd";
 import "./css/PricingStep.css";
 
 const PricingStep = ({ onNext, onBack, onSkip, percentComplete = 60 }) => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllPricing())
+      .unwrap()
+      .then((data) => {
+        console.log("All Pricing:", data);
+      })
+      .catch((err) => {
+        console.log("Pricing Error:", err);
+      });
+  }, [dispatch]);
 
   const [startingPrice, setStartingPrice] = useState("");
   const [packageName, setPackageName] = useState("");
@@ -27,13 +38,14 @@ const PricingStep = ({ onNext, onBack, onSkip, percentComplete = 60 }) => {
         packagePrice: sanitizedPrice,
         packageDescription,
         packageName: packageName,
-      }),
+      })
     );
 
     setIsSubmitting(false);
 
     if (createPricing.fulfilled.match(result)) {
       message.success("Pricing package created successfully!");
+      console.log("Created Pricing:", result.payload);
       onNext();
     } else {
       message.error(result.payload || "Pricing creation failed");

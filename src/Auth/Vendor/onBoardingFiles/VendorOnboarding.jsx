@@ -12,10 +12,28 @@ import SuccessModal from "./SuccessModal.jsx";
 
 const VendorOnboarding = ({ isOpen, onClose }) => {
   const [currentStep, setCurrentStep] = useState("incomplete");
-  const [selectedCategory, setSelectedCategory] = useState(null); 
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  // NEW: store all vendor profile data here
+  const [vendorProfile, setVendorProfile] = useState({
+    category: "",
+    stateOfResidence: "",
+    bankName: "",
+    accountNumber: "",
+
+    bio: "",
+    servicesOffered: "",
+
+    profilePicture: null,
+    coverPhoto: null,
+    coverVideo: null,
+
+    photoCatalogue: [],
+    videoCatalogue: [],
+  });
 
   const [completedSteps, setCompletedSteps] = useState({
-    category: false, 
+    category: false,
     bank: false,
     media: false,
     pricing: false,
@@ -27,9 +45,12 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
 
   const total = Object.keys(completedSteps).length;
   const done = Object.values(completedSteps).filter(Boolean).length;
-  const percentComplete = total? Math.round((done / total) * 100) : 0;
+  const percentComplete = total
+    ? Math.round((done / total) * 100)
+    : 0;
 
   const stepMap = {
+    category: "bank",
     bank: "media",
     media: "pricing",
     pricing: "docs",
@@ -38,9 +59,20 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
   };
 
   const completeStep = (stepName) => {
-    setCompletedSteps((prev) => ({...prev, [stepName]: true }));
+    setCompletedSteps((prev) => ({
+      ...prev,
+      [stepName]: true,
+    }));
 
-    const order = ["category", "bank", "media", "pricing", "docs", "calendar"];
+    const order = [
+      "category",
+      "bank",
+      "media",
+      "pricing",
+      "docs",
+      "calendar",
+    ];
+
     const nextIndex = order.indexOf(stepName) + 1;
 
     if (nextIndex < order.length) {
@@ -60,7 +92,7 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
 
     checklist: (
       <ChecklistModal
-        onStart={() => setCurrentStep("category")} 
+        onStart={() => setCurrentStep("category")}
         onLater={onClose}
         completedSteps={completedSteps}
         percentComplete={percentComplete}
@@ -74,16 +106,25 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
         onSkip={() => setCurrentStep("bank")}
         percentComplete={percentComplete}
         selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
+        setSelectedCategory={(value) => {
+          setSelectedCategory(value);
+
+          setVendorProfile((prev) => ({
+            ...prev,
+            category: value,
+          }));
+        }}
       />
     ),
 
     bank: (
       <BankStep
         onNext={() => completeStep("bank")}
-        onBack={() => setCurrentStep("category")} 
+        onBack={() => setCurrentStep("category")}
         onSkip={() => setCurrentStep("media")}
         percentComplete={percentComplete}
+        profileData={vendorProfile}
+        setProfileData={setVendorProfile}
       />
     ),
 
@@ -93,6 +134,8 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
         onBack={() => setCurrentStep("bank")}
         onSkip={() => setCurrentStep("pricing")}
         percentComplete={percentComplete}
+        profileData={vendorProfile}
+        setProfileData={setVendorProfile}
       />
     ),
 
@@ -120,13 +163,18 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
         onBack={() => setCurrentStep("docs")}
         onSkip={onClose}
         percentComplete={percentComplete}
+        profileData={vendorProfile}
       />
     ),
 
-    success: <SuccessModal onClose={onClose} selectedCategory={selectedCategory} />,
+    success: (
+      <SuccessModal
+        onClose={onClose}
+        selectedCategory={selectedCategory}
+      />
+    ),
   };
 
- 
   if (currentStep === "checklist") {
     return (
       <div className="profile-modal-overlay">
@@ -137,7 +185,9 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
 
   return (
     <div className="vo-overlay">
-      <div className="vo-modal-container">{steps[currentStep]}</div>
+      <div className="vo-modal-container">
+        {steps[currentStep]}
+      </div>
     </div>
   );
 };

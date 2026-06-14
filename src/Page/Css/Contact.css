@@ -126,6 +126,7 @@
     width: 100%;
     height: 50%;
     display: flex;
+    gap: 30px;
 }
 .contact-rightup1-left{
     width: 50%;

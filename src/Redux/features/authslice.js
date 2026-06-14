@@ -172,14 +172,41 @@ export const getAllPricing = createAsyncThunk(
   },
 );
 
+  export const updatePricing = createAsyncThunk(
+    "auth/updatePricing",
+    async (
+      { pricingId, packagePrice, packageDescription, packageName },
+      { rejectWithValue }
+    ) => {
+      try {
+        const res = await api.put(`/new-pricing/${pricingId}`, {
+          packagePrice,
+          packageDescription,
+          packageName,
+        });
+
+        return res.data;
+      } catch (err) {
+        return rejectWithValue(
+          err.response?.data?.message || "Failed to update pricing package"
+        );
+      }
+    }
+  );
+
 
 export const updateVendorProfile = createAsyncThunk(
   "vendor/updateProfile",
-  async (profileData, { rejectWithValue }) => {
+  async ({ id, profileData }, { rejectWithValue }) => {
     try {
       const response = await api.put(
-        "/vendor/profile",
-        profileData
+        `/vendor/update-profile/${id}`,
+        profileData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
       return response.data;
@@ -189,7 +216,7 @@ export const updateVendorProfile = createAsyncThunk(
       );
     }
   }
-); 
+);
 
 export const logoutUser = createAsyncThunk(
   "auth/logout",
@@ -378,6 +405,32 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+
+      .addCase(updatePricing.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    })
+    .addCase(updatePricing.fulfilled, (state, action) => {
+      state.isLoading = false;
+    
+      const updatedPricing = action.payload?.data || action.payload;
+    
+      const index = state.pricingPackages.findIndex(
+        (item) => item.id === updatedPricing.id
+      );
+    
+      if (index !== -1) {
+        state.pricingPackages[index] = updatedPricing;
+      }
+    
+      state.pricing = updatedPricing;
+    })
+    .addCase(updatePricing.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    })
+
+
 
       .addCase(updateVendorProfile.pending, (state) => {
       state.loading = true;
