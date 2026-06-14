@@ -27,7 +27,7 @@ export const login = createAsyncThunk(
       //   vendor: responseData?.vendor || responseData,
       // };
       const payload = {
-  token,                                        // token from localStorage
+  token,                                      
   accountType,
   user:       responseData?.user   || null,
   vendor:     responseData?.vendor || responseData || null,
