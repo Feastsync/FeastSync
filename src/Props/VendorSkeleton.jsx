@@ -1,4 +1,3 @@
-import React from 'react'
 import './Css/VendorSkeleton.css'
 
 const VendorCardSkeleton = () => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Button from './Button'
 import { IoLocationOutline } from 'react-icons/io5'
 import { FaStar, FaHeart } from 'react-icons/fa' 
@@ -64,7 +64,7 @@ const VendorCard = (props) => {
             <p className="price_lbl">Starting Price</p>
             <p className="price_amt">₦{props.price ? props.price.toLocaleString() : 0}</p>
           </div>
-          <Button className="btn_purple" onClick={() => navigate(`/epkrating/${props.id}`)} btnText="Book now" />
+          <Button className="btn_purple" onClick={() => navigate(`/epknorating/${props.id}`)} btnText="Book now" />
         </div>
 
       </div>

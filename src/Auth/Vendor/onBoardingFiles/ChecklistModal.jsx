@@ -1,20 +1,20 @@
-import React from "react";
 import { FiX, FiSquare } from "react-icons/fi";
 import "./css/ChecklistModal.css";
 import { useNavigate } from "react-router-dom";
 
-const ChecklistModal = ({
-  onStart,
-  onLater,
-  completedSteps,
-  percentComplete = 0,
-}) => {
+const ChecklistModal = ({ onStart, onLater, completedSteps, percentComplete = 0 }) => {
   const navigate = useNavigate();
-  const totalSteps = 5;
+  const totalSteps = 6; 
   const completedCount = Object.values(completedSteps).filter(Boolean).length;
   const progress = (completedCount / totalSteps) * 100 || percentComplete;
 
   const checklistItems = [
+    {
+      id: "category",
+      title: "Vendor Category",
+      desc: "Select what best describes your service",
+      done: completedSteps.category
+    },
     {
       id: "bank",
       title: "Bank information",
@@ -34,17 +34,17 @@ const ChecklistModal = ({
       done: completedSteps.pricing,
     },
     {
-      id: "calendar",
-      title: "Availability Calendar",
-      desc: "Configure your availability and booking preferences",
-      done: completedSteps.calendar,
-    },
-    {
       id: "docs",
       title: "Verification Documents",
       desc: "Submit required documents for verification",
-      done: completedSteps.docs,
+      done: completedSteps.docs
     },
+    {
+      id: "calendar",
+      title: "Availability Calendar",
+      desc: "Configure your availability and booking preferences", 
+      done: completedSteps.calendar
+    }
   ];
 
   return (
@@ -56,19 +56,19 @@ const ChecklistModal = ({
             <FiX size={24} />
           </button>
         </div>
-
+        
         <p className="profile-subtext">
           You need to complete your profile before accessing vendor features
         </p>
 
         <div className="profile-progress-row">
           <span className="profile-progress-label">Profile Completion</span>
-          <span className="profile-progress-percent">{progress}%</span>
+          <span className="profile-progress-percent">{Math.round(progress)}%</span>
         </div>
-
+        
         <div className="profile-progress-bar">
-          <div
-            className="profile-progress-fill"
+          <div 
+            className="profile-progress-fill" 
             style={{ width: `${progress}%` }}
           ></div>
         </div>
@@ -76,10 +76,7 @@ const ChecklistModal = ({
 
       <div className="profile-modal-body">
         {checklistItems.map((item) => (
-          <div
-            key={item.id}
-            className={`profile-item ${item.done ? "done" : ""}`}
-          >
+          <div key={item.id} className={`profile-item ${item.done ? 'done' : ''}`}>
             <div className="profile-item-checkbox">
               {item.done ? (
                 <div className="profile-checkbox-checked">✓</div>
@@ -100,7 +97,7 @@ const ChecklistModal = ({
           <button className="profile-btn-primary" onClick={onStart}>
             Complete Profile Now
           </button>
-          <button className="profile-btn-secondary" onClick={onLater}>
+          <button className="profile-btn-secondary" onClick={()=> navigate("/")}>
             Remind Me Later
           </button>
         </div>

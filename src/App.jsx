@@ -1,7 +1,5 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./lib/Private.jsx";
-import { useSelector } from "react-redux";
 
 // Pages
 import Home from "./Page/Home.jsx";
@@ -33,7 +31,6 @@ import VendorOnboarding from "./Auth/Vendor/onBoardingFiles/VendorOnboarding.jsx
 import WalletLedger from "./Page/Wallet/WalletLedger.jsx";
 import VendorWallet from "./Page/Wallet/VendorWallet.jsx";
 import AllNotifications from "./Page/NotitficationsPages/AllNotifications.jsx";
-import WelcomeModal from "./Auth/Vendor/onBoardingFiles/WelcomeModal.jsx";
 import Chat from "./Page/chatPage/Chat.jsx";
 import Error505 from "./Auth/Vendor/Error505.jsx";
 import Error404 from "./Auth/Vendor/Error404.jsx";
@@ -44,8 +41,8 @@ import Settings from "./Page/SettingsPage/Settings.jsx";
 import { ScrollToTop } from "./Components/Highfunction.jsx";
 import Epknorating from "./Auth/Vendor/Epknorating.jsx";
 import Epkrating from "./Auth/Vendor/Epkrating.jsx";
-import IncompleteBanner from "./Auth/Vendor/onBoardingFiles/IncompleteBanner.jsx";
-
+import BookingModal from "./Page/Booking/Booking.jsx";
+import { useSelector } from "react-redux";
 const OnboardingPage = () => {
   const { vendorInfo } = useSelector((state) => state.auth);
   const vendorName = vendorInfo?.stageName || vendorInfo?.firstName || "";
@@ -90,6 +87,8 @@ const App = () => {
         <Route path="/vendor/signup" element={<VendorSignUp />} />
         <Route path="/user/signup" element={<UserSignUp />} />
         <Route path="getStarted" element={<GetStarted />} />
+        <Route path="bookings" element={<BookingModal />} />
+        
         <Route
           path="/vendor/onboarding"
           element={
@@ -98,7 +97,7 @@ const App = () => {
             </PrivateRoute>
           }
         />
-        <Route path="/epknorating" element={<Epknorating />} />
+        <Route path="/epknorating/:vendorId" element={<Epknorating />} />
         <Route path="/epkrating/:id" element={<Epkrating />} />
         <Route path="/505" element={<Error505 />} />
 

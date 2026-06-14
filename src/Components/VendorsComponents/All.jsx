@@ -1,136 +1,149 @@
-import React, { useRef, useEffect, useState } from 'react'
-import { IoChevronBackOutline, IoChevronForwardOutline } from 'react-icons/io5'
-import VendorCard from '../../Props/VendorCard'
-import VendorCardSkeleton from '../../Props/VendorSkeleton'
-import './css/All.css'
-import api from '../../Redux/app/axios'
+import { useState, useEffect } from "react";
+import VendorCard from "../../Props/VendorCard";
+import VendorCardSkeleton from "../../Props/VendorSkeleton";
+import "./css/All.css";
+import api from "../../Redux/app/axios";
 
-const FeaturedVendors = () => {
-  const row1Ref = useRef(null)
-  const row2Ref = useRef(null)
-  const [vendors, setVendors] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+const getItemsPerPage = () => {
+  if (window.innerWidth <= 540) return 4;
+  if (window.innerWidth <= 860) return 6;
+  return 9;
+};
+
+const AllVendors = () => {
+  const [vendors, setVendors]         = useState([]);
+  const [loading, setLoading]         = useState(true);
+  const [error, setError]             = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage());
 
   const fetchVendors = async () => {
     try {
-      setLoading(true)
-      setError(null)
-      const res = await api.get('/vendor/all-vendors')
-      
-      const mappedVendors = (res.data?.data || []).map(vendor => ({
-        _id: vendor._id,
-        name: vendor.stageName || 'Unknown Artist',
-        location: vendor.city || vendor.location || 'Lagos, NG',
-        rating: vendor.averageRating || vendor.rating || 4.5,
-        price: vendor.startingPrice 
-          ? `₦${Number(vendor.startingPrice).toLocaleString()}` 
-          : 'Contact for price',
-        image: vendor.profileImage || vendor.avatar || vendor.image || ''
-      }))
-      setVendors(mappedVendors)
+      setLoading(true);
+      setError(null);
+      const res = await api.get("/vendor/all-vendors");
+
+      const mappedVendors = (res.data?.data || []).map((vendor) => ({
+        _id:      vendor._id,
+        name:     vendor.stageName || "Unknown Artist",
+        location: vendor.city || vendor.stateOfResidence || vendor.location || "Lagos, NG",
+        rating:   vendor.averageRating || vendor.rating || 4.5,
+        price:    vendor.startingPrice
+          ? `₦${Number(vendor.startingPrice).toLocaleString()}`
+          : "Contact for price",
+        image:    vendor.profileImage || vendor.avatar || vendor.image || "",
+      }));
+
+      setVendors(mappedVendors);
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to fetch vendors')
-      console.error(err)
+      setError(err.response?.data?.message || "Failed to fetch vendors");
+      console.error(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchVendors()
-  }, [])
+    // eslint-disable-next-line
+    fetchVendors();
+  }, []);
 
-  const scrollRow = (ref, direction) => {
-    const amount = 300
-    if (ref.current) {
-      ref.current.scrollLeft += direction === "left" ? -amount : amount
-    }
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setItemsPerPage(getItemsPerPage());
+      setCurrentPage(1);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const skeletonArray  = Array.from({ length: itemsPerPage });
+  const totalPages     = Math.ceil(vendors.length / itemsPerPage);
+  const start          = (currentPage - 1) * itemsPerPage;
+  const currentVendors = vendors.slice(start, start + itemsPerPage);
+
+  const changePage = (dir) => {
+    const next = currentPage + dir;
+    if (next >= 1 && next <= totalPages) setCurrentPage(next);
+  };
+
+  /* ── error state ── */
+  if (error && !loading) {
+    return (
+      <div className="vendor-state-wrap">
+        <div className="vendor-state-card">
+          <span className="vendor-state-icon">⚠️</span>
+          <h2>Something went wrong</h2>
+          <p>{error}</p>
+          <button className="vendor-retry-btn" onClick={fetchVendors}>
+            Retry
+          </button>
+        </div>
+      </div>
+    );
   }
 
-  const row1Vendors = vendors.slice(0, 8)
-  const row2Vendors = vendors.slice(8, 16)
-  const skeletonArray = Array.from({ length: 4 })
+  /* ── empty state ── */
+  if (!loading && vendors.length === 0) {
+    return (
+      <div className="vendor-state-wrap">
+        <div className="vendor-state-card">
+          <span className="vendor-state-icon">🔍</span>
+          <h2>No Vendors Found</h2>
+          <p>No vendors available yet. Check back soon!</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <section className="fv_sec">
-      <div className="fv_container">
-        <div className="fv_row_header">
-          <h2 className="fv_title">Top Featured Vendors</h2>
-        </div>
-
-        {/* Error State */}
-        {error && !loading && (
-          <div className="fv_error">
-            <div className="fv_error_icon"></div>
-            <p>{error}</p>
-            <button onClick={fetchVendors}>Retry</button>
-          </div>
-        )}
-
-        {/* Empty State */}
-        {!loading && !error && vendors.length === 0 && (
-          <div className="fv_empty">
-            <div className="fv_empty_icon">📭</div>
-            <p>No vendors found yet. Check back soon!</p>
-          </div>
-        )}
-
-        {/* Carousel - only show if no error */}
-        {!error && (
-          <>
-            <div className="fv_carousel_zone">
-              <button className="btn2 left" onClick={() => scrollRow(row1Ref, "left")} disabled={loading}>
-                <IoChevronBackOutline size={40} />
-              </button>
-              <div className="fv_window" ref={row1Ref}>
-                {loading 
-                  ? skeletonArray.map((_, i) => (
-                      <div key={`skel-1-${i}`} className="box">
-                        <VendorCardSkeleton />
-                      </div>
-                    ))
-                  : row1Vendors.map((vendor) => (
-                      <div key={vendor._id} className="box">
-                        <VendorCard {...vendor} id={vendor._id} />
-                      </div>
-                    ))
-                }
+    <div className="all-vendors-page">
+      <div className="category_grid">
+        {loading
+          ? skeletonArray.map((_, i) => (
+              <VendorCardSkeleton key={`sk-${i}`} />
+            ))
+          : currentVendors.map((vendor) => (
+              <div key={vendor._id} className="fade-in">
+                <VendorCard
+                  id={vendor._id}
+                  name={vendor.name}
+                  location={vendor.location}
+                  rating={vendor.rating}
+                  price={vendor.price}
+                  image={vendor.image}
+                />
               </div>
-              <button className="btn2 right" onClick={() => scrollRow(row1Ref, "right")} disabled={loading}>
-                <IoChevronForwardOutline size={40} />
-              </button>
-            </div>
-
-            {(loading || row2Vendors.length > 0) && (
-              <div className="fv_carousel_zone">
-                <button className="btn2 left" onClick={() => scrollRow(row2Ref, "left")} disabled={loading}>
-                  <IoChevronBackOutline size={40} />
-                </button>
-                <div className="fv_window" ref={row2Ref}>
-                  {loading 
-                    ? skeletonArray.map((_, i) => (
-                        <div key={`skel-2-${i}`} className="box">
-                          <VendorCardSkeleton />
-                        </div>
-                      ))
-                    : row2Vendors.map((vendor) => (
-                        <div key={vendor._id} className="box">
-                          <VendorCard {...vendor} id={vendor._id} />
-                        </div>
-                      ))
-                  }
-                </div>
-                <button className="btn2 right" onClick={() => scrollRow(row2Ref, "right")} disabled={loading}>
-                  <IoChevronForwardOutline size={40} />
-                </button>
-              </div>
-            )}
-          </>
-        )}
+            ))}
       </div>
-    </section>
-  )
-}
 
-export default FeaturedVendors
+      {!loading && totalPages > 1 && (
+        <div className="pagination">
+          <button
+            className="pagination_btn"
+            onClick={() => changePage(-1)}
+            disabled={currentPage === 1}
+          >
+            Prev
+          </button>
+          <span className="pagination_info">
+            {currentPage} of {totalPages}
+          </span>
+          <button
+            className="pagination_btn"
+            onClick={() => changePage(1)}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AllVendors;
