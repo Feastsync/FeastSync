@@ -203,14 +203,17 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  padding: 16px;
 }
 
 .modal_box {
   background-color: #ffffff;
   border-radius: 12px;
-  width: 90%;
+  width: 100%;
   max-width: 480px;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .modal_header {
@@ -370,55 +373,236 @@
   background-color: #4A1A6B;
 }
 
+/* Pricing Modal - Purple Header */
+.modal_header_purple {
+  background: #5B2C83;
+  color: #fff;
+  padding: 20px 24px;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.modal_header_purple h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.modal_subtitle {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.modal_header_purple .modal_close {
+  color: #fff;
+}
+
+.modal_header_purple .modal_close:hover {
+  opacity: 0.8;
+}
+
+.pricing_modal .modal_label {
+  margin-top: 16px;
+}
+
+.pricing_modal .modal_label:first-child {
+  margin-top: 0;
+}
+
+/* Mobile Responsive */
 @media (max-width: 768px) {
- .settings_container {
+  .settings_page {
+    padding: 16px 0 32px 0;
+  }
+
+  .settings_container {
     padding: 0 20px;
   }
 
- .settings_profile_card {
-    padding: 24px 0;
+  .settings_back_row {
+    padding: 0 0 12px 0;
   }
 
- .settings_avatar {
+  .settings_section_header {
+    padding: 12px 0;
+  }
+
+  .settings_profile_card {
+    padding: 24px 0;
+    gap: 16px;
+  }
+
+  .settings_avatar {
     width: 56px;
     height: 56px;
     font-size: 16px;
   }
 
- .settings_profile_name {
+  .settings_profile_name {
     font-size: 18px;
   }
 
- .settings_row {
+  .settings_profile_role {
+    font-size: 14px;
+  }
+
+  .settings_row {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
     padding: 20px 0;
+    min-height: auto;
   }
 
- .settings_row_right {
+  .settings_row_left {
+    width: 100%;
+  }
+
+  .settings_row_right {
     width: 100%;
     justify-content: space-between;
     gap: 16px;
   }
 
- .settings_value {
+  .settings_value {
     text-align: left;
     min-width: auto;
     flex: 1;
-  }
-
- .settings_btn {
-    padding: 8px 16px;
     font-size: 14px;
   }
 
- .modal_box {
-    width: 95%;
+  .settings_label {
+    font-size: 14px;
   }
 
- .settings_toast {
+  .settings_sublabel {
+    font-size: 13px;
+  }
+
+  .settings_btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .settings_badge_approved {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  .settings_toast {
     right: 20px;
     left: 20px;
+    top: 70px;
+    font-size: 13px;
+  }
+
+  .modal_overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modal_box {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 16px 16px 0 0;
+    max-height: 92vh;
+  }
+
+  .modal_header {
+    padding: 20px 20px 12px 20px;
+  }
+
+  .modal_header h3 {
+    font-size: 17px;
+  }
+
+  .modal_body {
+    padding: 20px;
+  }
+
+  .modal_footer {
+    padding: 16px 20px 20px;
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .modal_btn_cancel,
+  .modal_btn_primary {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 16px;
+  }
+
+  .modal_input,
+  .modal_select,
+  .modal_textarea {
+    padding: 12px;
+    font-size: 16px; /* Prevents iOS zoom */
+  }
+
+  .otp_inputs {
+    gap: 8px;
+  }
+
+  .otp_input {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+  }
+
+  .modal_header_purple {
+    padding: 16px 20px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .modal_header_purple h3 {
+    font-size: 16px;
+  }
+
+  .modal_subtitle {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 375px) {
+  .settings_container {
+    padding: 0 16px;
+  }
+
+  .settings_profile_card {
+    padding: 20px 0;
+  }
+
+  .settings_avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 14px;
+  }
+
+  .settings_row {
+    padding: 16px 0;
+  }
+
+  .modal_header,
+  .modal_header_purple {
+    padding: 16px;
+  }
+
+  .modal_body {
+    padding: 16px;
+  }
+
+  .modal_footer {
+    padding: 12px 16px 16px;
+  }
+
+  .otp_input {
+    width: 44px;
+    height: 44px;
   }
 }
