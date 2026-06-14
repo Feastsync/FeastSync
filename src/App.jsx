@@ -42,7 +42,7 @@ import { ScrollToTop } from "./Components/Highfunction.jsx";
 import Epknorating from "./Auth/Vendor/Epknorating.jsx";
 import Epkrating from "./Auth/Vendor/Epkrating.jsx";
 import BookingModal from "./Page/Booking/Booking.jsx";
-
+import { useSelector } from "react-redux";
 const OnboardingPage = () => {
   const { vendorInfo } = useSelector((state) => state.auth);
   const vendorName = vendorInfo?.stageName || vendorInfo?.firstName || "";
