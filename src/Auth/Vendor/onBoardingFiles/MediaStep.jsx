@@ -1,19 +1,47 @@
-import React, { useState } from "react";
+import React from "react";
 import { FiX, FiUpload } from "react-icons/fi";
 import "./css/MediaStep.css";
 
-const MediaStep = ({ onNext, onBack, onSkip, percentComplete = 40 }) => {
-  const [workExperience, setWorkExperience] = useState("");
-  const [servicesOffered, setServicesOffered] = useState("");
+const MediaStep = ({
+  onNext,
+  onBack,
+  onSkip,
+  percentComplete = 60,
+  profileData,
+  setProfileData,
+}) => {
+
+  const workExperience = profileData?.bio || "";
+  const servicesOffered = profileData?.servicesOffered || "";
+
   const wordCount =
     workExperience.trim() === ""
       ? 0
       : workExperience.trim().split(/\s+/).length;
 
+  const handleChange = (field, value) => {
+    setProfileData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const handleFileChange = (field, files, limit) => {
+    const selected = Array.from(files).slice(0, limit);
+
+    setProfileData((prev) => ({
+      ...prev,
+      [field]: selected,
+    }));
+  };
+
   const handleContinue = () => {
-    if (typeof onNext === "function") {
-      onNext();
+    if (!workExperience || wordCount > 500) {
+      alert("Work experience must not be 500 words");
+      return;
     }
+
+    onNext();
   };
 
   return (
@@ -26,10 +54,12 @@ const MediaStep = ({ onNext, onBack, onSkip, percentComplete = 40 }) => {
               Showcase your expertise and previous work
             </p>
           </div>
+
           <button className="media-close" onClick={onSkip}>
             <FiX size={22} />
           </button>
         </div>
+
         <div className="media-progress-bar">
           <div
             className="media-progress-fill"
@@ -40,14 +70,16 @@ const MediaStep = ({ onNext, onBack, onSkip, percentComplete = 40 }) => {
 
       <div className="media-body">
         <div className="media-field">
-          <label>Work Experience (min. 500 words)</label>
+          <label>Work Experience (max. 500 words)</label>
           <textarea
             rows={6}
             placeholder="Describe your work experience, expertise, and achievements..."
             value={workExperience}
-            onChange={(e) => setWorkExperience(e.target.value)}
+            onChange={(e) => handleChange("bio", e.target.value)}
           />
-          <span className="media-word-count">{wordCount} / 500 words</span>
+          <span className="media-word-count">
+            {wordCount} / 500 words
+          </span>
         </div>
 
         <div className="media-field">
@@ -56,41 +88,81 @@ const MediaStep = ({ onNext, onBack, onSkip, percentComplete = 40 }) => {
             rows={3}
             placeholder="List services offered"
             value={servicesOffered}
-            onChange={(e) => setServicesOffered(e.target.value)}
+            onChange={(e) =>
+              handleChange("servicesOffered", e.target.value)
+            }
           />
         </div>
 
         <div className="media-field">
-          <label>Upload video catalog ( Max of 2)</label>
+          <label>Upload video catalog (Max of 2)</label>
+
           <div className="media-upload-box video">
+            <input
+              type="file"
+              accept="video/*"
+              multiple
+              onChange={(e) =>
+                handleFileChange(
+                  "videoCatalogue",
+                  e.target.files,
+                  2
+                )
+              }
+            />
+
             <FiUpload size={28} />
             <p className="media-upload-title">Click to upload</p>
-            <p className="media-upload-sub">Each video not more than 10MB</p>
+            <p className="media-upload-sub">
+              Each video not more than 10MB
+            </p>
           </div>
         </div>
 
         <div className="media-field">
           <label>Upload photo catalog (Max of 4)</label>
+
           <div className="media-upload-grid">
             <div className="media-upload-box photo">
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={(e) =>
+                  handleFileChange(
+                    "photoCatalogue",
+                    e.target.files,
+                    4
+                  )
+                }
+              />
+
               <FiUpload size={22} />
               <p className="media-upload-title">Add more</p>
             </div>
           </div>
+
           <p className="media-upload-note">
             Each photo should not be more than 5mb
           </p>
         </div>
       </div>
 
+      {/* FOOTER */}
       <div className="media-footer">
         <button className="media-btn-skip" onClick={onSkip}>
           Skip for Now
         </button>
+
         <div className="media-footer-right">
-          <button className="media-btn-back" type="button" onClick={onBack}>
+          <button
+            className="media-btn-back"
+            type="button"
+            onClick={onBack}
+          >
             Back
           </button>
+
           <button
             className="media-btn-continue"
             type="button"

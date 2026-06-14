@@ -53,23 +53,41 @@ const nigerianBanks = [
 ].sort();
 
 const BankStep = ({
- onNext,
+  onNext,
   onBack,
   onSkip,
   percentComplete = 40,
   profileData,
   setProfileData,
 }) => {
+  const safeProfile = profileData || {};
+
   const accountNumberRegex = /^[0-9]{10}$/;
 
+  const updateField = (field, value) => {
+    setProfileData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
   const isFormValid =
-    profileData.stateOfResidence.trim() !== "" &&
-    profileData.bankName.trim() !== "" &&
-    accountNumberRegex.test(profileData.accountNumber);
+    (safeProfile.stateOfResidence || "").trim() !== "" &&
+    (safeProfile.bankName || "").trim() !== "" &&
+    accountNumberRegex.test(safeProfile.accountNumber || "");
 
   const handleContinue = () => {
     if (!isFormValid) return;
-    onNext?.();
+
+    // Ensure clean state before moving forward
+    setProfileData((prev) => ({
+      ...prev,
+      stateOfResidence: prev.stateOfResidence || "",
+      bankName: prev.bankName || "",
+      accountNumber: prev.accountNumber || "",
+    }));
+
+    onNext();
   };
 
   return (
@@ -84,14 +102,14 @@ const BankStep = ({
         </div>
 
         <p className="bank-subtext">
-          You need to complete your profile before accessing vendor features
+          Add your bank details for secure payouts
         </p>
 
         <div className="bank-progress-bar">
           <div
             className="bank-progress-fill"
             style={{ width: `${percentComplete}%` }}
-          ></div>
+          />
         </div>
       </div>
 
@@ -100,9 +118,8 @@ const BankStep = ({
           <div className="bank-warning-bar"></div>
 
           <p>
-            Account name must match the name on your ID exactly. Payouts follow
-            the 70/30 escrow split — 30% released 24 hours after event
-            completion and organiser confirmation.
+            Ensure your account name matches your ID. Payouts follow the 70/30
+            escrow system.
           </p>
         </div>
 
@@ -111,16 +128,12 @@ const BankStep = ({
 
           <div className="bank-field">
             <label>State of Residence</label>
-
             <input
               type="text"
               placeholder="Enter your state of residence"
-              value={profileData.stateOfResidence}
+              value={safeProfile.stateOfResidence || ""}
               onChange={(e) =>
-                setProfileData((prev) => ({
-                  ...prev,
-                  stateOfResidence: e.target.value,
-                }))
+                updateField("stateOfResidence", e.target.value)
               }
             />
           </div>
@@ -130,13 +143,8 @@ const BankStep = ({
 
             <div className="bank-select-wrapper">
               <select
-                value={profileData.bankName}
-                onChange={(e) =>
-                  setProfileData((prev) => ({
-                    ...prev,
-                    bankName: e.target.value,
-                  }))
-                }
+                value={safeProfile.bankName || ""}
+                onChange={(e) => updateField("bankName", e.target.value)}
               >
                 <option value="">Select your bank</option>
 
@@ -152,34 +160,25 @@ const BankStep = ({
           </div>
 
           <div className="bank-field">
-            <label>Enter Account Number</label>
+            <label>Account Number</label>
 
             <input
               type="text"
               placeholder="Enter your 10-digit account number"
-              value={profileData.accountNumber}
+              value={safeProfile.accountNumber || ""}
               onChange={(e) => {
                 const value = e.target.value.replace(/\D/g, "");
 
                 if (value.length <= 10) {
-                  setProfileData((prev) => ({
-                    ...prev,
-                    accountNumber: value,
-                  }));
+                  updateField("accountNumber", value);
                 }
               }}
               maxLength={10}
             />
 
-            {profileData.accountNumber &&
-              profileData.accountNumber.length !== 10 && (
-                <small
-                  style={{
-                    color: "red",
-                    display: "block",
-                    marginTop: "5px",
-                  }}
-                >
+            {safeProfile.accountNumber &&
+              safeProfile.accountNumber.length !== 10 && (
+                <small style={{ color: "red", marginTop: "5px", display: "block" }}>
                   Account number must be exactly 10 digits
                 </small>
               )}

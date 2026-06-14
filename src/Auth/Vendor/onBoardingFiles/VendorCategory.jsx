@@ -1,32 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiX, FiCheck } from "react-icons/fi";
 import "./css/VendorCategory.css";
 
 const categories = [
-  { 
-    id: "dj", 
-    name: "DJs", 
-    desc: "Professional music mixing for events and parties" 
+  {
+    id: "dj",
+    name: "DJs",
+    desc: "Professional music mixing for events and parties",
   },
-  { 
-    id: "liveband", 
-    name: "Livebands", 
-    desc: "Live musical performances for weddings and events" 
+  {
+    id: "liveband",
+    name: "Livebands",
+    desc: "Live musical performances for weddings and events",
   },
-  { 
-    id: "mc", 
-    name: "MCs", 
-    desc: "Master of ceremonies to host and coordinate events" 
+  {
+    id: "mc",
+    name: "MCs",
+    desc: "Master of ceremonies to host and coordinate events",
   },
-  { 
-    id: "photographer", 
-    name: "Photographers", 
-    desc: "Capture memorable moments with professional photography" 
+  {
+    id: "photographer",
+    name: "Photographers",
+    desc: "Capture memorable moments with professional photography",
   },
-  { 
-    id: "videographer", 
-    name: "Videographers", 
-    desc: "Record and produce high-quality event videos" 
+  {
+    id: "videographer",
+    name: "Videographers",
+    desc: "Record and produce high-quality event videos",
   },
 ];
 
@@ -36,15 +36,45 @@ const CategoryStep = ({
   onSkip,
   percentComplete = 20,
   selectedCategory,
-  setSelectedCategory
+  setSelectedCategory,
+  setProfileData,
 }) => {
   const [localSelected, setLocalSelected] = useState(selectedCategory || null);
 
-  const handleContinue = () => {
-    if (localSelected) {
-      setSelectedCategory(localSelected);
-      onNext();
+  useEffect(() => {
+    setLocalSelected(selectedCategory || null);
+  }, [selectedCategory]);
+
+  const handleSelect = (value) => {
+    setLocalSelected(value);
+
+    if (setSelectedCategory) {
+      setSelectedCategory(value);
     }
+
+    if (setProfileData) {
+      setProfileData((prev) => ({
+        ...prev,
+        category: value,
+      }));
+    }
+  };
+
+  const handleContinue = () => {
+    if (!localSelected) return;
+
+    if (setSelectedCategory) {
+      setSelectedCategory(localSelected);
+    }
+
+    if (setProfileData) {
+      setProfileData((prev) => ({
+        ...prev,
+        category: localSelected,
+      }));
+    }
+
+    onNext();
   };
 
   return (
@@ -53,12 +83,16 @@ const CategoryStep = ({
         <div className="ds-header-top">
           <div>
             <h2>Vendor Category</h2>
-            <p className="ds-subtext">Select what best describes your service</p>
+            <p className="ds-subtext">
+              Select what best describes your service
+            </p>
           </div>
+
           <button className="ds-close" onClick={onSkip}>
             <FiX size={22} />
           </button>
         </div>
+
         <div className="ds-progress-bar">
           <div
             className="ds-progress-fill"
@@ -74,21 +108,27 @@ const CategoryStep = ({
 
         <div className="ds-category-list">
           {categories.map((cat) => (
-            <label 
-              key={cat.id} 
-              className={`ds-category-row ${localSelected === cat.id ? 'selected' : ''}`}
+            <label
+              key={cat.id}
+              className={`ds-category-row ${
+                localSelected === cat.id ? "selected" : ""
+              }`}
             >
               <input
                 type="radio"
                 name="vendor-category"
                 value={cat.id}
                 checked={localSelected === cat.id}
-                onChange={() => setLocalSelected(cat.id)}
+                onChange={() => handleSelect(cat.id)}
                 className="ds-category-input"
               />
+
               <span className="ds-category-checkbox">
-                {localSelected === cat.id && <FiCheck size={14} strokeWidth={3} />}
+                {localSelected === cat.id && (
+                  <FiCheck size={14} strokeWidth={3} />
+                )}
               </span>
+
               <div className="ds-category-content">
                 <span className="ds-category-title">{cat.name}</span>
                 <span className="ds-category-desc">{cat.desc}</span>
@@ -102,10 +142,12 @@ const CategoryStep = ({
         <button className="ds-btn-skip" onClick={onSkip}>
           Skip for Now
         </button>
+
         <div className="ds-footer-right">
           <button className="ds-btn-back" onClick={onBack}>
             Back
           </button>
+
           <button
             className="ds-btn-upload"
             onClick={handleContinue}
