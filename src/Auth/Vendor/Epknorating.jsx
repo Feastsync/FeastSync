@@ -130,7 +130,7 @@ const Epknorating = () => {
         </div>
       </div>
 
-      {/* ── Pricing section ─────────────────────────────── */}
+
       <section className="Epknorating-pricing-section">
         <h2 className="Epknorating-section-title">Services & Pricing</h2>
 
@@ -212,7 +212,7 @@ const Epknorating = () => {
       <Vendorcalendar />
       <Vendormediagallery />
 
-      {/* ── Booking modal ────────────────────────────────── */}
+
       {selectedPackage && (
         <BookingModal
           pricingId={selectedPackage._id}

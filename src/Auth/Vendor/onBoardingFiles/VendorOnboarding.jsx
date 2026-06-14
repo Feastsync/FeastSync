@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./css/VendorOnboarding.css";
 import IncompleteBanner from "./IncompleteBanner.jsx";
 import ChecklistModal from "./ChecklistModal.jsx";
@@ -10,7 +10,7 @@ import DocumentStep from "./DocumentStep.jsx";
 import CalendarStep from "./CalendarStep.jsx";
 import SuccessModal from "./SuccessModal.jsx";
 
-const VendorOnboarding = ({ isOpen, onClose, vendorName }) => {
+const VendorOnboarding = ({ isOpen, onClose }) => {
   const [currentStep, setCurrentStep] = useState("incomplete");
   const [selectedCategory, setSelectedCategory] = useState(null); 
 

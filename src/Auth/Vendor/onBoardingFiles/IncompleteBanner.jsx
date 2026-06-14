@@ -1,10 +1,7 @@
-import React from "react";
 import "./css/IncompleteBanner.css";
 import warning from "../../../assets/logos/Icomplete.png";
-import { useNavigate } from "react-router-dom";
 
 const IncompleteBanner = ({ onComplete, percentComplete = 25 }) => {
-  const navigate = useNavigate();
 
   return (
     <div className="ib-banner">

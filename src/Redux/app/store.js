@@ -3,9 +3,9 @@ import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import authReducer from '../features/authslice'
 import userReducer from '../features/userslice'
 import vendorReducer from '../features/vendorslice'
-import bookingReducer from '../features/bookingSlice'  
+import bookingReducer from '../features/Bookingslice'  
 
-// CHANGE: custom storage engine — bypasses the broken redux-persist storage import in Vite
+
 const customStorage = {
   getItem: (key) => Promise.resolve(localStorage.getItem(key)),
   setItem: (key, value) => Promise.resolve(localStorage.setItem(key, value)),

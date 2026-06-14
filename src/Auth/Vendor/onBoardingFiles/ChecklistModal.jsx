@@ -1,4 +1,3 @@
-import React from "react";
 import { FiX, FiSquare } from "react-icons/fi";
 import "./css/ChecklistModal.css";
 import { useNavigate } from "react-router-dom";

@@ -1,7 +1,5 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./lib/Private.jsx";
-import { useSelector } from "react-redux";
 
 // Pages
 import Home from "./Page/Home.jsx";
@@ -33,7 +31,6 @@ import VendorOnboarding from "./Auth/Vendor/onBoardingFiles/VendorOnboarding.jsx
 import WalletLedger from "./Page/Wallet/WalletLedger.jsx";
 import VendorWallet from "./Page/Wallet/VendorWallet.jsx";
 import AllNotifications from "./Page/NotitficationsPages/AllNotifications.jsx";
-import WelcomeModal from "./Auth/Vendor/onBoardingFiles/WelcomeModal.jsx";
 import Chat from "./Page/chatPage/Chat.jsx";
 import Error505 from "./Auth/Vendor/Error505.jsx";
 import Error404 from "./Auth/Vendor/Error404.jsx";
@@ -45,12 +42,8 @@ import { ScrollToTop } from "./Components/Highfunction.jsx";
 import Epknorating from "./Auth/Vendor/Epknorating.jsx";
 import Epkrating from "./Auth/Vendor/Epkrating.jsx";
 import BookingModal from "./Page/Booking/Booking.jsx";
-import IncompleteBanner from "./Auth/Vendor/onBoardingFiles/IncompleteBanner.jsx";
 
 const App = () => {
-  const { user } = useSelector((state) => state.auth);
-  const vendorName = user?.firstName || "Vendor";
-
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -89,7 +82,6 @@ const App = () => {
                 <Vendordashboard />
                 <VendorOnboarding
                   isOpen={true}
-                  vendorName={vendorName}
                   onClose={() => (window.location.href = "/vendordashboard")}
                 />
               </>

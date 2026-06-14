@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Booking.css";
 
-import { createBooking, resetBooking } from "../../Redux/features/bookingSlice";
+import { createBooking, resetBooking } from "../../Redux/features/Bookingslice";
 
 import calendarIcon  from "../../assets/logos/calender.png";
 import hourglassIcon from "../../assets/logos/Times.svg";

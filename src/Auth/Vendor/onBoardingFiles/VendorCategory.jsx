@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FiX, FiCheck } from "react-icons/fi";
 import "./css/VendorCategory.css";
 

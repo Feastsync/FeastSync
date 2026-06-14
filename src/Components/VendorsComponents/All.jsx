@@ -44,6 +44,7 @@ const AllVendors = () => {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line
     fetchVendors();
   }, []);
 

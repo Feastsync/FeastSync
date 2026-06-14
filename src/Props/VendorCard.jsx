@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Button from './Button'
 import { IoLocationOutline } from 'react-icons/io5'
 import { FaStar, FaHeart } from 'react-icons/fa' 
