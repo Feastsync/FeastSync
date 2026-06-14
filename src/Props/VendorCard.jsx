@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 
 const VendorCard = (props) => {
 
-  {console.log("vf : ", props)}
+
 
   const navigate = useNavigate()
   const [isLiked, setIsLiked] = useState(false)
@@ -59,7 +59,7 @@ const VendorCard = (props) => {
 
         <div className="vendor_card_footer">
 
-          {console.log("props : ",props)}
+      
           <div className="price_box">
             <p className="price_lbl">Starting Price</p>
             <p className="price_amt">₦{props.price ? props.price.toLocaleString() : 0}</p>

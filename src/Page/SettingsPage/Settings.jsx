@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux' 
+import { logoutUser } from '../../Redux/features/authslice' 
+import { message } from 'antd' 
+import { useSelector } from 'react-redux'
 import './Settings.css'
 
 const Settings = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch() 
   const [copied, setCopied] = useState(false)
   const [modal, setModal] = useState(null)
   const [otp, setOtp] = useState(['', '', '', ''])
@@ -14,9 +19,8 @@ const Settings = () => {
   const [bank, setBank] = useState({ name: '', account: '' })
   const [showSuccess, setShowSuccess] = useState(false)
   const [username, setUsername] = useState('')
-  const [toastType, setToastType] = useState('') 
-  
-
+  const [toastType, setToastType] = useState('')
+const {  vendorInfo } = useSelector((s) => s.auth)
   const [pricing, setPricing] = useState({
     startingPrice: '',
     packageName: '',
@@ -61,32 +65,46 @@ const Settings = () => {
     setModal('otp-bank')
   }
 
-const verifyOtp = () => {
-  setToastType('phone') 
-  setShowSuccess(true)
-  setModal(null)
-  setTimeout(() => setShowSuccess(false), 3000)
+  const verifyOtp = () => {
+    setToastType('phone')
+    setShowSuccess(true)
+    setModal(null)
+    setTimeout(() => setShowSuccess(false), 3000)
+  }
+
+  const handlePricingSave = () => {
+    setToastType('pricing')
+    setShowSuccess(true)
+    setModal(null)
+    setTimeout(() => setShowSuccess(false), 3000)
+  }
+
+const handleLogout = async () => {
+
+  try {
+    await dispatch(logoutUser()).unwrap()
+    message.success('Logged out successfully')
+    navigate('/login')
+  } catch (err) {
+    navigate('/login') 
+  }
 }
 
-const handlePricingSave = () => {
-  setToastType('pricing') 
-  setShowSuccess(true)
-  setModal(null)
-  setTimeout(() => setShowSuccess(false), 3000)
-}
+  
+
   return (
     <div className="settings_page">
-{showSuccess && (
-  <div className="settings_toast">
-    <span className="toast_icon">✓</span>
-    {toastType === 'pricing' ? 'Pricing updated successfully!' : 'Phone number updated successfully!'}
-    <br />
-    {toastType === 'pricing' 
-      ? 'Your packages have been updated.' 
-      : 'Your phone number has been verified and updated.'
-    }
-  </div>
-)}
+      {showSuccess && (
+        <div className="settings_toast">
+          <span className="toast_icon">✓</span>
+          {toastType === 'pricing' ? 'Pricing updated successfully!' : 'Phone number updated successfully!'}
+          <br />
+          {toastType === 'pricing'
+            ? 'Your packages have been updated.'
+            : 'Your phone number has been verified and updated.'
+          }
+        </div>
+      )}
 
       <div className="settings_container">
         <div className="settings_back_row">
@@ -104,9 +122,9 @@ const handlePricingSave = () => {
         </div>
 
         <div className="settings_profile_card">
-          <div className="settings_avatar">DJ</div>
+          <div className="settings_avatar"> {vendorInfo?.stageName?.charAt(0) || vendorInfo?.firstName?.charAt(0) || 'V'}</div>
           <div className="settings_profile_info">
-            <h3 className="settings_profile_name">DJ Kolade Oseni</h3>
+            <h3 className="settings_profile_name"> {vendorInfo?.stageName || vendorInfo?.firstName + ' ' + vendorInfo?.lastName}</h3>
             <p className="settings_profile_role">Vendor — DJ</p>
           </div>
         </div>
@@ -116,7 +134,7 @@ const handlePricingSave = () => {
             <span className="settings_label">Display name</span>
           </div>
           <div className="settings_row_right">
-            <span className="settings_value">{displayName}</span>
+            <span className="settings_value">{vendorInfo.stageName}</span>
             <button className="settings_btn" onClick={() => setModal('display-name')}>Edit</button>
           </div>
         </div>
@@ -126,7 +144,7 @@ const handlePricingSave = () => {
             <span className="settings_label">Phone number</span>
           </div>
           <div className="settings_row_right">
-            <span className="settings_value">{phoneNumber}</span>
+            <span className="settings_value">{vendorInfo?.phoneNumber || phoneNumber}</span>
             <button className="settings_btn" onClick={() => setModal('phone')}>Edit</button>
           </div>
         </div>
@@ -136,7 +154,7 @@ const handlePricingSave = () => {
             <span className="settings_label">Email</span>
           </div>
           <div className="settings_row_right">
-            <span className="settings_value">djkolade@gmail.com</span>
+            <span className="settings_value">{vendorInfo?.email}</span>
           </div>
         </div>
 
@@ -214,9 +232,16 @@ const handlePricingSave = () => {
             <div className="settings_badge_approved">✓ Approved</div>
           </div>
         </div>
+
+        {/* ← LOGOUT BUTTON AT BOTTOM */}
+        <div className="settings_logout_section">
+          <button className="settings_logout_btn" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
       </div>
 
-      {/* Existing modals... */}
+      {/* Modals stay the same... */}
       {modal === 'phone' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box" onClick={(e) => e.stopPropagation()}>
@@ -226,8 +251,8 @@ const handlePricingSave = () => {
             </div>
             <div className="modal_body">
               <label className="modal_label">Phone Number</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 className="modal_input"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
@@ -285,7 +310,7 @@ const handlePricingSave = () => {
             </div>
             <div className="modal_body">
               <label className="modal_label">Select state of residence</label>
-              <select 
+              <select
                 className="modal_select"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
@@ -314,7 +339,7 @@ const handlePricingSave = () => {
             </div>
             <div className="modal_body">
               <label className="modal_label">Select Bank</label>
-              <select 
+              <select
                 className="modal_select"
                 onChange={(e) => setBank({...bank, name: e.target.value})}
               >
@@ -325,8 +350,8 @@ const handlePricingSave = () => {
                 <option>Zenith Bank</option>
               </select>
               <label className="modal_label">Account number</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 className="modal_input"
                 placeholder="8024000056"
                 onChange={(e) => setBank({...bank, account: e.target.value})}
@@ -350,8 +375,8 @@ const handlePricingSave = () => {
             </div>
             <div className="modal_body">
               <label className="modal_label">Display Name</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 className="modal_input"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
@@ -374,7 +399,7 @@ const handlePricingSave = () => {
             </div>
             <div className="modal_body">
               <label className="modal_label">Bio/Description</label>
-              <textarea 
+              <textarea
                 className="modal_textarea"
                 placeholder="Tell us about yourself and your services"
                 value={bio}
@@ -390,7 +415,6 @@ const handlePricingSave = () => {
         </div>
       )}
 
-      {/* NEW PRICING MODAL */}
       {modal === 'pricing' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box pricing_modal" onClick={(e) => e.stopPropagation()}>
@@ -403,15 +427,15 @@ const handlePricingSave = () => {
             </div>
             <div className="modal_body">
               <label className="modal_label">Starting Price</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 className="modal_input"
                 value={pricing.startingPrice}
                 onChange={(e) => setPricing({...pricing, startingPrice: e.target.value})}
               />
-              
+
               <label className="modal_label">Package Name</label>
-              <select 
+              <select
                 className="modal_select"
                 value={pricing.packageName}
                 onChange={(e) => setPricing({...pricing, packageName: e.target.value})}
@@ -422,9 +446,9 @@ const handlePricingSave = () => {
                 <option value="premium">Premium Package</option>
                 <option value="custom">Custom Package</option>
               </select>
-              
+
               <label className="modal_label">Package Description</label>
-              <textarea 
+              <textarea
                 className="modal_textarea"
                 placeholder="What's included..."
                 value={pricing.description}
@@ -442,5 +466,6 @@ const handlePricingSave = () => {
     </div>
   )
 }
+
 
 export default Settings

@@ -22,8 +22,7 @@ function TypingIndicator() {
 
 export default function Chat() {
   const { roomId, errandId } = useParams();
-console.log("erran", errandId)
-console.log("room", roomId)
+
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isTyping] = useState(false);
@@ -49,7 +48,7 @@ console.log("room", roomId)
 
       setMessages(res.data.data || []);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -106,7 +105,7 @@ console.log("room", roomId)
         }
       );
 
-      console.log(res)
+      
 
       const newMessage = res.data.data;
 
@@ -120,7 +119,7 @@ console.log("room", roomId)
         message: newMessage,
       });
     } catch (error) {
-      console.error(error.message);
+      // console.error(error.message);
     }
   };
 

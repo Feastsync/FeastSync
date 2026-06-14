@@ -2,7 +2,6 @@ import React from "react";
 import "./Css/Input.css";
 
 const Input = (props) => {
-  console.log(props);
   return (
     <input
       type={props.type || "text"}

@@ -5,10 +5,9 @@ import {
   verifyOTP,
   clearError,
   resendOTP,
-  verifyResetPasswordOTP,
+  forgotPassword,
 } from "../Redux/features/authslice";
 import { Input, message } from "antd";
-import api from "../Redux/app/axios.js";
 import "./Css/OTP.css";
 import FeastLogo from "../assets/logos/Headerlogo.png";
 import Button from "../Props/Button.jsx";
@@ -29,14 +28,12 @@ const OTPVerification = () => {
   const [countdown, setCountdown] = useState(60);
   const [resendingReset, setResendingReset] = useState(false);
 
-  console.log(location);
-
   const email = location.state?.email;
   const accountType = location.state?.accountType || "user";
   const isForgotPassword = location.state?.isForgotPassword || false;
 
   useEffect(() => {
-    if (!email && !redirectedRef.current) {
+    if (!email &&!redirectedRef.current) {
       redirectedRef.current = true;
       navigate("/login", { replace: true });
     }
@@ -78,21 +75,15 @@ const OTPVerification = () => {
   const handleVerify = async () => {
     const otpCode = otp.join("");
 
-    if (otpCode.length !== 4) {
+    if (otpCode.length!== 4) {
       message.error("Please enter complete 4-digit OTP");
       return;
     }
 
     try {
       if (isForgotPassword) {
-        await dispatch(
-          verifyResetPasswordOTP({
-            email,
-            otp: otpCode,
-          })
-        ).unwrap();
-
-        message.success("OTP verified successfully!");
+        // NO API CALL HERE - backend doesn't have verify endpoint
+        // Just pass OTP to reset-password page for both user & vendor
         navigate("/reset-password", {
           state: {
             email,
@@ -101,6 +92,7 @@ const OTPVerification = () => {
           },
         });
       } else {
+      
         await dispatch(
           verifyOTP({
             email,
@@ -110,7 +102,6 @@ const OTPVerification = () => {
         ).unwrap();
 
         message.success("Account verified successfully!");
-
         navigate("/login");
       }
     } catch (err) {
@@ -124,9 +115,11 @@ const OTPVerification = () => {
     try {
       if (isForgotPassword) {
         setResendingReset(true);
-        await api.post("/user/forgot-password", { email });
+        
+        await dispatch(forgotPassword({ email, accountType })).unwrap();
         setResendingReset(false);
       } else {
+       
         await dispatch(resendOTP({ email, accountType })).unwrap();
       }
 
@@ -136,7 +129,7 @@ const OTPVerification = () => {
       inputs.current[0]?.focus();
     } catch (err) {
       setResendingReset(false);
-      message.error(err.response?.data?.message || err || "Resend failed");
+      message.error(err || "Resend failed");
     }
   };
 
@@ -152,9 +145,9 @@ const OTPVerification = () => {
           <Link
             to={
               isForgotPassword
-                ? "/forgot-password"
+               ? "/forgot-password"
                 : accountType === "vendor"
-                ? "/vendor/signup"
+               ? "/vendor/signup"
                 : "/user/signup"
             }
             className="otp-back-wrap"
@@ -166,7 +159,7 @@ const OTPVerification = () => {
           </Link>
 
           <div className="otp-header">
-            <h1>{isForgotPassword ? "Reset Password" : "OTP verification"}</h1>
+            <h1>{isForgotPassword? "Reset Password" : "OTP verification"}</h1>
             <p>Enter OTP code sent to {email}</p>
           </div>
 
@@ -192,15 +185,15 @@ const OTPVerification = () => {
             disabled={isLoading}
           >
             {isLoading
-              ? "Verifying..."
+             ? "Verifying..."
               : isForgotPassword
-              ? "Continue"
+             ? "Continue"
               : "Verify OTP"}
           </Button>
 
           <p className="otp-resend">
             Didn't receive the code?{" "}
-            {countdown > 0 ? (
+            {countdown > 0? (
               <span style={{ color: "#888" }}>Resend in {countdown}s</span>
             ) : (
               <span
@@ -211,7 +204,7 @@ const OTPVerification = () => {
                   fontWeight: 600,
                 }}
               >
-                {resendingReset ? "Sending..." : "Resend"}
+                {resendingReset? "Sending..." : "Resend"}
               </span>
             )}
           </p>

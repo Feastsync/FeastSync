@@ -99,11 +99,10 @@ const Login = () => {
         }),
       ).unwrap();
 
-      console.log("Login result:", result);
+   
       message.success("Login successful!");
 
       if (result.accountType === "vendor") {
-        // Extract vendor name from various possible locations in response
         const vendorName =
           result.vendor?.stageName ||
           result.vendor?.firstName ||
@@ -119,7 +118,7 @@ const Login = () => {
         navigate("/userdashboard");
       }
     } catch (err) {
-      console.error("Login error details:", err);
+    
       const errorMessage =
         typeof err === "string"
           ? err

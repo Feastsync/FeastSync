@@ -37,7 +37,7 @@ const AllVendors = () => {
       setVendors(mappedVendors);
     } catch (err) {
       setError(err.response?.data?.message || "Failed to fetch vendors");
-      console.error(err);
+  
     } finally {
       setLoading(false);
     }

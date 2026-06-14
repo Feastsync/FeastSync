@@ -8,7 +8,7 @@ export const signupVendor = createAsyncThunk(
       const res = await api.post('/vendor/sign-up', formData);
       return { email: formData.email };
     } catch (err) {
-      console.log("BACKEND ERROR:", err.response?.data);
+    
       return rejectWithValue(
         err.response?.data?.message || 'Signup failed'
       );
@@ -17,22 +17,7 @@ export const signupVendor = createAsyncThunk(
 );
 
 
-// export const resendVendorOTP = createAsyncThunk(
-//   "vendor/resendOTP",
-//   async (email, { rejectWithValue }) => {
-//     try {
-//       const response = await api.post("/vendor/resend-otp", {
-//         email,
-//       });
 
-//       return response.data;
-//     } catch (error) {
-//       return rejectWithValue(
-//         error.response?.data?.message || "Failed to resend OTP"
-//       );
-//     }
-//   }
-// );
 
 const vendorSlice = createSlice({
   name: 'vendor',
