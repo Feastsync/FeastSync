@@ -412,8 +412,31 @@
 .pricing_modal .modal_label:first-child {
   margin-top: 0;
 }
+.settings_logout_section {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+}
 
-/* Mobile Responsive */
+.settings_logout_btn {
+  width: 100%;
+  padding: 12px 24px;
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.settings_logout_btn:hover {
+  background: #b91c1c;
+}
+
+
+
 @media (max-width: 768px) {
   .settings_page {
     padding: 16px 0 32px 0;

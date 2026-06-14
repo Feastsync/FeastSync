@@ -19,7 +19,6 @@ const ForgetPassword = () => {
   const accountType = useSelector((state) => state.auth.accountType);
   const { isLoading } = useSelector((state) => state.auth);
 
-  // Fallback to Redux accountType or user
   const currentRole = params.get("role") || accountType || "user";
 
   const [email, setEmail] = useState("");
@@ -36,8 +35,6 @@ const ForgetPassword = () => {
     }
 
     try {
-      console.log("Role:", currentRole);
-      console.log("Email:", email);
 
       await dispatch(
         forgotPassword({
@@ -56,7 +53,7 @@ const ForgetPassword = () => {
         },
       });
     } catch (err) {
-      console.error("Forgot Password Error:", err);
+      // console.error("Forgot Password Error:", err);
       message.error(err || "Failed to send OTP");
     }
   };
@@ -71,7 +68,7 @@ const ForgetPassword = () => {
       <div className="forgotPaswwordContainer">
         <div className="forgotPasswordHolder">
           <div className="forgotPasswordButton">
-            <Button onClick={() => navigate(-1)}>
+            <Button onClick={() => navigate("/login")}>
               <p>
                 <FaArrowLeft />
               </p>

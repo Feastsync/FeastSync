@@ -5,7 +5,7 @@ import { allNotifications } from "../../Components/DummyData";
 const ITEMS_PER_PAGE = 5;
 
 export default function AllNotifications() {
-    console.log("notifications data:", allNotifications);
+ 
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(allNotifications.length / ITEMS_PER_PAGE);
