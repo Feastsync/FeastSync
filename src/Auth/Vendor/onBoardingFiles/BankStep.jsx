@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { FiX, FiChevronDown } from "react-icons/fi";
 import "./css/BankStep.css";
-import { useNavigate } from "react-router-dom";
 
 const BankStep = ({ onNext, onBack, onSkip, percentComplete = 20 }) => {
   const [state, setState] = useState("");
   const [bank, setBank] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
-  const navigate = useNavigate();
 
   const isFormValid =
     state.trim() !== "" && bank.trim() !== "" && accountNumber.trim() !== "";
@@ -95,7 +93,7 @@ const BankStep = ({ onNext, onBack, onSkip, percentComplete = 20 }) => {
       </div>
 
       <div className="bank-modal-footer">
-        <button className="bank-btn-text" onClick={() => navigate("/")}>
+        <button className="bank-btn-text" onClick={onSkip}>
           Skip for Now
         </button>
         <div className="bank-footer-actions">

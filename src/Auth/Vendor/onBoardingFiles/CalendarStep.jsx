@@ -1,10 +1,8 @@
 import React from "react";
 import { IoClose } from "react-icons/io5";
 import "./css/CalendarStep.css";
-import { useNavigate } from "react-router-dom";
 
-const CalendarStep = ({ onNext, onBack }) => {
-  const navigate = useNavigate();
+const CalendarStep = ({ onNext, onBack, onSkip }) => {
   return (
     <div className="cs-modal">
       <div className="cs-header">
@@ -14,10 +12,10 @@ const CalendarStep = ({ onNext, onBack }) => {
             You need to complete your profile before accessing vendor features
           </p>
           <div className="cs-progress-bar">
-            <div className="cs-progress-fill" style={{ width: "100%" }} />
+            <div className="cs-progress-fill" style={{ width: "95%" }} />
           </div>
         </div>
-        <button className="cs-close" onClick={onBack}>
+        <button className="cs-close" onClick={onSkip}>
           <IoClose size={24} />
         </button>
       </div>
@@ -35,7 +33,7 @@ const CalendarStep = ({ onNext, onBack }) => {
       </div>
 
       <div className="cs-footer">
-        <button className="cs-btn-text" onClick={() => navigate("/")}>
+        <button className="cs-btn-text" onClick={onSkip}>
           Skip for Now
         </button>
         <div className="cs-btn-group">

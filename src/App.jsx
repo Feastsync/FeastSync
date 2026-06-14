@@ -43,6 +43,21 @@ import Epknorating from "./Auth/Vendor/Epknorating.jsx";
 import Epkrating from "./Auth/Vendor/Epkrating.jsx";
 import BookingModal from "./Page/Booking/Booking.jsx";
 
+const OnboardingPage = () => {
+  const { vendorInfo } = useSelector((state) => state.auth);
+  const vendorName = vendorInfo?.stageName || vendorInfo?.firstName || "";
+  return (
+    <>
+      <Vendordashboard />
+      <VendorOnboarding
+        isOpen={true}
+        vendorName={vendorName}
+        onClose={() => (window.location.href = "/vendordashboard")}
+      />
+    </>
+  );
+};
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -78,13 +93,7 @@ const App = () => {
           path="/vendor/onboarding"
           element={
             <PrivateRoute>
-              <>
-                <Vendordashboard />
-                <VendorOnboarding
-                  isOpen={true}
-                  onClose={() => (window.location.href = "/vendordashboard")}
-                />
-              </>
+              <OnboardingPage />
             </PrivateRoute>
           }
         />

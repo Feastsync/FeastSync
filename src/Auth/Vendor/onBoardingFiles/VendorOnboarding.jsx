@@ -29,6 +29,14 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
   const done = Object.values(completedSteps).filter(Boolean).length;
   const percentComplete = total? Math.round((done / total) * 100) : 0;
 
+  const stepMap = {
+    bank: "media",
+    media: "pricing",
+    pricing: "docs",
+    docs: "calendar",
+    calendar: "success",
+  };
+
   const completeStep = (stepName) => {
     setCompletedSteps((prev) => ({...prev, [stepName]: true }));
 
