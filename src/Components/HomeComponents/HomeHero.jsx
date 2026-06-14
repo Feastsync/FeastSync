@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import Imp from '../../Props/Imp'
 import Button from '../../Props/Button'
 import { LuSearch } from 'react-icons/lu'
 import "./Css/HomeHero.css"
 import {useNavigate} from 'react-router-dom'
+
 const HomeHero = () => {
   const [searchQuery, setSearchQuery] = useState("")
   const navigate = useNavigate()
+  const { isLoggedIn, accountType } = useSelector((state) => state.auth)
 
   return (
     <section className="home_hero_container">
@@ -32,9 +35,19 @@ const HomeHero = () => {
           />
         </div>
 
-        <div className="home_hero_actions">
-          <Button onClick={() => navigate('/onboarding')} className="btn_purple" btnText="Get Started" />
-          <Button onClick={() => navigate('/vendors')}  className="btn_outline" btnText="Explore the vendors" />
+        <div className={`home_hero_actions ${isLoggedIn ? 'centered' : ''}`}>
+          {!isLoggedIn && (
+            <Button 
+              onClick={() => navigate('/onboarding')} 
+              className="btn_purple" 
+              btnText="Get Started" 
+            />
+          )}
+          <Button 
+            onClick={() => navigate('/vendors')}  
+            className="btn_outline" 
+            btnText="Explore the vendors" 
+          />
         </div>
       </div>
 
