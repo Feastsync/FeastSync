@@ -109,15 +109,15 @@ export const resetPassword = createAsyncThunk(
     try {
       const endpoint =
         accountType === "user"
-         ? "/user/reset-password"
+          ? "/user/reset-password"
           : "/vendor/reset-password";
 
-      const res = await api.post(endpoint, {
-        email,
-        otp,
-        password,
-        confirmPassword,
-      });
+      const body =
+        accountType === "vendor"
+          ? { email, password, confirmPassword }
+          : { email, otp, password, confirmPassword };
+
+      const res = await api.post(endpoint, body);
       return res.data;
     } catch (err) {
       return rejectWithValue(
@@ -126,7 +126,6 @@ export const resetPassword = createAsyncThunk(
     }
   },
 );
-
 
 export const getAllPricing = createAsyncThunk(
   "pricing/getAllPricing",
@@ -290,6 +289,22 @@ export const getVendorById = createAsyncThunk(
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "Failed to fetch vendor");
+    }
+  }
+);
+
+export const verifyResetOTP = createAsyncThunk(
+  "auth/verifyResetOTP",
+  async ({ email, otp, accountType }, { rejectWithValue }) => {
+    try {
+      const endpoint =
+        accountType === "user" ? "/user/verify-otp" : "/vendor/verify-otp";
+      const res = await api.post(endpoint, { email, otp });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || "OTP verification failed"
+      );
     }
   }
 );
@@ -458,7 +473,18 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-
+     
+       .addCase(verifyResetOTP.pending, (state) => {
+  state.isLoading = true;
+  state.error = null;
+})
+.addCase(verifyResetOTP.fulfilled, (state) => {
+  state.isLoading = false;
+})
+.addCase(verifyResetOTP.rejected, (state, action) => {
+  state.isLoading = false;
+  state.error = action.payload;
+})
      .addCase(resendOTP.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -674,5 +700,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, clearError, updateVendorInfo } = authSlice.actions;
+export const { logout, clearError, updateVendorInfo  } = authSlice.actions;
 export default authSlice.reducer;

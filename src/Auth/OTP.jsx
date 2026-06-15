@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   verifyOTP,
+  verifyResetOTP,
   clearError,
   resendOTP,
   forgotPassword,
@@ -33,7 +34,7 @@ const OTPVerification = () => {
   const isForgotPassword = location.state?.isForgotPassword || false;
 
   useEffect(() => {
-    if (!email &&!redirectedRef.current) {
+    if (!email && !redirectedRef.current) {
       redirectedRef.current = true;
       navigate("/login", { replace: true });
     }
@@ -75,30 +76,23 @@ const OTPVerification = () => {
   const handleVerify = async () => {
     const otpCode = otp.join("");
 
-    if (otpCode.length!== 4) {
+    if (otpCode.length !== 4) {
       message.error("Please enter complete 4-digit OTP");
       return;
     }
 
     try {
       if (isForgotPassword) {
-        // NO API CALL HERE - backend doesn't have verify endpoint
-        // Just pass OTP to reset-password page for both user & vendor
+        await dispatch(
+          verifyResetOTP({ email, otp: otpCode, accountType })
+        ).unwrap();
+
         navigate("/reset-password", {
-          state: {
-            email,
-            otp: otpCode,
-            accountType,
-          },
+          state: { email, otp: otpCode, accountType },
         });
       } else {
-      
         await dispatch(
-          verifyOTP({
-            email,
-            otp: otpCode,
-            accountType,
-          })
+          verifyOTP({ email, otp: otpCode, accountType })
         ).unwrap();
 
         message.success("Account verified successfully!");
@@ -115,11 +109,9 @@ const OTPVerification = () => {
     try {
       if (isForgotPassword) {
         setResendingReset(true);
-        
         await dispatch(forgotPassword({ email, accountType })).unwrap();
         setResendingReset(false);
       } else {
-       
         await dispatch(resendOTP({ email, accountType })).unwrap();
       }
 
@@ -145,9 +137,9 @@ const OTPVerification = () => {
           <Link
             to={
               isForgotPassword
-               ? "/forgot-password"
+                ? "/forgot-password"
                 : accountType === "vendor"
-               ? "/vendor/signup"
+                ? "/vendor/signup"
                 : "/user/signup"
             }
             className="otp-back-wrap"
@@ -159,7 +151,7 @@ const OTPVerification = () => {
           </Link>
 
           <div className="otp-header">
-            <h1>{isForgotPassword? "Reset Password" : "OTP verification"}</h1>
+            <h1>{isForgotPassword ? "Reset Password" : "OTP verification"}</h1>
             <p>Enter OTP code sent to {email}</p>
           </div>
 
@@ -185,26 +177,22 @@ const OTPVerification = () => {
             disabled={isLoading}
           >
             {isLoading
-             ? "Verifying..."
+              ? "Verifying..."
               : isForgotPassword
-             ? "Continue"
+              ? "Continue"
               : "Verify OTP"}
           </Button>
 
           <p className="otp-resend">
             Didn't receive the code?{" "}
-            {countdown > 0? (
+            {countdown > 0 ? (
               <span style={{ color: "#888" }}>Resend in {countdown}s</span>
             ) : (
               <span
                 onClick={handleResend}
-                style={{
-                  color: "#330159",
-                  cursor: "pointer",
-                  fontWeight: 600,
-                }}
+                style={{ color: "#330159", cursor: "pointer", fontWeight: 600 }}
               >
-                {resendingReset? "Sending..." : "Resend"}
+                {resendingReset ? "Sending..." : "Resend"}
               </span>
             )}
           </p>
