@@ -15,9 +15,7 @@ const ForgetPassword = () => {
   const dispatch = useDispatch();
 
   const params = new URLSearchParams(location.search);
-
-  const accountType = useSelector((state) => state.auth.accountType);
-  const { isLoading } = useSelector((state) => state.auth);
+  const { isLoading, accountType } = useSelector((state) => state.auth);
 
   const currentRole = params.get("role") || accountType || "user";
 
@@ -35,12 +33,8 @@ const ForgetPassword = () => {
     }
 
     try {
-
       await dispatch(
-        forgotPassword({
-          email,
-          accountType: currentRole,
-        })
+        forgotPassword({ email, accountType: currentRole })
       ).unwrap();
 
       message.success("Recovery OTP sent to your email");
@@ -53,16 +47,14 @@ const ForgetPassword = () => {
         },
       });
     } catch (err) {
-      // console.error("Forgot Password Error:", err);
-      message.error(err || "Failed to send OTP");
+      message.error(typeof err === "string" ? err : "Failed to send OTP");
     }
   };
 
   return (
     <div>
       <div className="forgotPasswordLogo">
-        <div className="forgetPasswordLogo">
-        </div>
+        <div className="forgetPasswordLogo"></div>
       </div>
 
       <div className="forgotPaswwordContainer">
@@ -87,7 +79,6 @@ const ForgetPassword = () => {
           <div className="passwordEmail">
             <section className="passwordEmailWrapper">
               <label>Email Address</label>
-
               <input
                 type="email"
                 placeholder="Your email address"
@@ -117,10 +108,7 @@ const ForgetPassword = () => {
         </div>
 
         <div className="forgotPasswordImage">
-          <img
-            src="../public/About/Icon.png"
-            alt="Forgot Password Icon"
-          />
+          <img src="../public/About/Icon.png" alt="Forgot Password Icon" />
         </div>
       </div>
     </div>
