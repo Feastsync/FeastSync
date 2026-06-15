@@ -18,9 +18,8 @@ const services = () => {
             for every kind of event.
             </p>
           <p className="serviceDeliver">
-            from initimate birthday dinners to large-scale coperate galas,{" "}
-            <br />
-            feastsync connects you with verified entertainment <br />
+            From initimate birthday dinners to large-scale coperate galas,{" "}
+            feastsync connects you with verified entertainment 
             professionals who deliver excellence-everytime.
            </p>
             <div className="serviceRate">
@@ -174,9 +173,9 @@ const services = () => {
         <div className="serviceBrandWrapper">
           <p className="serviceBrand">
             Why book seperately when you can have it all-perfectly
-            coordinated?FeastSync's entertainment packages <br />
+            coordinated?FeastSync's entertainment packages 
             bundle top-tier vendors into seamless,pre-matched combinations that
-            work together fro the first soundcheck <br />
+            work together fro the first soundcheck 
             to the last song.Book more, spend less and eliminate the
             coordination headache entirely.
           </p>
