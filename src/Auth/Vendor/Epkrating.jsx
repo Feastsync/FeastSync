@@ -12,6 +12,8 @@ const Epkrating = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const [expandedCards, setExpandedCards] = useState({});
+    const [vendor, setVendor] = useState({});
+
   const [showOnboarding, setShowOnboarding] = useState(false)
   const [vendorName, setVendorName] = useState("")
 

@@ -48,18 +48,18 @@ const topVendors = async()=>{
           <button className="btn2 left" onClick={() => scrollRow(row1Ref, "left")}>
             <IoChevronBackOutline size={40} />
           </button>
-
           <div className="fv_window" ref={row1Ref}>
             {row1Vendors.map((vendor) => (
               <div key={vendor.id} className="box">
+
                 <VendorCard
-                  image={vendor.image}
-                  name={vendor.name}
-                  location={vendor.location}
-                  rating={vendor.rating}
-                  price={vendor.price}
+                  // image={vendor.image}
+                  // name={vendor.name}
+                  // location={vendor.location}
+                  // rating={vendor.rating}
+                  // price={vendor.price}
+                  // id ={vendor.id}
                 />
-              
               </div>
             ))}
           </div>
@@ -81,11 +81,11 @@ const topVendors = async()=>{
             {row2Vendors.map((vendor) => (
               <div key={vendor.id} className="box">
                 <VendorCard
-                  image={vendor.image}
-                  name={vendor.name}
-                  location={vendor.location}
-                  rating={vendor.rating}
-                  price={vendor.price}
+                  // image={vendor.image}
+                  // name={vendor.name}
+                  // location={vendor.location}
+                  // rating={vendor.rating}
+                  // price={vendor.price}
                 />
               </div>
             ))}

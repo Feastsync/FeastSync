@@ -152,7 +152,7 @@ height: 396px;
   }
 
   .serviceContainerTitle {
-    font-size: 20px;
+    font-size: 19px;
     font-weight: bold;
   }
   .serviceBooking {
@@ -201,5 +201,12 @@ height: 396px;
 }
 .serviceDeliver{
   font-size: 15px;
+}
+.serviceEntertainment{
+  gap: 0px;
+  padding: 5px;
+}
+.serviceCoperate{
+  font-size: 19.5px;
 }
 }

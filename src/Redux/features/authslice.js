@@ -9,6 +9,7 @@ export const login = createAsyncThunk(
       const res = await api.post(endpoint, { email, password })
       if (res.data.token) {
         localStorage.setItem('token', res.data.token)
+        
       }
       return {...res.data, accountType }
     } catch (err) {
@@ -32,6 +33,26 @@ export const verifyOTP = createAsyncThunk(
     }
   }
 )
+
+  export const resendOTP = createAsyncThunk(
+  "auth/resendOTP",
+  async ({ email, accountType }, { rejectWithValue }) => {
+    try {
+      const endpoint =
+        accountType === "user"
+          ? "/user/resend-otp"
+          : "/vendor/resend-otp";
+
+      const res = await api.post(endpoint, { email });
+
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || "Resend OTP failed"
+      );
+    }
+  }
+);
 
 export const forgotPassword = createAsyncThunk(
   'auth/forgotPassword',
@@ -73,6 +94,18 @@ export const resetPassword = createAsyncThunk(
     }
   }
 )
+export const logoutUser = createAsyncThunk(
+  'auth/logout',
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const { accountType } = getState().auth
+      const endpoint = accountType === 'user' ? '/user/logout' : '/vendor/logout'
+      await api.post(endpoint)
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message)
+    }
+  }
+)
 
 const authSlice = createSlice({
   name: 'auth',
@@ -91,7 +124,7 @@ const authSlice = createSlice({
       state.userInfo = null
       state.vendorInfo = null
       state.token = null
-      state.accountType = null
+      state.accountType = null 
       state.isLoggedIn = false
     },
     clearError: (state) => {
@@ -140,6 +173,27 @@ const authSlice = createSlice({
         state.error = action.payload
       })
 
+  .addCase(resendOTP.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+    .addCase(resendOTP.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isLoggedIn = true
+        state.token = action.payload.token
+        state.accountType = action.payload.accountType
+        if (action.payload.accountType === 'user') {
+          state.userInfo = action.payload.user
+        } else {
+          state.vendorInfo = action.payload.vendor
+        }
+      })
+    .addCase(resendOTP.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload
+      })
+
+
     .addCase(forgotPassword.pending, (state) => {
         state.isLoading = true
         state.error = null
@@ -175,6 +229,22 @@ const authSlice = createSlice({
         state.isLoading = false
         state.error = action.payload
       })
+ .addCase(logoutUser.fulfilled, (state) => {
+  localStorage.removeItem('token')
+  state.userInfo = null
+  state.vendorInfo = null
+  state.token = null
+  state.accountType = null
+  state.isLoggedIn = false
+})  
+.addCase(logoutUser.rejected, (state) => {
+  localStorage.removeItem('token')
+  state.userInfo = null
+  state.vendorInfo = null
+  state.token = null
+  state.accountType = null
+  state.isLoggedIn = false
+})
   }
 })
 

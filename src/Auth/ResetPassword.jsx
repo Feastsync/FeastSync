@@ -83,38 +83,7 @@ const ResetPassword = () => {
             <p className='resetPasswordText'>Reset Password?</p>
             <p className='resetPasswordLink'>Enter your email address to recieve a recovery link</p>
           </div>
-          <div className='resetpasswordEmail'>        
-            <section>
-              <label htmlFor=""> Create Password</label>
-              <div>
-                <input 
-                  type={showPassword ? "text" : "password"}
-                  name="" 
-                  id="" 
-                  placeholder='Enter your password'
-                  value={Password}
-                  onChange={(e)=>setPassword(e.target.value)}
-                /> 
-                <span onClick={handlePassword}>{showPassword ?<FaRegEyeSlash />:<FaRegEye />} </span>
-              </div>
-            </section>
-            <section>
-              <label htmlFor=""> Reset Password</label>
-              <div>
-                <input 
-                  type={showConfirm ? "text" : "password"}
-                  name="" 
-                  id="" 
-                  placeholder='Enter your password'
-                  value={confirmPassword}
-                  onChange={(e)=>setConfirmPassword(e.target.value)}
-                />
-                <span onClick={()=>setShowConfirm(!showConfirm)}>{showConfirm ?<FaRegEyeSlash />:<FaRegEye />} </span>
-              </div>
-            </section>   
-            <Button >Submit</Button>  
-          </div>
-        </div>
+        
         <div className='resetpasswordEmail'>
           <section>
             <label htmlFor="password">New Password</label>
@@ -154,6 +123,7 @@ const ResetPassword = () => {
       <div className='resetPasswordImage'>
         <img src="/About/amico.png" alt="" className='imageHolder' />
       </div>
+    </div>
     </div>
   )
 }

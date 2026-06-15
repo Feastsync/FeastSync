@@ -13,17 +13,17 @@ export const signupUser = createAsyncThunk(
   }
 )
 
-export const resendOTP = createAsyncThunk(
-  'user/resendOTP',
-  async (email, { rejectWithValue }) => {
-    try {
-      const response = await api.post('/user/resend-otp', { email })
-      return { email, message: response.data?.message }
-    } catch (err) {
-      return rejectWithValue(err.response?.data?.message || 'Resend failed')
-    }
-  }
-)
+// export const resendOTP = createAsyncThunk(
+//   'user/resendOTP',
+//   async (email, { rejectWithValue }) => {
+//     try {
+//       const response = await api.post('/user/resend-otp', { email })
+//       return { email, message: response.data?.message }
+//     } catch (err) {
+//       return rejectWithValue(err.response?.data?.message || 'Resend failed')
+//     }
+//   }
+// )
 
 const userSlice = createSlice({
   name: 'user',
@@ -56,17 +56,17 @@ const userSlice = createSlice({
         state.isLoading = false
         state.error = action.payload
       })
-      .addCase(resendOTP.pending, (state) => {
-        state.resendLoading = true
-        state.error = null
-      })
-      .addCase(resendOTP.fulfilled, (state) => {
-        state.resendLoading = false
-      })
-      .addCase(resendOTP.rejected, (state, action) => {
-        state.resendLoading = false
-        state.error = action.payload
-      })
+      // .addCase(resendOTP.pending, (state) => {
+      //   state.resendLoading = true
+      //   state.error = null
+      // })
+      // .addCase(resendOTP.fulfilled, (state) => {
+      //   state.resendLoading = false
+      // })
+      // .addCase(resendOTP.rejected, (state, action) => {
+      //   state.resendLoading = false
+      //   state.error = action.payload
+      // })
   }
 })
 
