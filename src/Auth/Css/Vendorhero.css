@@ -25,8 +25,7 @@
 }
 
 .vendorhero-back,
-.vendorhero-cover-upload,
-.vendorhero-avatar-upload {
+.vendorhero-cover-upload {
   border: 1px solid rgba(255, 255, 255, 0.32);
   background-color: rgba(0, 0, 0, 0.34);
   color: #ffffff;
@@ -96,30 +95,38 @@
   display: block;
   object-fit: cover;
   border-radius: 50%;
+  z-index: 1;
 }
 
+/* KEY FIX: Remove pointer-events: none and add cursor + z-index */
 .vendorhero-avatar-overlay {
-  font-size: 18px;
-  width: 67%;
-  height: 21%;
-  background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.08) 48%, rgba(0, 0, 0, 0.38) 100%),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.22) 100%);
-  pointer-events: none;
-  display: flex;
   position: absolute;
   top: 77px;
   left: 25px;
-  font-size: 12px;
+  width: 67%;
+  height: 21%;
+  display: flex;
   align-items: center;
   justify-content: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.7);
   border-radius: 4px;
   border: 1px solid #ffffff;
+  cursor: pointer;
+  z-index: 2;
+  backdrop-filter: blur(6px);
 }
 
 .vendorhero-avatar-overlay img {
   width: 13px;
   height: 13px;
+}
+
+.vendorhero-avatar-overlay:hover {
+  background: rgba(0, 0, 0, 0.85);
 }
 
 @media (max-width: 768px) {
@@ -176,6 +183,8 @@
     left: 18px !important;
     padding: 2px 4px !important;
     box-sizing: border-box !important;
+    cursor: pointer !important;
+    z-index: 2 !important;
   }
 }
 

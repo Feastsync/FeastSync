@@ -18,23 +18,20 @@ const FeaturedVendors = () => {
         setError(null)
         const res = await api.get('/vendor/all-vendors')
         
-       
         const mappedVendors = (res.data?.data || []).map(vendor => ({
           _id: vendor._id,
+          slug: vendor.slug, 
           stageName: vendor.stageName || '',
-          name: vendor.stageName || vendor.name || '',
+          name: vendor.stageName || '',
           location: vendor.stateOfResidence || vendor.location || '',
-          rating: vendor.averageRating || vendor.rating,
-          price: vendor.startingPrice 
-            ? `₦${vendor.startingPrice.toLocaleString()}` 
-            : vendor.price || '',
-          image: vendor.secureUrl || vendor.avatar || vendor.image || ''
+          rating: Math.floor(vendor.averageRating || 0), 
+          price: vendor.bookingFee || 0, 
+          image: vendor.profilePicture?.secureUrl || vendor.profilePicture || ''
         }))
         setVendors(mappedVendors)
     
       } catch (err) {
         setError(err.response?.data?.message || 'Failed to fetch vendors')
-     
       } finally {
         setLoading(false)
       }
@@ -54,7 +51,6 @@ const FeaturedVendors = () => {
       ref.current.scrollLeft += amount
     }
   }
-
 
   const SkeletonCard = () => (
     <div className="box">
@@ -87,7 +83,6 @@ const FeaturedVendors = () => {
           </div>
         )}
 
-       
         <div className="fv_carousel_zone">
           <button 
             className="btn2 left" 
@@ -103,6 +98,7 @@ const FeaturedVendors = () => {
                   <div key={vendor._id} className="box fade-in">
                     <VendorCard
                       id={vendor._id}
+                      slug={vendor.slug}
                       name={vendor.stageName}
                       location={vendor.location}
                       rating={vendor.rating}
@@ -122,7 +118,6 @@ const FeaturedVendors = () => {
           </button>
         </div>
 
-    
         {(loading || row2Vendors.length > 0) && (
           <div className="fv_carousel_zone">
             <button 
@@ -139,7 +134,8 @@ const FeaturedVendors = () => {
                     <div key={vendor._id} className="box fade-in">
                       <VendorCard
                         id={vendor._id}
-                        name={vendor.name}
+                        slug={vendor.slug}
+                        name={vendor.stageName}
                         location={vendor.location}
                         rating={vendor.rating}
                         price={vendor.price}
@@ -159,7 +155,6 @@ const FeaturedVendors = () => {
           </div>
         )}
 
-       
         {!loading && !error && vendors.length === 0 && (
           <div className="fv_state">
             <p>No vendors found yet. Check back soon!</p>

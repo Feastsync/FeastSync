@@ -14,16 +14,22 @@ const Vendordashboard = () => {
   const location = useLocation();
   const [expandedCards, setExpandedCards] = useState({});
   const [showOnboarding, setShowOnboarding] = useState(false);
-  const { pricingPackages, vendorInfo } = useSelector((state) => state.auth); // Keep this line
+  const { pricingPackages, vendorInfo } = useSelector((state) => state.auth);
   const [vendorName, setVendorName] = useState(vendorInfo?.stageName || vendorInfo?.firstName || "");
 
   useEffect(() => {
-    if (location.state?.showOnboarding) {
+    const shouldShowOnboarding = location.state?.showOnboarding &&!vendorInfo?.isOnboarded;
+
+    if (shouldShowOnboarding) {
       setShowOnboarding(true);
       if (location.state?.vendorName) setVendorName(location.state.vendorName);
       navigate(location.pathname, { replace: true, state: {} });
     }
-  }, [location, navigate]);
+
+    if (vendorInfo?.isOnboarded) {
+      setShowOnboarding(false);
+    }
+  }, [location, navigate, vendorInfo?.isOnboarded]);
 
   const handleOnboardingClose = () => {
     setShowOnboarding(false);
@@ -31,56 +37,19 @@ const Vendordashboard = () => {
 
   const toggleExpand = (id) => {
     setExpandedCards((prev) => ({
-      ...prev,
-      [id]: !prev[id],
+     ...prev,
+      [id]:!prev[id],
     }));
   };
 
+  // Keep card structure, no hardcoded text
   const basePackages = [
-    {
-      id: "basic",
-      title: "Basic Package",
-      price: "₦350,000",
-      highlights: [
-        "Professional DJ performance",
-        "Up to 4 hours of playtime",
-        "Curated playlist based on event type",
-        "Basic sound setup",
-        "Crowd engagement and music transitions",
-        "Pre-event consultation",
-        "Arrival and setup before event start",
-      ],
-    },
-    {
-      id: "standard",
-      title: "Standard Package",
-      price: "₦550,000",
-      highlights: [
-        "Professional DJ performance",
-
-      ],
-    },
-    {
-      id: "premium",
-      title: "Premium Package",
-      price: "₦750,000",
-      highlights: [
-        "Professional DJ performance",
-        "Up to 10 hours of coverage",
-        "Premium sound system setup",
-        "Customized music programming",
-        "Advanced lighting effects",
-        "Wireless microphones for hosts and speeches",
-        "Dedicated event planning consultation",
-        "Live mixing and seamless transitions",
-        "Priority support before event day",
-        "Backup DJ equipment and contingency plan",
-        "Extended event coverage flexibility",
-      ],
-    },
+    { id: "basic", title: "Basic Package", price: "₦0", highlights: [] },
+    { id: "standard", title: "Standard Package", price: "₦0", highlights: [] },
+    { id: "premium", title: "Premium Package", price: "₦0", highlights: [] },
   ];
 
-  // Only show packages that exist in the pricingPackages array from Redux
+  // Merge with data from Redux/backend
   const displayPackages = basePackages.map((base) => {
     const saved = pricingPackages?.find(
       (p) => (p.packageName || p.pacakageName)?.toLowerCase() === base.id,
@@ -90,19 +59,15 @@ const Vendordashboard = () => {
       return base;
     }
 
-    // Sanitize and format the price from Redux
     const rawPrice = saved.packagePrice || saved.price || "0";
     const cleanPrice = rawPrice.toString().replace(/,/g, "").replace("₦", "");
     const formattedPrice = `₦${Number(cleanPrice).toLocaleString()}`;
 
-    // Use the saved description as highlights (split by lines)
     const desc = saved.packageDescription || saved.description || "";
-    const highlights = desc
-      ? desc.split("\n").filter((l) => l.trim())
-      : base.highlights;
+    const highlights = desc? desc.split("\n").filter((l) => l.trim()) : [];
 
     return {
-      ...base,
+     ...base,
       price: formattedPrice,
       highlights: highlights,
     };
@@ -172,7 +137,7 @@ const Vendordashboard = () => {
 
         <div className="vendordashboard-pricing-grid">
           {displayPackages.map((item) => {
-            const isExpanded = !!expandedCards[item.id];
+            const isExpanded =!!expandedCards[item.id];
 
             return (
               <div key={item.id} className="vendordashboard-pricing-card">
@@ -185,30 +150,36 @@ const Vendordashboard = () => {
 
                 <div className="vendordashboard-card-body-wrapper">
                   <div
-                    className={`vendordashboard-card-body ${isExpanded ? "vendordashboard-scrollable" : ""}`}
+                    className={`vendordashboard-card-body ${isExpanded? "vendordashboard-scrollable" : ""}`}
                   >
                     <h4 className="vendordashboard-highlights-heading">
                       Service Highlights
                     </h4>
                     <ul className="vendordashboard-highlights-list">
-                      {item.highlights.map((highlight, index) => (
-                        <li
-                          key={index}
-                          className="vendordashboard-highlight-item"
-                        >
-                          {highlight}
+                      {item.highlights.length > 0? (
+                        item.highlights.map((highlight, index) => (
+                          <li
+                            key={index}
+                            className="vendordashboard-highlight-item"
+                          >
+                            {highlight}
+                          </li>
+                        ))
+                      ) : (
+                        <li className="vendordashboard-highlight-item">
+                          No details added yet
                         </li>
-                      ))}
+                      )}
                     </ul>
                   </div>
 
                   <button
                     className="vendordashboard-toggle-expand-btn"
                     onClick={() => toggleExpand(item.id)}
-                    aria-label={isExpanded ? "Disable scroll" : "Enable scroll"}
+                    aria-label={isExpanded? "Disable scroll" : "Enable scroll"}
                   >
                     <svg
-                      className={`vendordashboard-dropdown-icon ${isExpanded ? "vendordashboard-open" : ""}`}
+                      className={`vendordashboard-dropdown-icon ${isExpanded? "vendordashboard-open" : ""}`}
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
