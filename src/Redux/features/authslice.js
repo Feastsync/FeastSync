@@ -8,8 +8,8 @@ export const login = createAsyncThunk(
     try {
       const endpoint = accountType === "user"? "/user/login" : "/vendor/login";
       const res = await api.post(endpoint, { email, password });
-      
-      console.log('LOGIN RAW RESPONSE:', res.data); 
+     
+
       const responseData = res.data?.data || res.data;
       const token = responseData?.token || res.data?.token;
 
@@ -19,14 +19,19 @@ export const login = createAsyncThunk(
 
       localStorage.setItem("token", token);
 
+      // const payload = {
+      //  ...responseData,
+      //   token,
+      //   accountType,
+      //   user: responseData?.user || responseData,
+      //   vendor: responseData?.vendor || responseData,
+      // };
       const payload = {
-        token,
-        accountType,
-        user: responseData?.user || null,
-        vendor: responseData?.vendor || responseData || null,
-      };
-      console.log('LOGIN PAYLOAD TO REDUX:', payload);
-      console.log('VENDOR isOnboarded:', payload.vendor?.isOnboarded);
+  token,                                      
+  accountType,
+  user:       responseData?.user   || null,
+  vendor:     responseData?.vendor || responseData || null,
+};
 
       return payload;
     } catch (err) {
@@ -41,6 +46,7 @@ export const login = createAsyncThunk(
   },
 );
 
+
 export const verifyOTP = createAsyncThunk(
   "auth/verifyOTP",
   async ({ email, otp, accountType }, { rejectWithValue }) => {
@@ -48,7 +54,6 @@ export const verifyOTP = createAsyncThunk(
       const endpoint =
         accountType === "user"? "/user/verify" : "/vendor/verify";
       const res = await api.post(endpoint, { email, otp });
-      console.log(res)
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
       }
@@ -84,7 +89,7 @@ export const forgotPassword = createAsyncThunk(
     try {
       const endpoint =
         accountType === "user"
-    ? "/user/forgot-password"
+         ? "/user/forgot-password"
           : "/vendor/forgot-password";
 
       const res = await api.post(endpoint, { email });
@@ -97,16 +102,14 @@ export const forgotPassword = createAsyncThunk(
   },
 );
 
+
 export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
-  async (
-    { email, otp, password, confirmPassword, accountType },
-    { rejectWithValue },
-  ) => {
+  async ({ email, otp, password, confirmPassword, accountType }, { rejectWithValue }) => {
     try {
       const endpoint =
         accountType === "user"
-    ? "/user/reset-password"
+         ? "/user/reset-password"
           : "/vendor/reset-password";
 
       const res = await api.post(endpoint, {
@@ -123,6 +126,7 @@ export const resetPassword = createAsyncThunk(
     }
   },
 );
+
 
 export const getAllPricing = createAsyncThunk(
   "pricing/getAllPricing",
@@ -328,13 +332,97 @@ const authSlice = createSlice({
       state.vendorInfo = {...state.vendorInfo,...action.payload };
     },
   },
+//   extraReducers: (builder) => {
+//     builder
+// .addCase(login.pending, (state) => {
+//         state.isLoading = true;
+//         state.error = null;
+//       })
+// .addCase(login.fulfilled, (state, action) => {
+//         state.isLoading = false;
+//         state.isLoggedIn = true;
+//         state.token = action.payload.token;
+//         state.accountType = action.payload.accountType;
+
+//         if (action.payload.accountType === "user") {
+//           state.userInfo = action.payload.user || action.payload;
+//         } else {
+//           const vendor = action.payload.vendor || action.payload;
+//           state.vendorInfo = {
+//         ...vendor,
+//             profilePicture: vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
+//             coverPhoto: vendor.coverPhoto?.secureUrl || vendor.coverPhoto || null,
+//           };
+//         }
+//       })
+// .addCase(login.rejected, (state, action) => {
+//         state.isLoading = false;
+//         state.error = action.payload;
+//       })
+// .addCase(verifyOTP.pending, (state) => {
+//         state.isLoading = true;
+//         state.error = null;
+//       })
+// .addCase(verifyOTP.fulfilled, (state, action) => {
+//         state.isLoading = false;
+//         state.isLoggedIn = true;
+//         state.token = action.payload.token;
+//         state.accountType = action.payload.accountType;
+//         if (action.payload.accountType === "user") {
+//           state.userInfo = action.payload.user;
+//         } else {
+//           const vendor = action.payload.vendor;
+//           state.vendorInfo = {
+//         ...vendor,
+//             profilePicture: vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
+//             coverPhoto: vendor.coverPhoto?.secureUrl || vendor.coverPhoto || null,
+//           };
+//         }
+//       })
+// .addCase(verifyOTP.rejected, (state, action) => {
+//         state.isLoading = false;
+//         state.error = action.payload;
+//       })
+// .addCase(resendOTP.pending, (state) => {
+//         state.isLoading = true;
+//         state.error = null;
+//       })
+// .addCase(resendOTP.fulfilled, (state) => {
+//         state.isLoading = false;
+//       })
+// .addCase(resendOTP.rejected, (state, action) => {
+//         state.isLoading = false;
+//         state.error = action.payload;
+//       })
+// .addCase(forgotPassword.pending, (state) => {
+//         state.isLoading = true;
+//         state.error = null;
+//       })
+// .addCase(forgotPassword.fulfilled, (state) => {
+//         state.isLoading = false;
+//       })
+// .addCase(forgotPassword.rejected, (state, action) => {
+//         state.isLoading = false;
+//         state.error = action.payload;
+//       })
+// .addCase(resetPassword.pending, (state) => {
+//         state.isLoading = true;
+//         state.error = null;
+//       })
+// .addCase(resetPassword.fulfilled, (state) => {
+//         state.isLoading = false;
+//       })
+// .addCase(resetPassword.rejected, (state, action) => {
+//         state.isLoading = false;
+//         state.error = action.payload;
+//       })
   extraReducers: (builder) => {
     builder
-.addCase(login.pending, (state) => {
+     .addCase(login.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-.addCase(login.fulfilled, (state, action) => {
+     .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isLoggedIn = true;
         state.token = action.payload.token;
@@ -343,23 +431,19 @@ const authSlice = createSlice({
         if (action.payload.accountType === "user") {
           state.userInfo = action.payload.user || action.payload;
         } else {
-          const vendor = action.payload.vendor || action.payload;
-          state.vendorInfo = {
-        ...vendor,
-            profilePicture: vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
-            coverPhoto: vendor.coverPhoto?.secureUrl || vendor.coverPhoto || null,
-          };
+          state.vendorInfo = action.payload.vendor || action.payload;
         }
       })
-.addCase(login.rejected, (state, action) => {
+     .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-.addCase(verifyOTP.pending, (state) => {
+
+     .addCase(verifyOTP.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-.addCase(verifyOTP.fulfilled, (state, action) => {
+     .addCase(verifyOTP.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isLoggedIn = true;
         state.token = action.payload.token;
@@ -367,51 +451,52 @@ const authSlice = createSlice({
         if (action.payload.accountType === "user") {
           state.userInfo = action.payload.user;
         } else {
-          const vendor = action.payload.vendor;
-          state.vendorInfo = {
-        ...vendor,
-            profilePicture: vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
-            coverPhoto: vendor.coverPhoto?.secureUrl || vendor.coverPhoto || null,
-          };
+          state.vendorInfo = action.payload.vendor;
         }
       })
-.addCase(verifyOTP.rejected, (state, action) => {
+     .addCase(verifyOTP.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-.addCase(resendOTP.pending, (state) => {
+
+     .addCase(resendOTP.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-.addCase(resendOTP.fulfilled, (state) => {
+     .addCase(resendOTP.fulfilled, (state) => {
         state.isLoading = false;
       })
-.addCase(resendOTP.rejected, (state, action) => {
+     .addCase(resendOTP.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-.addCase(forgotPassword.pending, (state) => {
+
+     .addCase(forgotPassword.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-.addCase(forgotPassword.fulfilled, (state) => {
+     .addCase(forgotPassword.fulfilled, (state) => {
         state.isLoading = false;
       })
-.addCase(forgotPassword.rejected, (state, action) => {
+     .addCase(forgotPassword.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-.addCase(resetPassword.pending, (state) => {
+
+      // DELETED verifyResetPasswordOTP cases
+
+     .addCase(resetPassword.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-.addCase(resetPassword.fulfilled, (state) => {
+     .addCase(resetPassword.fulfilled, (state) => {
         state.isLoading = false;
       })
-.addCase(resetPassword.rejected, (state, action) => {
+     .addCase(resetPassword.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
+
 .addCase(createPricing.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -454,7 +539,7 @@ const authSlice = createSlice({
           : [payload].filter(Boolean);
       })
 .addCase(getAllPricing.rejected, (state, action) => {
-        state.loading = false;
+        state.loading = false; 
         state.error = action.payload;
       })
 .addCase(updatePricing.pending, (state) => {
