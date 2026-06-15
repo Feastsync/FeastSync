@@ -24,7 +24,6 @@ const ResetPassword = () => {
   const otp = location.state?.otp
   const accountType = location.state?.accountType || "user"
 
-  // ← Added this useEffect to logout first
   useEffect(() => {
     dispatch(logout())
   }, [dispatch])
@@ -64,7 +63,7 @@ const ResetPassword = () => {
       })).unwrap()
 
       message.success("Password reset successfully! Please login")
-      navigate("/login") // ← Changed: was "/vendor/login", now just "/login"
+      navigate("/login") 
     } catch (err) {
       // console.log(err)
     }

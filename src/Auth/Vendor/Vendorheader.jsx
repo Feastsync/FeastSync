@@ -12,7 +12,7 @@ const Vendorheader = () => {
   const navigate = useNavigate();
   const { vendorInfo } = useSelector((state) => state.auth);
 
-  // Extract initials from vendor name
+
   const getInitials = () => {
     const name = vendorInfo?.stageName || vendorInfo?.firstName || "";
     if (!name) return "DK";

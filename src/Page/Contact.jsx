@@ -24,7 +24,7 @@ const Contact = () => {
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
-  // Auto-clear status message after 4s
+  
   useEffect(() => {
     if (status.message) {
       const timer = setTimeout(() => {
@@ -92,8 +92,7 @@ const Contact = () => {
     ...prev,
       [name]: value
     }));
-    
-    // Clear status message when user starts typing
+
     if (status.message) {
       setStatus({ type: "", message: "" });
     }
