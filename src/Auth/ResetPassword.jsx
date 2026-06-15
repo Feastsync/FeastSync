@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { resetPassword, clearError, logout } from '../Redux/features/authslice' // ← Added logout
+import { resetPassword, clearError } from '../Redux/features/authslice'
 import { message } from 'antd'
 import Button from '../Props/Button'
 import { FaArrowLeft } from "react-icons/fa6"
@@ -25,15 +25,11 @@ const ResetPassword = () => {
   const accountType = location.state?.accountType || "user"
 
   useEffect(() => {
-    dispatch(logout())
-  }, [dispatch])
-
-  useEffect(() => {
-    if (!email ||!otp) {
+    if (!email) {
       message.error("Invalid reset session. Please start over.")
       navigate("/forgot-password")
     }
-  }, [email, otp, navigate])
+  }, [email, navigate])
 
   useEffect(() => {
     if (error) {
@@ -43,42 +39,44 @@ const ResetPassword = () => {
   }, [error, dispatch])
 
   const handleSubmit = async () => {
-    if (!password ||!confirmPassword) {
+    if (!password || !confirmPassword) {
       return message.error("Please fill in both fields")
     }
     if (password.length < 6) {
       return message.error("Password must be at least 6 characters")
     }
-    if (password!== confirmPassword) {
+    if (password !== confirmPassword) {
       return message.error("Passwords do not match")
     }
 
     try {
-      await dispatch(resetPassword({
-        email,
-        otp,
-        password,
-        confirmPassword,
-        accountType
-      })).unwrap()
+      // vendor reset doesn't need otp, user reset does
+      const payload =
+        accountType === "vendor"
+          ? { email, password, confirmPassword, accountType }
+          : { email, otp, password, confirmPassword, accountType }
+
+      await dispatch(resetPassword(payload)).unwrap()
 
       message.success("Password reset successfully! Please login")
-      navigate("/login") 
+      navigate("/login")
     } catch (err) {
-      // console.log(err)
+      // error handled by useEffect above
     }
   }
 
   return (
-   <div className='resetPasswordBox'>
+    <div className='resetPasswordBox'>
       <div className='forgotPasswordLogo'>
-        <div className='resetPasswordLogo'>
-        </div>
+        <div className='resetPasswordLogo'></div>
       </div>
 
-      <div className='resetPasswordButton' onClick={() => navigate("/verify-otp", {
-        state: { email, isForgotPassword: true, accountType }
-      })}>
+      <div
+        className='resetPasswordButton'
+        onClick={() => navigate("/verify-otp", {
+          state: { email, isForgotPassword: true, accountType }
+        })}
+      >
         <Button>
           <FaArrowLeft />
         </Button>
@@ -99,14 +97,14 @@ const ResetPassword = () => {
               <label htmlFor="password">New Password</label>
               <div className="input-wrap">
                 <input
-                  type={showPassword? "text" : "password"}
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   placeholder='Enter new password'
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <span onClick={() => setShowPassword(!showPassword)}>
-                  {showPassword? <FaRegEyeSlash /> : <FaRegEye />}
+                  {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
                 </span>
               </div>
             </section>
@@ -115,20 +113,20 @@ const ResetPassword = () => {
               <label htmlFor="confirmPassword">Confirm Password</label>
               <div className="input-wrap">
                 <input
-                  type={showConfirm? "text" : "password"}
+                  type={showConfirm ? "text" : "password"}
                   id="confirmPassword"
                   placeholder='Confirm new password'
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
                 <span onClick={() => setShowConfirm(!showConfirm)}>
-                  {showConfirm? <FaRegEyeSlash /> : <FaRegEye />}
+                  {showConfirm ? <FaRegEyeSlash /> : <FaRegEye />}
                 </span>
               </div>
             </section>
 
             <Button onClick={handleSubmit} disabled={isLoading}>
-              {isLoading? "Resetting..." : "Reset Password"}
+              {isLoading ? "Resetting..." : "Reset Password"}
             </Button>
           </div>
         </div>
