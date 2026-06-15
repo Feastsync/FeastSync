@@ -12,7 +12,12 @@
 }
 
 
-
+.notif-loading-box {
+  padding: 60px 0;
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+}
 
 .notif-page {
   max-width: 1200px;

@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import NotifLayout from "../../Components/NotifLayout.jsx";
-import { allNotifications } from "../../Components/DummyData";
+import { getNotifications } from "../../Redux/features/authslice.js";
 
 const ITEMS_PER_PAGE = 5;
 
 export default function ReviewsNotifications() {
+  const dispatch = useDispatch();
+  const { notifications, loading } = useSelector((state) => state.auth);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const reviews = allNotifications.filter((n) => n.type === "reviews");
+  useEffect(() => {
+    dispatch(getNotifications());
+  }, [dispatch]);
+
+  
+  const reviews = notifications.filter((n) => n.type === "review" || n.type === "reviews");
   const totalPages = Math.ceil(reviews.length / ITEMS_PER_PAGE);
 
   const paginated = reviews.slice(
@@ -15,11 +23,15 @@ export default function ReviewsNotifications() {
     currentPage * ITEMS_PER_PAGE
   );
 
+  if (loading && notifications.length === 0) {
+    return <div className="notif-page"><p>Loading...</p></div>;
+  }
+
   return (
     <NotifLayout
       notifications={paginated}
       currentPage={currentPage}
-      totalPages={totalPages}
+      totalPages={totalPages || 1}
       onPageChange={setCurrentPage}
     />
   );

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { FiX, FiChevronDown } from "react-icons/fi";
-import {createPricing,getAllPricing,} from "../../../Redux/features/authslice";
+import {
+  createPricing,
+  getAllPricing,
+} from "../../../Redux/features/authslice";
 import { useDispatch } from "react-redux";
 import { message } from "antd";
 import "./css/PricingStep.css";
@@ -38,7 +41,7 @@ const PricingStep = ({ onNext, onBack, onSkip, percentComplete = 75 }) => {
         packagePrice: sanitizedPrice,
         packageDescription,
         packageName: packageName,
-      })
+      }),
     );
 
     setIsSubmitting(false);
