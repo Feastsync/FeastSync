@@ -12,7 +12,7 @@ import DocumentStep from "./DocumentStep.jsx";
 import CalendarStep from "./CalendarStep.jsx";
 import SuccessModal from "./SuccessModal.jsx";
 
-import { updateVendorProfile } from "../../../Redux/features/authslice.js"
+import { updateVendorProfile } from "../../../Redux/features/authslice.js";
 
 const VendorOnboarding = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
@@ -91,36 +91,64 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
     }
   };
 
-  // FINAL SUBMIT (ONLY BACKEND CALL)
-  const handleFinalSubmit = () => {
-    const formData = new FormData();
+  const handleFinalSubmit = async () => {
+    try {
+      const formData = new FormData();
 
-    Object.entries(vendorProfile).forEach(([key, value]) => {
-      if (value !== null && value !== undefined) {
-        // Objects must be stringified for FormData, Files should stay as is
-        if (
-          typeof value === "object" &&
-          !(value instanceof File) &&
-          !Array.isArray(value)
-        ) {
-          formData.append(key, JSON.stringify(value));
-        } else if (Array.isArray(value)) {
-          // Handle arrays if backend expects them (e.g., as JSON or multiple appends)
-          formData.append(key, JSON.stringify(value));
-        } else {
-          formData.append(key, value);
-        }
+      // Text fields
+      formData.append("stateOfResidence", vendorProfile.stateOfResidence || "");
+      formData.append("bankName", vendorProfile.bankName || "");
+      formData.append("accountNumber", vendorProfile.accountNumber || "");
+      formData.append("bio", vendorProfile.bio || "");
+      formData.append("servicesOffered", vendorProfile.servicesOffered || "");
+      formData.append("category", vendorProfile.category || "");
+
+      // Single files
+      if (vendorProfile.profilePicture) {
+        formData.append("profilePicture", vendorProfile.profilePicture);
       }
-    });
 
-    dispatch(
-      updateVendorProfile({
-        id: vendorProfile.id,
-        profileData: formData,
-      }),
-    );
+      if (vendorProfile.coverPhoto) {
+        formData.append("coverPhoto", vendorProfile.coverPhoto);
+      }
 
-    onClose?.();
+      if (vendorProfile.coverVideo) {
+        formData.append("coverVideo", vendorProfile.coverVideo);
+      }
+
+      // Photo catalogue
+      if (vendorProfile.photoCatalogue?.length) {
+        vendorProfile.photoCatalogue.forEach((file) => {
+          formData.append("photoCatalogue", file);
+        });
+      }
+
+      // Video catalogue
+      if (vendorProfile.videoCatalogue?.length) {
+        vendorProfile.videoCatalogue.forEach((file) => {
+          formData.append("videoCatalogue", file);
+        });
+      }
+
+      // Debug payload
+      for (const pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+      }
+
+      const response = await dispatch(
+        updateVendorProfile({
+          id: vendorProfile.id,
+          profileData: formData,
+        }),
+      ).unwrap();
+
+      console.log("Profile updated successfully:", response);
+
+      // Close modal ONLY after successful API response
+      onClose?.();
+    } catch (error) {
+      console.error("Profile update failed:", error);
+    }
   };
 
   const steps = {

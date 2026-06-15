@@ -15,8 +15,10 @@ const Vendordashboard = () => {
   const [expandedCards, setExpandedCards] = useState({});
   const [showOnboarding, setShowOnboarding] = useState(false);
   const { pricingPackages, vendorInfo } = useSelector((state) => state.auth); // Keep this line
-  const [vendorName, setVendorName] = useState(vendorInfo?.stageName || vendorInfo?.firstName || "");
-
+  const [vendorName, setVendorName] = useState(
+    vendorInfo?.stageName || vendorInfo?.firstName || "",
+  );
+  console.log(vendorInfo);
   useEffect(() => {
     if (location.state?.showOnboarding) {
       setShowOnboarding(true);
@@ -55,10 +57,7 @@ const Vendordashboard = () => {
       id: "standard",
       title: "Standard Package",
       price: "₦550,000",
-      highlights: [
-        "Professional DJ performance",
-
-      ],
+      highlights: ["Professional DJ performance"],
     },
     {
       id: "premium",

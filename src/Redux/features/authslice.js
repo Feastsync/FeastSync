@@ -189,18 +189,18 @@ export const updateVendorProfile = createAsyncThunk(
   "vendor/updateProfile",
   async ({ id, profileData }, { rejectWithValue }) => {
     try {
+      console.log("Sending request to:", `/vendor/update-profile/${id}`);
+
       const response = await api.put(
         `/vendor/update-profile/${id}`,
         profileData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        },
       );
+
+      console.log("Response:", response.data);
 
       return response.data;
     } catch (error) {
+      console.log("API Error:", error.response?.data);
       return rejectWithValue(
         error.response?.data?.message || "Failed to update profile",
       );
@@ -415,11 +415,6 @@ const authSlice = createSlice({
       .addCase(updateVendorProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-
-
-
-
-        
       })
 
       .addCase(logoutUser.fulfilled, (state) => {
