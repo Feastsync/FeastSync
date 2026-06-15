@@ -5,6 +5,7 @@ import Epkhero from "./Epkhero.jsx"
 import Copyicon from "../../assets/logos/Copyicon.svg"
 import Vendorcalendar from "./Vendorcalendar.jsx"
 import Vendormediagallery from "./Vendormediagallery.jsx"
+import Ratingandreview from "../../Components/Ratingandreview.jsx"
 import VendorOnboarding from "./onBoardingFiles/VendorOnboarding.jsx"
 import { useNavigate, useLocation } from 'react-router-dom'
 
@@ -204,7 +205,7 @@ const Epkrating = () => {
       </section>
       <Vendorcalendar />
       <Vendormediagallery />
-
+      <Ratingandreview />   
       <VendorOnboarding
         isOpen={showOnboarding}
         onClose={handleOnboardingClose}

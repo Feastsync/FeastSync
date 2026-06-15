@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Button from './Button'
 import { IoLocationOutline } from 'react-icons/io5'
 import { FaStar, FaHeart } from 'react-icons/fa' 
@@ -7,9 +7,6 @@ import "./Css/VendorsCard.css"
 import { useNavigate } from 'react-router-dom'
 
 const VendorCard = (props) => {
-
-  {console.log("vf : ", props)}
-
   const navigate = useNavigate()
   const [isLiked, setIsLiked] = useState(false)
 
@@ -17,17 +14,23 @@ const VendorCard = (props) => {
     setIsLiked(!isLiked)
   }
 
+  const goToVendor = () => {
+    if (props.slug) {
+      navigate(`/vendordashboard/${props.slug}`)
+    }
+  }
+
   return (
     <div className="vendor_card">
       
       <div className="card_top_actions">
-        <span className="see_more_lnk" onClick={() => navigate('/epknorating')}>See More</span>
+        <span className="see_more_lnk" onClick={goToVendor}>See More</span>
         <Button 
           className="wishlist_btn" 
           onClick={handleLikeClick} 
           btnText={
             isLiked ? (
-              <FaHeart size={12} color="#330159;" /> 
+              <FaHeart size={12} color="#330159" /> 
             ) : (
               <FiHeart size={12} /> 
             ) 
@@ -58,13 +61,15 @@ const VendorCard = (props) => {
         </div>
 
         <div className="vendor_card_footer">
-
-          {console.log("props : ",props)}
           <div className="price_box">
             <p className="price_lbl">Starting Price</p>
             <p className="price_amt">₦{props.price ? props.price.toLocaleString() : 0}</p>
           </div>
-          <Button className="btn_purple" onClick={() => navigate(`/epkrating/${props.id}`)} btnText="Book now" />
+          <Button 
+            className="btn_purple" 
+            onClick={goToVendor} 
+            btnText="Book now" 
+          />
         </div>
 
       </div>

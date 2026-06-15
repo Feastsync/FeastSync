@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux' 
+import { logoutUser } from '../../Redux/features/authslice' 
+import { message } from 'antd' 
+import { useSelector } from 'react-redux'
 import './Settings.css'
 
 const Settings = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch() 
   const [copied, setCopied] = useState(false)
   const [modal, setModal] = useState(null)
   const [otp, setOtp] = useState(['', '', '', ''])
@@ -14,6 +19,13 @@ const Settings = () => {
   const [bank, setBank] = useState({ name: '', account: '' })
   const [showSuccess, setShowSuccess] = useState(false)
   const [username, setUsername] = useState('')
+  const [toastType, setToastType] = useState('')
+const {  vendorInfo } = useSelector((s) => s.auth)
+  const [pricing, setPricing] = useState({
+    startingPrice: '',
+    packageName: '',
+    description: ''
+  })
 
   const handleBack = () => {
     if (window.history.length > 1) {
@@ -54,18 +66,43 @@ const Settings = () => {
   }
 
   const verifyOtp = () => {
+    setToastType('phone')
     setShowSuccess(true)
     setModal(null)
     setTimeout(() => setShowSuccess(false), 3000)
   }
+
+  const handlePricingSave = () => {
+    setToastType('pricing')
+    setShowSuccess(true)
+    setModal(null)
+    setTimeout(() => setShowSuccess(false), 3000)
+  }
+
+const handleLogout = async () => {
+
+  try {
+    await dispatch(logoutUser()).unwrap()
+    message.success('Logged out successfully')
+    navigate('/login')
+  } catch (err) {
+    navigate('/login') 
+  }
+}
+
+  
 
   return (
     <div className="settings_page">
       {showSuccess && (
         <div className="settings_toast">
           <span className="toast_icon">✓</span>
-          Phone number updated successfully!
-          <br />Your phone number has been verified and updated.
+          {toastType === 'pricing' ? 'Pricing updated successfully!' : 'Phone number updated successfully!'}
+          <br />
+          {toastType === 'pricing'
+            ? 'Your packages have been updated.'
+            : 'Your phone number has been verified and updated.'
+          }
         </div>
       )}
 
@@ -85,9 +122,9 @@ const Settings = () => {
         </div>
 
         <div className="settings_profile_card">
-          <div className="settings_avatar">DJ</div>
+          <div className="settings_avatar"> {vendorInfo?.stageName?.charAt(0) || vendorInfo?.firstName?.charAt(0) || 'V'}</div>
           <div className="settings_profile_info">
-            <h3 className="settings_profile_name">DJ Kolade Oseni</h3>
+            <h3 className="settings_profile_name"> {vendorInfo?.stageName || vendorInfo?.firstName + ' ' + vendorInfo?.lastName}</h3>
             <p className="settings_profile_role">Vendor — DJ</p>
           </div>
         </div>
@@ -97,7 +134,7 @@ const Settings = () => {
             <span className="settings_label">Display name</span>
           </div>
           <div className="settings_row_right">
-            <span className="settings_value">{displayName}</span>
+            <span className="settings_value">{vendorInfo.stageName}</span>
             <button className="settings_btn" onClick={() => setModal('display-name')}>Edit</button>
           </div>
         </div>
@@ -107,7 +144,7 @@ const Settings = () => {
             <span className="settings_label">Phone number</span>
           </div>
           <div className="settings_row_right">
-            <span className="settings_value">{phoneNumber}</span>
+            <span className="settings_value">{vendorInfo?.phoneNumber || phoneNumber}</span>
             <button className="settings_btn" onClick={() => setModal('phone')}>Edit</button>
           </div>
         </div>
@@ -117,7 +154,7 @@ const Settings = () => {
             <span className="settings_label">Email</span>
           </div>
           <div className="settings_row_right">
-            <span className="settings_value">djkolade@gmail.com</span>
+            <span className="settings_value">{vendorInfo?.email}</span>
           </div>
         </div>
 
@@ -169,7 +206,7 @@ const Settings = () => {
             <span className="settings_sublabel">Edit and set pricing</span>
           </div>
           <div className="settings_row_right">
-            <button className="settings_btn">Edit</button>
+            <button className="settings_btn" onClick={() => setModal('pricing')}>Edit</button>
           </div>
         </div>
 
@@ -195,8 +232,16 @@ const Settings = () => {
             <div className="settings_badge_approved">✓ Approved</div>
           </div>
         </div>
+
+        {/* ← LOGOUT BUTTON AT BOTTOM */}
+        <div className="settings_logout_section">
+          <button className="settings_logout_btn" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
       </div>
 
+      {/* Modals stay the same... */}
       {modal === 'phone' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box" onClick={(e) => e.stopPropagation()}>
@@ -206,8 +251,8 @@ const Settings = () => {
             </div>
             <div className="modal_body">
               <label className="modal_label">Phone Number</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 className="modal_input"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
@@ -221,7 +266,6 @@ const Settings = () => {
           </div>
         </div>
       )}
-
 
       {(modal === 'otp-phone' || modal === 'otp-bank') && (
         <div className="modal_overlay" onClick={closeModal}>
@@ -257,7 +301,6 @@ const Settings = () => {
         </div>
       )}
 
-   
       {modal === 'location' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box" onClick={(e) => e.stopPropagation()}>
@@ -267,7 +310,7 @@ const Settings = () => {
             </div>
             <div className="modal_body">
               <label className="modal_label">Select state of residence</label>
-              <select 
+              <select
                 className="modal_select"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
@@ -296,7 +339,7 @@ const Settings = () => {
             </div>
             <div className="modal_body">
               <label className="modal_label">Select Bank</label>
-              <select 
+              <select
                 className="modal_select"
                 onChange={(e) => setBank({...bank, name: e.target.value})}
               >
@@ -307,8 +350,8 @@ const Settings = () => {
                 <option>Zenith Bank</option>
               </select>
               <label className="modal_label">Account number</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 className="modal_input"
                 placeholder="8024000056"
                 onChange={(e) => setBank({...bank, account: e.target.value})}
@@ -323,7 +366,6 @@ const Settings = () => {
         </div>
       )}
 
-
       {modal === 'display-name' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box" onClick={(e) => e.stopPropagation()}>
@@ -333,8 +375,8 @@ const Settings = () => {
             </div>
             <div className="modal_body">
               <label className="modal_label">Display Name</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 className="modal_input"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
@@ -348,7 +390,6 @@ const Settings = () => {
         </div>
       )}
 
-    
       {modal === 'bio' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box" onClick={(e) => e.stopPropagation()}>
@@ -358,7 +399,7 @@ const Settings = () => {
             </div>
             <div className="modal_body">
               <label className="modal_label">Bio/Description</label>
-              <textarea 
+              <textarea
                 className="modal_textarea"
                 placeholder="Tell us about yourself and your services"
                 value={bio}
@@ -373,8 +414,58 @@ const Settings = () => {
           </div>
         </div>
       )}
+
+      {modal === 'pricing' && (
+        <div className="modal_overlay" onClick={closeModal}>
+          <div className="modal_box pricing_modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal_header modal_header_purple">
+              <div>
+                <h3>Pricing & Packages</h3>
+                <p className="modal_subtitle">Set your starting price</p>
+              </div>
+              <button className="modal_close" onClick={closeModal}>×</button>
+            </div>
+            <div className="modal_body">
+              <label className="modal_label">Starting Price</label>
+              <input
+                type="text"
+                className="modal_input"
+                value={pricing.startingPrice}
+                onChange={(e) => setPricing({...pricing, startingPrice: e.target.value})}
+              />
+
+              <label className="modal_label">Package Name</label>
+              <select
+                className="modal_select"
+                value={pricing.packageName}
+                onChange={(e) => setPricing({...pricing, packageName: e.target.value})}
+              >
+                <option value="">Select package</option>
+                <option value="basic">Basic Package</option>
+                <option value="standard">Standard Package</option>
+                <option value="premium">Premium Package</option>
+                <option value="custom">Custom Package</option>
+              </select>
+
+              <label className="modal_label">Package Description</label>
+              <textarea
+                className="modal_textarea"
+                placeholder="What's included..."
+                value={pricing.description}
+                onChange={(e) => setPricing({...pricing, description: e.target.value})}
+                rows="4"
+              />
+            </div>
+            <div className="modal_footer">
+              <button className="modal_btn_cancel" onClick={closeModal}>Back</button>
+              <button className="modal_btn_primary" onClick={handlePricingSave}>Save</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
+
 
 export default Settings

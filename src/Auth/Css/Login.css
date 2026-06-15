@@ -1,11 +1,9 @@
-
 .vl-page {
   display: flex;
   height: 100vh;
   width: 100%;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
-
 
 .vl-left {
   flex: 0 0 50%;
@@ -13,27 +11,26 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
   background-color: #ffffff;
 }
 
-
 .vl-form-container {
   width: 100%;
-  max-width: 420px; 
+  max-width: 420px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; 
+  align-items: flex-start;
 }
 
 .vl-logo {
   margin-bottom: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
 }
-.vl-logo-text{
+.vl-logo-text {
   font-size: 20px;
   font-weight: 700;
   padding-top: 8px;
@@ -59,7 +56,6 @@
   color: #330159;
   margin-bottom: 32px;
 }
-
 
 .vl-field-group {
   width: 100%;
@@ -110,7 +106,6 @@
   color: #999;
 }
 
-
 .vl-role-row {
   width: 100%;
   display: flex;
@@ -149,9 +144,8 @@
   font-weight: 600;
 }
 .vl-checkbox {
+  accent-color: #000;
 
-  accent-color: #000; 
-  
   width: 18px;
   height: 18px;
   cursor: pointer;
@@ -160,7 +154,7 @@
 .vl-login-btn {
   width: 100%;
   height: 52px;
-  background-color:var(--primary-color); ;
+  background-color: var(--primary-color);
   color: white;
   border: none;
 
@@ -199,12 +193,12 @@
   width: 18px;
   height: 18px;
   cursor: pointer;
-  accent-color: #4A148C; /* Purple from your design */
+  accent-color: #4a148c; /* Purple from your design */
 }
 
 .vl-forgot {
   font-size: 14px;
-  color: #4A148C;
+  color: #4a148c;
   text-decoration: none;
   font-weight: 500;
 }
@@ -232,15 +226,74 @@
   margin-top: 4px;
 }
 
+.vl-popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.24);
+}
+
+.vl-popup-card {
+  width: min(520px, 100%);
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+  padding: 32px;
+  text-align: center;
+}
+
+.vl-popup-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+}
+
+.vl-popup-text {
+  font-size: 15px;
+  color: #4c4c4c;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.vl-popup-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.vl-popup-btn {
+  min-width: 160px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+}
+
+.vl-popup-btn-primary {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.vl-popup-btn-secondary {
+  background: #f4f4f4;
+  color: #333;
+}
 
 .vl-right {
   flex: 1;
-  max-width: 500px;     
+  max-width: 500px;
   height: auto;
   object-fit: contain;
-  align-self: center;  
+  align-self: center;
 }
-
 
 @media (max-width: 768px) {
   .vl-right {

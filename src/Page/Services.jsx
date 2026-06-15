@@ -1,13 +1,14 @@
 import React from "react";
-import Header from "../Components/Header";
+import { useSelector } from "react-redux";
+
 import Button from "../Props/Button";
-import Footer from "../Components/Footer";
 // import "./Css/Services.css";
 import "./NewCSS/services.css";
 import { useNavigate } from "react-router-dom";
 
-const services = () => {
+const Services = () => {
   const navigate = useNavigate();
+  const { isLoggedIn } = useSelector((state) => state.auth);
 
   return (
     <main className="service-container">
@@ -16,15 +17,15 @@ const services = () => {
           <p className="serviceContainerTitle">
             World-class entertainment <br />
             for every kind of event.
-            </p>
+          </p>
           <p className="serviceDeliver">
             From initimate birthday dinners to large-scale coperate galas,{" "}
             feastsync connects you with verified entertainment 
             professionals who deliver excellence-everytime.
-           </p>
-            <div className="serviceRate">
+          </p>
+          <div className="serviceRate">
             <div>
-              <p >7</p>
+              <p>7</p>
               <p className="serviceCategory">service categories</p>
             </div>
             <div>
@@ -162,7 +163,19 @@ const services = () => {
             right coperate occasion, everytime.
           </p>
         </div>
-        <Button btnText="Get Started" onClick={() => navigate('/onboarding')} className="servicebtn" />
+        {!isLoggedIn ? (
+          <Button 
+            btnText="Get Started" 
+            onClick={() => navigate('/onboarding')} 
+            className="servicebtn" 
+          />
+        ) : (
+          <Button 
+            btnText="Explore Vendors" 
+            onClick={() => navigate('/vendors')} 
+            className="servicebtn" 
+          />
+        )}
       </div>
 
       <div className="serviceEntertainment">
@@ -179,11 +192,23 @@ const services = () => {
             to the last song.Book more, spend less and eliminate the
             coordination headache entirely.
           </p>
-           <Button btnText="Get Started" onClick={() => navigate('/onboarding')} className="servicebtn" />
+          {!isLoggedIn ? (
+            <Button 
+              btnText="Get Started" 
+              onClick={() => navigate('/onboarding')} 
+              className="servicebtn" 
+            />
+          ) : (
+            <Button 
+              btnText="Explore Vendors" 
+              onClick={() => navigate('/vendors')} 
+              className="servicebtn" 
+            />
+          )}
         </div>
       </div>
     </main>
   );
 };
 
-export default services;
+export default Services;
