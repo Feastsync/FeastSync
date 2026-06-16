@@ -10,7 +10,7 @@ import Vendormediagallery from "./Vendormediagallery.jsx";
 import VendorOnboarding from "./onBoardingFiles/VendorOnboarding.jsx";
 import BookingModal from "../../Page/Booking/Booking.jsx";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
-import { getVendorById, getCurrentUser } from "../../Redux/features/authslice.js";
+import { getVendorById } from "../../Redux/features/authslice.js";
 import VendorDashboardSkeleton from "../../Props/Vendordashboardskeleton.jsx";
 import {message} from "antd"
 const Vendordashboard = () => {
@@ -29,7 +29,7 @@ const Vendordashboard = () => {
     currentVendorLoading: viewingVendorLoading,
     isLoggedIn,
     accountType,
-    shouldRefreshVendor
+    // shouldRefreshVendor
   } = useSelector((state) => state.auth);
 
   
@@ -54,11 +54,11 @@ const Vendordashboard = () => {
     }
   }, [slug, isLoggedIn, accountType, dispatch, vendorInfo?._id]);
 
-  useEffect(() => {
-    if (shouldRefreshVendor) {
-      dispatch(getCurrentUser());
-    }
-  }, [shouldRefreshVendor, dispatch]);
+  // useEffect(() => {
+  //   if (shouldRefreshVendor) {
+  //     dispatch(getCurrentUser());
+  //   }
+  // }, [shouldRefreshVendor, dispatch]);
 
   
   useEffect(() => {
@@ -85,9 +85,9 @@ const Vendordashboard = () => {
 
   const handleOnboardingClose = () => {
     setShowOnboarding(false);
-    if (isOwner) {
-      dispatch(getCurrentUser());
-    }
+    // if (isOwner) {
+    //   dispatch(getCurrentUser());
+    // }
   };
 
   const toggleExpand = (id) => {
