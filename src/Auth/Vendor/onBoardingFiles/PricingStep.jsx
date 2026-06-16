@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { message } from "antd";
 import "./css/PricingStep.css";
 
-const PricingStep = ({ onNext, onBack, onSkip, percentComplete = 75 }) => {
+const PricingStep = ({ onNext, onBack, onSkip, percentComplete = 80 }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {

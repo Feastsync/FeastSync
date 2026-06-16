@@ -10,7 +10,6 @@ const MediaStep = ({
   profileData,
   setProfileData,
 }) => {
-
   const workExperience = profileData?.bio || "";
   const servicesOffered = profileData?.servicesOffered || "";
 
@@ -35,14 +34,40 @@ const MediaStep = ({
     }));
   };
 
-  const handleContinue = () => {
-    if (!workExperience || wordCount > 500) {
-      alert("Work experience must not be 500 words");
-      return;
-    }
+ const handleContinue = () => {
+  if (!workExperience.trim()) {
+    alert("Work Experience is required");
+    return;
+  }
 
-    onNext();
-  };
+  if (wordCount > 500) {
+    alert("Work Experience must not exceed 500 words");
+    return;
+  }
+
+  if (!servicesOffered.trim()) {
+    alert("Services Offered is required");
+    return;
+  }
+
+  if (
+    !profileData?.videoCatalogue ||
+    profileData.videoCatalogue.length === 0
+  ) {
+    alert("Please upload at least one video");
+    return;
+  }
+
+  if (
+    !profileData?.photoCatalogue ||
+    profileData.photoCatalogue.length === 0
+  ) {
+    alert("Please upload at least one photo");
+    return;
+  }
+
+  onNext();
+};
 
   return (
     <div className="media-modal">
@@ -71,12 +96,14 @@ const MediaStep = ({
       <div className="media-body">
         <div className="media-field">
           <label>Work Experience (max. 500 words)</label>
+
           <textarea
             rows={6}
             placeholder="Describe your work experience, expertise, and achievements..."
             value={workExperience}
             onChange={(e) => handleChange("bio", e.target.value)}
           />
+
           <span className="media-word-count">
             {wordCount} / 500 words
           </span>
@@ -84,6 +111,7 @@ const MediaStep = ({
 
         <div className="media-field">
           <label>Services Offered</label>
+
           <textarea
             rows={3}
             placeholder="List services offered"
@@ -94,11 +122,13 @@ const MediaStep = ({
           />
         </div>
 
+        {/* VIDEO UPLOAD */}
         <div className="media-field">
           <label>Upload video catalog (Max of 2)</label>
 
           <div className="media-upload-box video">
             <input
+              id="video-upload"
               type="file"
               accept="video/*"
               multiple
@@ -111,20 +141,39 @@ const MediaStep = ({
               }
             />
 
-            <FiUpload size={28} />
+            <FiUpload
+              className="media-upload-files"
+              size={28}
+              style={{ cursor: "pointer" }}
+              onClick={() =>
+                document.getElementById("video-upload").click()
+              }
+            />
+
             <p className="media-upload-title">Click to upload</p>
+
             <p className="media-upload-sub">
               Each video not more than 10MB
             </p>
+
+            {profileData?.videoCatalogue?.length > 0 && (
+              <div className="media-selected-files">
+                {profileData.videoCatalogue.map((file, index) => (
+                  <p key={index}>{file.name}</p>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
+        {/* PHOTO UPLOAD */}
         <div className="media-field">
           <label>Upload photo catalog (Max of 4)</label>
 
           <div className="media-upload-grid">
             <div className="media-upload-box photo">
               <input
+                id="photo-upload"
                 type="file"
                 accept="image/*"
                 multiple
@@ -137,8 +186,23 @@ const MediaStep = ({
                 }
               />
 
-              <FiUpload size={22} />
+              <FiUpload
+                size={22}
+                style={{ cursor: "pointer" }}
+                onClick={() =>
+                  document.getElementById("photo-upload").click()
+                }
+              />
+
               <p className="media-upload-title">Add more</p>
+
+              {profileData?.photoCatalogue?.length > 0 && (
+                <div className="media-selected-files">
+                  {profileData.photoCatalogue.map((file, index) => (
+                    <p key={index}>{file.name}</p>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
