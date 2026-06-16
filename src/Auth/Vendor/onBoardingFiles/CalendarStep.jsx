@@ -8,10 +8,15 @@ const CalendarStep = ({
   onNext,
   onBack,
   onSkip,
+  percentComplete = 100,
+  profileData,
+  setProfileData,
+  isLoading,
+  error
 }) => {
   const [activeStartDate, setActiveStartDate] = useState(new Date());
   
-  const bookedDates = profileData?.availability?.bookedDates || [];
+  const bookedDates = profileData?.availability?.bookedDays || profileData?.bookedDays || [];
 
   const formatDate = (date) => {
     const year = date.getFullYear();
@@ -23,7 +28,7 @@ const CalendarStep = ({
   const toggleDate = (date) => {
     const dateStr = formatDate(date);
     setProfileData((prev) => {
-      const current = prev?.availability?.bookedDates || [];
+      const current = prev?.availability?.bookedDays || prev?.bookedDays || [];
       const updated = current.includes(dateStr)
         ? current.filter((d) => d !== dateStr)
         : [...current, dateStr];
@@ -32,9 +37,9 @@ const CalendarStep = ({
         ...prev,
         availability: {
           ...prev.availability,
-          bookedDates: updated,
+          bookedDays: updated,
         },
-        bookedDates: updated,
+        bookedDays: updated,
       };
     });
   };
@@ -51,12 +56,7 @@ const CalendarStep = ({
     return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
   };
 
-
   const handleContinue = () => {
-    setProfileData((prev) => ({
-      ...prev,
-      bookedDates: prev?.availability?.bookedDates || [],
-    }));
     onNext();
   };
 
@@ -69,7 +69,6 @@ const CalendarStep = ({
               <h2>Availability Calendar</h2>
               <p>Select dates you're unavailable for customers</p>
               
-       
               <div className="cs-progress-bar">
                 <div
                   className="cs-progress-fill"
@@ -128,8 +127,9 @@ const CalendarStep = ({
             />
           </div>
 
+          {error && <p className="cs-error">{error}</p>}
+
           <div className="cs-footer">
-           
             <button className="cs-btn-text" onClick={onSkip}>
               Skip for Now
             </button>
@@ -138,13 +138,16 @@ const CalendarStep = ({
               <button className="cs-btn-outline" onClick={onBack}>
                 Back
               </button>
-              <button className="cs-btn-primary" onClick={handleContinue}>
-                Complete Setup
+              <button 
+                className="cs-btn-primary" 
+                onClick={handleContinue}
+                disabled={isLoading}
+              >
+                {isLoading ? "Saving..." : "Complete Setup"}
               </button>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
