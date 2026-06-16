@@ -14,7 +14,7 @@ const Adminsignup = () => {
   return (
     <div  className='adminHolder'>
      <div className='adminContainer'>
-         <div className='adminImage'><img src="public/About/Icon.png" alt="" /></div>
+         <div className='adminImage'><img src="/About/Frame 97.png" alt="" /></div>
      <form className='adminForm'>
          <div className='adminInputHolder'>
             <label htmlFor="">Enter your name</label>
