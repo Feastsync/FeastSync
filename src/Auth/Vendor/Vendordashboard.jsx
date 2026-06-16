@@ -123,7 +123,7 @@ const handleCopyLink = async () => {
     const cleanPrice = rawPrice.toString().replace(/,/g, "").replace("₦", "");
     const formattedPrice = `₦${Number(cleanPrice).toLocaleString()}`;
     const desc = saved.packageDescription || saved.description || "";
-    const highlights = desc? desc.split("\n").filter((l) => l.trim()) : [];
+    const highlights = desc ? desc.split("\n").filter((l) => l.trim()) : [];
 
     return {
      ...base,
@@ -206,7 +206,7 @@ const handleCopyLink = async () => {
 
         <div className="vendordashboard-pricing-grid">
           {displayPackages.map((item) => {
-            const isExpanded =!!expandedCards[item.id];
+            const isExpanded = !!expandedCards[item.id];
 
             return (
               <div key={item.id} className="vendordashboard-pricing-card">
@@ -225,7 +225,7 @@ const handleCopyLink = async () => {
                       Service Highlights
                     </h4>
                     <ul className="vendordashboard-highlights-list">
-                      {item.highlights.length > 0? (
+                      {item.highlights.length > 0 ? (
                         item.highlights.map((highlight, index) => (
                           <li key={index} className="vendordashboard-highlight-item">
                             {highlight}
@@ -242,7 +242,7 @@ const handleCopyLink = async () => {
                   <button
                     className="vendordashboard-toggle-expand-btn"
                     onClick={() => toggleExpand(item.id)}
-                    aria-label={isExpanded? "Disable scroll" : "Enable scroll"}
+                    aria-label={isExpanded ? "Disable scroll" : "Enable scroll"}
                   >
                     <svg
                       className={`vendordashboard-dropdown-icon ${

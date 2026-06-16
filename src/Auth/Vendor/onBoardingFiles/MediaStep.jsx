@@ -116,6 +116,7 @@ const MediaStep = ({
       <div className="media-body">
         <div className="media-field">
           <label>Work Experience (max. 500 words)</label>
+
           <textarea
             rows={6}
             placeholder="Describe your work experience, expertise, and achievements..."
@@ -129,6 +130,7 @@ const MediaStep = ({
 
         <div className="media-field">
           <label>Services Offered</label>
+
           <textarea
             rows={3}
             placeholder="List services offered"

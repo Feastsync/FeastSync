@@ -2,7 +2,6 @@ import React from "react";
 import "./css/Welcome.css";
 
 const WelcomeModal = ({ vendorName = "", onContinue, onSkip }) => {
-  // Extract display name (stageName) from vendorName
   const stageName =
     typeof vendorName === "string" && vendorName.trim()
       ? vendorName.trim().split(/\s+/)[0]

@@ -8,9 +8,6 @@ const CalendarStep = ({
   onNext,
   onBack,
   onSkip,
-  profileData,
-  setProfileData,
-  percentComplete = 95,
 }) => {
   const [activeStartDate, setActiveStartDate] = useState(new Date());
   
@@ -147,6 +144,7 @@ const CalendarStep = ({
             </div>
           </div>
         </div>
+
       </div>
     </div>
   );

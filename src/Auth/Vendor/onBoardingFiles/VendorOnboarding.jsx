@@ -89,7 +89,7 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
   });
 
   useEffect(() => {
-    if (vendorId &&!vendorProfile.id) {
+    if (vendorId && !vendorProfile.id) {
       setVendorProfile((prev) => ({...prev, id: vendorId }));
     }
   }, [vendorId, vendorProfile.id]);
@@ -164,7 +164,6 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
         await dispatch(
           createPricing({
             packagePrice: startingPrice,
-            packageName: packageName,
             pacakageName: packageName,
             packageDescription,
           })

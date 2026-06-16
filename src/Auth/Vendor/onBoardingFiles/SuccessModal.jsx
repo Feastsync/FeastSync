@@ -1,9 +1,10 @@
 import React from "react";
+// import "./css/SuccessModal.css";x
 import "./css/SuccessModal.css";
 import handShake from "../../../assets/logos/handshake.png";
 const SuccessModal = ({ onClose, isLoading, error }) => {
   return (
-    <div className="success-modal">
+    <div className="success-modal-container">
       <img className="success-icon" src={handShake} alt="" />
 
       <p className="success-text">
