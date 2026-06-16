@@ -27,8 +27,28 @@ const PricingStep = ({ onNext, onBack, onSkip, percentComplete = 80 }) => {
   const [packageDescription, setPackageDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const pricing = profileData?.pricing || {
+    startingPrice: "",
+    packageName: "",
+    packageDescription: "",
+  };
+
+  const handleChange = (field, value) => {
+    setProfileData((prev) => ({
+     ...prev,
+      pricing: {
+       ...prev.pricing,
+        [field]: value,
+      },
+    }));
+  };
+
   const handleContinue = async () => {
-    if (!startingPrice || !packageName || !packageDescription) {
+    if (
+     !pricing.startingPrice ||
+     !pricing.packageName ||
+     !pricing.packageDescription
+    ) {
       return message.warning("Please fill in all fields before continuing.");
     }
 
@@ -36,23 +56,26 @@ const PricingStep = ({ onNext, onBack, onSkip, percentComplete = 80 }) => {
 
     const sanitizedPrice = startingPrice.replace(/,/g, "").trim();
 
-    const result = await dispatch(
-      createPricing({
-        packagePrice: sanitizedPrice,
-        packageDescription,
-        packageName: packageName,
-      }),
-    );
+    setProfileData((prev) => ({
+     ...prev,
+      pricing: {
+       ...prev.pricing,
+        startingPrice: sanitizedPrice,
+      },
+    }));
 
     setIsSubmitting(false);
+    onNext(); 
+  };
 
-    if (createPricing.fulfilled.match(result)) {
-      message.success("Pricing package created successfully!");
-      console.log("Created Pricing:", result.payload);
-      onNext();
-    } else {
-      message.error(result.payload || "Pricing creation failed");
-    }
+
+  const handleBack = () => {
+    onBack(); 
+  };
+
+ 
+  const handleSkip = () => {
+    onSkip(); 
   };
 
   return (
@@ -64,7 +87,7 @@ const PricingStep = ({ onNext, onBack, onSkip, percentComplete = 80 }) => {
             <p className="ps-subtext">Set your start price</p>
           </div>
 
-          <button className="ps-close" onClick={onSkip}>
+          <button className="ps-close" onClick={handleSkip}>
             <FiX size={22} />
           </button>
         </div>
@@ -119,12 +142,12 @@ const PricingStep = ({ onNext, onBack, onSkip, percentComplete = 80 }) => {
       </div>
 
       <div className="ps-footer">
-        <button className="ps-btn-skip" onClick={onSkip}>
+        <button className="ps-btn-skip" onClick={handleSkip}>
           Skip for Now
         </button>
 
         <div className="ps-footer-right">
-          <button className="ps-btn-back" onClick={onBack}>
+          <button className="ps-btn-back" onClick={handleBack}>
             Back
           </button>
 
@@ -133,7 +156,7 @@ const PricingStep = ({ onNext, onBack, onSkip, percentComplete = 80 }) => {
             onClick={handleContinue}
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Saving..." : "Continue"}
+            {isSubmitting? "Saving..." : "Continue"}
           </button>
         </div>
       </div>

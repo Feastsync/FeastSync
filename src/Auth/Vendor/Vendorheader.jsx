@@ -3,20 +3,29 @@ import "../Css/Vendorheader.css";
 import Headerlogo2 from "../../assets/logos/Headerlogo2.svg";
 import Bellicon2 from "../../assets/logos/Bellicon2.svg";
 import Messageicon from "../../assets/logos/Messageicon.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 const Vendorheader = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { vendorInfo } = useSelector((state) => state.auth);
+  const location = useLocation();
+  const { vendorInfo, currentVendor, isLoggedIn, accountType } = useSelector((state) => state.auth);
 
+  const isDashboard = location.pathname === '/vendordashboard' || location.pathname === '/vendor';
+  const isOwnerOnDashboard = isLoggedIn && accountType === 'vendor' && isDashboard;
+  const isOwnerOnPublicPage = isLoggedIn && 
+                              accountType === 'vendor' && 
+                              currentVendor?._id && 
+                              vendorInfo?._id === currentVendor?._id;
+  
+  const isOwner = isOwnerOnDashboard || isOwnerOnPublicPage;
+  const showFullHeader = isOwnerOnDashboard;
 
   const getInitials = () => {
-    const name = vendorInfo?.stageName || vendorInfo?.firstName || "";
-    if (!name) return "DK";
-
+    const name = vendorInfo?.stageName || vendorInfo?.firstName || vendorInfo?.businessName || "";
+    if (!name) return "FS";
     const names = name.trim().split(/\s+/);
     if (names.length >= 2) {
       return (names[0][0] + names[names.length - 1][0]).toUpperCase();
@@ -25,7 +34,7 @@ const Vendorheader = () => {
   };
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "unset";
+    document.body.style.overflow = isOpen? "hidden" : "unset";
     return () => {
       document.body.style.overflow = "unset";
     };
@@ -47,54 +56,58 @@ const Vendorheader = () => {
           <h2 className="logo-text">FeastSync</h2>
         </div>
 
-        <div className={`vendorheader-right ${isOpen ? "active" : ""}`}>
-          <button
-            className="icon-btn"
-            aria-label="Wallet"
-            onClick={() => {
-              navigate("/wallet/transactions");
-              closeMenu();
-            }}
-          >
-            <img src={Messageicon} alt="" className="nav-icon1" />
-            <span className="vendorheader-navLabel">Messages</span>
-          </button>
+        {showFullHeader && (
+          <>
+            <div className={`vendorheader-right ${isOpen? "active" : ""}`}>
+              <button
+                className="icon-btn"
+                aria-label="Messages"
+                onClick={() => {
+                  navigate("/wallet/transactions");
+                  closeMenu();
+                }}
+              >
+                <img src={Messageicon} alt="" className="nav-icon1" />
+                <span className="vendorheader-navLabel">Messages</span>
+              </button>
 
-          <button
-            className="icon-btn notification-btn"
-            aria-label="Notifications"
-            onClick={() => {
-              navigate("/notifications");
-              closeMenu();
-            }}
-          >
-            <div className="icon-wrapper">
-              <img src={Bellicon2} alt="" className="nav-icon" />
-              <span className="notification-badge">1</span>
+              <button
+                className="icon-btn notification-btn"
+                aria-label="Notifications"
+                onClick={() => {
+                  navigate("/notifications");
+                  closeMenu();
+                }}
+              >
+                <div className="icon-wrapper">
+                  <img src={Bellicon2} alt="" className="nav-icon" />
+                  <span className="notification-badge">1</span>
+                </div>
+                <span className="vendorheader-navLabel">Notifications</span>
+              </button>
+
+              <div className="vendorheader-footerActions">
+                <div className="avatar-circle">{getInitials()}</div>
+                <button
+                  className="edit-profile-btn"
+                  onClick={() => {
+                    navigate("/Settings");
+                    closeMenu();
+                  }}
+                >
+                  Edit Profile
+                </button>
+              </div>
             </div>
-            <span className="vendorheader-navLabel">Notifications</span>
-          </button>
 
-          <div className="vendorheader-footerActions">
-            <div className="avatar-circle">{getInitials()}</div>
-            <button
-              className="edit-profile-btn"
-              onClick={() => {
-                navigate("/Settings");
-                closeMenu();
-              }}
+            <div
+              className="vendorheader_menuIcon"
+              onClick={() => setIsOpen(!isOpen)}
             >
-              Edit Profile
-            </button>
-          </div>
-        </div>
-
-        <div
-          className="vendorheader_menuIcon"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <FaTimes /> : <FaBars />}
-        </div>
+              {isOpen? <FaTimes /> : <FaBars />}
+            </div>
+          </>
+        )}
       </div>
     </header>
   );
