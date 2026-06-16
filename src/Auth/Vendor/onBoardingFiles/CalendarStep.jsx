@@ -1,120 +1,97 @@
-import React from "react";
-import { IoClose } from "react-icons/io5";
+import React, { useState } from "react";
+import { IoClose, IoChevronBack, IoChevronForward } from "react-icons/io5";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import "./css/CalendarStep.css";
 
 const CalendarStep = ({
   onNext,
   onBack,
   onSkip,
-  profileData,
-  setProfileData,
-  percentComplete = 95,
 }) => {
-  const days = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
+  const [activeStartDate, setActiveStartDate] = useState(new Date(2028, 6, 1)); 
 
-  const bookedDays = profileData?.availability?.bookedDays || [];
-
-  const toggleDay = (day) => {
-    setProfileData((prev) => {
-      const current = prev?.availability?.bookedDays || [];
-
-      const updated = current.includes(day)
-        ? current.filter((d) => d !== day)
-        : [...current, day];
-
-      return {
-        ...prev,
-
-        // KEEP your structure (UI compatibility)
-        availability: {
-          ...prev.availability,
-          bookedDays: updated,
-        },
-
-        // IMPORTANT: FLATTEN for backend (FormData safe)
-        bookedDays: updated,
-      };
-    });
+  const handlePrevMonth = () => {
+    setActiveStartDate((prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
   };
 
-  const handleContinue = () => {
-    // ensure sync before next step
-    setProfileData((prev) => ({
-      ...prev,
-      bookedDays: prev?.availability?.bookedDays || [],
-    }));
+  const handleNextMonth = () => {
+    setActiveStartDate((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
+  };
 
-    onNext();
+  const formatMonthYearLabel = (date) => {
+    return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
   };
 
   return (
-    <div className="cs-modal">
-      <div className="cs-header">
-        <div>
-          <h2>Availability Calendar</h2>
-          <p>Set your unavailable (booked) days for customers</p>
+    <div className="cs-overlay">
+      <div className="cs-modal">
+        
+        <div className="cs-purple-top-section">
+          <div className="cs-header">
+            <h2>Availability Calendar</h2>
+            <button className="cs-close" onClick={onSkip}>
+              <IoClose size={20} />
+            </button>
+          </div>
 
-          <div className="cs-progress-bar">
-            <div
-              className="cs-progress-fill"
-              style={{ width: `${percentComplete}%` }}
-            />
+          <div className="cs-custom-navigation">
+            <button className="nav-arrow-btn" onClick={handlePrevMonth}>
+              <IoChevronBack size={18} />
+            </button>
+            <span className="nav-month-label">{formatMonthYearLabel(activeStartDate)}</span>
+            <button className="nav-arrow-btn" onClick={handleNextMonth}>
+              <IoChevronForward size={18} />
+            </button>
+          </div>
+
+          <div className="cs-legend">
+            <div className="cs-legend-item">
+              <span className="legend-box available-box"></span>
+              Available
+            </div>
+            <div className="cs-legend-item">
+              <span className="legend-box booked-box"></span>
+              Booked
+            </div>
           </div>
         </div>
 
-        <button className="cs-close" onClick={onSkip}>
-          <IoClose size={24} />
-        </button>
-      </div>
+        <div className="cs-white-bottom-section">
+          <div className="cs-calendar-wrapper">
+            <Calendar
+              activeStartDate={activeStartDate}
+              onActiveStartDateChange={({ activeStartDate }) => setActiveStartDate(activeStartDate)}
+              showNavigation={false} 
+              calendarType="gregory"
+              formatShortWeekday={(locale, date) =>
+                date.toLocaleDateString(locale, { weekday: "short" }).toUpperCase()
+              }
+              tileClassName={({ date }) => {
+                const currentMonth = activeStartDate.getMonth();
+                const tileMonth = date.getMonth();
+                const currentYear = activeStartDate.getFullYear();
+                const tileYear = date.getFullYear();
 
-      <div className="cs-body">
-        <h3 className="cs-section-title">Select Booked Days</h3>
-        <p className="cs-subtitle">
-          White = available | Red = booked
-        </p>
+                if (tileYear > currentYear || (tileYear === currentYear && tileMonth > currentMonth)) {
+                  return "hide-next-neighbor readonly-tile";
+                }
 
-        <div className="cs-calendar-grid">
-          {days.map((day) => {
-            const isBooked = bookedDays.includes(day);
+                return "available-date readonly-tile";
+              }}
+            />
+          </div>
 
-            return (
-              <button
-                key={day}
-                type="button"
-                className={`cs-day-btn ${
-                  isBooked ? "booked" : "available"
-                }`}
-                onClick={() => toggleDay(day)}
-              >
-                {day}
-              </button>
-            );
-          })}
+          <div className="cs-footer">
+            <button className="cs-btn-outline" onClick={() => onBack(activeStartDate)}>
+              Back
+            </button>
+            <button className="cs-btn-primary" onClick={() => onNext(activeStartDate)}>
+              Complete profile setup
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div className="cs-footer">
-        <button className="cs-btn-text" onClick={onSkip}>
-          Skip for Now
-        </button>
-
-        <div className="cs-btn-group">
-          <button className="cs-btn-outline" onClick={onBack}>
-            Back
-          </button>
-
-          <button className="cs-btn-primary" onClick={handleContinue}>
-            Complete Setup
-          </button>
-        </div>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ const DocumentStep = ({
   onNext,
   onBack,
   onSkip,
-  percentComplete = 85,
+  percentComplete = 100,
   profileData,
   setProfileData,
 }) => {

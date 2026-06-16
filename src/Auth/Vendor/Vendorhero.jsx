@@ -13,31 +13,35 @@ const Vendorhero = () => {
 
   const handleProfileUpload = (e) => {
     const file = e.target.files[0];
-    if (!file ||!vendorInfo?._id) return;
+    if (!file || !vendorInfo?._id) return;
 
     const formData = new FormData();
     formData.append("profilePicture", file);
-    
-    dispatch(updateVendorProfile({ 
-      id: vendorInfo._id, 
-      profileData: formData 
-    }));
-    
+
+    dispatch(
+      updateVendorProfile({
+        id: vendorInfo._id,
+        profileData: formData,
+      }),
+    );
+
     e.target.value = "";
   };
 
   const handleCoverUpload = (e) => {
     const file = e.target.files[0];
-    if (!file ||!vendorInfo?._id) return;
+    if (!file || !vendorInfo?._id) return;
 
     const formData = new FormData();
     formData.append("coverPhoto", file);
-    
-    dispatch(updateVendorProfile({ 
-      id: vendorInfo._id, 
-      profileData: formData 
-    }));
-    
+
+    dispatch(
+      updateVendorProfile({
+        id: vendorInfo._id,
+        profileData: formData,
+      }),
+    );
+
     e.target.value = "";
   };
 
@@ -61,36 +65,36 @@ const Vendorhero = () => {
       <span className="vendorhero-back-text">Back</span>
 
       <label htmlFor="cover-upload" className="vendorhero-cover-upload">
-        <span>{loading? "Uploading..." : "Upload Cover"}</span>
+        <span>{loading ? "Uploading..." : "Upload Cover"}</span>
       </label>
-      <input 
-        id="cover-upload" 
-        type="file" 
-        accept="image/*" 
-        onChange={handleCoverUpload} 
-        hidden 
+      <input
+        id="cover-upload"
+        type="file"
+        accept="image/*"
+        onChange={handleCoverUpload}
+        hidden
         disabled={loading}
       />
 
       <div className="vendorhero-profile">
         <div className="vendorhero-avatar-wrap">
-          <img 
-            src={vendorInfo?.profilePicture || Vendorprofile} 
-            alt="Profile" 
+          <img
+            src={vendorInfo?.profilePicture || Vendorprofile}
+            alt="Profile"
             className="vendorhero-avatar"
-            key={vendorInfo?.profilePicture} 
+            key={vendorInfo?.profilePicture}
           />
-          
+
           <label htmlFor="profile-upload" className="vendorhero-avatar-overlay">
-            <span>{loading? "Uploading..." : "Upload Profile"}</span>
+            <span>{loading ? "Uploading..." : "Upload Profile"}</span>
             <img src={Vedorprofileview} alt="" />
           </label>
-          <input 
-            id="profile-upload" 
-            type="file" 
-            accept="image/*" 
-            onChange={handleProfileUpload} 
-            hidden 
+          <input
+            id="profile-upload"
+            type="file"
+            accept="image/*"
+            onChange={handleProfileUpload}
+            hidden
             disabled={loading}
           />
         </div>

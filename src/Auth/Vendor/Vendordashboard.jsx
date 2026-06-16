@@ -15,10 +15,13 @@ const Vendordashboard = () => {
   const [expandedCards, setExpandedCards] = useState({});
   const [showOnboarding, setShowOnboarding] = useState(false);
   const { pricingPackages, vendorInfo } = useSelector((state) => state.auth);
-  const [vendorName, setVendorName] = useState(vendorInfo?.stageName || vendorInfo?.firstName || "");
+  const [vendorName, setVendorName] = useState(
+    vendorInfo?.stageName || vendorInfo?.firstName || "",
+  );
 
   useEffect(() => {
-    const shouldShowOnboarding = location.state?.showOnboarding &&!vendorInfo?.isOnboarded;
+    const shouldShowOnboarding =
+      location.state?.showOnboarding && !vendorInfo?.isOnboarded;
 
     if (shouldShowOnboarding) {
       setShowOnboarding(true);
@@ -37,8 +40,8 @@ const Vendordashboard = () => {
 
   const toggleExpand = (id) => {
     setExpandedCards((prev) => ({
-     ...prev,
-      [id]:!prev[id],
+      ...prev,
+      [id]: !prev[id],
     }));
   };
 
@@ -64,10 +67,10 @@ const Vendordashboard = () => {
     const formattedPrice = `₦${Number(cleanPrice).toLocaleString()}`;
 
     const desc = saved.packageDescription || saved.description || "";
-    const highlights = desc? desc.split("\n").filter((l) => l.trim()) : [];
+    const highlights = desc ? desc.split("\n").filter((l) => l.trim()) : [];
 
     return {
-     ...base,
+      ...base,
       price: formattedPrice,
       highlights: highlights,
     };
@@ -137,7 +140,7 @@ const Vendordashboard = () => {
 
         <div className="vendordashboard-pricing-grid">
           {displayPackages.map((item) => {
-            const isExpanded =!!expandedCards[item.id];
+            const isExpanded = !!expandedCards[item.id];
 
             return (
               <div key={item.id} className="vendordashboard-pricing-card">
@@ -150,13 +153,13 @@ const Vendordashboard = () => {
 
                 <div className="vendordashboard-card-body-wrapper">
                   <div
-                    className={`vendordashboard-card-body ${isExpanded? "vendordashboard-scrollable" : ""}`}
+                    className={`vendordashboard-card-body ${isExpanded ? "vendordashboard-scrollable" : ""}`}
                   >
                     <h4 className="vendordashboard-highlights-heading">
                       Service Highlights
                     </h4>
                     <ul className="vendordashboard-highlights-list">
-                      {item.highlights.length > 0? (
+                      {item.highlights.length > 0 ? (
                         item.highlights.map((highlight, index) => (
                           <li
                             key={index}
@@ -176,10 +179,10 @@ const Vendordashboard = () => {
                   <button
                     className="vendordashboard-toggle-expand-btn"
                     onClick={() => toggleExpand(item.id)}
-                    aria-label={isExpanded? "Disable scroll" : "Enable scroll"}
+                    aria-label={isExpanded ? "Disable scroll" : "Enable scroll"}
                   >
                     <svg
-                      className={`vendordashboard-dropdown-icon ${isExpanded? "vendordashboard-open" : ""}`}
+                      className={`vendordashboard-dropdown-icon ${isExpanded ? "vendordashboard-open" : ""}`}
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"

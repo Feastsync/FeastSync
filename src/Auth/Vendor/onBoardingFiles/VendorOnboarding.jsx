@@ -64,7 +64,7 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
 
   // Sync vendor id if it loads after mount
   useEffect(() => {
-    if (vendorId &&!vendorProfile.id) {
+    if (vendorId && !vendorProfile.id) {
       setVendorProfile((prev) => ({...prev, id: vendorId }));
     }
   }, [vendorId]);
@@ -143,7 +143,6 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
         await dispatch(
           createPricing({
             packagePrice: startingPrice,
-            packageName: packageName,
             pacakageName: packageName,
             packageDescription,
           })
