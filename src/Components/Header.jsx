@@ -31,13 +31,13 @@ const Header = () => {
     return (first + last).toUpperCase()
   }
 
-    const handleLogout = () => {
-  dispatch(logoutUser()).finally(() => {
-     persistor.purge()
-    navigate('/login')
-    closeMenu()
-  })
+  const handleLogout = async () => {
+  await dispatch(logoutUser())
+  await persistor.purge()
+  navigate('/login')
+  closeMenu()
 }
+
 
   if (isLoggedIn) {
     return (

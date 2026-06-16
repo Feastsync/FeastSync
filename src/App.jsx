@@ -248,7 +248,7 @@ import Epknorating from "./Auth/Vendor/Epknorating.jsx";
 import Epkrating from "./Auth/Vendor/Epkrating.jsx";
 import BookingModal from "./Page/Booking/Booking.jsx";
 import { useSelector } from "react-redux";
-
+import CalendarStep from "./Auth/Vendor/onBoardingFiles/CalendarStep.jsx"
 const OnboardingPage = () => {
   const { vendorInfo } = useSelector((state) => state.auth);
   const vendorName = vendorInfo?.stageName || vendorInfo?.firstName || "";
@@ -299,8 +299,8 @@ const App = () => {
         <Route path="/epknorating/:vendorId" element={<Epknorating />} />
         <Route path="/epkrating/:id" element={<Epkrating />} />
         <Route path="/505" element={<Error505 />} />
-
         <Route path="/vendordashboard" element={<Vendordashboard />} />
+        <Route path="/vendor/:slug" element={<Vendordashboard />} />
         <Route path="/vendordashboardrating" element={<Vendordashboardrating />} />
         <Route path="/userdashboard" element={<Userdashboard />} />
         <Route path="/bookingrequest" element={<BookingRequest />} />
@@ -312,6 +312,7 @@ const App = () => {
         <Route path="/Settings" element={<Settings />} />
         <Route path="/vendorsetting" element={<VendorSetting />} />
         <Route path="/vendor/kyc" element={<VendorKYC />} />
+        <Route path="Calenderrr" element={<CalendarStep />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
     </BrowserRouter>

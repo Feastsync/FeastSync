@@ -21,9 +21,9 @@ const PricingStep = ({
 
   const handleChange = (field, value) => {
     setProfileData((prev) => ({
-      ...prev,
+     ...prev,
       pricing: {
-        ...prev.pricing,
+       ...prev.pricing,
         [field]: value,
       },
     }));
@@ -31,9 +31,9 @@ const PricingStep = ({
 
   const handleContinue = async () => {
     if (
-      !pricing.startingPrice ||
-      !pricing.packageName ||
-      !pricing.packageDescription
+     !pricing.startingPrice ||
+     !pricing.packageName ||
+     !pricing.packageDescription
     ) {
       return message.warning("Please fill in all fields before continuing.");
     }
@@ -43,15 +43,25 @@ const PricingStep = ({
     const sanitizedPrice = pricing.startingPrice.replace(/,/g, "").trim();
 
     setProfileData((prev) => ({
-      ...prev,
+     ...prev,
       pricing: {
-        ...prev.pricing,
+       ...prev.pricing,
         startingPrice: sanitizedPrice,
       },
     }));
 
     setIsSubmitting(false);
-    onNext();
+    onNext(); 
+  };
+
+
+  const handleBack = () => {
+    onBack(); 
+  };
+
+ 
+  const handleSkip = () => {
+    onSkip(); 
   };
 
   return (
@@ -63,7 +73,7 @@ const PricingStep = ({
             <p className="ps-subtext">Set your starting price</p>
           </div>
 
-          <button className="ps-close" onClick={onSkip}>
+          <button className="ps-close" onClick={handleSkip}>
             <FiX size={22} />
           </button>
         </div>
@@ -125,12 +135,12 @@ const PricingStep = ({
       </div>
 
       <div className="ps-footer">
-        <button className="ps-btn-skip" onClick={onSkip}>
+        <button className="ps-btn-skip" onClick={handleSkip}>
           Skip for Now
         </button>
 
         <div className="ps-footer-right">
-          <button className="ps-btn-back" onClick={onBack}>
+          <button className="ps-btn-back" onClick={handleBack}>
             Back
           </button>
 
@@ -139,7 +149,7 @@ const PricingStep = ({
             onClick={handleContinue}
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Saving..." : "Continue"}
+            {isSubmitting? "Saving..." : "Continue"}
           </button>
         </div>
       </div>

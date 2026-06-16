@@ -1,8 +1,6 @@
 import React from "react";
 import "./css/SuccessModal.css";
 import handShake from "../../../assets/logos/handshake.png";
-
-// onClose here is actually handleFinalSubmit from VendorOnboarding
 const SuccessModal = ({ onClose, isLoading, error }) => {
   return (
     <div className="success-modal">

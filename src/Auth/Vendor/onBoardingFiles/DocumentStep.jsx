@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FiX, FiUpload } from "react-icons/fi";
+import { message } from "antd";
 import "./css/DocumentStep.css";
 
 const DocumentStep = ({
@@ -11,27 +12,27 @@ const DocumentStep = ({
   setProfileData,
 }) => {
   const [dragOver, setDragOver] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const file = profileData?.document || null;
 
   const handleFile = (selectedFile) => {
     if (!selectedFile) return;
 
-    // optional: file validation
     const allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
 
     if (!allowedTypes.includes(selectedFile.type)) {
-      alert("Only JPG, PNG, or PDF files are allowed");
+      message.error("Only JPG, PNG, or PDF files are allowed");
       return;
     }
 
     if (selectedFile.size > 5 * 1024 * 1024) {
-      alert("File must be less than 5MB");
+      message.error("File must be less than 5MB");
       return;
     }
 
     setProfileData((prev) => ({
-      ...prev,
+     ...prev,
       document: selectedFile,
     }));
   };
@@ -49,19 +50,28 @@ const DocumentStep = ({
     handleFile(selected);
   };
 
-  const handleContinue = () => {
+  // 🔥 UPDATED: Now async so "Saving..." shows during Redux update
+  const handleContinue = async () => {
     if (!file) {
-      alert("Please upload a valid document");
+      message.warning("Please upload a valid document");
       return;
     }
 
-    // ensure clean backend-ready structure
-    setProfileData((prev) => ({
-      ...prev,
-      document: prev.document || null,
-    }));
+    setIsSubmitting(true);
+    await onNext(); // Waits for completeStep("docs") -> onboardingStep: 5
+    setIsSubmitting(false);
+  };
 
-    onNext();
+  const handleBack = async () => {
+    setIsSubmitting(true);
+    await onBack(); // Waits for completeStep("pricing") -> onboardingStep: 4
+    setIsSubmitting(false);
+  };
+
+  const handleSkip = async () => {
+    setIsSubmitting(true);
+    await onSkip(); // Waits for completeStep("docs") -> onboardingStep: 5
+    setIsSubmitting(false);
   };
 
   return (
@@ -73,7 +83,7 @@ const DocumentStep = ({
             <p className="ds-subtext">Upload proof of identity</p>
           </div>
 
-          <button className="ds-close" onClick={onSkip}>
+          <button className="ds-close" onClick={handleSkip}>
             <FiX size={22} />
           </button>
         </div>
@@ -99,8 +109,8 @@ const DocumentStep = ({
 
           <div
             className={`ds-dropzone ${
-              dragOver ? "drag-over" : ""
-            } ${file ? "has-file" : ""}`}
+              dragOver? "drag-over" : ""
+            } ${file? "has-file" : ""}`}
             onDragOver={(e) => {
               e.preventDefault();
               setDragOver(true);
@@ -123,7 +133,7 @@ const DocumentStep = ({
               <FiUpload size={24} />
             </div>
 
-            {file ? (
+            {file? (
               <p className="ds-file-name">{file.name}</p>
             ) : (
               <p className="ds-drop-text">
@@ -138,21 +148,29 @@ const DocumentStep = ({
       </div>
 
       <div className="ds-footer">
-        <button className="ds-btn-skip" onClick={onSkip}>
+        <button
+          className="ds-btn-skip"
+          onClick={handleSkip}
+          disabled={isSubmitting}
+        >
           Skip for Now
         </button>
 
         <div className="ds-footer-right">
-          <button className="ds-btn-back" onClick={onBack}>
+          <button
+            className="ds-btn-back"
+            onClick={handleBack}
+            disabled={isSubmitting}
+          >
             Back
           </button>
 
           <button
             className="ds-btn-upload"
             onClick={handleContinue}
-            disabled={!file}
+            disabled={!file || isSubmitting}
           >
-            Continue
+            {isSubmitting? "Saving..." : "Continue"}
           </button>
         </div>
       </div>

@@ -20,24 +20,50 @@ import {
 
 const STEP_ORDER = ["category", "bank", "media", "pricing", "docs", "calendar"];
 
+const STEP_MAP = {
+  1: 'category',
+  2: 'bank',
+  3: 'media',
+  4: 'pricing',
+  5: 'docs',
+  6: 'calendar',
+  7: 'completed'
+};
+
+const REVERSE_STEP_MAP = {
+  'category': 1,
+  'bank': 2,
+  'media': 3,
+  'pricing': 4,
+  'docs': 5,
+  'calendar': 6,
+  'completed': 7
+};
+
 const VendorOnboarding = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const { vendorInfo, isLoading } = useSelector((s) => s.auth);
 
-  const vendorId = vendorInfo?._id || vendorInfo?.id || "";
+  const vendorId = vendorInfo?.id || vendorInfo?._id || "";
 
-  const [currentStep, setCurrentStep] = useState("incomplete");
+  const onboardingStep = vendorInfo?.isOnboarded? 7 : (vendorInfo?.onboardingStep || 1);
+  const currentStep = STEP_MAP[onboardingStep] || 'category';
+
+  const completedSteps = {
+    category: onboardingStep > 1,
+    bank: onboardingStep > 2,
+    media: onboardingStep > 3,
+    pricing: onboardingStep > 4,
+    docs: onboardingStep > 5,
+    calendar: onboardingStep > 6,
+  };
+
+  const done = Object.values(completedSteps).filter(Boolean).length;
+  const total = STEP_ORDER.length;
+  const percentComplete = Math.round((done / total) * 100);
+
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [submitError, setSubmitError] = useState(null);
-
-  const [completedSteps, setCompletedSteps] = useState({
-    category: false,
-    bank: false,
-    media: false,
-    pricing: false,
-    docs: false,
-    calendar: false,
-  });
 
   const [vendorProfile, setVendorProfile] = useState({
     id: vendorId,
@@ -62,33 +88,34 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
     bookedDays: [],
   });
 
-  // Sync vendor id if it loads after mount
   useEffect(() => {
     if (vendorId &&!vendorProfile.id) {
       setVendorProfile((prev) => ({...prev, id: vendorId }));
     }
-  }, [vendorId]);
+  }, [vendorId, vendorProfile.id]);
 
-  // Auto close if already onboarded
-  useEffect(() => {
-    if (vendorInfo?.isOnboarded) {
-      onClose?.();
-    }
-  }, [vendorInfo?.isOnboarded, onClose]);
 
   if (!isOpen) return null;
 
-  const done = Object.values(completedSteps).filter(Boolean).length;
-  const total = STEP_ORDER.length;
-  const percentComplete = Math.round((done / total) * 100);
-
-  const completeStep = (stepName) => {
-    setCompletedSteps((prev) => ({...prev, [stepName]: true }));
+  const completeStep = async (stepName) => {
     const nextIndex = STEP_ORDER.indexOf(stepName) + 1;
-    if (nextIndex < STEP_ORDER.length) {
-      setCurrentStep(STEP_ORDER[nextIndex]);
-    } else {
-      setCurrentStep("success");
+    const nextStepName = nextIndex < STEP_ORDER.length? STEP_ORDER[nextIndex] : 'completed';
+    const nextStepNumber = REVERSE_STEP_MAP[nextStepName];
+
+    console.log('STEP NAME PASSED:', stepName);
+    console.log('NEXT INDEX:', nextIndex);
+    console.log('NEXT STEP NAME:', nextStepName);
+    console.log('NEXT STEP NUMBER:', nextStepNumber);
+
+    try {
+      const formData = new FormData();
+      formData.append("onboardingStep", String(nextStepNumber));
+      await dispatch(updateVendorProfile({
+        id: vendorId,
+        profileData: formData
+      })).unwrap();
+    } catch (e) {
+      console.log("Failed to save step", e);
     }
   };
 
@@ -96,12 +123,6 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
     setSubmitError(null);
     try {
       const id = vendorProfile.id || vendorId;
-      console.log("vendorId:", id);
-      console.log("vendorProfile:", vendorProfile);
-      console.log("photoCatalogue:", vendorProfile.photoCatalogue);
-      console.log("videoCatalogue:", vendorProfile.videoCatalogue);
-
-      // 1. Update vendor profile (bank, media, category, calendar)
       const profileFormData = new FormData();
       profileFormData.append("stateOfResidence", vendorProfile.stateOfResidence);
       profileFormData.append("bankName", vendorProfile.bankName);
@@ -109,13 +130,14 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
       profileFormData.append("bio", vendorProfile.bio);
       profileFormData.append("servicesOffered", vendorProfile.servicesOffered);
       profileFormData.append("category", vendorProfile.category);
+      profileFormData.append("isOnboarded", "true");
+      profileFormData.append("onboardingStep", "7");
+      profileFormData.append("isProfileCompleted", "true");
 
       profileFormData.append(
         "bookedDays",
         JSON.stringify(vendorProfile.bookedDays)
       );
-
-      // Files
       if (vendorProfile.profilePicture) {
         profileFormData.append("profilePicture", vendorProfile.profilePicture);
       }
@@ -136,7 +158,6 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
         updateVendorProfile({ id, profileData: profileFormData })
       ).unwrap();
 
-      // 2. Create pricing package — separate endpoint
       const { startingPrice, packageName, packageDescription } =
         vendorProfile.pricing;
       if (startingPrice && packageName) {
@@ -150,19 +171,14 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
         ).unwrap();
       }
 
-      // 3. Upload KYC document — separate endpoint
       if (vendorProfile.document) {
         const kycForm = new FormData();
         kycForm.append("documentImage", vendorProfile.document);
         await dispatch(uploadKyc(kycForm)).unwrap();
       }
 
-      // Backend should return vendorInfo with isOnboarded: true
-      // Redux will update and useEffect above will close modal
-      onClose?.();
-
     } catch (err) {
-      console.log("Submit done, onClose is:", onClose);
+      console.log("Submit error:", err);
       setSubmitError(
         typeof err === "string"? err : "Something went wrong. Please try again."
       );
@@ -172,14 +188,14 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
   const steps = {
     incomplete: (
       <IncompleteBanner
-        onComplete={() => setCurrentStep("checklist")}
+        onComplete={() => completeStep("category")}
         percentComplete={percentComplete}
       />
     ),
 
     checklist: (
       <ChecklistModal
-        onStart={() => setCurrentStep("category")}
+        onStart={() => completeStep("category")}
         onLater={onClose}
         completedSteps={completedSteps}
         percentComplete={percentComplete}
@@ -189,8 +205,8 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
     category: (
       <CategoryStep
         onNext={() => completeStep("category")}
-        onBack={() => setCurrentStep("checklist")}
-        onSkip={() => setCurrentStep("bank")}
+        onBack={() => {}}
+        onSkip={() => completeStep("category")}
         percentComplete={percentComplete}
         selectedCategory={selectedCategory}
         setSelectedCategory={(value) => {
@@ -204,8 +220,8 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
     bank: (
       <BankStep
         onNext={() => completeStep("bank")}
-        onBack={() => setCurrentStep("category")}
-        onSkip={() => setCurrentStep("media")}
+        onBack={() => completeStep("category")}
+        onSkip={() => completeStep("bank")}
         percentComplete={percentComplete}
         profileData={vendorProfile}
         setProfileData={setVendorProfile}
@@ -215,8 +231,8 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
     media: (
       <MediaStep
         onNext={() => completeStep("media")}
-        onBack={() => setCurrentStep("bank")}
-        onSkip={() => setCurrentStep("pricing")}
+        onBack={() => completeStep("bank")}
+        onSkip={() => completeStep("media")}
         percentComplete={percentComplete}
         profileData={vendorProfile}
         setProfileData={setVendorProfile}
@@ -226,8 +242,8 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
     pricing: (
       <PricingStep
         onNext={() => completeStep("pricing")}
-        onBack={() => setCurrentStep("media")}
-        onSkip={() => setCurrentStep("docs")}
+        onBack={() => completeStep("media")}
+        onSkip={() => completeStep("pricing")}
         percentComplete={percentComplete}
         profileData={vendorProfile}
         setProfileData={setVendorProfile}
@@ -237,8 +253,8 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
     docs: (
       <DocumentStep
         onNext={() => completeStep("docs")}
-        onBack={() => setCurrentStep("pricing")}
-        onSkip={() => setCurrentStep("calendar")}
+        onBack={() => completeStep("pricing")}
+        onSkip={() => completeStep("docs")}
         percentComplete={percentComplete}
         profileData={vendorProfile}
         setProfileData={setVendorProfile}
@@ -247,27 +263,28 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
 
     calendar: (
       <CalendarStep
-        onNext={() => completeStep("calendar")}
-        onBack={() => setCurrentStep("docs")}
+        onNext={handleFinalSubmit} 
+        onBack={() => completeStep("docs")}
         onSkip={onClose}
         percentComplete={percentComplete}
         profileData={vendorProfile}
         setProfileData={setVendorProfile}
+        isLoading={isLoading}
+        error={submitError}
       />
     ),
 
-    success: (
+ 
+    completed: (
       <SuccessModal
-        onClose={handleFinalSubmit}
-        isLoading={isLoading}
-        error={submitError}
-        selectedCategory={selectedCategory}
+        onClose={onClose}
+        selectedCategory={selectedCategory || vendorInfo?.category}
       />
     ),
   };
 
-  if (currentStep === "checklist") {
-    return <div className="profile-modal-overlay">{steps[currentStep]}</div>;
+  if (currentStep === "incomplete" || (currentStep === "category" && onboardingStep === 1 &&!vendorInfo?.category)) {
+    return <div className="profile-modal-overlay">{steps.incomplete}</div>;
   }
 
   return (

@@ -1,3 +1,8 @@
+*{
+   scrollbar-width: none;
+}
+
+
 .media-overlay {
   position: fixed;
   inset: 0;
@@ -8,19 +13,33 @@
   justify-content: center;
   z-index: 99999;
   padding: 40px 16px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   overflow-y: auto;
+}
+
+.media-overlay::-webkit-scrollbar {
+  display: none;
 }
 
 .media-modal {
   background: #ffffff;
   border-radius: 16px;
-  width: min(95%, 760px);
+  width: min(95%, 550px);
+  margin-top: 50px;
+  margin-left: 180px;
   box-shadow: none;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: visible;
   max-height: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.media-modal::-webkit-scrollbar {
+  display: none;
 }
 
 .media-header {
@@ -138,6 +157,7 @@
 .media-upload-box {
   border: 1.5px dashed #c9a8e8;
   border-radius: 12px;
+  position: relative;
   background: #f3effe;
   display: flex;
   flex-direction: column;
@@ -151,6 +171,10 @@
 .media-upload-box:hover {
   border-color: #5a1f8a;
   background: #ede5fa;
+}
+
+.media-upload-box input[type="file"] {
+  display: none;
 }
 
 .media-upload-box.video {
@@ -247,6 +271,7 @@
   border: none;
   border-radius: 10px;
   padding: 12px 28px;
+  scrollbar-width: none;
   font-family: "Inter", sans-serif;
   font-size: 15px;
   font-weight: 600;

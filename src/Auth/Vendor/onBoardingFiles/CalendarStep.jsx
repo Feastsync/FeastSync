@@ -1,5 +1,7 @@
-import React from "react";
-import { IoClose } from "react-icons/io5";
+import React, { useState } from "react";
+import { IoClose, IoChevronBack, IoChevronForward } from "react-icons/io5";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import "./css/CalendarStep.css";
 
 const CalendarStep = ({
@@ -10,110 +12,140 @@ const CalendarStep = ({
   setProfileData,
   percentComplete = 95,
 }) => {
-  const days = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
+  const [activeStartDate, setActiveStartDate] = useState(new Date());
+  
+  const bookedDates = profileData?.availability?.bookedDates || [];
 
-  const bookedDays = profileData?.availability?.bookedDays || [];
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
 
-  const toggleDay = (day) => {
+  const toggleDate = (date) => {
+    const dateStr = formatDate(date);
     setProfileData((prev) => {
-      const current = prev?.availability?.bookedDays || [];
-
-      const updated = current.includes(day)
-        ? current.filter((d) => d !== day)
-        : [...current, day];
+      const current = prev?.availability?.bookedDates || [];
+      const updated = current.includes(dateStr)
+        ? current.filter((d) => d !== dateStr)
+        : [...current, dateStr];
 
       return {
         ...prev,
-
-        // KEEP your structure (UI compatibility)
         availability: {
           ...prev.availability,
-          bookedDays: updated,
+          bookedDates: updated,
         },
-
-        // IMPORTANT: FLATTEN for backend (FormData safe)
-        bookedDays: updated,
+        bookedDates: updated,
       };
     });
   };
 
+  const handlePrevMonth = () => {
+    setActiveStartDate((prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
+  };
+
+  const handleNextMonth = () => {
+    setActiveStartDate((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
+  };
+
+  const formatMonthYearLabel = (date) => {
+    return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+  };
+
+
   const handleContinue = () => {
-    // ensure sync before next step
     setProfileData((prev) => ({
       ...prev,
-      bookedDays: prev?.availability?.bookedDays || [],
+      bookedDates: prev?.availability?.bookedDates || [],
     }));
-
     onNext();
   };
 
   return (
-    <div className="cs-modal">
-      <div className="cs-header">
-        <div>
-          <h2>Availability Calendar</h2>
-          <p>Set your unavailable (booked) days for customers</p>
+    <div className="cs-overlay">
+      <div className="cs-modal">
+        <div className="cs-purple-top-section">
+          <div className="cs-header">
+            <div>
+              <h2>Availability Calendar</h2>
+              <p>Select dates you're unavailable for customers</p>
+              
+       
+              <div className="cs-progress-bar">
+                <div
+                  className="cs-progress-fill"
+                  style={{ width: `${percentComplete}%` }}
+                />
+              </div>
+            </div>
+            
+            <button className="cs-close" onClick={onSkip}>
+              <IoClose size={20} />
+            </button>
+          </div>
 
-          <div className="cs-progress-bar">
-            <div
-              className="cs-progress-fill"
-              style={{ width: `${percentComplete}%` }}
-            />
+          <div className="cs-custom-navigation">
+            <button className="nav-arrow-btn" onClick={handlePrevMonth}>
+              <IoChevronBack size={18} />
+            </button>
+            <span className="nav-month-label">{formatMonthYearLabel(activeStartDate)}</span>
+            <button className="nav-arrow-btn" onClick={handleNextMonth}>
+              <IoChevronForward size={18} />
+            </button>
+          </div>
+
+          <div className="cs-legend">
+            <div className="cs-legend-item">
+              <span className="legend-box available-box"></span>
+              Available
+            </div>
+            <div className="cs-legend-item">
+              <span className="legend-box booked-box"></span>
+              Booked
+            </div>
           </div>
         </div>
 
-        <button className="cs-close" onClick={onSkip}>
-          <IoClose size={24} />
-        </button>
-      </div>
+        <div className="cs-white-bottom-section">
+          <div className="cs-calendar-wrapper">
+            <Calendar
+              activeStartDate={activeStartDate}
+              onActiveStartDateChange={({ activeStartDate }) => setActiveStartDate(activeStartDate)}
+              onClickDay={toggleDate}
+              showNavigation={false}
+              calendarType="gregory"
+              formatShortWeekday={(locale, date) =>
+                date.toLocaleDateString(locale, { weekday: "short" }).toUpperCase()
+              }
+              tileClassName={({ date }) => {
+                const dateStr = formatDate(date);
+                const isBooked = bookedDates.includes(dateStr);
+                const tileMonth = date.getMonth();
+                const currentMonth = activeStartDate.getMonth();
+                
+                if (tileMonth !== currentMonth) return "neighboring-month";
+                return isBooked ? "booked-date" : "available-date";
+              }}
+            />
+          </div>
 
-      <div className="cs-body">
-        <h3 className="cs-section-title">Select Booked Days</h3>
-        <p className="cs-subtitle">
-          White = available | Red = booked
-        </p>
+          <div className="cs-footer">
+           
+            <button className="cs-btn-text" onClick={onSkip}>
+              Skip for Now
+            </button>
 
-        <div className="cs-calendar-grid">
-          {days.map((day) => {
-            const isBooked = bookedDays.includes(day);
-
-            return (
-              <button
-                key={day}
-                type="button"
-                className={`cs-day-btn ${
-                  isBooked ? "booked" : "available"
-                }`}
-                onClick={() => toggleDay(day)}
-              >
-                {day}
+            <div className="cs-btn-group">
+              <button className="cs-btn-outline" onClick={onBack}>
+                Back
               </button>
-            );
-          })}
-        </div>
-      </div>
-
-      <div className="cs-footer">
-        <button className="cs-btn-text" onClick={onSkip}>
-          Skip for Now
-        </button>
-
-        <div className="cs-btn-group">
-          <button className="cs-btn-outline" onClick={onBack}>
-            Back
-          </button>
-
-          <button className="cs-btn-primary" onClick={handleContinue}>
-            Complete Setup
-          </button>
+              <button className="cs-btn-primary" onClick={handleContinue}>
+                Complete Setup
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
