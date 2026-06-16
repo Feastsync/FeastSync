@@ -248,6 +248,7 @@ import Epknorating from "./Auth/Vendor/Epknorating.jsx";
 import Epkrating from "./Auth/Vendor/Epkrating.jsx";
 import BookingModal from "./Page/Booking/Booking.jsx";
 import { useSelector } from "react-redux";
+import Adminsignup from "./Page/Admin/Adminsignup.jsx";
 
 const OnboardingPage = () => {
   const { vendorInfo } = useSelector((state) => state.auth);
@@ -313,6 +314,7 @@ const App = () => {
         <Route path="/vendorsetting" element={<VendorSetting />} />
         <Route path="/vendor/kyc" element={<VendorKYC />} />
         <Route path="*" element={<Error404 />} />
+        <Route path ="adminSignup" element={<Adminsignup />} />
       </Routes>
     </BrowserRouter>
   );
