@@ -20,10 +20,10 @@
 .bank-modal {
   background: white;
   border-radius: 16px;
-  margin-top: 50px;
-  margin-left: 180px;
+  margin-top: 70px;
+  margin-left: 210px;
   width: 100%;
-  max-width: 500px;
+  max-width: 480px;
   max-height: 90vh;
   box-shadow: none;
   display: flex;

@@ -17,10 +17,9 @@
   height: 85vh;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
   display: flex;
-  margin-top: 50px;
-  margin-left:200px;
+  margin-top: 70px;
+  margin-left: 200px;
   flex-direction: column;
-  /* overflow: hidden; */
 }
 
 .ds-header {

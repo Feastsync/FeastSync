@@ -25,9 +25,9 @@
 .media-modal {
   background: #ffffff;
   border-radius: 16px;
-  width: min(95%, 550px);
-  margin-top: 50px;
-  margin-left: 180px;
+  width: min(95%, 480px);
+  margin-top: 70px;
+  margin-left: 190px;
   box-shadow: none;
   display: flex;
   flex-direction: column;
@@ -57,7 +57,6 @@
 }
 
 .media-header h2 {
-  font-family: "Inter", sans-serif;
   font-size: 22px;
   font-weight: 700;
   margin: 0 0 4px 0;
@@ -65,7 +64,6 @@
 }
 
 .media-subtext {
-  font-family: "Inter", sans-serif;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
@@ -116,7 +114,6 @@
 
 .media-field label {
   display: block;
-  font-family: "Inter", sans-serif;
   font-size: 14px;
   font-weight: 600;
   color: #1a1a1a;
@@ -129,7 +126,7 @@
   border-radius: 10px;
   padding: 14px;
   font-family: "Inter", sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   color: #1a1a1a;
   resize: vertical;
   background: #ffffff;
@@ -148,8 +145,7 @@
 .media-word-count {
   display: block;
   text-align: right;
-  font-family: "Inter", sans-serif;
-  font-size: 12px;
+  font-size: 1px;
   color: #999999;
   margin-top: 6px;
 }

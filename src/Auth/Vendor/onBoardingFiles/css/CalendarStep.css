@@ -21,7 +21,7 @@
   border-radius: 16px;
   width: 700px;          
   min-height: 480px; 
-  margin-top: 150px;
+  margin-top: 170px;
   margin-left: 50px;  
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -47,6 +47,7 @@
   font-size: 18px;
   font-weight: 600;
   margin: 0;
+  margin-bottom: 20px;
 }
 
 .cs-close {
@@ -210,7 +211,10 @@
   margin-top: auto;
   flex-shrink: 0;
 }
-
+.cs-btn-group{
+  display: flex;
+  gap: 14px
+}
 .cs-btn-outline {
   height: 44px;
   background: #FFF;
@@ -242,7 +246,7 @@
 
 .cs-btn-primary {
   height: 44px;
-  background: var(--primary-purple);
+  background: var(--primary-color);
   color: #FFF;
   border: none;
   border-radius: 8px;
@@ -265,5 +269,5 @@
 
 .cs-btn-primary:active {
   opacity: 1;
-  background: #3B1675;
+  background: var(--primary-color);
 }
