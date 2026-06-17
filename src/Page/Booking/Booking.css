@@ -1,4 +1,4 @@
-/* ─── Backdrop ───────────────────────────────────────────── */
+
 .bm-backdrop {
   position: fixed;
   inset: 0;
@@ -11,7 +11,6 @@
   font-family: "Plus Jakarta Sans", sans-serif;
 }
 
-/* ─── Modal shell ─────────────────────────────────────────── */
 .bm-modal {
   background: #ffffff;
   border-radius: 12px;
@@ -33,7 +32,6 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ─── Header ──────────────────────────────────────────────── */
 .bm-header {
   background: var(--primary-color);
   padding: 20px 22px 18px;
@@ -64,7 +62,6 @@
   margin: 0;
 }
 
-/* ─── Close & Back buttons ────────────────────────────────── */
 .bm-close-btn {
   background: none;
   border: none;
@@ -111,7 +108,22 @@
   filter: brightness(0) invert(1);
 }
 
-/* ─── Stepper ─────────────────────────────────────────────── */
+/* .bm-error-field {
+  border: 1px solid #ef4444 !important;
+} */
+
+.bm-error-text {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.bm-error {
+  color: #ef4444;
+  font-size: 14px;
+  margin: 12px 0;
+  text-align: center;
+}
 .bm-stepper {
   display: flex;
   align-items: flex-start;
@@ -191,7 +203,7 @@
   color: var(--primary-color);
 }
 
-/* ─── Body ────────────────────────────────────────────────── */
+
 .bm-body {
   padding: 20px 22px 26px;
   display: flex;
@@ -199,7 +211,6 @@
   gap: 14px;
 }
 
-/* ─── Form layout ─────────────────────────────────────────── */
 .bm-grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -224,7 +235,6 @@
   margin: -3px 0 2px;
 }
 
-/* ─── Input wrapper (icon + input) ───────────────────────── */
 .bm-input-wrap {
   position: relative;
   display: flex;
@@ -254,7 +264,6 @@
   transition: border-color 0.15s, box-shadow 0.15s;
 }
 
-/* Input without icon */
 .bm-field > .bm-input-wrap input,
 .bm-grid-2 .bm-input-wrap input {
   padding-left: 12px;
@@ -269,7 +278,7 @@
   box-shadow: 0 0 0 3px rgba(51, 1, 89, 0.1);
 }
 
-/* ─── Select wrapper ─────────────────────────────────────── */
+
 .bm-select-wrap {
   position: relative;
 }
@@ -333,7 +342,6 @@
   box-shadow: 0 0 0 3px rgba(51, 1, 89, 0.1);
 }
 
-/* ─── Primary button ──────────────────────────────────────── */
 .bm-btn-primary {
   width: 100%;
   background: var(--primary-color);
@@ -356,7 +364,7 @@
   cursor: not-allowed;
 }
 
-/* ─── Section label ───────────────────────────────────────── */
+
 .bm-section-label {
   font-size: 10px;
   font-weight: 700;
@@ -365,7 +373,6 @@
   margin: 0;
 }
 
-/* ─── Review grid ─────────────────────────────────────────── */
 .bm-review-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -420,14 +427,14 @@
   margin-top: 2px;
 }
 
-/* ─── Divider ─────────────────────────────────────────────── */
+
 .bm-divider {
   border: none;
   border-top: 1px solid #f0f0f0;
   margin: 2px 0;
 }
 
-/* ─── Error ───────────────────────────────────────────────── */
+
 .bm-error {
   background: #fff1f0;
   border: 1px solid #ffc9c9;
@@ -438,7 +445,6 @@
   margin: 0;
 }
 
-/* ─── Success screen ──────────────────────────────────────── */
 .bm-success-body {
   padding: 30px 32px 36px;
   text-align: center;
@@ -500,8 +506,6 @@
   line-height: 1.7;
   margin: 0 0 6px;
 }
-
-/* ─── Responsive ──────────────────────────────────────────── */
 @media (max-width: 500px) {
   .bm-backdrop {
     align-items: flex-end;

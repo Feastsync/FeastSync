@@ -3,15 +3,18 @@ import api from '../app/axios'
 
 export const createBooking = createAsyncThunk(
   'booking/create',
-  async ({ pricingId, vendorId, bookingDate, bookingTitle, eventType, eventLocation }, { rejectWithValue }) => {
+  async ({ pricingId, vendorId, eventDate, bookingTitle, eventType, eventLocation, guestCount,additionalDetails, duration, }, { rejectWithValue }) => {
     try {
       const res = await api.post('/bookings/bookings', {
         pricingId,
         vendorId,
-        bookingDate,
+        eventDate,
         bookingTitle,
         eventType,
         eventLocation,
+        guestCount,
+        additionalDetails,
+        duration,
       })
       return res.data
     } catch (err) {
