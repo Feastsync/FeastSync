@@ -34,7 +34,12 @@ const Vendordashboard = () => {
 
   
   const isPublicView =!!slug ||!isLoggedIn;
-  const displayVendor = slug? viewingVendor : vendorInfo;
+  const displayVendor = slug
+  ? viewingVendor
+  : viewingVendor?._id === vendorInfo?._id
+  ? viewingVendor
+  : vendorInfo;
+
 
   const isOwner =
     accountType === "vendor" &&
@@ -46,13 +51,13 @@ const Vendordashboard = () => {
   const [vendorName, setVendorName] = useState("");
 
 
-  useEffect(() => {
-    if (slug) {
-      dispatch(getVendorById(slug));
-    } else if (isLoggedIn && accountType === "vendor" &&!vendorInfo?._id) {
-      dispatch(getCurrentUser());
-    }
-  }, [slug, isLoggedIn, accountType, dispatch, vendorInfo?._id]);
+useEffect(() => {
+  if (slug) {
+    dispatch(getVendorById(slug));
+  } else if (isLoggedIn && accountType === "vendor" && vendorInfo?.slug) {
+    dispatch(getVendorById(vendorInfo.slug));
+  }
+}, [slug, isLoggedIn, accountType, dispatch, vendorInfo?.slug]);
 
   // useEffect(() => {
   //   if (shouldRefreshVendor) {
@@ -115,7 +120,9 @@ const handleCopyLink = async () => {
   const displayPackages = basePackages.map((base) => {
     const saved = displayVendor?.pricingPackages?.find(
       (p) => (p.packageName || p.pacakageName)?.toLowerCase() === base.id
+      
     );
+    //  console.log(displayVendor?.pricingPackages)
 
     if (!saved) return base;
 
@@ -132,6 +139,9 @@ const handleCopyLink = async () => {
       highlights,
     };
   });
+  //  console.log(displayVendor?.pricingPackages)
+  console.log("displayVendor", displayVendor)
+console.log("vendorInfo", vendorInfo)
 
   if (viewingVendorLoading && slug) return <VendorDashboardSkeleton />;
   if (slug &&!viewingVendor &&!viewingVendorLoading)
@@ -161,7 +171,7 @@ const handleCopyLink = async () => {
               <h3>{displayVendor?.bookingCount || 0}</h3>
               <span>Bookings</span>
             </div>
-          
+           
             {isOwner && (
               <div className="vendordashboard-stat-item">
                 <h3>{displayVendor?.responseRate || 98}%</h3>
@@ -259,7 +269,7 @@ const handleCopyLink = async () => {
                 </div>
 
                 <div className="vendordashboard-card-footer">
-                  {/* Owner sees Edit, public sees Book Now */}
+                 
                   {isOwner? (
                     <button
                       className="vendordashboard-edit-btn"

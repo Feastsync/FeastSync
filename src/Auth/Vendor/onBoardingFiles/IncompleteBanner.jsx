@@ -2,7 +2,6 @@ import "./css/IncompleteBanner.css";
 import warning from "../../../assets/logos/Icomplete.png";
 
 const IncompleteBanner = ({ onComplete, percentComplete = 25 }) => {
-
   return (
     <div className="ib-banner">
       <div className="ib-title-row">

@@ -10,15 +10,25 @@ import "./Css/VendorsCard.css"
 const VendorCard = (props) => {
   const navigate = useNavigate()
   const [isLiked, setIsLiked] = useState(false)
-  const { isLoggedIn } = useSelector((state) => state.auth)
+  const { isLoggedIn, accountType } = useSelector((state) => state.auth)
+  const isLoggedInUser = isLoggedIn && accountType === 'user'
 
-  const handleProtectedNav = (targetPath) => {
-    if (!isLoggedIn) {
-      navigate("/login", { state: { from: targetPath } })
-      return
-    }
-    navigate(targetPath)
+const handleProtectedNav = (targetPath) => {
+  if (!isLoggedInUser) {
+    navigate("/vendordashboard", { state: { from: targetPath } })
+    return
   }
+  navigate(targetPath)
+}
+
+const handleWishlist = (e) => {
+  e.stopPropagation()
+  if (!isLoggedInUser) {
+    navigate("/onboarding", { state: { from: `/vendor/${props.slug}` } })
+    return
+  }
+  setIsLiked(!isLiked)
+}
 
   const goToVendor = () => {
     if (!props.slug) return
@@ -26,15 +36,15 @@ const VendorCard = (props) => {
     handleProtectedNav(vendorPath)
   }
 
-  const handleWishlist = (e) => {
-    e.stopPropagation()
-    if (!isLoggedIn) {
-      navigate("/onboarding", { state: { from: `/vendor/${props.slug}` } })
-      return
-    }
-    setIsLiked(!isLiked)
+  // const handleWishlist = (e) => {
+  //   e.stopPropagation()
+  //   if (!isLoggedIn) {
+  //     navigate("/onboarding", { state: { from: `/vendor/${props.slug}` } })
+  //     return
+  //   }
+  //   setIsLiked(!isLiked)
   
-  }
+  // }
 
   return (
     <div className="vendor_card">

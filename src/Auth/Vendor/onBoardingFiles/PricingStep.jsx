@@ -1,80 +1,64 @@
 import React, { useState, useEffect } from "react";
-import { FiX, FiChevronDown } from "react-icons/fi";
-import {
-  createPricing,
-  getAllPricing,
-} from "../../../Redux/features/authslice";
-import { useDispatch } from "react-redux";
+import { FiChevronDown } from "react-icons/fi";
+import { getAllPricing } from "../../../Redux/features/authslice";
+import { useDispatch, useSelector } from "react-redux";
 import { message } from "antd";
 import "./css/PricingStep.css";
 
 const PricingStep = ({
   onNext,
   onBack,
-  onSkip,
   percentComplete = 80,
   profileData,
   setProfileData,
 }) => {
   const dispatch = useDispatch();
+  const { pricingPackages } = useSelector((s) => s.auth);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Read from profileData so values persist when going back/forward
   const {
     startingPrice = "",
     packageName = "",
-    packageDescription = ""
+    packageDescription = "",
   } = profileData?.pricing || {};
 
   useEffect(() => {
-    dispatch(getAllPricing())
-    .unwrap()
-    .then((data) => {
-        console.log("All Pricing:", data);
-      })
-    .catch((err) => {
-        console.log("Pricing Error:", err);
-      });
+    dispatch(getAllPricing());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (pricingPackages?.length > 0) {
+      const existing = pricingPackages[0];
+      setProfileData((prev) => ({
+        ...prev,
+        pricing: {
+          startingPrice: existing.packagePrice?.toString() || "",
+          packageName: existing.packageName || "",
+          packageDescription: existing.packageDescription || "",
+        },
+      }));
+    }
+  }, [pricingPackages]);
 
   const handleChange = (field, value) => {
     setProfileData((prev) => ({
-    ...prev,
-      pricing: {
-      ...prev.pricing,
-        [field]: value,
-      },
+      ...prev,
+      pricing: { ...prev.pricing, [field]: value },
     }));
   };
 
   const handleContinue = async () => {
-    if (!startingPrice ||!packageName ||!packageDescription) {
+    if (!startingPrice || !packageName || !packageDescription) {
       return message.warning("Please fill in all fields before continuing.");
     }
-
     setIsSubmitting(true);
-
-    // Sanitize price before saving
     const sanitizedPrice = startingPrice.replace(/,/g, "").trim();
-
     setProfileData((prev) => ({
-    ...prev,
-      pricing: {
-      ...prev.pricing,
-        startingPrice: sanitizedPrice,
-      },
+      ...prev,
+      pricing: { ...prev.pricing, startingPrice: sanitizedPrice },
     }));
-
     setIsSubmitting(false);
-    onNext();
-  };
-
-  const handleBack = () => {
-    onBack();
-  };
-
-  const handleSkip = () => {
-    onSkip();
+    onNext({ sanitizedPrice });
   };
 
   return (
@@ -85,17 +69,9 @@ const PricingStep = ({
             <h2>Pricing & Packages</h2>
             <p className="ps-subtext">Set your start price</p>
           </div>
-
-          <button className="ps-close" onClick={handleSkip}>
-            <FiX size={22} />
-          </button>
         </div>
-
         <div className="ps-progress-bar">
-          <div
-            className="ps-progress-fill"
-            style={{ width: `${percentComplete}%` }}
-          />
+          <div className="ps-progress-fill" style={{ width: `${percentComplete}%` }} />
         </div>
       </div>
 
@@ -141,21 +117,16 @@ const PricingStep = ({
       </div>
 
       <div className="ps-footer">
-        <button className="ps-btn-skip" onClick={handleSkip}>
-          Skip for Now
-        </button>
-
         <div className="ps-footer-right">
-          <button className="ps-btn-back" onClick={handleBack}>
+          <button className="ps-btn-back" onClick={onBack}>
             Back
           </button>
-
           <button
             className="ps-btn-continue"
             onClick={handleContinue}
             disabled={isSubmitting}
           >
-            {isSubmitting? "Saving..." : "Continue"}
+            {isSubmitting ? "Saving..." : "Continue"}
           </button>
         </div>
       </div>
