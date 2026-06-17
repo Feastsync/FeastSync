@@ -1,5 +1,6 @@
-import React from "react";
+import { useState } from "react";
 import { FiX, FiUpload } from "react-icons/fi";
+import { message } from "antd";
 import "./css/MediaStep.css";
 
 const MediaStep = ({
@@ -10,64 +11,83 @@ const MediaStep = ({
   profileData,
   setProfileData,
 }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const workExperience = profileData?.bio || "";
   const servicesOffered = profileData?.servicesOffered || "";
+  const videoCatalogue = profileData?.videoCatalogue || [];
+  const photoCatalogue = profileData?.photoCatalogue || [];
 
   const wordCount =
     workExperience.trim() === ""
-      ? 0
+     ? 0
       : workExperience.trim().split(/\s+/).length;
 
   const handleChange = (field, value) => {
     setProfileData((prev) => ({
-      ...prev,
+     ...prev,
       [field]: value,
     }));
   };
 
-  const handleFileChange = (field, files, limit) => {
+  const handleFileChange = (field, files, limit, maxSizeMB) => {
     const selected = Array.from(files).slice(0, limit);
 
+    for (let file of selected) {
+      if (file.size > maxSizeMB * 1024 * 1024) {
+        message.error(`${file.name} exceeds ${maxSizeMB}MB limit`);
+        return;
+      }
+    }
+
     setProfileData((prev) => ({
-      ...prev,
+     ...prev,
       [field]: selected,
     }));
   };
 
- const handleContinue = () => {
-  if (!workExperience.trim()) {
-    alert("Work Experience is required");
-    return;
-  }
+  const handleContinue = async () => {
+    if (!workExperience.trim()) {
+      message.warning("Work Experience is required");
+      return;
+    }
 
-  if (wordCount > 500) {
-    alert("Work Experience must not exceed 500 words");
-    return;
-  }
+    if (wordCount > 500) {
+      message.error("Work Experience must not exceed 500 words");
+      return;
+    }
 
-  if (!servicesOffered.trim()) {
-    alert("Services Offered is required");
-    return;
-  }
+    if (!servicesOffered.trim()) {
+      message.warning("Services Offered is required");
+      return;
+    }
 
-  if (
-    !profileData?.videoCatalogue ||
-    profileData.videoCatalogue.length === 0
-  ) {
-    alert("Please upload at least one video");
-    return;
-  }
+    if (!videoCatalogue || videoCatalogue.length === 0) {
+      message.warning("Please upload at least one video");
+      return;
+    }
 
-  if (
-    !profileData?.photoCatalogue ||
-    profileData.photoCatalogue.length === 0
-  ) {
-    alert("Please upload at least one photo");
-    return;
-  }
+    if (!photoCatalogue || photoCatalogue.length === 0) {
+      message.warning("Please upload at least one photo");
+      return;
+    }
 
-  onNext();
-};
+    setIsSubmitting(true);
+    await onNext();
+    setIsSubmitting(false);
+  };
+
+  const handleBack = async () => {
+    setIsSubmitting(true);
+    await onBack();
+    setIsSubmitting(false);
+  };
+
+  const handleSkip = async () => {
+    setIsSubmitting(true);
+    await onSkip();
+    setIsSubmitting(false);
+  };
 
   return (
     <div className="media-modal">
@@ -80,7 +100,7 @@ const MediaStep = ({
             </p>
           </div>
 
-          <button className="media-close" onClick={onSkip}>
+          <button className="media-close" onClick={handleSkip} disabled={isSubmitting}>
             <FiX size={22} />
           </button>
         </div>
@@ -103,8 +123,7 @@ const MediaStep = ({
             value={workExperience}
             onChange={(e) => handleChange("bio", e.target.value)}
           />
-
-          <span className="media-word-count">
+          <span className={`media-word-count ${wordCount > 500? "error" : ""}`}>
             {wordCount} / 500 words
           </span>
         </div>
@@ -116,16 +135,13 @@ const MediaStep = ({
             rows={3}
             placeholder="List services offered"
             value={servicesOffered}
-            onChange={(e) =>
-              handleChange("servicesOffered", e.target.value)
-            }
+            onChange={(e) => handleChange("servicesOffered", e.target.value)}
           />
         </div>
 
         {/* VIDEO UPLOAD */}
         <div className="media-field">
           <label>Upload video catalog (Max of 2)</label>
-
           <div className="media-upload-box video">
             <input
               id="video-upload"
@@ -133,32 +149,23 @@ const MediaStep = ({
               accept="video/*"
               multiple
               onChange={(e) =>
-                handleFileChange(
-                  "videoCatalogue",
-                  e.target.files,
-                  2
-                )
+                handleFileChange("videoCatalogue", e.target.files, 2, 10)
               }
             />
-
             <FiUpload
               className="media-upload-files"
               size={28}
               style={{ cursor: "pointer" }}
-              onClick={() =>
-                document.getElementById("video-upload").click()
-              }
+              onClick={() => document.getElementById("video-upload").click()}
             />
-
             <p className="media-upload-title">Click to upload</p>
-
-            <p className="media-upload-sub">
-              Each video not more than 10MB
-            </p>
-
-            {profileData?.videoCatalogue?.length > 0 && (
+            <p className="media-upload-sub">Each video not more than 10MB</p>
+            {videoCatalogue.length > 0 && (
               <div className="media-selected-files">
-                {profileData.videoCatalogue.map((file, index) => (
+                <p className="media-file-count">
+                  {videoCatalogue.length} / 2 videos selected
+                </p>
+                {videoCatalogue.map((file, index) => (
                   <p key={index}>{file.name}</p>
                 ))}
               </div>
@@ -166,10 +173,9 @@ const MediaStep = ({
           </div>
         </div>
 
-        {/* PHOTO UPLOAD */}
+        
         <div className="media-field">
           <label>Upload photo catalog (Max of 4)</label>
-
           <div className="media-upload-grid">
             <div className="media-upload-box photo">
               <input
@@ -178,43 +184,38 @@ const MediaStep = ({
                 accept="image/*"
                 multiple
                 onChange={(e) =>
-                  handleFileChange(
-                    "photoCatalogue",
-                    e.target.files,
-                    4
-                  )
+                  handleFileChange("photoCatalogue", e.target.files, 4, 5)
                 }
               />
-
               <FiUpload
                 size={22}
                 style={{ cursor: "pointer" }}
-                onClick={() =>
-                  document.getElementById("photo-upload").click()
-                }
+                onClick={() => document.getElementById("photo-upload").click()}
               />
-
               <p className="media-upload-title">Add more</p>
-
-              {profileData?.photoCatalogue?.length > 0 && (
+              {photoCatalogue.length > 0 && (
                 <div className="media-selected-files">
-                  {profileData.photoCatalogue.map((file, index) => (
+                  {photoCatalogue.map((file, index) => (
                     <p key={index}>{file.name}</p>
                   ))}
                 </div>
               )}
             </div>
           </div>
-
           <p className="media-upload-note">
-            Each photo should not be more than 5mb
+            Each photo should not be more than 5MB
+            {photoCatalogue.length > 0 && ` • ${photoCatalogue.length} / 4 selected`}
           </p>
         </div>
       </div>
 
-      {/* FOOTER */}
+   
       <div className="media-footer">
-        <button className="media-btn-skip" onClick={onSkip}>
+        <button
+          className="media-btn-skip"
+          onClick={handleSkip}
+          disabled={isSubmitting}
+        >
           Skip for Now
         </button>
 
@@ -222,7 +223,8 @@ const MediaStep = ({
           <button
             className="media-btn-back"
             type="button"
-            onClick={onBack}
+            onClick={handleBack}
+            disabled={isSubmitting}
           >
             Back
           </button>
@@ -231,8 +233,9 @@ const MediaStep = ({
             className="media-btn-continue"
             type="button"
             onClick={handleContinue}
+            disabled={isSubmitting ||!workExperience}
           >
-            Continue
+            {isSubmitting? "Saving..." : "Continue"}
           </button>
         </div>
       </div>

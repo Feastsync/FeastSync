@@ -5,6 +5,7 @@ import { logoutUser } from '../../Redux/features/authslice'
 import { message } from 'antd' 
 import { useSelector } from 'react-redux'
 import './Settings.css'
+import { persistor } from "../../Redux/app/store"
 
 const Settings = () => {
   const navigate = useNavigate()
@@ -86,7 +87,8 @@ const handleLogout = async () => {
     message.success('Logged out successfully')
     navigate('/login')
   } catch (err) {
-    navigate('/login') 
+    await persistor.purge()
+    navigate('/login')
   }
 }
 
@@ -134,7 +136,7 @@ const handleLogout = async () => {
             <span className="settings_label">Display name</span>
           </div>
           <div className="settings_row_right">
-            <span className="settings_value">{vendorInfo.stageName}</span>
+            <span className="settings_value">{vendorInfo?.stageName}</span>
             <button className="settings_btn" onClick={() => setModal('display-name')}>Edit</button>
           </div>
         </div>
@@ -233,7 +235,7 @@ const handleLogout = async () => {
           </div>
         </div>
 
-        {/* ← LOGOUT BUTTON AT BOTTOM */}
+      
         <div className="settings_logout_section">
           <button className="settings_logout_btn" onClick={handleLogout}>
             Logout
@@ -241,7 +243,7 @@ const handleLogout = async () => {
         </div>
       </div>
 
-      {/* Modals stay the same... */}
+  
       {modal === 'phone' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box" onClick={(e) => e.stopPropagation()}>

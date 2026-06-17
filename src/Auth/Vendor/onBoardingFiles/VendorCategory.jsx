@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FiX, FiCheck } from "react-icons/fi";
+import { message } from "antd";
 import "./css/VendorCategory.css";
 
 const categories = [
@@ -54,14 +55,16 @@ const CategoryStep = ({
 
     if (setProfileData) {
       setProfileData((prev) => ({
-        ...prev,
+     ...prev,
         category: value,
       }));
     }
   };
 
   const handleContinue = () => {
-    if (!localSelected) return;
+    if (!localSelected) {
+      return message.warning("Please select a category before continuing.");
+    }
 
     if (setSelectedCategory) {
       setSelectedCategory(localSelected);
@@ -69,12 +72,12 @@ const CategoryStep = ({
 
     if (setProfileData) {
       setProfileData((prev) => ({
-        ...prev,
+     ...prev,
         category: localSelected,
       }));
     }
 
-    onNext();
+    onNext(); 
   };
 
   return (
@@ -111,7 +114,7 @@ const CategoryStep = ({
             <label
               key={cat.id}
               className={`ds-category-row ${
-                localSelected === cat.id ? "selected" : ""
+                localSelected === cat.id? "selected" : ""
               }`}
             >
               <input
@@ -144,7 +147,12 @@ const CategoryStep = ({
         </button>
 
         <div className="ds-footer-right">
-          <button className="ds-btn-back" onClick={onBack}>
+          <button
+            className="ds-btn-back"
+            onClick={onBack}
+            disabled={true}
+            style={{ opacity: 0.3, cursor: 'not-allowed' }}
+          >
             Back
           </button>
 

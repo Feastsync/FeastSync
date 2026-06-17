@@ -8,8 +8,41 @@ const CalendarStep = ({
   onNext,
   onBack,
   onSkip,
+  percentComplete = 100,
+  profileData,
+  setProfileData,
+  isLoading,
+  error
 }) => {
-  const [activeStartDate, setActiveStartDate] = useState(new Date(2028, 6, 1)); 
+  const [activeStartDate, setActiveStartDate] = useState(new Date());
+  
+  const bookedDates = profileData?.availability?.bookedDays || profileData?.bookedDays || [];
+
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const toggleDate = (date) => {
+    const dateStr = formatDate(date);
+    setProfileData((prev) => {
+      const current = prev?.availability?.bookedDays || prev?.bookedDays || [];
+      const updated = current.includes(dateStr)
+        ? current.filter((d) => d !== dateStr)
+        : [...current, dateStr];
+
+      return {
+        ...prev,
+        availability: {
+          ...prev.availability,
+          bookedDays: updated,
+        },
+        bookedDays: updated,
+      };
+    });
+  };
 
   const handlePrevMonth = () => {
     setActiveStartDate((prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
@@ -23,13 +56,27 @@ const CalendarStep = ({
     return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
   };
 
+  const handleContinue = () => {
+    onNext();
+  };
+
   return (
     <div className="cs-overlay">
       <div className="cs-modal">
-        
         <div className="cs-purple-top-section">
           <div className="cs-header">
-            <h2>Availability Calendar</h2>
+            <div>
+              <h2>Availability Calendar</h2>
+              <p>Select dates you're unavailable for customers</p>
+              
+              <div className="cs-progress-bar">
+                <div
+                  className="cs-progress-fill"
+                  style={{ width: `${percentComplete}%` }}
+                />
+              </div>
+            </div>
+            
             <button className="cs-close" onClick={onSkip}>
               <IoClose size={20} />
             </button>
@@ -62,36 +109,45 @@ const CalendarStep = ({
             <Calendar
               activeStartDate={activeStartDate}
               onActiveStartDateChange={({ activeStartDate }) => setActiveStartDate(activeStartDate)}
-              showNavigation={false} 
+              onClickDay={toggleDate}
+              showNavigation={false}
               calendarType="gregory"
               formatShortWeekday={(locale, date) =>
                 date.toLocaleDateString(locale, { weekday: "short" }).toUpperCase()
               }
               tileClassName={({ date }) => {
-                const currentMonth = activeStartDate.getMonth();
+                const dateStr = formatDate(date);
+                const isBooked = bookedDates.includes(dateStr);
                 const tileMonth = date.getMonth();
-                const currentYear = activeStartDate.getFullYear();
-                const tileYear = date.getFullYear();
-
-                if (tileYear > currentYear || (tileYear === currentYear && tileMonth > currentMonth)) {
-                  return "hide-next-neighbor readonly-tile";
-                }
-
-                return "available-date readonly-tile";
+                const currentMonth = activeStartDate.getMonth();
+                
+                if (tileMonth !== currentMonth) return "neighboring-month";
+                return isBooked ? "booked-date" : "available-date";
               }}
             />
           </div>
 
+          {error && <p className="cs-error">{error}</p>}
+
           <div className="cs-footer">
-            <button className="cs-btn-outline" onClick={() => onBack(activeStartDate)}>
-              Back
+            <button className="cs-btn-text" onClick={onSkip}>
+              Skip for Now
             </button>
-            <button className="cs-btn-primary" onClick={() => onNext(activeStartDate)}>
-              Complete profile setup
-            </button>
+
+            <div className="cs-btn-group">
+              <button className="cs-btn-outline" onClick={onBack}>
+                Back
+              </button>
+              <button 
+                className="cs-btn-primary" 
+                onClick={handleContinue}
+                disabled={isLoading}
+              >
+                {isLoading ? "Saving..." : "Complete Setup"}
+              </button>
+            </div>
           </div>
         </div>
-
       </div>
     </div>
   );

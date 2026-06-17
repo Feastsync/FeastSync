@@ -249,6 +249,7 @@ import Epkrating from "./Auth/Vendor/Epkrating.jsx";
 import BookingModal from "./Page/Booking/Booking.jsx";
 import WelcomeModal from "./Auth/Vendor/onBoardingFiles/WelcomeModal.jsx";
 import { useSelector } from "react-redux";
+import CalendarStep from "./Auth/Vendor/onBoardingFiles/CalendarStep.jsx"
 import SuccessModal from "./Auth/Vendor/onBoardingFiles/SuccessModal.jsx";
 
 const OnboardingPage = () => {
@@ -301,8 +302,8 @@ const App = () => {
         <Route path="/epknorating/:vendorId" element={<Epknorating />} />
         <Route path="/epkrating/:id" element={<Epkrating />} />
         <Route path="/505" element={<Error505 />} />
-
         <Route path="/vendordashboard" element={<Vendordashboard />} />
+        <Route path="/vendor/:slug" element={<Vendordashboard />} />
         <Route path="/vendordashboardrating" element={<Vendordashboardrating />} />
         <Route path="/userdashboard" element={<Userdashboard />} />
         <Route path="/bookingrequest" element={<BookingRequest />} />
@@ -314,6 +315,7 @@ const App = () => {
         <Route path="/Settings" element={<Settings />} />
         <Route path="/vendorsetting" element={<VendorSetting />} />
         <Route path="/vendor/kyc" element={<VendorKYC />} />
+        <Route path="Calenderrr" element={<CalendarStep />} />
         <Route path="/welcomemodal" element={<WelcomeModal />} />
         <Route path="/successmodal" element={<SuccessModal />} />
         <Route path="*" element={<Error404 />} />

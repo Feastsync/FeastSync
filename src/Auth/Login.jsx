@@ -10,7 +10,6 @@ import WelcomeModal from "./Vendor/onBoardingFiles/WelcomeModal.jsx";
 import "./Css/Login.css";
 import HeeaderLogo from "../assets/logos/Headerlogo.png";
 import LoginPic from "../assets/BackgroundImage/LoginPic.jpeg";
-import axios from "axios";
 
 const EmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -21,7 +20,7 @@ const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
-  const [accountType, setAccountType] = useState("vendor"); // Default to vendor like Figma
+  const [accountType, setAccountType] = useState("vendor");
   const [showVendorWelcome, setShowVendorWelcome] = useState(false);
   const [vendorName, setVendorName] = useState("");
   const [EmailErrorMsg, setEmailErrorMsg] = useState({
@@ -99,26 +98,23 @@ const Login = () => {
         }),
       ).unwrap();
 
-   
       message.success("Login successful!");
 
       if (result.accountType === "vendor") {
-        const vendorName =
-          result.vendor?.stageName ||
-          result.vendor?.firstName ||
-          result.vendor?.name ||
-          result.stageName ||
-          result.firstName ||
-          result.name ||
-          "Vendor";
-
+        const vendor = result.vendor;
+        const vendorName = vendor?.stageName || vendor?.firstName || "Vendor";
         setVendorName(vendorName.toString());
-        setShowVendorWelcome(true);
+
+     
+        if (!vendor?.isOnboarded) {
+          setShowVendorWelcome(true);
+        } else {
+          navigate("/vendordashboard");
+        }
       } else {
         navigate("/userdashboard");
       }
     } catch (err) {
-    
       const errorMessage =
         typeof err === "string"
           ? err
@@ -194,7 +190,6 @@ const Login = () => {
             )}
           </div>
 
-          {/* THIS MATCHES YOUR FIGMA - CHECKBOXES + FORGOT PASSWORD */}
           <div className="vl-role-row">
             <div className="vl-checkbox-group">
               <label className="vl-checkbox-label">

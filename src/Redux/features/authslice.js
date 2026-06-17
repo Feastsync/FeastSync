@@ -2,13 +2,22 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../app/axios";
 import { persistor } from "../app/store";
 
+const STEP_MAP = {
+  1: 'category',
+  2: 'bank',
+  3: 'media',
+  4: 'pricing',
+  5: 'docs',
+  6: 'calendar',
+  7: 'completed'
+};
+
 export const login = createAsyncThunk(
   "auth/login",
   async ({ email, password, accountType }, { rejectWithValue }) => {
     try {
       const endpoint = accountType === "user"? "/user/login" : "/vendor/login";
       const res = await api.post(endpoint, { email, password });
-     
 
       const responseData = res.data?.data || res.data;
       const token = responseData?.token || res.data?.token;
@@ -19,19 +28,12 @@ export const login = createAsyncThunk(
 
       localStorage.setItem("token", token);
 
-      // const payload = {
-      //  ...responseData,
-      //   token,
-      //   accountType,
-      //   user: responseData?.user || responseData,
-      //   vendor: responseData?.vendor || responseData,
-      // };
       const payload = {
-  token,                                      
-  accountType,
-  user:       responseData?.user   || null,
-  vendor:     responseData?.vendor || responseData || null,
-};
+        token,
+        accountType,
+        user: responseData?.user || null,
+        vendor: responseData?.vendor || responseData || null,
+      };
 
       return payload;
     } catch (err) {
@@ -45,7 +47,6 @@ export const login = createAsyncThunk(
     }
   },
 );
-
 
 export const verifyOTP = createAsyncThunk(
   "auth/verifyOTP",
@@ -89,7 +90,7 @@ export const forgotPassword = createAsyncThunk(
     try {
       const endpoint =
         accountType === "user"
-         ? "/user/forgot-password"
+        ? "/user/forgot-password"
           : "/vendor/forgot-password";
 
       const res = await api.post(endpoint, { email });
@@ -102,19 +103,18 @@ export const forgotPassword = createAsyncThunk(
   },
 );
 
-
 export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
   async ({ email, otp, password, confirmPassword, accountType }, { rejectWithValue }) => {
     try {
       const endpoint =
         accountType === "user"
-          ? "/user/reset-password"
+        ? "/user/reset-password"
           : "/vendor/reset-password";
 
       const body =
         accountType === "vendor"
-          ? { email, password, confirmPassword }
+        ? { email, password, confirmPassword }
           : { email, otp, password, confirmPassword };
 
       const res = await api.post(endpoint, body);
@@ -157,7 +157,7 @@ export const updatePricing = createAsyncThunk(
       return res.data;
     } catch (err) {
       return rejectWithValue(
-        err.response?.data?.message || "Failed to update pricing package",
+        err.response?.data?.message,
       );
     }
   },
@@ -210,25 +210,22 @@ export const uploadKyc = createAsyncThunk(
           'Authorization': `Bearer ${token}`
         }
       });
-      
-      console.log('Full KYC Response:', res.data);
+
       return res.data;
     } catch (err) {
-      console.log('KYC Error:', err.response?.data);
       return rejectWithValue(err.response?.data?.message || "KYC upload failed");
     }
   }
 );
- 
+
 export const createPricing = createAsyncThunk(
   "auth/createPricing",
-  async ({ packagePrice, packageDescription, packageName, pacakageName }, { rejectWithValue }) => {
+  async ({ packagePrice, packageDescription, packageName }, { rejectWithValue }) => {
     try {
       const res = await api.post("/pricing", {
         packagePrice,
         packageDescription,
-        packageName: packageName || pacakageName,
-        pacakageName: pacakageName || packageName,
+        packageName,
       });
       return res.data;
     } catch (err) {
@@ -257,7 +254,7 @@ export const markNotificationRead = createAsyncThunk(
   "auth/markNotificationRead",
   async (notificationId, { rejectWithValue }) => {
     try {
-      const res = await api.put(`/api/notification/read-notificatication/${notificationId}`);
+      const res = await api.put(`/api/notification/read-notification/${notificationId}`);
       return res.data;
     } catch (err) {
       return rejectWithValue(
@@ -298,7 +295,7 @@ export const verifyResetOTP = createAsyncThunk(
   async ({ email, otp, accountType }, { rejectWithValue }) => {
     try {
       const endpoint =
-        accountType === "user" ? "/user/verify-otp" : "/vendor/verify-otp";
+        accountType === "user"? "/user/verify-otp" : "/vendor/verify-otp";
       const res = await api.post(endpoint, { email, otp });
       return res.data;
     } catch (err) {
@@ -308,7 +305,20 @@ export const verifyResetOTP = createAsyncThunk(
     }
   }
 );
- 
+
+export const getCurrentUser = createAsyncThunk(
+  "auth/getCurrentUser",
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const { accountType } = getState().auth;
+      const endpoint = accountType === "user"? "/user/me" : "/vendor/me";
+      const res = await api.get(endpoint);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Failed to fetch user");
+    }
+  }
+);
 
 const authSlice = createSlice({
   name: "auth",
@@ -319,17 +329,13 @@ const authSlice = createSlice({
     accountType: null,
     isLoggedIn:!!localStorage.getItem("token"),
     isLoading: false,
-    loading: false,
     error: null,
-    pricing: [],
     pricingPackages: [],
     notificationsLoading: false,
-    kycUploaded: false,
-    success: false,
     notifications: [],
     unreadCount: 0,
-    viewingVendor: null,
-    viewingVendorLoading: false,
+    currentVendor: null,
+    currentVendorLoading: false,
   },
   reducers: {
     logout: (state) => {
@@ -347,97 +353,13 @@ const authSlice = createSlice({
       state.vendorInfo = {...state.vendorInfo,...action.payload };
     },
   },
-//   extraReducers: (builder) => {
-//     builder
-// .addCase(login.pending, (state) => {
-//         state.isLoading = true;
-//         state.error = null;
-//       })
-// .addCase(login.fulfilled, (state, action) => {
-//         state.isLoading = false;
-//         state.isLoggedIn = true;
-//         state.token = action.payload.token;
-//         state.accountType = action.payload.accountType;
-
-//         if (action.payload.accountType === "user") {
-//           state.userInfo = action.payload.user || action.payload;
-//         } else {
-//           const vendor = action.payload.vendor || action.payload;
-//           state.vendorInfo = {
-//         ...vendor,
-//             profilePicture: vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
-//             coverPhoto: vendor.coverPhoto?.secureUrl || vendor.coverPhoto || null,
-//           };
-//         }
-//       })
-// .addCase(login.rejected, (state, action) => {
-//         state.isLoading = false;
-//         state.error = action.payload;
-//       })
-// .addCase(verifyOTP.pending, (state) => {
-//         state.isLoading = true;
-//         state.error = null;
-//       })
-// .addCase(verifyOTP.fulfilled, (state, action) => {
-//         state.isLoading = false;
-//         state.isLoggedIn = true;
-//         state.token = action.payload.token;
-//         state.accountType = action.payload.accountType;
-//         if (action.payload.accountType === "user") {
-//           state.userInfo = action.payload.user;
-//         } else {
-//           const vendor = action.payload.vendor;
-//           state.vendorInfo = {
-//         ...vendor,
-//             profilePicture: vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
-//             coverPhoto: vendor.coverPhoto?.secureUrl || vendor.coverPhoto || null,
-//           };
-//         }
-//       })
-// .addCase(verifyOTP.rejected, (state, action) => {
-//         state.isLoading = false;
-//         state.error = action.payload;
-//       })
-// .addCase(resendOTP.pending, (state) => {
-//         state.isLoading = true;
-//         state.error = null;
-//       })
-// .addCase(resendOTP.fulfilled, (state) => {
-//         state.isLoading = false;
-//       })
-// .addCase(resendOTP.rejected, (state, action) => {
-//         state.isLoading = false;
-//         state.error = action.payload;
-//       })
-// .addCase(forgotPassword.pending, (state) => {
-//         state.isLoading = true;
-//         state.error = null;
-//       })
-// .addCase(forgotPassword.fulfilled, (state) => {
-//         state.isLoading = false;
-//       })
-// .addCase(forgotPassword.rejected, (state, action) => {
-//         state.isLoading = false;
-//         state.error = action.payload;
-//       })
-// .addCase(resetPassword.pending, (state) => {
-//         state.isLoading = true;
-//         state.error = null;
-//       })
-// .addCase(resetPassword.fulfilled, (state) => {
-//         state.isLoading = false;
-//       })
-// .addCase(resetPassword.rejected, (state, action) => {
-//         state.isLoading = false;
-//         state.error = action.payload;
-//       })
   extraReducers: (builder) => {
     builder
-     .addCase(login.pending, (state) => {
+    .addCase(login.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-     .addCase(login.fulfilled, (state, action) => {
+    .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isLoggedIn = true;
         state.token = action.payload.token;
@@ -446,94 +368,122 @@ const authSlice = createSlice({
         if (action.payload.accountType === "user") {
           state.userInfo = action.payload.user || action.payload;
         } else {
-          state.vendorInfo = action.payload.vendor || action.payload;
+          const vendor = action.payload.vendor || action.payload;
+
+          state.vendorInfo = {
+          ...vendor,
+            _id: vendor.id || vendor._id,
+            id: vendor.id || vendor._id,
+            slug: vendor.slug || null,
+            isOnboarded: vendor.isOnboarded?? false,
+            onboardingStep: vendor.onboardingStep || 1,
+            currentStep: STEP_MAP[vendor.onboardingStep] || 'category',
+            verificationStatus: vendor.verificationStatus || 'pending',
+            profilePicture: vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
+            coverPhoto: vendor.coverPhoto?.secureUrl || vendor.coverPhoto || null,
+          };
         }
       })
-     .addCase(login.rejected, (state, action) => {
+    .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
 
-     .addCase(verifyOTP.pending, (state) => {
+    .addCase(verifyOTP.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-     .addCase(verifyOTP.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isLoggedIn = true;
-        state.token = action.payload.token;
-        state.accountType = action.payload.accountType;
-        if (action.payload.accountType === "user") {
-          state.userInfo = action.payload.user;
-        } else {
-          state.vendorInfo = action.payload.vendor;
-        }
-      })
-     .addCase(verifyOTP.rejected, (state, action) => {
+    // .addCase(verifyOTP.fulfilled, (state, action) => {
+    //     state.isLoading = false;
+    //     state.isLoggedIn = true;
+    //     state.token = action.payload.token;
+    //     state.accountType = action.payload.accountType;
+    //     if (action.payload.accountType === "user") {
+    //       state.userInfo = action.payload.user;
+    //     } else {
+    //       const vendor = action.payload.vendor;
+
+    //       state.vendorInfo = {
+    //       ...vendor,
+    //         _id: vendor.id || vendor._id,
+    //         id: vendor.id || vendor._id,
+    //         slug: vendor.slug || null,
+    //         isOnboarded: vendor.isOnboarded?? false,
+    //         onboardingStep: vendor.onboardingStep || 1,
+    //         currentStep: STEP_MAP[vendor.onboardingStep] || 'category',
+    //         verificationStatus: vendor.verificationStatus || 'pending',
+    //         profilePicture: vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
+    //         coverPhoto: vendor.coverPhoto?.secureUrl || vendor.coverPhoto || null,
+    //       };
+    //     }
+    //   })
+
+       .addCase(verifyOTP.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-     
-       .addCase(verifyResetOTP.pending, (state) => {
-  state.isLoading = true;
-  state.error = null;
-})
-.addCase(verifyResetOTP.fulfilled, (state) => {
-  state.isLoading = false;
-})
-.addCase(verifyResetOTP.rejected, (state, action) => {
-  state.isLoading = false;
-  state.error = action.payload;
-})
-     .addCase(resendOTP.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-     .addCase(resendOTP.fulfilled, (state) => {
-        state.isLoading = false;
-      })
-     .addCase(resendOTP.rejected, (state, action) => {
+    .addCase(verifyOTP.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
 
-     .addCase(forgotPassword.pending, (state) => {
+    .addCase(verifyResetOTP.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-     .addCase(forgotPassword.fulfilled, (state) => {
+    .addCase(verifyResetOTP.fulfilled, (state) => {
         state.isLoading = false;
       })
-     .addCase(forgotPassword.rejected, (state, action) => {
+    .addCase(verifyResetOTP.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+    .addCase(resendOTP.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+    .addCase(resendOTP.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+    .addCase(resendOTP.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
 
-      // DELETED verifyResetPasswordOTP cases
-
-     .addCase(resetPassword.pending, (state) => {
+    .addCase(forgotPassword.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-     .addCase(resetPassword.fulfilled, (state) => {
+    .addCase(forgotPassword.fulfilled, (state) => {
         state.isLoading = false;
       })
-     .addCase(resetPassword.rejected, (state, action) => {
+    .addCase(forgotPassword.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
 
-.addCase(createPricing.pending, (state) => {
+    .addCase(resetPassword.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-.addCase(createPricing.fulfilled, (state, action) => {
+    .addCase(resetPassword.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+    .addCase(resetPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+    .addCase(createPricing.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+    .addCase(createPricing.fulfilled, (state, action) => {
         state.isLoading = false;
         const savedPricing = {
-    ...(action.payload || {}),
-    ...(action.meta?.arg || {}),
+        ...(action.payload || {}),
+        ...(action.meta?.arg || {}),
         };
-        state.pricing = savedPricing;
         if (!Array.isArray(state.pricingPackages)) {
           state.pricingPackages = [];
         }
@@ -543,36 +493,36 @@ const authSlice = createSlice({
         );
         if (existingIndex >= 0) {
           state.pricingPackages[existingIndex] = {
-      ...state.pricingPackages[existingIndex],
-      ...savedPricing,
+          ...state.pricingPackages[existingIndex],
+          ...savedPricing,
           };
         } else {
           state.pricingPackages.push(savedPricing);
         }
       })
-.addCase(createPricing.rejected, (state, action) => {
+    .addCase(createPricing.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-.addCase(getAllPricing.pending, (state) => {
-        state.loading = true;
+    .addCase(getAllPricing.pending, (state) => {
+        state.isLoading = true;
       })
-.addCase(getAllPricing.fulfilled, (state, action) => {
-        state.loading = false;
+    .addCase(getAllPricing.fulfilled, (state, action) => {
+        state.isLoading = false;
         const payload = action.payload?.data || action.payload;
         state.pricingPackages = Array.isArray(payload)
-    ? payload
+        ? payload
           : [payload].filter(Boolean);
       })
-.addCase(getAllPricing.rejected, (state, action) => {
-        state.loading = false; 
+    .addCase(getAllPricing.rejected, (state, action) => {
+        state.isLoading = false;
         state.error = action.payload;
       })
-.addCase(updatePricing.pending, (state) => {
+    .addCase(updatePricing.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-.addCase(updatePricing.fulfilled, (state, action) => {
+    .addCase(updatePricing.fulfilled, (state, action) => {
         state.isLoading = false;
         const updatedPricing = action.payload?.data || action.payload;
         const index = state.pricingPackages.findIndex(
@@ -581,124 +531,159 @@ const authSlice = createSlice({
         if (index!== -1) {
           state.pricingPackages[index] = updatedPricing;
         }
-        state.pricing = updatedPricing;
       })
-.addCase(updatePricing.rejected, (state, action) => {
+    .addCase(updatePricing.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-.addCase(updateVendorProfile.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-.addCase(updateVendorProfile.fulfilled, (state, action) => {
-        state.loading = false;
-        state.success = true;
-        
-        console.log('PROFILE UPDATE RESPONSE:', action.payload);
-        
-        const updatedData = action.payload.data;
-        
-        state.vendorInfo = {
-      ...state.vendorInfo,
-      ...updatedData,
-          profilePicture: updatedData.profilePicture?.secureUrl || state.vendorInfo.profilePicture,
-          coverPhoto: updatedData.coverPhoto?.secureUrl || state.vendorInfo.coverPhoto,
-          isOnboarded: updatedData.isOnboarded?? true
-        };
-      })
-.addCase(updateVendorProfile.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-.addCase(uploadKyc.pending, (state) => {
+    .addCase(updateVendorProfile.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-.addCase(uploadKyc.fulfilled, (state, action) => {
+    .addCase(updateVendorProfile.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.kycUploaded = true;
+
+        const updatedData = action.payload.data || action.payload;
+
         state.vendorInfo = {
-    ...state.vendorInfo,
-          isOnboarded: true,
-          isKycVerified: action.payload.data?.isKycVerified || false,
-          verificationStatus: action.payload.data?.verificationStatus
+        ...state.vendorInfo,
+        ...updatedData,
+          _id: updatedData.id || updatedData._id || state.vendorInfo._id,
+          id: updatedData.id || updatedData._id || state.vendorInfo.id,
+          profilePicture: updatedData.profilePicture?.secureUrl || updatedData.profilePicture || state.vendorInfo.profilePicture,
+          coverPhoto: updatedData.coverPhoto?.secureUrl || updatedData.coverPhoto || state.vendorInfo.coverPhoto,
+          onboardingStep: updatedData.onboardingStep?? state.vendorInfo.onboardingStep,
+          currentStep: STEP_MAP[updatedData.onboardingStep] || state.vendorInfo.currentStep,
+          isOnboarded: updatedData.isOnboarded?? state.vendorInfo.isOnboarded
         };
       })
-.addCase(uploadKyc.rejected, (state, action) => {
+    .addCase(updateVendorProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-.addCase(logoutUser.fulfilled, (state) => {
+    .addCase(uploadKyc.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+    .addCase(uploadKyc.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.vendorInfo = {
+        ...state.vendorInfo,
+          isOnboarded: true,
+          onboardingStep: 7,
+          currentStep: 'completed',
+          isKycVerified: action.payload.data?.isKycVerified || false,
+          verificationStatus: action.payload.data?.verificationStatus || 'pending'
+        };
+      })
+    .addCase(uploadKyc.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        if (state.vendorInfo) {
+          state.vendorInfo.isOnboarded = false;
+          state.vendorInfo.verificationStatus = 'failed';
+          state.vendorInfo.currentStep = 'docs';
+          state.vendorInfo.onboardingStep = 5;
+        }
+      })
+    .addCase(logoutUser.fulfilled, (state) => {
         localStorage.removeItem("token");
         state.userInfo = null;
         state.vendorInfo = null;
         state.token = null;
         state.accountType = null;
         state.isLoggedIn = false;
-        persistor.purge();
       })
-.addCase(logoutUser.rejected, (state) => {
+    .addCase(logoutUser.rejected, (state) => {
         localStorage.removeItem("token");
         state.userInfo = null;
         state.vendorInfo = null;
         state.token = null;
         state.accountType = null;
         state.isLoggedIn = false;
-        persistor.purge();
       })
-.addCase(getNotifications.pending, (state) => {
-    state.notificationsLoading = true; 
-  })
-.addCase(getNotifications.fulfilled, (state, action) => {
-    state.notificationsLoading = false;
-    state.notifications = action.payload.data || [];
-    state.unreadCount = action.payload.count || 0;
-  })
-.addCase(getNotifications.rejected, (state, action) => {
-    state.notificationsLoading = false;
-    state.error = action.payload;
-  })
-.addCase(markNotificationRead.fulfilled, (state, action) => {
+    .addCase(getNotifications.pending, (state) => {
+        state.notificationsLoading = true;
+      })
+    .addCase(getNotifications.fulfilled, (state, action) => {
+        state.notificationsLoading = false;
+        state.notifications = action.payload.data || [];
+        state.unreadCount = action.payload.count || 0;
+      })
+    .addCase(getNotifications.rejected, (state, action) => {
+        state.notificationsLoading = false;
+        state.error = action.payload;
+      })
+    .addCase(markNotificationRead.fulfilled, (state, action) => {
         const id = action.meta.arg;
-        state.notifications = state.notifications.map(n => 
+        state.notifications = state.notifications.map(n =>
           n._id === id? {...n, read: true } : n
         );
         state.unreadCount = Math.max(0, state.unreadCount - 1);
       })
-.addCase(markAllNotificationsRead.fulfilled, (state) => {
+    .addCase(markAllNotificationsRead.fulfilled, (state) => {
         state.unreadCount = 0;
         state.notifications = state.notifications.map(n => ({...n, read: true }));
       })
-.addCase(getVendorById.pending, (state) => {
-    state.viewingVendorLoading = true;
-    state.viewingVendor = null;
-    state.error = null;
-  })
-.addCase(getVendorById.fulfilled, (state, action) => {
-    state.viewingVendorLoading = false;
-    const vendor = action.payload.data || action.payload;
-    
-    if (!vendor ||!vendor._id) {
-      state.error = "Invalid vendor data";
-      return;
-    }
-    
-    state.viewingVendor = {
-    ...vendor,
-      profilePicture: vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
-      coverPhoto: vendor.coverPhoto?.secureUrl || vendor.coverPhoto || null,
-      pricingPackages: vendor.pricingPackages || [],
-    };
-    state.error = null;
-  })
-.addCase(getVendorById.rejected, (state, action) => {
-    state.viewingVendorLoading = false;
-    state.error = action.payload;
-    state.viewingVendor = null;
-  });
+    .addCase(getVendorById.pending, (state) => {
+        state.currentVendorLoading = true;
+        state.currentVendor = null;
+        state.error = null;
+      })
+    .addCase(getVendorById.fulfilled, (state, action) => {
+        state.currentVendorLoading = false;
+        const vendor = action.payload.data || action.payload;
+
+        if (!vendor ||!vendor._id) {
+          state.error = "Invalid vendor data";
+          return;
+        }
+
+        state.currentVendor = {
+        ...vendor,
+          profilePicture: vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
+          coverPhoto: vendor.coverPhoto?.secureUrl || vendor.coverPhoto || null,
+          pricingPackages: vendor.pricingPackages || [],
+        };
+        state.error = null;
+      })
+    .addCase(getVendorById.rejected, (state, action) => {
+        state.currentVendorLoading = false;
+        state.error = action.payload;
+        state.currentVendor = null;
+      })
+    .addCase(getCurrentUser.pending, (state) => {
+        state.isLoading = true;
+      })
+    .addCase(getCurrentUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const data = action.payload?.data || action.payload;
+
+        if (state.accountType === "user") {
+          state.userInfo = data.user || data;
+        } else {
+          const vendor = data.vendor || data;
+          state.vendorInfo = {
+          ...state.vendorInfo,
+          ...vendor,
+            _id: vendor.id || vendor._id,
+            id: vendor.id || vendor._id,
+            slug: vendor.slug || null,
+            isOnboarded: vendor.isOnboarded?? false,
+            onboardingStep: vendor.onboardingStep || 1,
+            currentStep: STEP_MAP[vendor.onboardingStep] || 'category',
+            verificationStatus: vendor.verificationStatus || 'pending',
+            profilePicture: vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
+            coverPhoto: vendor.coverPhoto?.secureUrl || vendor.coverPhoto || null,
+          };
+        }
+      })
+    .addCase(getCurrentUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      });
   },
 });
 
-export const { logout, clearError, updateVendorInfo  } = authSlice.actions;
+export const { logout, clearError, updateVendorInfo } = authSlice.actions;
 export default authSlice.reducer;
