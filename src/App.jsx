@@ -247,10 +247,7 @@ import { ScrollToTop } from "./Components/Highfunction.jsx";
 import Epknorating from "./Auth/Vendor/Epknorating.jsx";
 import Epkrating from "./Auth/Vendor/Epkrating.jsx";
 import BookingModal from "./Page/Booking/Booking.jsx";
-import WelcomeModal from "./Auth/Vendor/onBoardingFiles/WelcomeModal.jsx";
 import { useSelector } from "react-redux";
-import CalendarStep from "./Auth/Vendor/onBoardingFiles/CalendarStep.jsx"
-import SuccessModal from "./Auth/Vendor/onBoardingFiles/SuccessModal.jsx";
 
 const OnboardingPage = () => {
   const { vendorInfo } = useSelector((state) => state.auth);
@@ -315,9 +312,7 @@ const App = () => {
         <Route path="/Settings" element={<Settings />} />
         <Route path="/vendorsetting" element={<VendorSetting />} />
         <Route path="/vendor/kyc" element={<VendorKYC />} />
-        <Route path="Calenderrr" element={<CalendarStep />} />
-        <Route path="/welcomemodal" element={<WelcomeModal />} />
-        <Route path="/successmodal" element={<SuccessModal />} />
+        {/* <Route path="Calenderrr" element={<CalendarStep />} /> */}
         <Route path="*" element={<Error404 />} />
       </Routes>
     </BrowserRouter>

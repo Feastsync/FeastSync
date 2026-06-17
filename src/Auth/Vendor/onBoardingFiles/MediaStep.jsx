@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { FiX, FiUpload } from "react-icons/fi";
+import { FiUpload } from "react-icons/fi";
 import { message } from "antd";
 import "./css/MediaStep.css";
 
 const MediaStep = ({
   onNext,
   onBack,
-  onSkip,
   percentComplete = 60,
   profileData,
   setProfileData,
@@ -19,31 +18,21 @@ const MediaStep = ({
   const photoCatalogue = profileData?.photoCatalogue || [];
 
   const wordCount =
-    workExperience.trim() === ""
-     ? 0
-      : workExperience.trim().split(/\s+/).length;
+    workExperience.trim() === "" ? 0 : workExperience.trim().split(/\s+/).length;
 
   const handleChange = (field, value) => {
-    setProfileData((prev) => ({
-     ...prev,
-      [field]: value,
-    }));
+    setProfileData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleFileChange = (field, files, limit, maxSizeMB) => {
     const selected = Array.from(files).slice(0, limit);
-
     for (let file of selected) {
       if (file.size > maxSizeMB * 1024 * 1024) {
         message.error(`${file.name} exceeds ${maxSizeMB}MB limit`);
         return;
       }
     }
-
-    setProfileData((prev) => ({
-     ...prev,
-      [field]: selected,
-    }));
+    setProfileData((prev) => ({ ...prev, [field]: selected }));
   };
 
   const handleContinue = async () => {
@@ -51,27 +40,22 @@ const MediaStep = ({
       message.warning("Work Experience is required");
       return;
     }
-
     if (wordCount > 500) {
       message.error("Work Experience must not exceed 500 words");
       return;
     }
-
     if (!servicesOffered.trim()) {
       message.warning("Services Offered is required");
       return;
     }
-
     if (!videoCatalogue || videoCatalogue.length === 0) {
       message.warning("Please upload at least one video");
       return;
     }
-
     if (!photoCatalogue || photoCatalogue.length === 0) {
       message.warning("Please upload at least one photo");
       return;
     }
-
     setIsSubmitting(true);
     await onNext();
     setIsSubmitting(false);
@@ -83,54 +67,36 @@ const MediaStep = ({
     setIsSubmitting(false);
   };
 
-  const handleSkip = async () => {
-    setIsSubmitting(true);
-    await onSkip();
-    setIsSubmitting(false);
-  };
-
   return (
     <div className="media-modal">
       <div className="media-header">
         <div className="media-header-top">
           <div>
             <h2>Media Uploads</h2>
-            <p className="media-subtext">
-              Showcase your expertise and previous work
-            </p>
+            <p className="media-subtext">Showcase your expertise and previous work</p>
           </div>
-
-          <button className="media-close" onClick={handleSkip} disabled={isSubmitting}>
-            <FiX size={22} />
-          </button>
         </div>
-
         <div className="media-progress-bar">
-          <div
-            className="media-progress-fill"
-            style={{ width: `${percentComplete}%` }}
-          />
+          <div className="media-progress-fill" style={{ width: `${percentComplete}%` }} />
         </div>
       </div>
 
       <div className="media-body">
         <div className="media-field">
           <label>Work Experience (max. 500 words)</label>
-
           <textarea
             rows={6}
             placeholder="Describe your work experience, expertise, and achievements..."
             value={workExperience}
             onChange={(e) => handleChange("bio", e.target.value)}
           />
-          <span className={`media-word-count ${wordCount > 500? "error" : ""}`}>
+          <span className={`media-word-count ${wordCount > 500 ? "error" : ""}`}>
             {wordCount} / 500 words
           </span>
         </div>
 
         <div className="media-field">
           <label>Services Offered</label>
-
           <textarea
             rows={3}
             placeholder="List services offered"
@@ -139,7 +105,6 @@ const MediaStep = ({
           />
         </div>
 
-        {/* VIDEO UPLOAD */}
         <div className="media-field">
           <label>Upload video catalog (Max of 2)</label>
           <div className="media-upload-box video">
@@ -148,9 +113,7 @@ const MediaStep = ({
               type="file"
               accept="video/*"
               multiple
-              onChange={(e) =>
-                handleFileChange("videoCatalogue", e.target.files, 2, 10)
-              }
+              onChange={(e) => handleFileChange("videoCatalogue", e.target.files, 2, 10)}
             />
             <FiUpload
               className="media-upload-files"
@@ -162,9 +125,7 @@ const MediaStep = ({
             <p className="media-upload-sub">Each video not more than 10MB</p>
             {videoCatalogue.length > 0 && (
               <div className="media-selected-files">
-                <p className="media-file-count">
-                  {videoCatalogue.length} / 2 videos selected
-                </p>
+                <p className="media-file-count">{videoCatalogue.length} / 2 videos selected</p>
                 {videoCatalogue.map((file, index) => (
                   <p key={index}>{file.name}</p>
                 ))}
@@ -173,7 +134,6 @@ const MediaStep = ({
           </div>
         </div>
 
-        
         <div className="media-field">
           <label>Upload photo catalog (Max of 4)</label>
           <div className="media-upload-grid">
@@ -183,9 +143,7 @@ const MediaStep = ({
                 type="file"
                 accept="image/*"
                 multiple
-                onChange={(e) =>
-                  handleFileChange("photoCatalogue", e.target.files, 4, 5)
-                }
+                onChange={(e) => handleFileChange("photoCatalogue", e.target.files, 4, 5)}
               />
               <FiUpload
                 size={22}
@@ -209,16 +167,7 @@ const MediaStep = ({
         </div>
       </div>
 
-   
       <div className="media-footer">
-        <button
-          className="media-btn-skip"
-          onClick={handleSkip}
-          disabled={isSubmitting}
-        >
-          Skip for Now
-        </button>
-
         <div className="media-footer-right">
           <button
             className="media-btn-back"
@@ -228,14 +177,13 @@ const MediaStep = ({
           >
             Back
           </button>
-
           <button
             className="media-btn-continue"
             type="button"
             onClick={handleContinue}
-            disabled={isSubmitting ||!workExperience}
+            disabled={isSubmitting || !workExperience}
           >
-            {isSubmitting? "Saving..." : "Continue"}
+            {isSubmitting ? "Saving..." : "Continue"}
           </button>
         </div>
       </div>
