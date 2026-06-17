@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../Css/Vendordashboard.css";
@@ -88,12 +87,12 @@ useEffect(() => {
     }
   }, [slug, isLoggedIn, navigate]);
 
-  const handleOnboardingClose = () => {
-    setShowOnboarding(false);
-    // if (isOwner) {
-    //   dispatch(getCurrentUser());
-    // }
-  };
+const handleOnboardingClose = () => {
+  setShowOnboarding(false);
+  if (isOwner && vendorInfo?.slug) {
+    dispatch(getVendorById(vendorInfo.slug));
+  }
+};
 
   const toggleExpand = (id) => {
     setExpandedCards((prev) => ({...prev, [id]:!prev[id] }));
@@ -118,10 +117,9 @@ const handleCopyLink = async () => {
   ];
 
   const displayPackages = basePackages.map((base) => {
-    const saved = displayVendor?.pricingPackages?.find(
-      (p) => (p.packageName || p.pacakageName)?.toLowerCase() === base.id
-      
-    );
+   const saved = displayVendor?.pricingId?.find(
+  (p) => p.packageName?.toLowerCase() === base.id
+);
     //  console.log(displayVendor?.pricingPackages)
 
     if (!saved) return base;
@@ -194,12 +192,12 @@ console.log("vendorInfo", vendorInfo)
         <div className="vendordashboard-vendor-bio">
           <h3>Bio / About</h3>
           <h4>
-            About {displayVendor?.stageName || "Vendor"},{" "}
+            About {displayVendor?.stageName},{" "}
             {displayVendor?.stateOfResidence || "Lagos"}
           </h4>
           <p>{displayVendor?.bio || "No bio added yet"}</p>
           <div className="vendordashboard-vendor-link-row">
-            <span>www.feastsync.com/fs/{displayVendor?.slug}</span>
+            <span>{displayVendor?.vendorUrl}</span>
             <button
               className="vendordashboard-vendorcopy-link-btn"
               onClick={handleCopyLink}

@@ -6,27 +6,27 @@ import "./css/VendorCategory.css";
 const categories = [
   {
     id: "dj",
-    name: "DJs",
+    name: "DJ",
     desc: "Professional music mixing for events and parties",
   },
   {
     id: "liveband",
-    name: "Livebands",
+    name: "Liveband",
     desc: "Live musical performances for weddings and events",
   },
   {
     id: "mc",
-    name: "MCs",
+    name: "MC",
     desc: "Master of ceremonies to host and coordinate events",
   },
   {
     id: "photographer",
-    name: "Photographers",
+    name: "Photographer",
     desc: "Capture memorable moments with professional photography",
   },
   {
     id: "videographer",
-    name: "Videographers",
+    name: "Videographer",
     desc: "Record and produce high-quality event videos",
   },
 ];

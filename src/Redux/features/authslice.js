@@ -127,6 +127,29 @@ export const resetPassword = createAsyncThunk(
   },
 );
 
+export const createPricing = createAsyncThunk(
+  "auth/createPricing",
+  async (
+    { packagePrice, packageDescription, packageName },
+    { rejectWithValue }
+  ) => {
+    try {
+      const res = await api.post("/pricing", {
+        packagePrice,
+        packageDescription,
+        packageName,
+      });
+
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message ||
+          "Failed to create pricing package"
+      );
+    }
+  }
+);
+
 export const getAllPricing = createAsyncThunk(
   "pricing/getAllPricing",
   async (_, { rejectWithValue }) => {
@@ -168,6 +191,7 @@ export const updateVendorProfile = createAsyncThunk(
   async ({ id, profileData }, { rejectWithValue }) => {
     try {
       console.log("Sending request to:", `/vendor/update-profile/${id}`);
+console.log("Profile Data:", profileData);
 
       const response = await api.put(
         `/vendor/update-profile/${id}`,
@@ -218,23 +242,7 @@ export const uploadKyc = createAsyncThunk(
   }
 );
 
-export const createPricing = createAsyncThunk(
-  "auth/createPricing",
-  async ({ packagePrice, packageDescription, packageName }, { rejectWithValue }) => {
-    try {
-      const res = await api.post("/pricing", {
-        packagePrice,
-        packageDescription,
-        packageName,
-      });
-      return res.data;
-    } catch (err) {
-      return rejectWithValue(
-        err.response?.data?.message || "Failed to create pricing package"
-      );
-    }
-  }
-);
+
 
 export const getNotifications = createAsyncThunk(
   "auth/getNotifications",
