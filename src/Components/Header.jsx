@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { FaBars, FaTimes } from 'react-icons/fa'
-import { logout } from '../Redux/features/authslice'
 import Headerlogo from '../assets/logos/Headerlogo.png'
 import Bell from '../assets/logos/Bell.png'
 import Button from '../Props/Button.jsx'
@@ -10,12 +9,14 @@ import "./Css/Header.css"
 import "../Auth/Css/Userheader.css"
 import { persistor } from '../Redux/app/store'
 import { logoutUser } from '../Redux/features/authslice'
+import useAuth from '../lib/Myauth.jsx'
+
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const { isLoggedIn, userInfo } = useSelector((state) => state.auth)
+  const { isLoggedIn, activeUser, isVendor } = useAuth()
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : 'unset'
@@ -26,20 +27,23 @@ const Header = () => {
 
   const getInitials = (user) => {
     if (!user) return 'U'
-    const first = user.firstName?.[0] || ''
+    const first = user.firstName?.[0] || user.stageName?.[0] || ''
     const last = user.lastName?.[0] || ''
     return (first + last).toUpperCase()
   }
 
   const handleLogout = async () => {
-  await dispatch(logoutUser())
-  await persistor.purge()
-  navigate('/login')
-  closeMenu()
-}
+    await dispatch(logoutUser())
+    await persistor.purge()
+    navigate('/login')
+    closeMenu()
+  }
 
+  const handleProfileClick = () => {
+    navigate(isVendor ? '/vendordashboard' : '/userdashboard')
+  }
 
-  if (isLoggedIn) {
+  if (isLoggedIn && !isVendor){
     return (
       <nav className="userheader">
         <div className="userheader_wrapper">
@@ -63,18 +67,17 @@ const Header = () => {
             <NavLink to="/contact" className="userheader_nav_link" onClick={closeMenu}>Contact</NavLink>
           </div>
 
-    
           <div className="userheader_right">
             <div className="userheader_notification_wrapper">
               <img src={Bell} alt="Notifications" className="userheader_bell_icon" />
             </div>
-            <div onClick={()=> navigate("/userdashboard")} className="userheader_profile_wrapper">
+            <div onClick={handleProfileClick} className="userheader_profile_wrapper">
               <div className="userheader_avatar_circle">
-                <span>{getInitials(userInfo)}</span>
+                <span>{getInitials(activeUser)}</span>
                 <div className="userheader_status_dot"></div>
               </div>
               <span className="userheader_profile_name">
-                {userInfo?.firstName} {userInfo?.lastName}
+                {activeUser?.stageName || activeUser?.firstName} {activeUser?.lastName}
               </span>
             </div>
             <button className="userheader-logout-btn" onClick={handleLogout}>

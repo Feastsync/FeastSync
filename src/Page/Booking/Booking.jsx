@@ -45,7 +45,7 @@ const BUDGETS = [
 
 const STEP_LABELS = ["Event Details", "Review", "Confirmed"];
 
-/* ── Sub-components ─────────────────────────────────────────── */
+
 
 const StepDots = ({ current }) => (
   <div className="bm-stepper">

@@ -16,55 +16,17 @@ import {
   updateVendorProfile,
   createPricing,
   uploadKyc,
-  updateVendorInfo,
 } from "../../../Redux/features/authslice.js";
 
 const STEP_ORDER = ["category", "bank", "media", "pricing", "docs", "calendar"];
 
-const STEP_MAP = {
-  1: "category",
-  2: "bank",
-  3: "media",
-  4: "pricing",
-  5: "docs",
-  6: "calendar",
-  7: "completed",
-};
-
-const REVERSE_STEP_MAP = {
-  category: 1,
-  bank: 2,
-  media: 3,
-  pricing: 4,
-  docs: 5,
-  calendar: 6,
-  completed: 7,
-};
-
 const VendorOnboarding = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
-  const { vendorInfo, isLoading } = useSelector((s) => s.auth);
+  const { vendorInfo } = useSelector((s) => s.auth);
 
   const vendorId = vendorInfo?.id || vendorInfo?._id || "";
 
-  const onboardingStep = vendorInfo?.isOnboarded
-    ? 7
-    : vendorInfo?.onboardingStep || 1;
-  const currentStep = STEP_MAP[onboardingStep] || "category";
-
-  const completedSteps = {
-    category: onboardingStep > 1,
-    bank: onboardingStep > 2,
-    media: onboardingStep > 3,
-    pricing: onboardingStep > 4,
-    docs: onboardingStep > 5,
-    calendar: onboardingStep > 6,
-  };
-
-  const done = Object.values(completedSteps).filter(Boolean).length;
-  const total = STEP_ORDER.length;
-  const percentComplete = Math.round((done / total) * 100);
-
+  const [currentStep, setCurrentStep] = useState("category");
   const [showBanner, setShowBanner] = useState(true);
   const [showChecklist, setShowChecklist] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -72,9 +34,18 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
   const [submitError, setSubmitError] = useState(null);
   const [isFinalSubmitting, setIsFinalSubmitting] = useState(false);
 
-  // ── Ref to track if final submit is in progress ───────────────────
-  // This prevents the useEffect from firing showSuccess prematurely
-  const isFinalSubmitDone = useRef(false);
+  const completedSteps = {
+    category: false,
+    bank: false,
+    media: false,
+    pricing: false,
+    docs: false,
+    calendar: false,
+  };
+
+  const done = Object.values(completedSteps).filter(Boolean).length;
+  const total = STEP_ORDER.length;
+  const percentComplete = Math.round((done / total) * 100);
 
   const [vendorProfile, setVendorProfile] = useState({
     id: vendorId,
@@ -99,62 +70,32 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
     bookedDays: [],
   });
 
-  // ── Sync vendorId into local profile state ────────────────────────
   useEffect(() => {
     if (vendorId && !vendorProfile.id) {
       setVendorProfile((prev) => ({ ...prev, id: vendorId }));
     }
   }, [vendorId, vendorProfile.id]);
 
-  // ── Only show success after final submit fully completes ──────────
-  useEffect(() => {
-    if (
-      isFinalSubmitDone.current &&
-      (vendorInfo?.isOnboarded === true || vendorInfo?.onboardingStep === 7)
-    ) {
-      setShowSuccess(true);
-    }
-  }, [vendorInfo?.isOnboarded, vendorInfo?.onboardingStep]);
-
   if (!isOpen && !showSuccess) return null;
 
-  // ── Go back without hitting the API ──────────────────────────────
-  const goToStep = (stepName) => {
-    dispatch(
-      updateVendorInfo({
-        onboardingStep: REVERSE_STEP_MAP[stepName],
-        currentStep: stepName,
-      })
-    );
-  };
-
-  // ── Advance step and save progress to backend ─────────────────────
-  const completeStep = async (stepName) => {
-    // Don't allow step changes while final submit is running
-    if (isFinalSubmitting) return;
-
+  const goToNext = (stepName) => {
     const nextIndex = STEP_ORDER.indexOf(stepName) + 1;
-    const nextStepName =
-      nextIndex < STEP_ORDER.length ? STEP_ORDER[nextIndex] : "completed";
-    const nextStepNumber = REVERSE_STEP_MAP[nextStepName];
-
-    try {
-      const formData = new FormData();
-      formData.append("onboardingStep", String(nextStepNumber));
-      await dispatch(
-        updateVendorProfile({ id: vendorId, profileData: formData })
-      ).unwrap();
-    } catch (e) {
-      console.log("Failed to save step", e);
+    if (nextIndex < STEP_ORDER.length) {
+      setCurrentStep(STEP_ORDER[nextIndex]);
     }
   };
 
-  // ── Final submit on calendar step ─────────────────────────────────
+  const goToPrev = (stepName) => {
+    const prevIndex = STEP_ORDER.indexOf(stepName) - 1;
+    if (prevIndex >= 0) {
+      setCurrentStep(STEP_ORDER[prevIndex]);
+    }
+  };
+
   const handleFinalSubmit = async () => {
     if (isFinalSubmitting) return;
     setSubmitError(null);
     setIsFinalSubmitting(true);
-    isFinalSubmitDone.current = false;
 
     try {
       const id = vendorProfile.id || vendorId;
@@ -169,10 +110,7 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
       profileFormData.append("isOnboarded", "true");
       profileFormData.append("onboardingStep", "7");
       profileFormData.append("isProfileCompleted", "true");
-      profileFormData.append(
-        "bookedDays",
-        JSON.stringify(vendorProfile.bookedDays)
-      );
+      profileFormData.append("bookedDays", JSON.stringify(vendorProfile.bookedDays));
 
       if (vendorProfile.profilePicture) {
         profileFormData.append("profilePicture", vendorProfile.profilePicture);
@@ -194,8 +132,7 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
         updateVendorProfile({ id, profileData: profileFormData })
       ).unwrap();
 
-      const { startingPrice, packageName, packageDescription } =
-        vendorProfile.pricing;
+      const { startingPrice, packageName, packageDescription } = vendorProfile.pricing;
       if (startingPrice && packageName) {
         await dispatch(
           createPricing({
@@ -207,7 +144,6 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
         ).unwrap();
       }
 
-
       if (vendorProfile.document) {
         try {
           const kycForm = new FormData();
@@ -217,38 +153,33 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
           console.log("KYC failed but continuing:", kycErr);
         }
       }
-      isFinalSubmitDone.current = true;
-      setShowSuccess(true);
 
-} catch (err) {
-  console.log("FULL ERROR:", JSON.stringify(err, null, 2));
-  console.log("ERROR MESSAGE:", err?.message);
-  console.log("ERROR PAYLOAD:", err?.payload || err?.data || err);
-  setSubmitError(
-    typeof err === "string" ? err : "Something went wrong. Please try again."
-  );
-} finally {
-  setIsFinalSubmitting(false);
-}
+      setShowSuccess(true);
+    } catch (err) {
+      console.log("FULL ERROR:", JSON.stringify(err, null, 2));
+      setSubmitError(
+        typeof err === "string" ? err : "Something went wrong. Please try again."
+      );
+    } finally {
+      setIsFinalSubmitting(false);
+    }
   };
 
- 
-if (showSuccess) {
-  return (
-    <div className="vo-overlay">
-      <div className="vo-modal-container">
-        <SuccessModal
-          onClose={() => {
-            setShowSuccess(false);
-            onClose();
-          }}
-          selectedCategory={selectedCategory || vendorInfo?.category}
-        />
+  if (showSuccess) {
+    return (
+      <div className="vo-overlay">
+        <div className="vo-modal-container">
+          <SuccessModal
+            onClose={() => {
+              setShowSuccess(false);
+              onClose();
+            }}
+            selectedCategory={selectedCategory || vendorInfo?.category}
+          />
+        </div>
       </div>
-    </div>
-  );
-}
-
+    );
+  }
 
   if (showBanner && !vendorInfo?.isOnboarded) {
     if (showChecklist) {
@@ -279,13 +210,11 @@ if (showSuccess) {
     );
   }
 
-
   const steps = {
     category: (
       <CategoryStep
-        onNext={() => completeStep("category")}
+        onNext={() => goToNext("category")}
         onBack={() => {}}
-        onSkip={() => completeStep("category")}
         percentComplete={percentComplete}
         selectedCategory={selectedCategory}
         setSelectedCategory={(value) => {
@@ -298,9 +227,8 @@ if (showSuccess) {
 
     bank: (
       <BankStep
-        onNext={() => completeStep("bank")}
-        onBack={() => goToStep("category")}
-        onSkip={() => completeStep("bank")}
+        onNext={() => goToNext("bank")}
+        onBack={() => goToPrev("bank")}
         percentComplete={percentComplete}
         profileData={vendorProfile}
         setProfileData={setVendorProfile}
@@ -309,9 +237,8 @@ if (showSuccess) {
 
     media: (
       <MediaStep
-        onNext={() => completeStep("media")}
-        onBack={() => goToStep("bank")}
-        onSkip={() => completeStep("media")}
+        onNext={() => goToNext("media")}
+        onBack={() => goToPrev("media")}
         percentComplete={percentComplete}
         profileData={vendorProfile}
         setProfileData={setVendorProfile}
@@ -320,9 +247,16 @@ if (showSuccess) {
 
     pricing: (
       <PricingStep
-        onNext={() => completeStep("pricing")}
-        onBack={() => goToStep("media")}
-        onSkip={() => completeStep("pricing")}
+        onNext={(pricingOverride) => {
+          if (pricingOverride?.sanitizedPrice) {
+            setVendorProfile((prev) => ({
+              ...prev,
+              pricing: { ...prev.pricing, startingPrice: pricingOverride.sanitizedPrice },
+            }));
+          }
+          goToNext("pricing");
+        }}
+        onBack={() => goToPrev("pricing")}
         percentComplete={percentComplete}
         profileData={vendorProfile}
         setProfileData={setVendorProfile}
@@ -331,9 +265,8 @@ if (showSuccess) {
 
     docs: (
       <DocumentStep
-        onNext={() => completeStep("docs")}
-        onBack={() => goToStep("pricing")}
-        onSkip={() => completeStep("docs")}
+        onNext={() => goToNext("docs")}
+        onBack={() => goToPrev("docs")}
         percentComplete={percentComplete}
         profileData={vendorProfile}
         setProfileData={setVendorProfile}
@@ -343,8 +276,7 @@ if (showSuccess) {
     calendar: (
       <CalendarStep
         onNext={handleFinalSubmit}
-        onBack={() => goToStep("docs")}
-        onSkip={onClose}
+        onBack={() => goToPrev("calendar")}
         percentComplete={percentComplete}
         profileData={vendorProfile}
         setProfileData={setVendorProfile}

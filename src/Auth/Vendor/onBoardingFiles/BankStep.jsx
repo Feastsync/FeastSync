@@ -1,74 +1,32 @@
 import React from "react";
-import { FiX, FiChevronDown } from "react-icons/fi";
+import { FiChevronDown } from "react-icons/fi";
 import "./css/BankStep.css";
 
 const nigerianBanks = [
-  "AB Microfinance Bank",
-  "Access Bank",
-  "Accion MFB",
-  "Addosser Microfinance Bank",
-  "ALAT by Wema",
-  "Carbon",
-  "Citibank Nigeria",
-  "Ecobank Nigeria",
-  "Eyowo",
-  "FairMoney MFB",
-  "FCMB",
-  "Fidelity Bank",
-  "First Bank of Nigeria",
-  "Fina Trust MFB",
-  "Globus Bank",
-  "GoMoney",
-  "GTBank",
-  "Heritage Bank",
-  "Jaiz Bank",
-  "Keystone Bank",
-  "Kuda Bank",
-  "LAPO Microfinance Bank",
-  "Lotus Bank",
-  "Mintyn Bank",
-  "Mkobo MFB",
-  "Moniepoint MFB",
-  "OPay",
-  "Optimus Bank",
-  "PalmPay",
-  "Parallex Bank",
-  "Polaris Bank",
-  "Premium Trust Bank",
-  "Providus Bank",
-  "Rubies MFB",
-  "Sparkle",
-  "Stanbic IBTC Bank",
-  "Standard Chartered Bank",
-  "Sterling Bank",
-  "SunTrust Bank",
-  "TAJ Bank",
-  "Titan Trust Bank",
-  "UBA",
-  "Union Bank",
-  "Unity Bank",
-  "VFD Microfinance Bank",
-  "Wema Bank",
-  "Zenith Bank",
+  "AB Microfinance Bank", "Access Bank", "Accion MFB", "Addosser Microfinance Bank",
+  "ALAT by Wema", "Carbon", "Citibank Nigeria", "Ecobank Nigeria", "Eyowo",
+  "FairMoney MFB", "FCMB", "Fidelity Bank", "First Bank of Nigeria", "Fina Trust MFB",
+  "Globus Bank", "GoMoney", "GTBank", "Heritage Bank", "Jaiz Bank", "Keystone Bank",
+  "Kuda Bank", "LAPO Microfinance Bank", "Lotus Bank", "Mintyn Bank", "Mkobo MFB",
+  "Moniepoint MFB", "OPay", "Optimus Bank", "PalmPay", "Parallex Bank", "Polaris Bank",
+  "Premium Trust Bank", "Providus Bank", "Rubies MFB", "Sparkle", "Stanbic IBTC Bank",
+  "Standard Chartered Bank", "Sterling Bank", "SunTrust Bank", "TAJ Bank",
+  "Titan Trust Bank", "UBA", "Union Bank", "Unity Bank", "VFD Microfinance Bank",
+  "Wema Bank", "Zenith Bank",
 ].sort();
 
 const BankStep = ({
   onNext,
   onBack,
-  onSkip,
   percentComplete = 40,
   profileData,
   setProfileData,
 }) => {
   const safeProfile = profileData || {};
-
   const accountNumberRegex = /^[0-9]{10}$/;
 
   const updateField = (field, value) => {
-    setProfileData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+    setProfileData((prev) => ({ ...prev, [field]: value }));
   };
 
   const isFormValid =
@@ -78,15 +36,12 @@ const BankStep = ({
 
   const handleContinue = () => {
     if (!isFormValid) return;
-
-    // Ensure clean state before moving forward
     setProfileData((prev) => ({
       ...prev,
       stateOfResidence: prev.stateOfResidence || "",
       bankName: prev.bankName || "",
       accountNumber: prev.accountNumber || "",
     }));
-
     onNext();
   };
 
@@ -95,28 +50,16 @@ const BankStep = ({
       <div className="bank-modal-header">
         <div className="bank-header-top">
           <h2>Bank Information</h2>
-
-          <button className="bank-close" onClick={onSkip}>
-            <FiX size={24} />
-          </button>
         </div>
-
-        <p className="bank-subtext">
-          Add your bank details for secure payouts
-        </p>
-
+        <p className="bank-subtext">Add your bank details for secure payouts</p>
         <div className="bank-progress-bar">
-          <div
-            className="bank-progress-fill"
-            style={{ width: `${percentComplete}%` }}
-          />
+          <div className="bank-progress-fill" style={{ width: `${percentComplete}%` }} />
         </div>
       </div>
 
       <div className="bank-modal-body">
         <div className="bank-warning">
           <div className="bank-warning-bar"></div>
-
           <p>
             Ensure your account name matches your ID. Payouts follow the 70/30
             escrow system.
@@ -132,70 +75,52 @@ const BankStep = ({
               type="text"
               placeholder="Enter your state of residence"
               value={safeProfile.stateOfResidence || ""}
-              onChange={(e) =>
-                updateField("stateOfResidence", e.target.value)
-              }
+              onChange={(e) => updateField("stateOfResidence", e.target.value)}
             />
           </div>
 
           <div className="bank-field">
             <label>Select Bank</label>
-
             <div className="bank-select-wrapper">
               <select
                 value={safeProfile.bankName || ""}
                 onChange={(e) => updateField("bankName", e.target.value)}
               >
                 <option value="">Select your bank</option>
-
                 {nigerianBanks.map((bank) => (
-                  <option key={bank} value={bank}>
-                    {bank}
-                  </option>
+                  <option key={bank} value={bank}>{bank}</option>
                 ))}
               </select>
-
               <FiChevronDown className="bank-select-icon" />
             </div>
           </div>
 
           <div className="bank-field">
             <label>Account Number</label>
-
             <input
               type="text"
               placeholder="Enter your 10-digit account number"
               value={safeProfile.accountNumber || ""}
               onChange={(e) => {
                 const value = e.target.value.replace(/\D/g, "");
-
-                if (value.length <= 10) {
-                  updateField("accountNumber", value);
-                }
+                if (value.length <= 10) updateField("accountNumber", value);
               }}
               maxLength={10}
             />
-
-            {safeProfile.accountNumber &&
-              safeProfile.accountNumber.length !== 10 && (
-                <small style={{ color: "red", marginTop: "5px", display: "block" }}>
-                  Account number must be exactly 10 digits
-                </small>
-              )}
+            {safeProfile.accountNumber && safeProfile.accountNumber.length !== 10 && (
+              <small style={{ color: "red", marginTop: "5px", display: "block" }}>
+                Account number must be exactly 10 digits
+              </small>
+            )}
           </div>
         </div>
       </div>
 
       <div className="bank-modal-footer">
-        <button className="bank-btn-text" onClick={onSkip}>
-          Skip for Now
-        </button>
-
         <div className="bank-footer-actions">
           <button className="bank-btn-secondary" onClick={onBack}>
             Back
           </button>
-
           <button
             type="button"
             className="bank-btn-primary"
