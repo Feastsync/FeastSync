@@ -247,6 +247,7 @@ import { ScrollToTop } from "./Components/Highfunction.jsx";
 import Epknorating from "./Auth/Vendor/Epknorating.jsx";
 import Epkrating from "./Auth/Vendor/Epkrating.jsx";
 import BookingModal from "./Page/Booking/Booking.jsx";
+import PricingStep from "./Auth/Vendor/onBoardingFiles/PricingStep.jsx";
 import { useSelector } from "react-redux";
 
 const OnboardingPage = () => {
@@ -312,6 +313,7 @@ const App = () => {
         <Route path="/Settings" element={<Settings />} />
         <Route path="/vendorsetting" element={<VendorSetting />} />
         <Route path="/vendor/kyc" element={<VendorKYC />} />
+        <Route path="/pricingstep" element={<PricingStep />} />
         {/* <Route path="Calenderrr" element={<CalendarStep />} /> */}
         <Route path="*" element={<Error404 />} />
       </Routes>

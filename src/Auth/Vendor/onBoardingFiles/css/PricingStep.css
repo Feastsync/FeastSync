@@ -213,6 +213,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 30px;
   flex-shrink: 0;
 }
 
@@ -230,6 +231,23 @@
 .ps-btn-skip:hover {
   text-decoration: underline;
 }
+.ps-footer-left{
+  display: flex;
+}
+
+.ps-btn-save{
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  background: #330159;
+  color: #ffffff;
+  cursor: pointer;
+}
+.ps-btn-save:hover {
+  background: #4a0180;
+}
 
 .ps-footer-right {
   display: flex;
@@ -241,8 +259,7 @@
   color: #1A1A1A;
   border: 1.5px solid #D1D1D1;
   border-radius: 10px;
-  padding: 12px 28px;
-  font-family: 'Inter', sans-serif;
+  padding: 12px 20px;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
@@ -258,7 +275,7 @@
   color: #ffffff;
   border: none;
   border-radius: 10px;
-  padding: 12px 28px;
+  padding: 12px 20px;
   font-family: 'Inter', sans-serif;
   font-size: 15px;
   font-weight: 600;

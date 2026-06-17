@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { FiChevronDown } from "react-icons/fi";
-import { getAllPricing } from "../../../Redux/features/authslice";
+import { message, notification } from "antd";
+import { createPricing, getAllPricing} from "../../../Redux/features/authslice";
 import { useDispatch, useSelector } from "react-redux";
-import { message } from "antd";
 import "./css/PricingStep.css";
 
 const PricingStep = ({
@@ -26,40 +26,113 @@ const PricingStep = ({
     dispatch(getAllPricing());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (pricingPackages?.length > 0) {
-      const existing = pricingPackages[0];
-      setProfileData((prev) => ({
-        ...prev,
-        pricing: {
-          startingPrice: existing.packagePrice?.toString() || "",
-          packageName: existing.packageName || "",
-          packageDescription: existing.packageDescription || "",
-        },
-      }));
-    }
-  }, [pricingPackages]);
+  // useEffect(() => {
+  //   if (pricingPackages?.length > 0) {
+  //     const existing = pricingPackages[0];
+  //     setProfileData((prev) => ({
+  //       ...prev,
+  //       pricing: {
+  //         startingPrice: existing.packagePrice?.toString() || "",
+  //         packageName: existing.packageName || "",
+  //         packageDescription: existing.packageDescription || "",
+  //       },
+  //     }));
+  //   }
+  // }, [pricingPackages]);
 
   const handleChange = (field, value) => {
-    setProfileData((prev) => ({
-      ...prev,
-      pricing: { ...prev.pricing, [field]: value },
-    }));
-  };
+  setProfileData((prev) => ({
+    ...prev,
+    pricing: {
+      ...prev.pricing,
+      [field]: value,
+    },
+  }));
+};
 
-  const handleContinue = async () => {
-    if (!startingPrice || !packageName || !packageDescription) {
-      return message.warning("Please fill in all fields before continuing.");
-    }
-    setIsSubmitting(true);
-    const sanitizedPrice = startingPrice.replace(/,/g, "").trim();
+
+  const handleSave = async () => {
+  const {
+    startingPrice,
+    packageName,
+    packageDescription,
+  } = profileData?.pricing || {};
+
+  if (!startingPrice || !packageName || !packageDescription) {
+    return message.warning(
+      "Please fill in all fields before saving."
+    );
+  }
+
+  const alreadyExists = pricingPackages?.some(
+    (pkg) =>
+      (pkg.packageName || pkg.pacakageName)?.toLowerCase() ===
+      packageName.toLowerCase()
+  );
+
+  if (alreadyExists) {
+    return notification.warning({
+      message: "Package Already Added",
+      description: `${packageName} package has already been added. Please select another package.`,
+      placement: "topRight",
+    });
+  }
+
+  try {
+    await dispatch(
+    createPricing({
+      packagePrice: startingPrice,
+      packageDescription,
+      packageName,
+    })
+    ).unwrap();
+
+    await dispatch(getAllPricing());
+
+    notification.success({
+      message: "Package Saved Successfully",
+      description:
+        packageName === "basic"
+          ? "Basic Package has been saved successfully. Please select Standard Package next."
+          : packageName === "standard"
+          ? "Standard Package has been saved successfully. Please select Premium Package next."
+          : "Premium Package has been saved successfully. You can now continue to the next step.",
+      placement: "topRight",
+      duration: 5,
+    });
+
     setProfileData((prev) => ({
       ...prev,
-      pricing: { ...prev.pricing, startingPrice: sanitizedPrice },
+      pricing: {
+        startingPrice: "",
+        packageName: "",
+        packageDescription: "",
+      },
     }));
-    setIsSubmitting(false);
-    onNext({ sanitizedPrice });
-  };
+  } catch (error) {
+    notification.error({
+      message: "Save Failed",
+      description:
+        error || "Unable to save package. Please try again.",
+      placement: "topRight",
+    });
+  }
+};
+
+const handleContinue = () => {
+  if (!pricingPackages?.length) {
+    return message.warning(
+      "Please save at least one package before continuing."
+    );
+  }
+
+  setProfileData((prev) => ({
+    ...prev,
+    pricingPackages,
+  }));
+
+  onNext();
+};
 
   return (
     <div className="ps-modal">
@@ -117,14 +190,21 @@ const PricingStep = ({
       </div>
 
       <div className="ps-footer">
+        <div className="ps-footer-left">
+          <button className="ps-btn-save"
+          onClick={handleSave}
+          >
+            Save
+          </button>
+        </div>
         <div className="ps-footer-right">
           <button className="ps-btn-back" onClick={onBack}>
             Back
           </button>
           <button
-            className="ps-btn-continue"
-            onClick={handleContinue}
-            disabled={isSubmitting}
+          className="ps-btn-continue"
+          onClick={handleContinue}
+          disabled={isSubmitting}
           >
             {isSubmitting ? "Saving..." : "Continue"}
           </button>
