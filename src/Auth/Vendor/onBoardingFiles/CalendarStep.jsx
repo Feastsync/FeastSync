@@ -67,7 +67,7 @@ const CalendarStep = ({
           <div className="cs-header">
             <div>
               <h2>Availability Calendar</h2>
-              <p>Select dates you're unavailable for customers</p>
+              {/* <p>Select dates you're unavailable for customers</p> */}
               
               <div className="cs-progress-bar">
                 <div
@@ -130,9 +130,9 @@ const CalendarStep = ({
           {error && <p className="cs-error">{error}</p>}
 
           <div className="cs-footer">
-            <button className="cs-btn-text" onClick={onSkip}>
+            {/* <button className="cs-btn-text" onClick={onSkip}>
               Skip for Now
-            </button>
+            </button> */}
 
             <div className="cs-btn-group">
               <button className="cs-btn-outline" onClick={onBack}>
