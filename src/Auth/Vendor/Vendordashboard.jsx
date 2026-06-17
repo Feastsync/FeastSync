@@ -269,12 +269,13 @@ console.log("vendorInfo", vendorInfo)
                 <div className="vendordashboard-card-footer">
                  
                   {isOwner? (
-                    <button
-                      className="vendordashboard-edit-btn"
-                      onClick={() => navigate("/vendor/packages")}
-                    >
-                      Edit Package
-                    </button>
+                    // <button
+                    //   className="vendordashboard-edit-btn"
+                    //   onClick={() => navigate("/vendor/packages")}
+                    // >
+                    //   Edit Package
+                    // </button>
+                    null
                   ) : (
                     <button
                       className="vendordashboard-book-now-btn"
