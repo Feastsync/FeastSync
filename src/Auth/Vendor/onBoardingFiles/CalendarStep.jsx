@@ -57,7 +57,7 @@ const CalendarStep = ({
           <div className="cs-header">
             <div>
               <h2>Availability Calendar</h2>
-              <p>Select dates you're unavailable for customers</p>
+              <p>View all available days</p>
               <div className="cs-progress-bar">
                 <div className="cs-progress-fill" style={{ width: `${percentComplete}%` }} />
               </div>
