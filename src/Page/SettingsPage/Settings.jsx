@@ -162,7 +162,7 @@ const handleLogout = async () => {
 
         <div className="settings_row">
           <div className="settings_row_left">
-            <span className="settings_label">Location</span>
+            <span className="settings_label">State of Resisdence</span>
           </div>
           <div className="settings_row_right">
             <span className="settings_value">{location}</span>

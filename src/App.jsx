@@ -237,6 +237,7 @@ import WalletLedger from "./Page/Wallet/WalletLedger.jsx";
 import VendorWallet from "./Page/Wallet/VendorWallet.jsx";
 import AllNotifications from "./Page/NotitficationsPages/AllNotifications.jsx";
 import Chat from "./Page/chatPage/Chat.jsx";
+import MediaStep from "./Auth/Vendor/onBoardingFiles/MediaStep.jsx";
 import Error505 from "./Auth/Vendor/Error505.jsx";
 import Error404 from "./Auth/Vendor/Error404.jsx";
 import BookingRequest from "./Page/BookingRequest.jsx";
@@ -247,6 +248,7 @@ import { ScrollToTop } from "./Components/Highfunction.jsx";
 import Epknorating from "./Auth/Vendor/Epknorating.jsx";
 import Epkrating from "./Auth/Vendor/Epkrating.jsx";
 import BookingModal from "./Page/Booking/Booking.jsx";
+import Vendormediagallery from "./Auth/Vendor/Vendormediagallery.jsx";
 import PricingStep from "./Auth/Vendor/onBoardingFiles/PricingStep.jsx";
 import { useSelector } from "react-redux";
 
@@ -310,8 +312,10 @@ const App = () => {
         <Route path="/transaction/histories" element={<WalletLedger />} />
         <Route path="/notifications/:category?" element={<AllNotifications />} />
         <Route path="/chats" element={<Chat />} />
+        <Route path="/mediastep" element={<MediaStep />} />
         <Route path="/Settings" element={<Settings />} />
         <Route path="/vendorsetting" element={<VendorSetting />} />
+        <Route path="vendormediagallery" element={<Vendormediagallery />} />
         <Route path="/vendor/kyc" element={<VendorKYC />} />
         <Route path="/pricingstep" element={<PricingStep />} />
         {/* <Route path="Calenderrr" element={<CalendarStep />} /> */}
