@@ -70,7 +70,7 @@ const AllVendors = () => {
     if (next >= 1 && next <= totalPages) setCurrentPage(next);
   };
 
-  /* ── error state ── */
+ 
   if (error && !loading) {
     return (
       <div className="vendor-state-wrap">
@@ -86,7 +86,7 @@ const AllVendors = () => {
     );
   }
 
-  /* ── empty state ── */
+
   if (!loading && vendors.length === 0) {
     return (
       <div className="vendor-state-wrap">
@@ -115,6 +115,7 @@ const AllVendors = () => {
                   rating={vendor.rating}
                   price={vendor.price}
                   image={vendor.image}
+                  slug={vendor.slug}
                 />
               </div>
             ))}

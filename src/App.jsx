@@ -239,9 +239,9 @@ import AllNotifications from "./Page/NotitficationsPages/AllNotifications.jsx";
 import Chat from "./Page/chatPage/Chat.jsx";
 import Error505 from "./Auth/Vendor/Error505.jsx";
 import Error404 from "./Auth/Vendor/Error404.jsx";
-import BookingRequest from "./Page/BookingRequest.jsx";
+// import BookingRequest from "./Page/BookingRequest.jsx";
 import RatingReview from "./Page/RatingReview.jsx";
-import VendorSetting from "./Auth/Vendor/VendorSetting.jsx";
+// import VendorSetting from "./Auth/Vendor/VendorSetting.jsx";
 import Settings from "./Page/SettingsPage/Settings.jsx";
 import { ScrollToTop } from "./Components/Highfunction.jsx";
 import Epknorating from "./Auth/Vendor/Epknorating.jsx";
@@ -249,7 +249,13 @@ import Epkrating from "./Auth/Vendor/Epkrating.jsx";
 import BookingModal from "./Page/Booking/Booking.jsx";
 import PricingStep from "./Auth/Vendor/onBoardingFiles/PricingStep.jsx";
 import { useSelector } from "react-redux";
-
+import { Navigate } from "react-router-dom";
+import BookingRequest from "./Page/Booking/BookingRequest.jsx";
+// import AllNotifications from "./Page/NotitficationsPages/AllNotifications.jsx";
+import BookingNotifications from "./Page/NotitficationsPages/BookingNotifications.jsx";
+import PaymentNotifications from "./Page/NotitficationsPages/PaymentNotifications.jsx"
+import ReviewsNotification from "./Page/NotitficationsPages/ReviewsNotifications.jsx"
+import NotificationsWrapper from "./Page/NotitficationsPages/NotificationsWrapper.jsx";
 const OnboardingPage = () => {
   const { vendorInfo } = useSelector((state) => state.auth);
   const vendorName = vendorInfo?.stageName || vendorInfo?.firstName || "";
@@ -308,12 +314,25 @@ const App = () => {
         <Route path="/ratingreview" element={<RatingReview />} />
         <Route path="/wallet/transactions" element={<VendorWallet />} />
         <Route path="/transaction/histories" element={<WalletLedger />} />
-        <Route path="/notifications/:category?" element={<AllNotifications />} />
+        {/* <Route path="/notifications/:category?" element={<AllNotifications />} /> */}
+
+
+
+       
+<Route path="/request/:requestId" element={<BookingRequest />} />
+<Route path="/notifications" element={<NotificationsWrapper />}>
+  <Route path="all" element={<AllNotifications />} />
+  <Route path="booking" element={<BookingNotifications />} />
+  <Route path="payment" element={<PaymentNotifications />} />
+  <Route path="reviews" element={<ReviewsNotification />} />
+  <Route index element={<Navigate to="all" replace />} />
+</Route> 
         <Route path="/chats" element={<Chat />} />
         <Route path="/Settings" element={<Settings />} />
-        <Route path="/vendorsetting" element={<VendorSetting />} />
+        {/* <Route path="/vendorsetting" element={<VendorSetting />} /> */}
         <Route path="/vendor/kyc" element={<VendorKYC />} />
         <Route path="/pricingstep" element={<PricingStep />} />
+         <Route path="/requestId/:requestId" element={<BookingRequest />} />
         {/* <Route path="Calenderrr" element={<CalendarStep />} /> */}
         <Route path="*" element={<Error404 />} />
       </Routes>

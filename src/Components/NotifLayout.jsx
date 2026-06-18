@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { markAllNotificationsRead, markNotificationRead } from "../Redux/features/authslice";
 import "../Page/NewCss1/NotifLayout.css";
 import dayjs from "dayjs";
@@ -18,6 +18,7 @@ export default function NotifLayout({ notifications, currentPage, totalPages, on
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const { actionLoading } = useSelector((state) => state.auth);
 
   const newCount = notifications.filter((n) =>!n.read).length;
 
@@ -25,11 +26,21 @@ export default function NotifLayout({ notifications, currentPage, totalPages, on
     dispatch(markAllNotificationsRead());
   };
 
-  const handleNotifClick = (notif) => {
-    if (!notif.read) {
-      dispatch(markNotificationRead(notif._id));
-    }
-  };
+const handleNotifClick = (notif) => {
+  console.log('Clicked notif:', notif);
+  
+  if (!notif.isRead) {
+    dispatch(markNotificationRead(notif._id));
+  }
+  const id = notif.requestId || notif.booking?.id || notif.bookingId;
+  
+  if (id) {
+    navigate(`/request/${id}`); 
+  } else {
+    console.error('No booking ID found:', notif);
+  }
+};
+
 
   return (
     <div className="notif-page">
@@ -53,7 +64,7 @@ export default function NotifLayout({ notifications, currentPage, totalPages, on
             </p>
           </div>
         </div>
-        <button 
+        <button
           className="notif-markread-btn"
           onClick={handleMarkAllRead}
           disabled={newCount === 0}
