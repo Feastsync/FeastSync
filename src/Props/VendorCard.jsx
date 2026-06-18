@@ -24,17 +24,16 @@ const handleProtectedNav = (targetPath) => {
 const handleWishlist = (e) => {
   e.stopPropagation()
   if (!isLoggedInUser) {
-    navigate("/onboarding", { state: { from: `/vendor/${props.slug}` } })
+    navigate("/vendordashboard", { state: { from: `/vendor/${props.slug}` } })
     return
   }
   setIsLiked(!isLiked)
 }
 
-  const goToVendor = () => {
-    if (!props.slug) return
-    const vendorPath = `/vendor/${props.slug}`
-    handleProtectedNav(vendorPath)
-  }
+const goToVendor = () => {
+  if (!props.slug) return
+  navigate(`/vendor/${props.slug}`)
+}
 
   // const handleWishlist = (e) => {
   //   e.stopPropagation()
@@ -54,7 +53,7 @@ const handleWishlist = (e) => {
         </span>
         <Button
           className="wishlist_btn"
-          onClick={handleWishlist}
+          onClick={()=>navigate("/userdashboard")}
           btnText={isLiked ? <FaHeart size={12} color="#330159" /> : <FiHeart size={12} />}
         />
       </div>

@@ -333,7 +333,7 @@ const App = () => {
         <Route path="/mediastep" element={<MediaStep />} />
         <Route path="/Settings" element={<Settings />} />
         {/* <Route path="/vendorsetting" element={<VendorSetting />} /> */}
-        <Route path="/vendorsetting" element={<VendorSetting />} />
+        {/* <Route path="/vendorsetting" element={<VendorSetting />} /> */}
         <Route path="vendormediagallery" element={<Vendormediagallery />} />
         <Route path="/vendor/kyc" element={<VendorKYC />} />
         <Route path="/pricingstep" element={<PricingStep />} />
