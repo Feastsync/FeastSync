@@ -19,11 +19,11 @@ const Vendormediagallery = () => {
     (state) => state.auth
   );
 
-  useEffect(() => {
-    if (slug) {
-      dispatch(getVendorById(slug));
-    }
-  }, [dispatch, slug]);
+  // useEffect(() => {
+  //   if (slug) {
+  //     dispatch(getVendorById(slug));
+  //   }
+  // }, [dispatch, slug]);
 
   const photos = currentVendor?.photoCatalogue || [];
   const videos = currentVendor?.videoCatalogue || [];
@@ -53,7 +53,7 @@ const Vendormediagallery = () => {
       formData.append("publicId", selectedMedia.publicId);
 
       await api.put(
-        `/vendor/replace-media/${currentVendor.id}`,
+        `/vendor/replace-media/${currentVendor._id}`,
         formData,
         {
           headers: {
