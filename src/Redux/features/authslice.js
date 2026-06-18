@@ -278,7 +278,7 @@ export const markNotificationRead = createAsyncThunk(
   "auth/markNotificationRead",
   async (notificationId, { rejectWithValue }) => {
     try {
-      const res = await api.put(`/api/notification/read-notification/${notificationId}`);
+      const res = await api.put(`/notification/read-notification/${notificationId}`);
       return res.data;
     } catch (err) {
       return rejectWithValue(
@@ -292,12 +292,37 @@ export const markAllNotificationsRead = createAsyncThunk(
   "auth/markAllNotificationsRead",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await api.put("/api/notification/mark-all-read");
+      const res = await api.put("/notification/mark-all-read");
       return res.data;
     } catch (err) {
       return rejectWithValue(
         err.response?.data?.message || "Failed to mark all as read"
       );
+    }
+  }
+);
+
+
+export const acceptBooking = createAsyncThunk(
+  "auth/acceptBooking",
+  async (bookingId, { rejectWithValue }) => {
+    try {
+      const res = await api.put(`/bookings/accept/${bookingId}`);
+      return { bookingId, data: res.data };
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const rejectBooking = createAsyncThunk(
+  "auth/rejectBooking",
+  async (bookingId, { rejectWithValue }) => {
+    try {
+      const res = await api.put(`/bookings/reject/${bookingId}`);
+      return { bookingId, data: res.data };
+    } catch (err) {
+      return rejectWithValue(err.response.data);
     }
   }
 );

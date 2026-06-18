@@ -28,7 +28,6 @@ const Vendordashboard = () => {
     currentVendorLoading: viewingVendorLoading,
     isLoggedIn,
     accountType,
-    // shouldRefreshVendor
   } = useSelector((state) => state.auth);
 
   
@@ -137,9 +136,9 @@ const handleCopyLink = async () => {
       highlights,
     };
   });
-  //  console.log(displayVendor?.pricingPackages)
-  console.log("displayVendor", displayVendor)
-console.log("vendorInfo", vendorInfo)
+
+//   console.log("displayVendor", displayVendor)
+// console.log("vendorInfo", vendorInfo)
 
   if (viewingVendorLoading && slug) return <VendorDashboardSkeleton />;
   if (slug &&!viewingVendor &&!viewingVendorLoading)
