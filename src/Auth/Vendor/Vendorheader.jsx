@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { getNotifications } from "../../Redux/features/authslice.js";
 
-const Vendorheader = () => {
+const Vendorheader = ({ vendor }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,25 +20,26 @@ const Vendorheader = () => {
     isLoggedIn,
     accountType,
     notifications = [],
+    notificationsLoading
   } = useSelector((state) => state.auth);
 
+  // Only fetch once when user logs in
   useEffect(() => {
-    if (isLoggedIn && notifications.length === 0) {
+    if (isLoggedIn &&!notificationsLoading && notifications.length === 0) {
       dispatch(getNotifications());
     }
-  }, [dispatch, isLoggedIn, notifications.length]);
+  }, [dispatch, isLoggedIn]); // removed notifications.length
 
-  const unreadCount = notifications.filter((n) => !n.isRead).length;
+  const unreadCount = notifications.filter((n) =>!n.read).length; // your slice uses 'read' not 'isRead'
 
-  const isDashboard =
-    location.pathname === "/vendordashboard" || location.pathname === "/vendor";
-  const isOwnerOnDashboard =
-    isLoggedIn && accountType === "vendor" && isDashboard;
-  const isOwnerOnPublicPage =
-    isLoggedIn &&
-    accountType === "vendor" &&
-    currentVendor?._id &&
-    vendorInfo?._id === currentVendor?._id;
+  const isDashboard = location.pathname === '/vendordashboard';
+  const isPublicVendorPage = location.pathname.startsWith('/vendor/');
+  
+  const isOwnerOnDashboard = isLoggedIn && accountType === 'vendor' && isDashboard;
+  const isOwnerOnPublicPage = isLoggedIn &&
+                              accountType === 'vendor' &&
+                              currentVendor?._id &&
+                              vendorInfo?._id === currentVendor?._id;
 
   const isOwner = isOwnerOnDashboard || isOwnerOnPublicPage;
   const showFullHeader = isOwnerOnDashboard;
@@ -87,7 +88,7 @@ const Vendorheader = () => {
                 className="icon-btn"
                 aria-label="Messages"
                 onClick={() => {
-                  navigate("/wallet/transactions");
+                  navigate("/chats"); // was /wallet/transactions, chats makes more sense
                   closeMenu();
                 }}
               >
@@ -119,7 +120,7 @@ const Vendorheader = () => {
                 <button
                   className="edit-profile-btn"
                   onClick={() => {
-                    navigate("/Settings");
+                    navigate("/settings"); // lowercase to match routes
                     closeMenu();
                   }}
                 >

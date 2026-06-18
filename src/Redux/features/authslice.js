@@ -265,7 +265,7 @@ export const getNotifications = createAsyncThunk(
   "auth/getNotifications",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await api.get("notification");
+      const res = await api.get("/notification");
       return res.data;
     } catch (err) {
       return rejectWithValue(
@@ -309,11 +309,18 @@ export const getVendorById = createAsyncThunk(
   "vendor/getById",
   async (vendorSlug, { rejectWithValue }) => {
     try {
+      console.log("Fetching vendor:", vendorSlug);
+
       const res = await api.get(`/vendor/one-vendor/${vendorSlug}`);
+
+      console.log("Response:", res);
+
       return res.data;
     } catch (err) {
+      console.log("Thunk error:", err);
+
       return rejectWithValue(
-        err.response?.data?.message || "Failed to fetch vendor",
+        err.response?.data?.message || "Failed to fetch vendor"
       );
     }
   },

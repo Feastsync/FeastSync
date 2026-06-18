@@ -19,11 +19,11 @@ const Vendormediagallery = () => {
     (state) => state.auth
   );
 
-  useEffect(() => {
-    if (slug) {
-      dispatch(getVendorById(slug));
-    }
-  }, [dispatch, slug]);
+  // useEffect(() => {
+  //   if (slug) {
+  //     dispatch(getVendorById(slug));
+  //   }
+  // }, [dispatch, slug]);
 
   const photos = currentVendor?.photoCatalogue || [];
   const videos = currentVendor?.videoCatalogue || [];
@@ -54,7 +54,6 @@ const Vendormediagallery = () => {
       console.log (currentVendor)
       await api.put(
         `/vendor/replace-media/${currentVendor._id}`,
-    
         formData,
         {
           headers: {
