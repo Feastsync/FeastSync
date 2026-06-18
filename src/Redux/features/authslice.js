@@ -16,7 +16,7 @@ export const login = createAsyncThunk(
   "auth/login",
   async ({ email, password, accountType }, { rejectWithValue }) => {
     try {
-      const endpoint = accountType === "user"? "/user/login" : "/vendor/login";
+      const endpoint = accountType === "user" ? "/user/login" : "/vendor/login";
       const res = await api.post(endpoint, { email, password });
 
       const responseData = res.data?.data || res.data;
@@ -53,12 +53,12 @@ export const verifyOTP = createAsyncThunk(
   async ({ email, otp, accountType }, { rejectWithValue }) => {
     try {
       const endpoint =
-        accountType === "user"? "/user/verify" : "/vendor/verify";
+        accountType === "user" ? "/user/verify" : "/vendor/verify";
       const res = await api.post(endpoint, { email, otp });
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
       }
-      return {...res.data, accountType };
+      return { ...res.data, accountType };
     } catch (err) {
       return rejectWithValue(
         err.response?.data?.message || "OTP verification failed",
@@ -72,7 +72,7 @@ export const resendOTP = createAsyncThunk(
   async ({ email, accountType }, { rejectWithValue }) => {
     try {
       const endpoint =
-        accountType === "user"? "/user/resend-otp" : "/vendor/resend-otp";
+        accountType === "user" ? "/user/resend-otp" : "/vendor/resend-otp";
 
       const res = await api.post(endpoint, { email });
       return res.data;
@@ -90,7 +90,7 @@ export const forgotPassword = createAsyncThunk(
     try {
       const endpoint =
         accountType === "user"
-        ? "/user/forgot-password"
+          ? "/user/forgot-password"
           : "/vendor/forgot-password";
 
       const res = await api.post(endpoint, { email });
@@ -109,12 +109,12 @@ export const resetPassword = createAsyncThunk(
     try {
       const endpoint =
         accountType === "user"
-        ? "/user/reset-password"
+          ? "/user/reset-password"
           : "/vendor/reset-password";
 
       const body =
         accountType === "vendor"
-        ? { email, password, confirmPassword }
+          ? { email, password, confirmPassword }
           : { email, otp, password, confirmPassword };
 
       const res = await api.post(endpoint, body);
@@ -190,24 +190,42 @@ export const updateVendorProfile = createAsyncThunk(
   "vendor/updateProfile",
   async ({ id, profileData }, { rejectWithValue }) => {
     try {
-      console.log("Sending request to:", `/vendor/update-profile/${id}`);
-console.log("Profile Data:", profileData);
-
-      const response = await api.put(
-        `/vendor/update-profile/${id}`,
-        profileData,
-      );
-
-      console.log("Response:", response.data);
-
+      const response = await api.put(`/vendor/update-profile/${id}`, profileData);
       return response.data;
     } catch (error) {
-      console.log("API Error:", error.response?.data);
       return rejectWithValue(
         error.response?.data?.message || "Failed to update profile",
       );
     }
   },
+);
+
+export const replaceVendorMedia = createAsyncThunk(
+  "vendor/replaceMedia",
+  async ({ vendorId, file, mediaId, mediaType }, { rejectWithValue }) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("mediaId", mediaId); 
+      formData.append("mediaType", mediaType);
+
+      const res = await api.put(
+        `/vendor/replace-media/${vendorId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || "Media update failed"
+      );
+    }
+  }
 );
 
 export const logoutUser = createAsyncThunk(
@@ -216,7 +234,7 @@ export const logoutUser = createAsyncThunk(
     try {
       const { accountType } = getState().auth;
       const endpoint =
-        accountType === "user"? "/user/logout" : "/vendor/logout";
+        accountType === "user" ? "/user/logout" : "/vendor/logout";
       await api.post(endpoint);
     } catch (err) {
       return rejectWithValue(err.response?.data?.message);
@@ -241,8 +259,6 @@ export const uploadKyc = createAsyncThunk(
     }
   }
 );
-
-
 
 export const getNotifications = createAsyncThunk(
   "auth/getNotifications",
@@ -328,7 +344,7 @@ export const verifyResetOTP = createAsyncThunk(
   async ({ email, otp, accountType }, { rejectWithValue }) => {
     try {
       const endpoint =
-        accountType === "user"? "/user/verify-otp" : "/vendor/verify-otp";
+        accountType === "user" ? "/user/verify-otp" : "/vendor/verify-otp";
       const res = await api.post(endpoint, { email, otp });
       return res.data;
     } catch (err) {
@@ -344,7 +360,7 @@ export const getCurrentUser = createAsyncThunk(
   async (_, { getState, rejectWithValue }) => {
     try {
       const { accountType } = getState().auth;
-      const endpoint = accountType === "user"? "/user/me" : "/vendor/me";
+      const endpoint = accountType === "user" ? "/user/me" : "/vendor/me";
       const res = await api.get(endpoint);
       return res.data;
     } catch (err) {
@@ -360,7 +376,7 @@ const authSlice = createSlice({
     vendorInfo: null,
     token: localStorage.getItem("token") || null,
     accountType: null,
-    isLoggedIn:!!localStorage.getItem("token"),
+    isLoggedIn: !!localStorage.getItem("token"),
     isLoading: false,
     error: null,
     pricingPackages: [],
@@ -373,26 +389,25 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       localStorage.removeItem("token");
-      state.userInfo = null;
-      state.vendorInfo = null;
       state.token = null;
       state.accountType = null;
       state.isLoggedIn = false;
+      // userInfo and vendorInfo are intentionally NOT cleared here
     },
     clearError: (state) => {
       state.error = null;
     },
     updateVendorInfo: (state, action) => {
-      state.vendorInfo = {...state.vendorInfo,...action.payload };
+      state.vendorInfo = { ...state.vendorInfo, ...action.payload };
     },
   },
   extraReducers: (builder) => {
     builder
-    .addCase(login.pending, (state) => {
+      .addCase(login.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-    .addCase(login.fulfilled, (state, action) => {
+      .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isLoggedIn = true;
         state.token = action.payload.token;
@@ -404,11 +419,11 @@ const authSlice = createSlice({
           const vendor = action.payload.vendor || action.payload;
 
           state.vendorInfo = {
-          ...vendor,
+            ...vendor,
             _id: vendor.id || vendor._id,
             id: vendor.id || vendor._id,
             slug: vendor.slug || null,
-            isOnboarded: vendor.isOnboarded?? false,
+            isOnboarded: vendor.isOnboarded ?? false,
             onboardingStep: vendor.onboardingStep || 1,
             currentStep: STEP_MAP[vendor.onboardingStep] || 'category',
             verificationStatus: vendor.verificationStatus || 'pending',
@@ -417,105 +432,71 @@ const authSlice = createSlice({
           };
         }
       })
-    .addCase(login.rejected, (state, action) => {
+      .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-
-    .addCase(verifyOTP.pending, (state) => {
+      .addCase(verifyOTP.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(verifyOTP.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(verifyResetOTP.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-    // .addCase(verifyOTP.fulfilled, (state, action) => {
-    //     state.isLoading = false;
-    //     state.isLoggedIn = true;
-    //     state.token = action.payload.token;
-    //     state.accountType = action.payload.accountType;
-    //     if (action.payload.accountType === "user") {
-    //       state.userInfo = action.payload.user;
-    //     } else {
-    //       const vendor = action.payload.vendor;
-
-    //       state.vendorInfo = {
-    //       ...vendor,
-    //         _id: vendor.id || vendor._id,
-    //         id: vendor.id || vendor._id,
-    //         slug: vendor.slug || null,
-    //         isOnboarded: vendor.isOnboarded?? false,
-    //         onboardingStep: vendor.onboardingStep || 1,
-    //         currentStep: STEP_MAP[vendor.onboardingStep] || 'category',
-    //         verificationStatus: vendor.verificationStatus || 'pending',
-    //         profilePicture: vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
-    //         coverPhoto: vendor.coverPhoto?.secureUrl || vendor.coverPhoto || null,
-    //       };
-    //     }
-    //   })
-
-       .addCase(verifyOTP.fulfilled, (state, action) => {
+      .addCase(verifyResetOTP.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(verifyResetOTP.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-    .addCase(verifyOTP.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-
-    .addCase(verifyResetOTP.pending, (state) => {
+      .addCase(resendOTP.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-    .addCase(verifyResetOTP.fulfilled, (state) => {
+      .addCase(resendOTP.fulfilled, (state) => {
         state.isLoading = false;
       })
-    .addCase(verifyResetOTP.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-    .addCase(resendOTP.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-    .addCase(resendOTP.fulfilled, (state) => {
-        state.isLoading = false;
-      })
-    .addCase(resendOTP.rejected, (state, action) => {
+      .addCase(resendOTP.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-
-    .addCase(forgotPassword.pending, (state) => {
+      .addCase(forgotPassword.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-    .addCase(forgotPassword.fulfilled, (state) => {
+      .addCase(forgotPassword.fulfilled, (state) => {
         state.isLoading = false;
       })
-    .addCase(forgotPassword.rejected, (state, action) => {
+      .addCase(forgotPassword.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-
-    .addCase(resetPassword.pending, (state) => {
+      .addCase(resetPassword.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-    .addCase(resetPassword.fulfilled, (state) => {
+      .addCase(resetPassword.fulfilled, (state) => {
         state.isLoading = false;
       })
-    .addCase(resetPassword.rejected, (state, action) => {
+      .addCase(resetPassword.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-
-    .addCase(createPricing.pending, (state) => {
+      .addCase(createPricing.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-    .addCase(createPricing.fulfilled, (state, action) => {
+      .addCase(createPricing.fulfilled, (state, action) => {
         state.isLoading = false;
         const savedPricing = {
-        ...(action.payload || {}),
-        ...(action.meta?.arg || {}),
+          ...(action.payload || {}),
+          ...(action.meta?.arg || {}),
         };
         if (!Array.isArray(state.pricingPackages)) {
           state.pricingPackages = [];
@@ -526,82 +507,92 @@ const authSlice = createSlice({
         );
         if (existingIndex >= 0) {
           state.pricingPackages[existingIndex] = {
-          ...state.pricingPackages[existingIndex],
-          ...savedPricing,
+            ...state.pricingPackages[existingIndex],
+            ...savedPricing,
           };
         } else {
           state.pricingPackages.push(savedPricing);
         }
       })
-    .addCase(createPricing.rejected, (state, action) => {
+      .addCase(createPricing.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-    .addCase(getAllPricing.pending, (state) => {
+      .addCase(getAllPricing.pending, (state) => {
         state.isLoading = true;
       })
-    .addCase(getAllPricing.fulfilled, (state, action) => {
+      .addCase(getAllPricing.fulfilled, (state, action) => {
         state.isLoading = false;
         const payload = action.payload?.data || action.payload;
         state.pricingPackages = Array.isArray(payload)
-        ? payload
+          ? payload
           : [payload].filter(Boolean);
       })
-    .addCase(getAllPricing.rejected, (state, action) => {
+      .addCase(getAllPricing.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-    .addCase(updatePricing.pending, (state) => {
+      .addCase(updatePricing.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-    .addCase(updatePricing.fulfilled, (state, action) => {
+      .addCase(updatePricing.fulfilled, (state, action) => {
         state.isLoading = false;
         const updatedPricing = action.payload?.data || action.payload;
         const index = state.pricingPackages.findIndex(
           (item) => item.id === updatedPricing.id,
         );
-        if (index!== -1) {
+        if (index !== -1) {
           state.pricingPackages[index] = updatedPricing;
         }
       })
-    .addCase(updatePricing.rejected, (state, action) => {
+      .addCase(updatePricing.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-    .addCase(updateVendorProfile.pending, (state) => {
+      .addCase(updateVendorProfile.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-    .addCase(updateVendorProfile.fulfilled, (state, action) => {
+      .addCase(updateVendorProfile.fulfilled, (state, action) => {
         state.isLoading = false;
-
         const updatedData = action.payload.data || action.payload;
-
         state.vendorInfo = {
-        ...state.vendorInfo,
-        ...updatedData,
+          ...state.vendorInfo,
+          ...updatedData,
           _id: updatedData.id || updatedData._id || state.vendorInfo._id,
           id: updatedData.id || updatedData._id || state.vendorInfo.id,
           profilePicture: updatedData.profilePicture?.secureUrl || updatedData.profilePicture || state.vendorInfo.profilePicture,
           coverPhoto: updatedData.coverPhoto?.secureUrl || updatedData.coverPhoto || state.vendorInfo.coverPhoto,
-          onboardingStep: updatedData.onboardingStep?? state.vendorInfo.onboardingStep,
+          onboardingStep: updatedData.onboardingStep ?? state.vendorInfo.onboardingStep,
           currentStep: STEP_MAP[updatedData.onboardingStep] || state.vendorInfo.currentStep,
-          isOnboarded: updatedData.isOnboarded?? state.vendorInfo.isOnboarded
+          isOnboarded: updatedData.isOnboarded ?? state.vendorInfo.isOnboarded
         };
       })
-    .addCase(updateVendorProfile.rejected, (state, action) => {
+      .addCase(updateVendorProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-    .addCase(uploadKyc.pending, (state) => {
+
+      .addCase(replaceVendorMedia.fulfilled, (state, action) => {
+      const updatedVendor = action.payload?.data;
+
+      if (updatedVendor) {
+        state.currentVendor = {
+          ...state.currentVendor,
+          ...updatedVendor,
+        };
+      }
+      })
+      
+      .addCase(uploadKyc.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-    .addCase(uploadKyc.fulfilled, (state, action) => {
+      .addCase(uploadKyc.fulfilled, (state, action) => {
         state.isLoading = false;
         state.vendorInfo = {
-        ...state.vendorInfo,
+          ...state.vendorInfo,
           isOnboarded: true,
           onboardingStep: 7,
           currentStep: 'completed',
@@ -609,7 +600,7 @@ const authSlice = createSlice({
           verificationStatus: action.payload.data?.verificationStatus || 'pending'
         };
       })
-    .addCase(uploadKyc.rejected, (state, action) => {
+      .addCase(uploadKyc.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
         if (state.vendorInfo) {
@@ -619,7 +610,7 @@ const authSlice = createSlice({
           state.vendorInfo.onboardingStep = 5;
         }
       })
-    .addCase(logoutUser.fulfilled, (state) => {
+  .addCase(logoutUser.fulfilled, (state) => {
         localStorage.removeItem("token");
         state.userInfo = null;
         state.vendorInfo = null;
@@ -635,60 +626,60 @@ const authSlice = createSlice({
         state.accountType = null;
         state.isLoggedIn = false;
       })
-    .addCase(getNotifications.pending, (state) => {
+      .addCase(getNotifications.pending, (state) => {
         state.notificationsLoading = true;
       })
-    .addCase(getNotifications.fulfilled, (state, action) => {
+      .addCase(getNotifications.fulfilled, (state, action) => {
         state.notificationsLoading = false;
         state.notifications = action.payload.data || [];
         state.unreadCount = action.payload.count || 0;
       })
-    .addCase(getNotifications.rejected, (state, action) => {
+      .addCase(getNotifications.rejected, (state, action) => {
         state.notificationsLoading = false;
         state.error = action.payload;
       })
-    .addCase(markNotificationRead.fulfilled, (state, action) => {
+      .addCase(markNotificationRead.fulfilled, (state, action) => {
         const id = action.meta.arg;
         state.notifications = state.notifications.map(n =>
-          n._id === id? {...n, read: true } : n
+          n._id === id ? { ...n, read: true } : n
         );
         state.unreadCount = Math.max(0, state.unreadCount - 1);
       })
-    .addCase(markAllNotificationsRead.fulfilled, (state) => {
+      .addCase(markAllNotificationsRead.fulfilled, (state) => {
         state.unreadCount = 0;
-        state.notifications = state.notifications.map(n => ({...n, read: true }));
+        state.notifications = state.notifications.map(n => ({ ...n, read: true }));
       })
-    .addCase(getVendorById.pending, (state) => {
+      .addCase(getVendorById.pending, (state) => {
         state.currentVendorLoading = true;
         state.currentVendor = null;
         state.error = null;
       })
-    .addCase(getVendorById.fulfilled, (state, action) => {
+      .addCase(getVendorById.fulfilled, (state, action) => {
         state.currentVendorLoading = false;
         const vendor = action.payload.data || action.payload;
 
-        if (!vendor ||!vendor._id) {
+        if (!vendor || !vendor._id) {
           state.error = "Invalid vendor data";
           return;
         }
 
         state.currentVendor = {
-        ...vendor,
+          ...vendor,
           profilePicture: vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
           coverPhoto: vendor.coverPhoto?.secureUrl || vendor.coverPhoto || null,
           pricingPackages: vendor.pricingPackages || [],
         };
         state.error = null;
       })
-    .addCase(getVendorById.rejected, (state, action) => {
+      .addCase(getVendorById.rejected, (state, action) => {
         state.currentVendorLoading = false;
         state.error = action.payload;
         state.currentVendor = null;
       })
-    .addCase(getCurrentUser.pending, (state) => {
+      .addCase(getCurrentUser.pending, (state) => {
         state.isLoading = true;
       })
-    .addCase(getCurrentUser.fulfilled, (state, action) => {
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
         state.isLoading = false;
         const data = action.payload?.data || action.payload;
 
@@ -697,12 +688,12 @@ const authSlice = createSlice({
         } else {
           const vendor = data.vendor || data;
           state.vendorInfo = {
-          ...state.vendorInfo,
-          ...vendor,
+            ...state.vendorInfo,
+            ...vendor,
             _id: vendor.id || vendor._id,
             id: vendor.id || vendor._id,
             slug: vendor.slug || null,
-            isOnboarded: vendor.isOnboarded?? false,
+            isOnboarded: vendor.isOnboarded ?? false,
             onboardingStep: vendor.onboardingStep || 1,
             currentStep: STEP_MAP[vendor.onboardingStep] || 'category',
             verificationStatus: vendor.verificationStatus || 'pending',
@@ -711,7 +702,7 @@ const authSlice = createSlice({
           };
         }
       })
-    .addCase(getCurrentUser.rejected, (state, action) => {
+      .addCase(getCurrentUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

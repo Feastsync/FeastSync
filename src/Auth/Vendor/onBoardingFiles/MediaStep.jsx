@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FiUpload } from "react-icons/fi";
+import { FiUpload, FiCheck } from "react-icons/fi";
 import { message } from "antd";
 import "./css/MediaStep.css";
 
@@ -25,14 +25,42 @@ const MediaStep = ({
   };
 
   const handleFileChange = (field, files, limit, maxSizeMB) => {
-    const selected = Array.from(files).slice(0, limit);
-    for (let file of selected) {
+    const currentFiles = profileData?.[field] || [];
+    const remainingSlots = limit - currentFiles.length;
+
+    if (remainingSlots <= 0) {
+      message.warning(`You have already reached the maximum limit of ${limit} files.`);
+      return;
+    }
+
+    const newlySelected = Array.from(files).slice(0, remainingSlots);
+    const validNewFiles = [];
+
+    for (let file of newlySelected) {
       if (file.size > maxSizeMB * 1024 * 1024) {
-        message.error(`${file.name} exceeds ${maxSizeMB}MB limit`);
-        return;
+        message.error(`"${file.name}" exceeds the ${maxSizeMB}MB limit and was skipped.`);
+        continue;
+      }
+      
+      const isDuplicate = currentFiles.some((f) => f.name === file.name && f.size === file.size);
+      if (!isDuplicate) {
+        validNewFiles.push(file);
       }
     }
-    setProfileData((prev) => ({ ...prev, [field]: selected }));
+
+    if (validNewFiles.length === 0) return;
+
+    setProfileData((prev) => ({
+      ...prev,
+      [field]: [...(prev[field] || []), ...validNewFiles],
+    }));
+  };
+
+  const handleRemoveFile = (field, indexToRemove) => {
+    setProfileData((prev) => ({
+      ...prev,
+      [field]: (prev[field] || []).filter((_, index) => index !== indexToRemove),
+    }));
   };
 
   const handleContinue = async () => {
@@ -113,6 +141,7 @@ const MediaStep = ({
               type="file"
               accept="video/*"
               multiple
+              style={{ display: 'none' }}
               onChange={(e) => handleFileChange("videoCatalogue", e.target.files, 2, 10)}
             />
             <FiUpload
@@ -127,7 +156,14 @@ const MediaStep = ({
               <div className="media-selected-files">
                 <p className="media-file-count">{videoCatalogue.length} / 2 videos selected</p>
                 {videoCatalogue.map((file, index) => (
-                  <p key={index}>{file.name}</p>
+                  <div key={index} className="media-file-item" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px", margin: "4px 0" }}>
+                    <p style={{ margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{file.name}</p>
+                    <FiCheck 
+                      size={16} 
+                      style={{ cursor: "pointer", color: "#330159" }} 
+                      onClick={() => handleRemoveFile("videoCatalogue", index)} 
+                    />
+                  </div>
                 ))}
               </div>
             )}
@@ -143,6 +179,7 @@ const MediaStep = ({
                 type="file"
                 accept="image/*"
                 multiple
+                style={{ display: 'none' }}
                 onChange={(e) => handleFileChange("photoCatalogue", e.target.files, 4, 5)}
               />
               <FiUpload
@@ -152,9 +189,16 @@ const MediaStep = ({
               />
               <p className="media-upload-title">Add more</p>
               {photoCatalogue.length > 0 && (
-                <div className="media-selected-files">
+                <div className="media-selected-files" style={{ width: "100%", marginTop: "10px" }}>
                   {photoCatalogue.map((file, index) => (
-                    <p key={index}>{file.name}</p>
+                    <div key={index} className="media-file-item" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px", margin: "4px 0" }}>
+                      <p style={{ margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{file.name}</p>
+                      <FiCheck 
+                        size={16} 
+                        style={{ cursor: "pointer", color: "#330159" }} 
+                        onClick={() => handleRemoveFile("photoCatalogue", index)} 
+                      />
+                    </div>
                   ))}
                 </div>
               )}
