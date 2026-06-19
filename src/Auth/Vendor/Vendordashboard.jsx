@@ -128,25 +128,23 @@ const Vendordashboard = () => {
     }
   }, [displayVendor, messageApi]);
 
-  const basePackages = useMemo(
-    () => [
-      { id: "basic", title: "Basic Package", price: "₦0", highlights: [] },
-      {
-        id: "standard",
-        title: "Standard Package",
-        price: "₦0",
-        highlights: [],
-      },
-      { id: "premium", title: "Premium Package", price: "₦0", highlights: [] },
-    ],
-    [],
-  );
+console.log("isOwner:", isOwner)
+console.log("isLoggedIn:", isLoggedIn)
+console.log("accountType:", accountType)
+console.log("displayVendor:", displayVendor?._id)
+console.log("vendorInfo:", vendorInfo?._id)
 
-  const displayPackages = useMemo(() => {
-    return basePackages.map((base) => {
-      const saved = displayVendor?.pricingId?.find(
-        (p) => p.packageName?.toLowerCase() === base.id,
-      );
+  const basePackages = [
+    { id: "basic", title: "Basic Package", price: "₦0", highlights: [] },
+    { id: "standard", title: "Standard Package", price: "₦0", highlights: [] },
+    { id: "premium", title: "Premium Package", price: "₦0", highlights: [] },
+  ];
+
+  const displayPackages = basePackages.map((base) => {
+   const saved = displayVendor?.pricingId?.find(
+  (p) => p.packageName?.toLowerCase() === base.id
+);
+    //  console.log(displayVendor?.pricingPackages)
 
       if (!saved) return base;
 

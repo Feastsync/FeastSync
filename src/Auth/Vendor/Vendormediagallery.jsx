@@ -19,11 +19,7 @@ const Vendormediagallery = () => {
     (state) => state.auth
   );
 
-  // useEffect(() => {
-  //   if (slug) {
-  //     dispatch(getVendorById(slug));
-  //   }
-  // }, [dispatch, slug]);
+
 
   const photos = currentVendor?.photoCatalogue || [];
   const videos = currentVendor?.videoCatalogue || [];

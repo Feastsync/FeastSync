@@ -49,14 +49,14 @@ const PricingStep = ({
 
     const alreadyExists = pricingPackages?.some(
       (pkg) =>
-        (pkg.packageName || pkg.pacakageName)?.toLowerCase() ===
+        (pkg.packageName || pkg.pacakageName || "").toLowerCase() ===
         packageName.toLowerCase()
     );
 
     if (alreadyExists) {
       return notification.warning({
         message: "Package Already Added",
-        description: `${packageName} package has already been added. Please select another package.`,
+        description: `${packageName} has already been added. Please select another package.`,
         placement: "topRight",
       });
     }
@@ -75,11 +75,11 @@ const PricingStep = ({
       notification.success({
         message: "Package Saved Successfully",
         description:
-          packageName === "basic"
-            ? "Basic Package has been saved successfully. Please select Standard Package next."
-            : packageName === "standard"
-            ? "Standard Package has been saved successfully. Please select Premium Package next."
-            : "Premium Package has been saved successfully. You can now continue to the next step.",
+          packageName === "Basic Package"
+            ? "Basic Package saved. Please select Standard Package next."
+            : packageName === "Standard Package"
+            ? "Standard Package saved. Please select Premium Package next."
+            : "Premium Package saved. You can now continue to the next step.",
         placement: "topRight",
         duration: 5,
       });
@@ -106,19 +106,16 @@ const PricingStep = ({
       (pkg.packageName || pkg.pacakageName || "").toLowerCase()
     );
 
-    const requiredPackages = ["basic", "standard", "premium"];
-    
+    // Match exactly what backend expects but compare lowercase
+    const requiredPackages = ["Basic Package", "Standard Package", "Premium Package"];
+
     const missingPackages = requiredPackages.filter(
-      (pkg) => !savedNames.includes(pkg)
+      (pkg) => !savedNames.includes(pkg.toLowerCase())
     );
 
     if (missingPackages.length > 0) {
-      const formattedMissing = missingPackages
-        .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
-        .join(", ");
-        
       return message.warning(
-        `Kindly fill in all packages. Missing: ${formattedMissing}`
+        `Kindly fill in all packages. Missing: ${missingPackages.join(", ")}`
       );
     }
 
@@ -166,9 +163,9 @@ const PricingStep = ({
               onChange={(e) => handleChange("packageName", e.target.value)}
             >
               <option value="">Select package</option>
-              <option value="basic">Basic Package</option>
-              <option value="standard">Standard Package</option>
-              <option value="premium">Premium Package</option>
+              <option value="Basic Package">Basic Package</option>
+              <option value="Standard Package">Standard Package</option>
+              <option value="Premium Package">Premium Package</option>
             </select>
             <FiChevronDown className="ps-select-icon" />
           </div>
@@ -184,21 +181,37 @@ const PricingStep = ({
           />
         </div>
 
-        {/* Visual List of Saved Packages */}
         {pricingPackages && pricingPackages.length > 0 && (
           <div className="ps-saved-list" style={{ marginTop: "20px", paddingTop: "15px", borderTop: "1px dashed #e8e8e8" }}>
-            <h4 style={{ margin: "0 0 10px 0", fontSize: "14px", color: "#333" }}>Saved Packages ({pricingPackages.length}/3)</h4>
+            <h4 style={{ margin: "0 0 10px 0", fontSize: "14px", color: "#333" }}>
+              Saved Packages ({pricingPackages.length}/3)
+            </h4>
             <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
               {pricingPackages.map((pkg, idx) => {
                 const name = pkg.packageName || pkg.pacakageName || "";
                 const price = pkg.packagePrice || "";
                 return (
-                  <div key={idx} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px", backgroundColor: "#f9f9f9", borderRadius: "6px", border: "1px solid #eee" }}>
+                  <div
+                    key={idx}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      padding: "10px",
+                      backgroundColor: "#f9f9f9",
+                      borderRadius: "6px",
+                      border: "1px solid #eee",
+                    }}
+                  >
                     <div>
-                      <strong style={{ textTransform: "capitalize", fontSize: "13px" }}>{name} Package</strong>
-                      <p style={{ margin: "2px 0 0 0", fontSize: "12px", color: "#666", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: "250px" }}>{pkg.packageDescription}</p>
+                      <strong style={{ fontSize: "13px" }}>{name}</strong>
+                      <p style={{ margin: "2px 0 0 0", fontSize: "12px", color: "#666", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: "250px" }}>
+                        {pkg.packageDescription}
+                      </p>
                     </div>
-                    <span style={{ fontWeight: "600", color: "#1890ff", fontSize: "13px" }}>₦{Number(price).toLocaleString()}</span>
+                    <span style={{ fontWeight: "600", color: "#1890ff", fontSize: "13px" }}>
+                      ₦{Number(price).toLocaleString()}
+                    </span>
                   </div>
                 );
               })}

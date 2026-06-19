@@ -381,7 +381,8 @@ const authSlice = createSlice({
       state.token = null;
       state.accountType = null;
       state.isLoggedIn = false;
-      // userInfo and vendorInfo are intentionally NOT cleared here
+        state.userInfo = null;
+       state.vendorInfo = null;
     },
     clearError: (state) => {
       state.error = null;
@@ -673,7 +674,7 @@ const authSlice = createSlice({
           profilePicture:
             vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
           coverPhoto: vendor.coverPhoto?.secureUrl || vendor.coverPhoto || null,
-          pricingPackages: vendor.pricingPackages || [],
+        pricingId: vendor.pricingId || [],
         };
 
         state.error = null;
