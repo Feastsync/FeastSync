@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../Css/Vendorcalendar.css";
-import api from  "../../Redux/app/axios"
+import api from "../../Redux/app/axios";
 
 const Vendorcalendar = ({ vendorId }) => {
   const [date, setDate] = useState(new Date());
+  const [activeMonth, setActiveMonth] = useState(new Date());
   const [bookedDates, setBookedDates] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -16,15 +17,19 @@ const Vendorcalendar = ({ vendorId }) => {
       try {
         setLoading(true);
 
+        const year = activeMonth.getFullYear();
+        const month = String(activeMonth.getMonth() + 1).padStart(2, "0");
+        const monthParam = `${year}-${month}`;
+
         const res = await api.get(
-          `/calendar/calendar/${vendorId}`
+          `/calendar/get-calendar/${vendorId}?month=${monthParam}`
         );
 
-        console.log("Calendar API Response:", res.data);
+        console.log("Calendar API Response:", res);
 
         const dates =
           res.data?.bookedDates?.map((item) =>
-            item.date.split("T")[0]
+            item.date ? item.date.split("T")[0] : item
           ) || [];
 
         setBookedDates(dates);
@@ -36,13 +41,12 @@ const Vendorcalendar = ({ vendorId }) => {
     };
 
     fetchCalendar();
-  }, [vendorId]);
+  }, [vendorId, activeMonth]);
 
   const formatDate = (calendarDate) => {
     const year = calendarDate.getFullYear();
     const month = String(calendarDate.getMonth() + 1).padStart(2, "0");
     const day = String(calendarDate.getDate()).padStart(2, "0");
-
     return `${year}-${month}-${day}`;
   };
 
@@ -52,7 +56,6 @@ const Vendorcalendar = ({ vendorId }) => {
         <header className="vendor-calendar-header">
           <div className="vendor-calendar-title-row">
             <h2>Availability Calendar</h2>
-
             <button
               className="vendor-calendar-close"
               aria-label="Close calendar"
@@ -67,7 +70,6 @@ const Vendorcalendar = ({ vendorId }) => {
               <span className="vendor-calendar-swatch available"></span>
               Available
             </span>
-
             <span className="vendor-calendar-legend-item">
               <span className="vendor-calendar-swatch booked"></span>
               Booked
@@ -81,11 +83,13 @@ const Vendorcalendar = ({ vendorId }) => {
           ) : (
             <Calendar
               calendarType="iso8601"
+              activeStartDate={activeMonth}
+              onActiveStartDateChange={({ activeStartDate }) => {
+                setActiveMonth(activeStartDate);
+              }}
               formatShortWeekday={(_, calendarDate) =>
                 calendarDate
-                  .toLocaleDateString("en-US", {
-                    weekday: "short",
-                  })
+                  .toLocaleDateString("en-US", { weekday: "short" })
                   .toUpperCase()
               }
               next2Label={null}
@@ -100,7 +104,6 @@ const Vendorcalendar = ({ vendorId }) => {
                 ) {
                   return "booked-day";
                 }
-
                 return null;
               }}
             />

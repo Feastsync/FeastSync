@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { getNotifications } from "../../Redux/features/authslice.js"; 
 
-const Vendorheader = ({ vendor }) => {
+const Vendorheader = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,22 +19,19 @@ const Vendorheader = ({ vendor }) => {
     currentVendor,
     isLoggedIn,
     accountType,
-    notifications = [],
-    notificationsLoading
+    notifications = [] 
   } = useSelector((state) => state.auth);
 
-  // Only fetch once when user logs in
+
   useEffect(() => {
-    if (isLoggedIn &&!notificationsLoading && notifications.length === 0) {
+    if (isLoggedIn && notifications.length === 0) {
       dispatch(getNotifications());
     }
-  }, [dispatch, isLoggedIn]); // removed notifications.length
+  }, [dispatch, isLoggedIn, notifications.length]);
 
-  const unreadCount = notifications.filter((n) =>!n.read).length; // your slice uses 'read' not 'isRead'
+  const unreadCount = notifications.filter((n) =>!n.isRead).length;
 
-  const isDashboard = location.pathname === '/vendordashboard';
-  const isPublicVendorPage = location.pathname.startsWith('/vendor/');
-  
+  const isDashboard = location.pathname === '/vendordashboard' || location.pathname === '/vendor';
   const isOwnerOnDashboard = isLoggedIn && accountType === 'vendor' && isDashboard;
   const isOwnerOnPublicPage = isLoggedIn &&
                               accountType === 'vendor' &&
@@ -84,7 +81,7 @@ const Vendorheader = ({ vendor }) => {
                 className="icon-btn"
                 aria-label="Messages"
                 onClick={() => {
-                  navigate("/chats"); // was /wallet/transactions, chats makes more sense
+                  navigate("/wallet/transactions");
                   closeMenu();
                 }}
               >
@@ -116,7 +113,7 @@ const Vendorheader = ({ vendor }) => {
                 <button
                   className="edit-profile-btn"
                   onClick={() => {
-                    navigate("/settings"); // lowercase to match routes
+                    navigate("/Settings");
                     closeMenu();
                   }}
                 >

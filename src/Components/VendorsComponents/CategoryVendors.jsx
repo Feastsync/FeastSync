@@ -1,22 +1,23 @@
-import { useState, useEffect } from "react";
-import VendorCard from "../../Props/VendorCard";
-import VendorCardSkeleton from "../../Props/VendorSkeleton";
-import "./css/All.css";
-import api from "../../Redux/app/axios";
+import { useState, useEffect } from "react"
+import VendorCard from "../../Props/VendorCard"
+import VendorCardSkeleton from "../../Props/VendorSkeleton"
+import "./css/All.css"
+import api from "../../Redux/app/axios"
+import "./css/VendorState.css"
 
 const getItemsPerPage = () => {
-  if (window.innerWidth <= 540) return 4;
-  if (window.innerWidth <= 860) return 6;
-  return 9;
-};
+  if (window.innerWidth <= 540) return 4
+  if (window.innerWidth <= 860) return 6
+  return 9
+}
 
-const AllVendors = () => {
-  const [vendors, setVendors]         = useState([]);
-  const [loading, setLoading]         = useState(true);
-  const [error, setError]             = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage());
 
+const CategoryVendors = ({ category }) => {
+  const [vendors, setVendors] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage())
 
   useEffect(() => {
     const fetchVendors = async () => {
@@ -24,53 +25,55 @@ const AllVendors = () => {
         setLoading(true)
         setError(null)
         const res = await api.get('/vendor/all-vendors')
-        console.log("First vendor:", res.data?.data?.[0])
-        const mappedVendors = (res.data?.data || []).map(vendor => ({
+        const all = res.data?.data || []
+
+        const filtered = all.filter(v =>
+          v.category?.toLowerCase() === category.toLowerCase()
+        )
+
+        const mapped = filtered.map(vendor => ({
           _id: vendor._id,
-          slug: vendor.slug, 
-          stageName: vendor.stageName || '',
-          name: vendor.stageName || '',
-          location: vendor.stateOfResidence || vendor.location || '',
-          rating: Math.floor(vendor.averageRating || 0), 
-          price: vendor.bookingFee || 0, 
-          image: vendor.profilePicture?.secureUrl || vendor.profilePicture || ''
+          slug: vendor.slug,
+          name: vendor.stageName || `${vendor.firstName} ${vendor.lastName}`,
+          location: vendor.stateOfResidence || '',
+          rating: Math.floor(vendor.averageRating || 0),
+          price: vendor.bookingFee || 0,
+          image: vendor.profilePicture?.secureUrl || '',
         }))
-        setVendors(mappedVendors)
-    
+
+        setVendors(mapped)
       } catch (err) {
         setError(err.response?.data?.message || 'Failed to fetch vendors')
       } finally {
         setLoading(false)
       }
     }
-
     fetchVendors()
-  }, [])
+  }, [category])
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [currentPage]);
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }, [currentPage])
 
   useEffect(() => {
     const handleResize = () => {
-      setItemsPerPage(getItemsPerPage());
-      setCurrentPage(1);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+      setItemsPerPage(getItemsPerPage())
+      setCurrentPage(1)
+    }
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
 
-  const skeletonArray  = Array.from({ length: itemsPerPage });
-  const totalPages     = Math.ceil(vendors.length / itemsPerPage);
-  const start          = (currentPage - 1) * itemsPerPage;
-  const currentVendors = vendors.slice(start, start + itemsPerPage);
+  const skeletonArray = Array.from({ length: itemsPerPage })
+  const totalPages = Math.ceil(vendors.length / itemsPerPage)
+  const start = (currentPage - 1) * itemsPerPage
+  const currentVendors = vendors.slice(start, start + itemsPerPage)
 
   const changePage = (dir) => {
-    const next = currentPage + dir;
-    if (next >= 1 && next <= totalPages) setCurrentPage(next);
-  };
+    const next = currentPage + dir
+    if (next >= 1 && next <= totalPages) setCurrentPage(next)
+  }
 
- 
   if (error && !loading) {
     return (
       <div className="vendor-state-wrap">
@@ -78,14 +81,10 @@ const AllVendors = () => {
           <span className="vendor-state-icon">⚠️</span>
           <h2>Something went wrong</h2>
           <p>{error}</p>
-          <button className="vendor-retry-btn" onClick={fetchVendors}>
-            Retry
-          </button>
         </div>
       </div>
-    );
+    )
   }
-
 
   if (!loading && vendors.length === 0) {
     return (
@@ -93,19 +92,17 @@ const AllVendors = () => {
         <div className="vendor-state-card">
           <span className="vendor-state-icon">🔍</span>
           <h2>No Vendors Found</h2>
-          <p>No vendors available yet. Check back soon!</p>
+          <p>No {category} vendors available yet. Check back soon!</p>
         </div>
       </div>
-    );
+    )
   }
 
   return (
     <div className="all-vendors-page">
       <div className="category_grid">
         {loading
-          ? skeletonArray.map((_, i) => (
-              <VendorCardSkeleton key={`sk-${i}`} />
-            ))
+          ? skeletonArray.map((_, i) => <VendorCardSkeleton key={`sk-${i}`} />)
           : currentVendors.map((vendor) => (
               <div key={vendor._id} className="fade-in">
                 <VendorCard
@@ -143,7 +140,7 @@ const AllVendors = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default AllVendors;
+export default CategoryVendors

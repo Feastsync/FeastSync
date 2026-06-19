@@ -13,12 +13,21 @@ const VendorCard = (props) => {
   const { isLoggedIn, accountType } = useSelector((state) => state.auth)
   const isLoggedInUser = isLoggedIn && accountType === 'user'
 
-const handleProtectedNav = (targetPath) => {
-  if (!isLoggedInUser) {
-    navigate("/vendordashboard", { state: { from: targetPath } })
+// const handleProtectedNav = (targetPath) => {
+//   if (!isLoggedInUser) {
+//     navigate("/vendordashboard", { state: { from: targetPath } })
+//     return
+//   }
+//   navigate(targetPath)
+// }
+
+const handleBookNow = (e) => {
+  e.stopPropagation()
+  if (!isLoggedIn) {
+    navigate("/onboarding", { state: { from: `/vendor/${props.slug}` } })
     return
   }
-  navigate(targetPath)
+  navigate(`/vendor/${props.slug}`) 
 }
 
 const handleWishlist = (e) => {
@@ -26,15 +35,14 @@ const handleWishlist = (e) => {
   if (!isLoggedInUser) {
     navigate("/onboarding", { state: { from: `/vendor/${props.slug}` } })
     return
-  }
+  } 
   setIsLiked(!isLiked)
 }
 
-  const goToVendor = () => {
-    if (!props.slug) return
-    const vendorPath = `/vendor/${props.slug}`
-    handleProtectedNav(vendorPath)
-  }
+ const goToVendor = () => {
+  if (!props.slug) return
+  navigate(`/vendor/${props.slug}`) 
+}
 
   // const handleWishlist = (e) => {
   //   e.stopPropagation()
@@ -92,7 +100,7 @@ const handleWishlist = (e) => {
           </div>
           <Button 
             className="btn_purple" 
-            onClick={goToVendor} 
+            onClick={handleBookNow}  
             btnText="Book now" 
           />
         </div>

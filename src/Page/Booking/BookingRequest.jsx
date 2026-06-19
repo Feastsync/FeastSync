@@ -16,6 +16,7 @@ const formatRemaining = (ms) => {
 
 const BookingRequestPage = () => {
   const { requestId } = useParams();
+  
   const navigate = useNavigate();
 
   const [data, setData] = useState(null);
@@ -24,25 +25,22 @@ const BookingRequestPage = () => {
   const [remainingMs, setRemainingMs] = useState(null);
   const [actionLoading, setActionLoading] = useState(false);
 
- 
-  useEffect(() => {
-    const fetchBookingRequest = async () => {
-      try {
-        setLoading(true);
-        const res = await api.get(`/bookings/vendor/${requestId}`);
-        console.log("object", res)
-        setData(res.data);
-      } catch (err) {
-        setError(err.response?.data?.message || err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    if (requestId) {
-      fetchBookingRequest();
+useEffect(() => {
+  const fetchBookingRequest = async () => {
+    try {
+      setLoading(true);
+      const res = await api.get(`/bookings/booking-details/${requestId}`); 
+      console.log("BOOKING DATA:", res.data); 
+      setData(res.data);
+    } catch (err) {
+      setError(err.response?.data?.message || err.message);
+    } finally {
+      setLoading(false);
     }
-  }, [requestId]);
+  };
+  if (requestId) fetchBookingRequest();
+}, [requestId]);
 
 
   useEffect(() => {
@@ -64,8 +62,7 @@ const BookingRequestPage = () => {
       setActionLoading(true);
       await api.put(`/bookings/accept/${requestId}`);
       alert("Booking accepted.");
-      const res = await api.get(`/bookings/vendor/${requestId}`);
-      console.log("accept", res)
+      const res = await api.get(`/bookings/booking-details/${requestId}`)
       setData(res.data);
     } catch (err) {
       alert(err.response?.data?.message || err.message);
@@ -80,7 +77,7 @@ const BookingRequestPage = () => {
       setActionLoading(true);
       await api.put(`/bookings/reject/${requestId}`);
       alert("Booking declined.");
-      const res = await api.get(`/bookings/vendor/${requestId}`);
+      const res = await api.get(`/bookings/booking-details/${requestId}`)
       setData(res.data);
     } catch (err) {
       alert(err.response?.data?.message || err.message);
@@ -114,7 +111,7 @@ const BookingRequestPage = () => {
   }
 
   const {
-    djName,
+    // djName,
     location,
     avatarUrl,
     kycVerified,
@@ -129,8 +126,11 @@ const BookingRequestPage = () => {
     packagePrice,
     packageIncludes,
     organiserNote,
-    bookingStatus,
+  // bookingStatus,
+  
   } = data;
+  const bookingStatus = data?.status ?? data?.bookingStatus;
+   const djName = data?.djName ?? data?.organizer?.name;
 
   return (
     <div className="booking-page">
