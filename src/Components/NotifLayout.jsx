@@ -20,27 +20,27 @@ export default function NotifLayout({ notifications, currentPage, totalPages, on
   const dispatch = useDispatch();
   const { actionLoading } = useSelector((state) => state.auth);
 
-  const newCount = notifications.filter((n) =>!n.read).length;
+  const newCount = notifications.filter((n) => !n.isRead).length;
 
   const handleMarkAllRead = () => {
     dispatch(markAllNotificationsRead());
   };
-
 const handleNotifClick = (notif) => {
-  console.log('Clicked notif:', notif);
-  
   if (!notif.isRead) {
-    dispatch(markNotificationRead(notif._id));
+    dispatch(markNotificationRead(notif.id));
   }
-  const id = notif.requestId || notif.booking?.id || notif.bookingId;
   
-  if (id) {
-    navigate(`/request/${id}`); 
+  // You need THIS line, not requestId
+  // const bookingId = notif.booking?.id || notif.bookingId;
+  const bookingId = notif.booking?._id || notif.requestId;
+
+  
+  if (bookingId) {
+    navigate(`/request/${bookingId}`); 
   } else {
-    console.error('No booking ID found:', notif);
+    console.error('No booking ID found in notification:', notif);
   }
 };
-
 
   return (
     <div className="notif-page">
@@ -60,7 +60,7 @@ const handleNotifClick = (notif) => {
           <div>
             <h1 className="notif-title">Notifications</h1>
             <p className="notif-count">
-              {newCount} new message{newCount!== 1? "s" : ""}
+              {newCount} new message{newCount !== 1 ? "s" : ""}
             </p>
           </div>
         </div>
@@ -78,7 +78,7 @@ const handleNotifClick = (notif) => {
           <button
             key={tab.path}
             className={`notif-tab ${
-              location.pathname === tab.path? "notif-tab--active" : ""
+              location.pathname === tab.path ? "notif-tab--active" : ""
             }`}
             onClick={() => navigate(tab.path)}
           >
@@ -88,23 +88,24 @@ const handleNotifClick = (notif) => {
       </div>
 
       <div className="notif-list">
-        {notifications.length === 0? (
+        {notifications.length === 0 ? (
           <p className="notif-empty">No notifications here yet.</p>
         ) : (
           notifications.map((notif) => (
             <div
-              className={`notif-item ${!notif.read? "notif-item--new" : ""}`}
-              key={notif._id}
+              // FIX 3: Use notif.id. Fallback to requestId if id is missing
+              key={notif.id || notif.requestId}
+              className={`notif-item ${!notif.isRead ? "notif-item--new" : ""}`}
               onClick={() => handleNotifClick(notif)}
             >
               <div className="notif-item-left">
-                {!notif.read && <span className="notif-dot" />}
+                {!notif.isRead && <span className="notif-dot" />}
               </div>
               <div className="notif-item-body">
                 {notif.title && (
                   <div className="notif-item-title-row">
                     <span className="notif-item-title">{notif.title}</span>
-                    {!notif.read && <span className="notif-badge">New</span>}
+                    {!notif.isRead && <span className="notif-badge">New</span>}
                   </div>
                 )}
                 <p className="notif-item-msg">{notif.message}</p>

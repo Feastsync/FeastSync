@@ -53,25 +53,14 @@ import BookingNotifications from "./Page/NotitficationsPages/BookingNotification
 import PaymentNotifications from "./Page/NotitficationsPages/PaymentNotifications.jsx"
 import ReviewsNotification from "./Page/NotitficationsPages/ReviewsNotifications.jsx"
 import NotificationsWrapper from "./Page/NotitficationsPages/NotificationsWrapper.jsx";
-const OnboardingPage = () => {
-  const { vendorInfo } = useSelector((state) => state.auth);
-  const vendorName = vendorInfo?.stageName || vendorInfo?.firstName || "";
-  return (
-    <>
-      <Vendordashboard />
-      <VendorOnboarding
-        isOpen={true}
-        vendorName={vendorName}
-        onClose={() => (window.location.href = "/vendordashboard")}
-      />
-    </>
-  );
-};
+import { TokenValidator, OnboardingPage  } from "./Components/Highfunction.jsx";
+
 
 const App = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <TokenValidator />
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
@@ -132,7 +121,8 @@ const App = () => {
         <Route path="vendormediagallery" element={<Vendormediagallery />} />
         <Route path="/vendor/kyc" element={<VendorKYC />} />
         <Route path="/pricingstep" element={<PricingStep />} />
-         <Route path="/requestId/:requestId" element={<BookingRequest />} />
+        <Route path="/request/:requestId" element={<BookingRequest />} />
+         {/* <Route path="/requestId/:requestId" element={<BookingRequest />} /> */}
         {/* <Route path="Calenderrr" element={<CalendarStep />} /> */}
         <Route path="*" element={<Error404 />} />
       </Routes>

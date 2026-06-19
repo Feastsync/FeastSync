@@ -108,6 +108,11 @@ const handleCopyLink = async () => {
   }
 };
 
+console.log("isOwner:", isOwner)
+console.log("isLoggedIn:", isLoggedIn)
+console.log("accountType:", accountType)
+console.log("displayVendor:", displayVendor?._id)
+console.log("vendorInfo:", vendorInfo?._id)
 
   const basePackages = [
     { id: "basic", title: "Basic Package", price: "₦0", highlights: [] },
@@ -116,9 +121,9 @@ const handleCopyLink = async () => {
   ];
 
   const displayPackages = basePackages.map((base) => {
-   const saved = displayVendor?.pricingId?.find(
-  (p) => p.packageName?.toLowerCase() === base.id
-);
+const saved = displayVendor?.pricingId?.find(
+  (p) => p.packageName?.toLowerCase() === base.title.toLowerCase()
+)
     //  console.log(displayVendor?.pricingPackages)
 
     if (!saved) return base;
