@@ -1,12 +1,14 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import useAuth from '../lib/Myauth'
 import Button from '../Props/Button'
 import "./Css/Readytogetstarted.css"
 import { useNavigate } from 'react-router-dom'
 
 const Readytogetstarted = () => {
   const Nav = useNavigate()
-  const { isLoggedIn } = useSelector((state) => state.auth)
+  const { isLoggedIn, isVendor } = useAuth()
+
+  const isLoggedInUser = isLoggedIn && !isVendor
 
   return (
     <section className='hero-getStarted'>
@@ -16,8 +18,8 @@ const Readytogetstarted = () => {
         <p>Whether you are planning an event or ready to list your talent <span> — FeastSync </span> is built for you.</p>
       </article>
       
-      <div className={`hero-getStarted-btn-container ${isLoggedIn ? 'centered' : ''}`}>
-        {!isLoggedIn && (
+      <div className={`hero-getStarted-btn-container ${isLoggedInUser ? 'centered' : ''}`}>
+        {!isLoggedInUser && (
           <Button 
             onClick={() => Nav("/onboarding")} 
             className="hero-getStarted-btn1" 

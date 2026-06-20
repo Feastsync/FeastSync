@@ -23,7 +23,7 @@ const Epknorating = () => {
   const [pricingError, setPricingError]                 = useState(null)
   const [selectedPackage, setSelectedPackage]           = useState(null)
 
-  /* ── fetch pricing ──────────────────────────────────── */
+
   useEffect(() => {
     const fetchPricing = async () => {
       try {
@@ -49,7 +49,7 @@ const Epknorating = () => {
     if (vendorId) fetchPricing()
   }, [vendorId])
 
-  /* ── onboarding flow ────────────────────────────────── */
+
   useEffect(() => {
     if (location.state?.showOnboarding) {
       setShowOnboarding(true)
@@ -64,7 +64,6 @@ const Epknorating = () => {
     setExpandedCards((prev) => ({ ...prev, [id]: !prev[id] }))
   }
 
-  /* ── skeleton card ──────────────────────────────────── */
   const PricingSkeleton = () => (
     <div className="Epknorating-pricing-card Epknorating-skeleton-card">
       <div className="Epknorating-skel-line Epknorating-skel-title shimmer" />

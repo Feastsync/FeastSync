@@ -1,23 +1,30 @@
-import React, { useState } from "react";
-import { FiX, FiChevronDown } from "react-icons/fi";
-import { message } from "antd";
+import React, { useState, useEffect } from "react";
+import { FiChevronDown } from "react-icons/fi";
+import { message, notification } from "antd";
+import { createPricing, getAllPricing } from "../../../Redux/features/authslice";
+import { useDispatch, useSelector } from "react-redux";
 import "./css/PricingStep.css";
 
 const PricingStep = ({
   onNext,
   onBack,
-  onSkip,
-  percentComplete = 75,
+  percentComplete = 80,
   profileData,
   setProfileData,
 }) => {
+  const dispatch = useDispatch();
+  const { pricingPackages } = useSelector((s) => s.auth);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const pricing = profileData?.pricing || {
-    startingPrice: "",
-    packageName: "",
-    packageDescription: "",
-  };
+  const {
+    startingPrice = "",
+    packageName = "",
+    packageDescription = "",
+  } = profileData?.pricing || {};
+
+  useEffect(() => {
+    dispatch(getAllPricing());
+  }, [dispatch]);
 
   const handleChange = (field, value) => {
     setProfileData((prev) => ({
@@ -29,28 +36,94 @@ const PricingStep = ({
     }));
   };
 
-  const handleContinue = async () => {
-    if (
-      !pricing.startingPrice ||
-      !pricing.packageName ||
-      !pricing.packageDescription
-    ) {
-      return message.warning("Please fill in all fields before continuing.");
+  const handleSave = async () => {
+    const {
+      startingPrice,
+      packageName,
+      packageDescription,
+    } = profileData?.pricing || {};
+
+    if (!startingPrice || !packageName || !packageDescription) {
+      return message.warning("Please fill in all fields before saving.");
     }
 
-    setIsSubmitting(true);
+    const alreadyExists = pricingPackages?.some(
+      (pkg) =>
+        (pkg.packageName || pkg.pacakageName || "").toLowerCase() ===
+        packageName.toLowerCase()
+    );
 
-    const sanitizedPrice = pricing.startingPrice.replace(/,/g, "").trim();
+    if (alreadyExists) {
+      return notification.warning({
+        message: "Package Already Added",
+        description: `${packageName} has already been added. Please select another package.`,
+        placement: "topRight",
+      });
+    }
+
+    try {
+      await dispatch(
+        createPricing({
+          packagePrice: startingPrice,
+          packageDescription,
+          packageName,
+        })
+      ).unwrap();
+
+      await dispatch(getAllPricing());
+
+      notification.success({
+        message: "Package Saved Successfully",
+        description:
+          packageName === "Basic Package"
+            ? "Basic Package saved. Please select Standard Package next."
+            : packageName === "Standard Package"
+            ? "Standard Package saved. Please select Premium Package next."
+            : "Premium Package saved. You can now continue to the next step.",
+        placement: "topRight",
+        duration: 5,
+      });
+
+      setProfileData((prev) => ({
+        ...prev,
+        pricing: {
+          startingPrice: "",
+          packageName: "",
+          packageDescription: "",
+        },
+      }));
+    } catch (error) {
+      notification.error({
+        message: "Save Failed",
+        description: error || "Unable to save package. Please try again.",
+        placement: "topRight",
+      });
+    }
+  };
+
+  const handleContinue = () => {
+    const savedNames = (pricingPackages || []).map((pkg) =>
+      (pkg.packageName || pkg.pacakageName || "").toLowerCase()
+    );
+
+    // Match exactly what backend expects but compare lowercase
+    const requiredPackages = ["Basic Package", "Standard Package", "Premium Package"];
+
+    const missingPackages = requiredPackages.filter(
+      (pkg) => !savedNames.includes(pkg.toLowerCase())
+    );
+
+    if (missingPackages.length > 0) {
+      return message.warning(
+        `Kindly fill in all packages. Missing: ${missingPackages.join(", ")}`
+      );
+    }
 
     setProfileData((prev) => ({
       ...prev,
-      pricing: {
-        ...prev.pricing,
-        startingPrice: sanitizedPrice,
-      },
+      pricingPackages,
     }));
 
-    setIsSubmitting(false);
     onNext();
   };
 
@@ -60,19 +133,11 @@ const PricingStep = ({
         <div className="ps-header-top">
           <div>
             <h2>Pricing & Packages</h2>
-            <p className="ps-subtext">Set your starting price</p>
+            <p className="ps-subtext">Set your three (3) starting prices</p>
           </div>
-
-          <button className="ps-close" onClick={onSkip}>
-            <FiX size={22} />
-          </button>
         </div>
-
         <div className="ps-progress-bar">
-          <div
-            className="ps-progress-fill"
-            style={{ width: `${percentComplete}%` }}
-          />
+          <div className="ps-progress-fill" style={{ width: `${percentComplete}%` }} />
         </div>
       </div>
 
@@ -84,10 +149,8 @@ const PricingStep = ({
             <input
               type="text"
               placeholder="50,000"
-              value={pricing.startingPrice}
-              onChange={(e) =>
-                handleChange("startingPrice", e.target.value)
-              }
+              value={startingPrice}
+              onChange={(e) => handleChange("startingPrice", e.target.value)}
             />
           </div>
         </div>
@@ -96,17 +159,14 @@ const PricingStep = ({
           <label>Package Name</label>
           <div className="ps-select-wrap">
             <select
-              value={pricing.packageName}
-              onChange={(e) =>
-                handleChange("packageName", e.target.value)
-              }
+              value={packageName}
+              onChange={(e) => handleChange("packageName", e.target.value)}
             >
               <option value="">Select package</option>
-              <option value="basic">Basic Package</option>
-              <option value="standard">Standard Package</option>
-              <option value="premium">Premium Package</option>
+              <option value="Basic Package">Basic Package</option>
+              <option value="Standard Package">Standard Package</option>
+              <option value="Premium Package">Premium Package</option>
             </select>
-
             <FiChevronDown className="ps-select-icon" />
           </div>
         </div>
@@ -115,25 +175,61 @@ const PricingStep = ({
           <label>Package Description</label>
           <textarea
             rows={5}
-            placeholder="What’s included..."
-            value={pricing.packageDescription}
-            onChange={(e) =>
-              handleChange("packageDescription", e.target.value)
-            }
+            placeholder="Whats included....."
+            value={packageDescription}
+            onChange={(e) => handleChange("packageDescription", e.target.value)}
           />
         </div>
+
+        {pricingPackages && pricingPackages.length > 0 && (
+          <div className="ps-saved-list" style={{ marginTop: "20px", paddingTop: "15px", borderTop: "1px dashed #e8e8e8" }}>
+            <h4 style={{ margin: "0 0 10px 0", fontSize: "14px", color: "#333" }}>
+              Saved Packages ({pricingPackages.length}/3)
+            </h4>
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+              {pricingPackages.map((pkg, idx) => {
+                const name = pkg.packageName || pkg.pacakageName || "";
+                const price = pkg.packagePrice || "";
+                return (
+                  <div
+                    key={idx}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      padding: "10px",
+                      backgroundColor: "#f9f9f9",
+                      borderRadius: "6px",
+                      border: "1px solid #eee",
+                    }}
+                  >
+                    <div>
+                      <strong style={{ fontSize: "13px" }}>{name}</strong>
+                      <p style={{ margin: "2px 0 0 0", fontSize: "12px", color: "#666", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: "250px" }}>
+                        {pkg.packageDescription}
+                      </p>
+                    </div>
+                    <span style={{ fontWeight: "600", color: "#1890ff", fontSize: "13px" }}>
+                      ₦{Number(price).toLocaleString()}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="ps-footer">
-        <button className="ps-btn-skip" onClick={onSkip}>
-          Skip for Now
-        </button>
-
+        <div className="ps-footer-left">
+          <button className="ps-btn-save" onClick={handleSave}>
+            Save
+          </button>
+        </div>
         <div className="ps-footer-right">
           <button className="ps-btn-back" onClick={onBack}>
             Back
           </button>
-
           <button
             className="ps-btn-continue"
             onClick={handleContinue}

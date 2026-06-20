@@ -1,9 +1,7 @@
-/* Category Step - Full Width Card List */
 .ds-category-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: 20px;
   width: 100%;
 }
 
@@ -28,7 +26,7 @@
 }
 
 .ds-category-row.selected {
-  border-color: #4f46e5;
+  border-color: #5A1F8A;
   background: #f5f3ff;
 }
 
@@ -57,8 +55,8 @@
 }
 
 .ds-category-row.selected .ds-category-checkbox {
-  background: #4f46e5;
-  border-color: #4f46e5;
+  background: #5A1F8A;
+  border-color: #5A1F8A;
 }
 
 .ds-category-content {
@@ -91,11 +89,11 @@
 .ds-btn-upload:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  background: #4f46e5;
+  background: #5A1F8A;
 }
 
 .ds-btn-upload:disabled:hover {
-  background: #4f46e5;
+  background: #5A1F8A;
 }
 
 /* Mobile */

@@ -1,8 +1,7 @@
 import React from "react";
 import "./css/Welcome.css";
 
-const WelcomeModal = ({ vendorName = "", onContinue, onSkip }) => {
-  // Extract display name (stageName) from vendorName
+const WelcomeModal = ({ vendorName = "", onContinue }) => {
   const stageName =
     typeof vendorName === "string" && vendorName.trim()
       ? vendorName.trim().split(/\s+/)[0]
@@ -23,10 +22,6 @@ const WelcomeModal = ({ vendorName = "", onContinue, onSkip }) => {
         onClick={onContinue}
       >
         Continue verification
-      </button>
-
-      <button type="button" className="welcome-btn-text" onClick={onSkip}>
-        Skip for now
       </button>
     </div>
   );

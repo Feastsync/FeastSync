@@ -4,10 +4,8 @@
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
   display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 99999;
-  padding: 40px 16px;
+  padding: 10px 16px;
   overflow-y: auto;
 }
 
@@ -15,12 +13,13 @@
   background: #ffffff;
   border-radius: 16px;
   width: 90%;
-  max-width: 580px;
+  max-width: 480px;
   height: 85vh;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
   display: flex;
+  margin-top: 70px;
+  margin-left: 200px;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .ds-header {

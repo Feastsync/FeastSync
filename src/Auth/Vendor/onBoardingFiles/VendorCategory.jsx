@@ -1,31 +1,32 @@
 import { useState, useEffect } from "react";
 import { FiX, FiCheck } from "react-icons/fi";
+import { message } from "antd";
 import "./css/VendorCategory.css";
 
 const categories = [
   {
     id: "dj",
-    name: "DJs",
+    name: "DJ",
     desc: "Professional music mixing for events and parties",
   },
   {
     id: "liveband",
-    name: "Livebands",
+    name: "Liveband",
     desc: "Live musical performances for weddings and events",
   },
   {
     id: "mc",
-    name: "MCs",
+    name: "MC",
     desc: "Master of ceremonies to host and coordinate events",
   },
   {
     id: "photographer",
-    name: "Photographers",
+    name: "Photographer",
     desc: "Capture memorable moments with professional photography",
   },
   {
     id: "videographer",
-    name: "Videographers",
+    name: "Videographer",
     desc: "Record and produce high-quality event videos",
   },
 ];
@@ -33,7 +34,6 @@ const categories = [
 const CategoryStep = ({
   onNext,
   onBack,
-  onSkip,
   percentComplete = 20,
   selectedCategory,
   setSelectedCategory,
@@ -47,33 +47,20 @@ const CategoryStep = ({
 
   const handleSelect = (value) => {
     setLocalSelected(value);
-
-    if (setSelectedCategory) {
-      setSelectedCategory(value);
-    }
-
+    if (setSelectedCategory) setSelectedCategory(value);
     if (setProfileData) {
-      setProfileData((prev) => ({
-        ...prev,
-        category: value,
-      }));
+      setProfileData((prev) => ({ ...prev, category: value }));
     }
   };
 
   const handleContinue = () => {
-    if (!localSelected) return;
-
-    if (setSelectedCategory) {
-      setSelectedCategory(localSelected);
+    if (!localSelected) {
+      return message.warning("Please select a category before continuing.");
     }
-
+    if (setSelectedCategory) setSelectedCategory(localSelected);
     if (setProfileData) {
-      setProfileData((prev) => ({
-        ...prev,
-        category: localSelected,
-      }));
+      setProfileData((prev) => ({ ...prev, category: localSelected }));
     }
-
     onNext();
   };
 
@@ -83,21 +70,12 @@ const CategoryStep = ({
         <div className="ds-header-top">
           <div>
             <h2>Vendor Category</h2>
-            <p className="ds-subtext">
-              Select what best describes your service
-            </p>
+            <p className="ds-subtext">Select what best describes your service</p>
           </div>
-
-          <button className="ds-close" onClick={onSkip}>
-            <FiX size={22} />
-          </button>
         </div>
 
         <div className="ds-progress-bar">
-          <div
-            className="ds-progress-fill"
-            style={{ width: `${percentComplete}%` }}
-          />
+          <div className="ds-progress-fill" style={{ width: `${percentComplete}%` }} />
         </div>
       </div>
 
@@ -110,9 +88,7 @@ const CategoryStep = ({
           {categories.map((cat) => (
             <label
               key={cat.id}
-              className={`ds-category-row ${
-                localSelected === cat.id ? "selected" : ""
-              }`}
+              className={`ds-category-row ${localSelected === cat.id ? "selected" : ""}`}
             >
               <input
                 type="radio"
@@ -122,13 +98,9 @@ const CategoryStep = ({
                 onChange={() => handleSelect(cat.id)}
                 className="ds-category-input"
               />
-
               <span className="ds-category-checkbox">
-                {localSelected === cat.id && (
-                  <FiCheck size={14} strokeWidth={3} />
-                )}
+                {localSelected === cat.id && <FiCheck size={14} strokeWidth={3} />}
               </span>
-
               <div className="ds-category-content">
                 <span className="ds-category-title">{cat.name}</span>
                 <span className="ds-category-desc">{cat.desc}</span>
@@ -139,15 +111,15 @@ const CategoryStep = ({
       </div>
 
       <div className="ds-footer">
-        <button className="ds-btn-skip" onClick={onSkip}>
-          Skip for Now
-        </button>
-
         <div className="ds-footer-right">
-          <button className="ds-btn-back" onClick={onBack}>
+          <button
+            className="ds-btn-back"
+            onClick={onBack}
+            disabled={true}
+            style={{ opacity: 0.3, cursor: "not-allowed" }}
+          >
             Back
           </button>
-
           <button
             className="ds-btn-upload"
             onClick={handleContinue}

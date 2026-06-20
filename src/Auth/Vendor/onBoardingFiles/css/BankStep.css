@@ -18,10 +18,12 @@
 }
 
 .bank-modal {
-  background: #ffffff;
+  background: white;
   border-radius: 16px;
+  margin-top: 70px;
+  margin-left: 210px;
   width: 100%;
-  max-width: 680px;
+  max-width: 480px;
   max-height: 90vh;
   box-shadow: none;
   display: flex;
@@ -105,7 +107,7 @@
   background: #fff4f4;
   border-radius: 8px;
   padding: 16px;
-  margin-bottom: 32px;
+  margin-bottom: 20px;
 }
 
 .bank-warning-bar {
