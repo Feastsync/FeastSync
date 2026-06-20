@@ -1,3 +1,7 @@
+/* ===========================
+   USERHEADER — BASE (DESKTOP)
+   =========================== */
+
 .userheader {
   width: 100%;
   height: 12.5vh;
@@ -21,11 +25,13 @@
   gap: 20px;
 }
 
+/* LEFT */
 .userheader_left {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
+  cursor: pointer;
 }
 
 .userheader_logo_img {
@@ -40,13 +46,14 @@
   font-weight: 600;
 }
 
+/* MIDDLE — nav links */
 .userheader_middle {
   display: flex;
   align-items: center;
   height: 100%;
   flex: 1;
   justify-content: center;
-  position: sticky;
+  gap: 2px;
 }
 
 .userheader_nav_link {
@@ -55,25 +62,23 @@
   font-size: 15px;
   font-weight: 500;
   padding: 8px 16px;
+  height: 40px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 40px;
   border-radius: 6px;
   position: relative;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
+  transition: background 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
 }
 
 .userheader_nav_link:hover {
-  background-color: #a281be;
-  color: #ffffff;
+  background-color: #f0e9ff;
+  color: var(--primary-color);
 }
 
 .userheader_nav_link.active {
-  font-weight: 500;
-  background-color: transparent;
   color: var(--primary-color);
+  font-weight: 600;
 }
 
 .userheader_nav_link.active::after {
@@ -87,22 +92,32 @@
   border-radius: 2px;
 }
 
-.userheader_nav_link.active:hover {
-  background-color: #a281be;
-  color: #ffffff;
-}
-
+/* RIGHT */
 .userheader_right {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 8px;
   flex-shrink: 0;
 }
 
-.userheader_notification_wrapper {
+/* Icon buttons (bell, chat) */
+.userheader_icon_btn {
+  background: none;
+  border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  color: var(--primary-color);
+  transition: background 0.15s ease;
+  padding: 0;
+}
+
+.userheader_icon_btn:hover {
+  background-color: #f0e9ff;
 }
 
 .userheader_bell_icon {
@@ -111,11 +126,34 @@
   color: var(--primary-color);
 }
 
-.userheader_profile_wrapper {
+.userheader_chat_icon {
+  width: 22px;
+  height: 22px;
+}
+
+/* ===========================
+   AVATAR + DROPDOWN
+   =========================== */
+.userheader_avatar_wrapper {
+  position: relative;
+}
+
+.userheader_avatar_btn {
+  background: none;
+  border: none;
+  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 6px;
-  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 30px;
+  border: 1.5px solid transparent;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.userheader_avatar_btn:hover {
+  background-color: #f0e9ff;
+  border-color: #d4bfff;
 }
 
 .userheader_avatar_circle {
@@ -127,271 +165,482 @@
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  position: relative;
   font-size: 14px;
+  font-weight: 700;
+  position: relative;
+  flex-shrink: 0;
 }
 
 .userheader_status_dot {
-  width: 15px;
-  height: 15px;
-  background-color: #00cc44;
+  width: 13px;
+  height: 13px;
+  background-color: #22c55e;
   border-radius: 50%;
   position: absolute;
-  top: 50%;
-  right: -4px;
+  bottom: 1px;
+  right: -1px;
+  border: 2px solid #ffffff;
 }
 
-.userheader_profile_name {
-  font-size: 16px;
-  font-weight: 500;
-  color: #333333;
-  margin-top: 3px;
-  margin-left: 3px;
-  white-space: nowrap;
+.userheader_chevron {
+  width: 15px;
+  height: 15px;
+  color: #555;
+  transition: transform 0.2s ease;
 }
 
-.userheader-logout-btn {
-  width: 75px;
-  height: 40px;
+.userheader_chevron.open {
+  transform: rotate(180deg);
+}
+
+/* Dropdown panel */
+.userheader_dropdown {
+  position: absolute;
+  top: calc(100% + 16px);
+  right: 0;
+  width: 250px;
+  background: #ffffff;
+  border: 1px solid #e0d8f5;
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(100, 60, 180, 0.15), 0 2px 8px rgba(0,0,0,0.08);
+  overflow: visible;
+  z-index: 1000;
+  animation: dropdown_in 0.18s ease;
+}
+
+/* Arrow pointer pointing up to the avatar */
+.userheader_dropdown::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: 22px;
+  width: 14px;
+  height: 14px;
+  background: #ffffff;
+  border-left: 1px solid #e0d8f5;
+  border-top: 1px solid #e0d8f5;
+  transform: rotate(45deg);
+  border-radius: 2px 0 0 0;
+}
+
+/* Clip inner content so the arrow stays visible */
+.userheader_dropdown_inner {
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+@keyframes dropdown_in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.userheader_dropdown_profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  background: #faf8ff;
+}
+
+.userheader_dropdown_avatar {
+  width: 38px;
+  height: 38px;
   background-color: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.userheader_dropdown_avatar_dot {
+  width: 10px;
+  height: 10px;
+  background: #22c55e;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  right: -1px;
+  border: 2px solid #faf8ff;
+}
+
+.userheader_dropdown_name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  line-height: 1.3;
+}
+
+.userheader_dropdown_email {
+  font-size: 12px;
+  color: #999;
+  margin-top: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 140px;
+}
+
+.userheader_dropdown_divider {
+  height: 1px;
+  background: #f0f0f0;
+}
+
+.userheader_dropdown_item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  background: none;
   border: none;
-  border-radius: 4px;
-  color: white;
-  font-size: 15px;
+  cursor: pointer;
+  font-size: 14px;
   font-weight: 500;
-  cursor: pointer;
+  color: #333;
+  text-align: left;
+  transition: background 0.12s ease;
 }
 
-.userheader-logout-btn:hover {
-  border: 1px solid var(--primary-color);
-  background-color: transparent;
+.userheader_dropdown_item:hover {
+  background-color: #f5f0ff;
   color: var(--primary-color);
 }
 
-
-.userheader-logout-mobile {
-  display: none;
+.userheader_dropdown_logout {
+  color: #e53e3e;
 }
 
-.userheader-logout-desktop {
-  display: block;
+.userheader_dropdown_logout:hover {
+  background-color: #fff5f5;
+  color: #c53030;
 }
 
-.menu_icon {
-  display: none;
-  font-size: 28px;
+/* ===========================
+   LOGOUT CONFIRMATION MODAL
+   =========================== */
+.userheader_modal_backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+  animation: backdrop_in 0.15s ease;
+}
+
+@keyframes backdrop_in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.userheader_modal {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  animation: modal_in 0.18s ease;
+}
+
+@keyframes modal_in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.userheader_modal_icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #fff5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e53e3e;
+  margin: 0 auto 16px;
+}
+
+.userheader_modal_title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 8px;
+}
+
+.userheader_modal_text {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 24px;
+  line-height: 1.5;
+}
+
+.userheader_modal_actions {
+  display: flex;
+  gap: 10px;
+}
+
+.userheader_modal_cancel {
+  flex: 1;
+  height: 42px;
+  border: 1.5px solid #e0e0e0;
+  background: #ffffff;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
   cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.userheader_modal_cancel:hover {
+  background: #f5f5f5;
+  border-color: #ccc;
+}
+
+.userheader_modal_confirm {
+  flex: 1;
+  height: 42px;
+  border: none;
+  background: #e53e3e;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.userheader_modal_confirm:hover {
+  background: #c53030;
+}
+
+/* ===========================
+   HAMBURGER (mobile only)
+   =========================== */
+.userheader_hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 38px;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
   color: var(--primary-color);
+  font-size: 20px;
+  padding: 0;
+  transition: background 0.15s ease;
 }
 
-
-@media screen and (max-width: 1200px) {
-  .userheader_wrapper {
-    width: 95%;
-    gap: 15px;
-  }
-
-  .userheader_middle {
-    gap: 5px;
-  }
-
-  .userheader_nav_link {
-    padding: 8px 12px;
-    font-size: 14px;
-  }
-
-  .userheader_right {
-    gap: 16px;
-  }
-
-  .userheader_avatar_circle {
-    width: 42px;
-    height: 42px;
-  }
+.userheader_hamburger:hover {
+  background-color: #f0e9ff;
 }
 
+/* Desktop-only helper */
+.userheader_desktop_only {
+  display: flex;
+}
 
+/* ===========================
+   MOBILE DRAWER STYLES
+   =========================== */
+
+/* Mobile profile card — hidden on desktop */
+.userheader_mobile_profile {
+  display: none;
+}
+
+/* Mobile action buttons — hidden on desktop */
+.userheader_mobile_actions {
+  display: none;
+}
+
+/* Mobile overlay */
+.userheader_overlay {
+  display: none;
+}
+
+/* ===========================
+   RESPONSIVE: ≤ 768px
+   =========================== */
 @media screen and (max-width: 768px) {
   .userheader {
-    height: 70px;
-    padding: 0;
+    height: 60px;
   }
 
-
   .userheader_wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 90%;
-    height: 100%;
-    position: relative;
+    width: 92%;
     gap: 0;
   }
 
-  .userheader_left {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .userheader_logo_img {
-    height: 38px;
-  }
-
-  .userheader_logo_text {
-    font-size: 17px;
-  }
-
- 
-  .userheader_profile_name {
-    display: none;
-  }
-
- 
-  .userheader_right {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 12px;
-    border-top: none;
-    padding-top: 0;
-    width: auto;
-  }
-
-  /* hide desktop logout on mobile */
-  .userheader-logout-desktop {
-    display: none;
-  }
-
-
-  .menu_icon {
-    display: flex !important;
-    align-items: center;
-    font-size: 24px;
-    cursor: pointer;
-    color: var(--primary-color);
-    position: static;
-    transform: none;
-  }
-
-  
-  .userheader_middle {
+  /* Hide desktop-only elements */
+  .userheader_desktop_only {
     display: none !important;
+  }
+
+  /* Show hamburger */
+  .userheader_hamburger {
+    display: flex;
+  }
+
+  /* MIDDLE becomes a slide-down drawer */
+  .userheader_middle {
+    display: none;
     position: fixed;
-    top: 70px;
+    top: 60px;
     left: 0;
-    width: 100%;
-    background-color: #ffffff;
+    right: 0;
+    background: #ffffff;
     flex-direction: column;
     align-items: stretch;
-    z-index: 1000;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    z-index: 998;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    border-top: 1px solid #f0f0f0;
+    overflow-y: auto;
+    max-height: calc(100vh - 60px);
   }
-
 
   .userheader_middle.active {
-    display: flex !important;
+    display: flex;
   }
 
+  /* Mobile profile card */
+  .userheader_mobile_profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    background: #faf8ff;
+  }
+
+  .userheader_mobile_avatar {
+    width: 44px;
+    height: 44px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .userheader_mobile_avatar_dot {
+    width: 11px;
+    height: 11px;
+    background: #22c55e;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 0;
+    right: -1px;
+    border: 2px solid #faf8ff;
+  }
+
+  .userheader_mobile_name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  .userheader_mobile_status {
+    font-size: 12px;
+    color: #22c55e;
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  /* Nav links in drawer */
   .userheader_nav_link {
     width: 100%;
-    height: 55px;
+    height: 50px;
     justify-content: flex-start;
-    font-size: 16px;
     padding: 0 20px;
-    border-bottom: 1px solid #f0f0f0;
     border-radius: 0;
+    border-bottom: 1px solid #f5f5f5;
+    font-size: 15px;
+    color: #333;
   }
 
   .userheader_nav_link:hover {
-    background-color: transparent;
+    background-color: #f5f0ff;
     color: var(--primary-color);
   }
 
-  /* logout inside dropdown */
-  .userheader-logout-mobile {
-    display: block;
+  .userheader_nav_link.active::after {
+    display: none;
+  }
+
+  /* Mobile action buttons section */
+  .userheader_mobile_actions {
+    display: flex;
+    flex-direction: column;
+    border-top: 6px solid #f5f5f5;
+  }
+
+  .userheader_mobile_action_btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     width: 100%;
-    height: 55px;
-    background-color: transparent;
-    color: var(--primary-color);
-    border: none;
-    border-bottom: 1px solid #f0f0f0;
-    border-radius: 0;
-    font-size: 16px;
-    font-weight: 600;
-    text-align: left;
+    height: 50px;
     padding: 0 20px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #f5f5f5;
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
     cursor: pointer;
+    text-align: left;
+    transition: background 0.12s ease;
   }
 
-  .userheader-logout-mobile:hover {
-    background-color: #f9f5ff;
+  .userheader_mobile_action_btn:hover {
+    background-color: #f5f0ff;
+    color: var(--primary-color);
   }
 
-  .userheader_avatar_circle {
-    width: 38px;
-    height: 38px;
-    font-size: 12px;
+  .userheader_mobile_logout {
+    color: #e53e3e;
+    border-bottom: none;
+    margin-top: 4px;
   }
 
-  .userheader_status_dot {
-    width: 12px;
-    height: 12px;
-    top: auto;
-    bottom: 0px;
-    right: -2px;
-    border: 2px solid #ffffff;
+  .userheader_mobile_logout:hover {
+    background-color: #fff5f5;
+    color: #c53030;
   }
 
-  .userheader_bell_icon {
-    width: 22px;
-    height: 22px;
+
+  .userheader_overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    top: 60px;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 997;
   }
 }
 
-
-@media screen and (max-width: 680px) {
-  .userheader_wrapper {
-    width: 92%;
-  }
-
-  .userheader_left {
-    gap: 6px;
-  }
-
+@media screen and (max-width: 480px) {
   .userheader_logo_img {
-    height: 34px;
+    height: 32px;
   }
 
   .userheader_logo_text {
     font-size: 16px;
-  }
-
-  .menu_icon {
-    font-size: 22px;
-  }
-
-  .userheader_right {
-    gap: 10px;
-  }
-
-  .userheader_avatar_circle {
-    width: 34px;
-    height: 34px;
-    font-size: 11px;
-  }
-
-  .userheader_status_dot {
-    width: 10px;
-    height: 10px;
-    bottom: -1px;
-    right: -2px;
-  }
-
-  .userheader_bell_icon {
-    width: 20px;
-    height: 20px;
   }
 }
