@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
+import useAuth from '../../lib/Myauth'
 import Imp from '../../Props/Imp'
 import Button from '../../Props/Button'
 import { LuSearch } from 'react-icons/lu'
 import "./Css/HomeHero.css"
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+
 const HomeHero = () => {
   const [searchQuery, setSearchQuery] = useState("")
   const navigate = useNavigate()
+  const { isLoggedIn, isVendor } = useAuth()
+
+  const isLoggedInUser = isLoggedIn && !isVendor
 
   return (
     <section className="home_hero_container">
@@ -18,7 +23,7 @@ const HomeHero = () => {
         </h1>
         
         <p className="home_hero_desc">
-          Connect with Nigeria’s elite entertainers, syncing your vision with handpicked <br /> professional vendors that keep the energy alive from start to finish.
+          Connect with Nigeria's elite entertainers, syncing your vision with handpicked <br /> professional vendors that keep the energy alive from start to finish.
         </p>
 
         <div className="home_hero_search_box">
@@ -32,9 +37,19 @@ const HomeHero = () => {
           />
         </div>
 
-        <div className="home_hero_actions">
-          <Button onClick={() => navigate('/onboarding')} className="btn_purple" btnText="Get Started" />
-          <Button onClick={() => navigate('/vendors')}  className="btn_outline" btnText="Explore the vendors" />
+        <div className={`home_hero_actions ${isLoggedInUser ? 'centered' : ''}`}>
+          {!isLoggedInUser && (
+            <Button 
+              onClick={() => navigate('/onboarding')} 
+              className="btn_purple" 
+              btnText="Get Started" 
+            />
+          )}
+          <Button 
+            onClick={() => navigate('/vendors')}  
+            className="btn_outline" 
+            btnText="Explore the vendors" 
+          />
         </div>
       </div>
 
@@ -42,7 +57,6 @@ const HomeHero = () => {
         <div className="hero_banner_left">
           <p>Become a featured Feaster</p>
         </div>
-        
         <div className="hero_banner_right">
           <p>Subscribe <span>➔</span></p>
         </div>

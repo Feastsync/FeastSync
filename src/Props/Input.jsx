@@ -2,7 +2,6 @@ import React from "react";
 import "./Css/Input.css";
 
 const Input = (props) => {
-  console.log(props);
   return (
     <input
       type={props.type || "text"}
@@ -17,6 +16,7 @@ const Input = (props) => {
         padding: "29px",
         fontSize: "16px",
         border: "1px solid #ccc",
+        outline: "none",
       }}
     />
   );

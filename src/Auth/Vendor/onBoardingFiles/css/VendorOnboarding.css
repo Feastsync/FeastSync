@@ -12,8 +12,12 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .onboard-card {
@@ -30,8 +34,14 @@
 }
 
 @keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .onboard-card-center {
@@ -231,15 +241,55 @@
 
 /* Mobile */
 @media (max-width: 480px) {
-.onboard-card {
+  .onboard-card {
     padding: 32px 24px;
   }
-  
-.onboard-title {
+
+  .onboard-title {
     font-size: 22px;
   }
-  
-.onboard-days {
+
+  .onboard-days {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+.vo-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 20px;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.3)),
+    url("../../../assets/BackgroundImage/Vendorbackgroundimage.jpg")
+      center/cover no-repeat;
+  backdrop-filter: blur(1.8px);
+  overflow-y: auto;
+}
+
+.vo-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.vo-modal-container {
+  position: relative;
+  width: min(95%, 900px);
+  max-width: 900px;
+  border-radius: 28px;
+  overflow: visible;
+  /* background: rgba(255, 255, 255, 0.08); */
+  /* backdrop-filter: blur(24px); */
+  box-shadow: none;
+  z-index: 1;
+}
+
+.vo-modal-container > * {
+  position: relative;
+  z-index: 1;
 }

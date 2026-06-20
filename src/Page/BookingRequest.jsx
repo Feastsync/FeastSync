@@ -6,11 +6,11 @@ export default function BookingRequest() {
   const navigate = useNavigate();
 
   const handleAccept = () => {
-    console.log("Accept clicked");
+  
   };
 
   const handleDecline = () => {
-    console.log("Decline clicked");
+   
   };
 
   return (

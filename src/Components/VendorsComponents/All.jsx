@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import VendorCard from "../../Props/VendorCard";
+import VendorCardSkeleton from "../../Props/VendorSkeleton";
 import "./css/All.css";
 import api from "../../Redux/app/axios";
 
@@ -10,35 +11,44 @@ const getItemsPerPage = () => {
 };
 
 const AllVendors = () => {
-  const [vendors, setVendors] = useState([]);
-  const [loading, setLoading] = useState(true);
-
+  const [vendors, setVendors]         = useState([]);
+  const [loading, setLoading]         = useState(true);
+  const [error, setError]             = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage());
+
 
   useEffect(() => {
     const fetchVendors = async () => {
       try {
-        const res = await api.get("/vendor/all-vendors");
-
-        setVendors(res.data?.data || []);
+        setLoading(true)
+        setError(null)
+        const res = await api.get('/vendor/all-vendors')
+        console.log("First vendor:", res.data?.data?.[0])
+        const mappedVendors = (res.data?.data || []).map(vendor => ({
+          _id: vendor._id,
+          slug: vendor.slug, 
+          stageName: vendor.stageName || '',
+          name: vendor.stageName || '',
+          location: vendor.stateOfResidence || vendor.location || '',
+          rating: Math.floor(vendor.averageRating || 0), 
+          price: vendor.bookingFee || 0, 
+          image: vendor.profilePicture?.secureUrl || vendor.profilePicture || ''
+        }))
+        setVendors(mappedVendors)
+    
       } catch (err) {
-        console.error(
-          err.response?.data?.message || "Failed to fetch vendors"
-        );
+        setError(err.response?.data?.message || 'Failed to fetch vendors')
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
-    fetchVendors();
-  }, []);
+    fetchVendors()
+  }, [])
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentPage]);
 
   useEffect(() => {
@@ -46,52 +56,72 @@ const AllVendors = () => {
       setItemsPerPage(getItemsPerPage());
       setCurrentPage(1);
     };
-
     window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const totalPages = Math.ceil(vendors.length / itemsPerPage);
-
-  const start = (currentPage - 1) * itemsPerPage;
-
-  const currentVendors = vendors.slice(
-    start,
-    start + itemsPerPage
-  );
+  const skeletonArray  = Array.from({ length: itemsPerPage });
+  const totalPages     = Math.ceil(vendors.length / itemsPerPage);
+  const start          = (currentPage - 1) * itemsPerPage;
+  const currentVendors = vendors.slice(start, start + itemsPerPage);
 
   const changePage = (dir) => {
     const next = currentPage + dir;
-
-    if (next >= 1 && next <= totalPages) {
-      setCurrentPage(next);
-    }
+    if (next >= 1 && next <= totalPages) setCurrentPage(next);
   };
 
-  if (loading) {
-    return <p>Loading vendors...</p>;
+ 
+  if (error && !loading) {
+    return (
+      <div className="vendor-state-wrap">
+        <div className="vendor-state-card">
+          <span className="vendor-state-icon">⚠️</span>
+          <h2>Something went wrong</h2>
+          <p>{error}</p>
+          <button className="vendor-retry-btn" onClick={fetchVendors}>
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+
+  if (!loading && vendors.length === 0) {
+    return (
+      <div className="vendor-state-wrap">
+        <div className="vendor-state-card">
+          <span className="vendor-state-icon">🔍</span>
+          <h2>No Vendors Found</h2>
+          <p>No vendors available yet. Check back soon!</p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div>
+    <div className="all-vendors-page">
       <div className="category_grid">
-        {currentVendors.map((vendor) => (
-          <VendorCard
-            key={vendor._id}
-            id={vendor._id}
-            name={vendor.name}
-            location={vendor.location}
-            rating={vendor.rating}
-            price={vendor.price}
-            image={vendor.image}
-          />
-        ))}
+        {loading
+          ? skeletonArray.map((_, i) => (
+              <VendorCardSkeleton key={`sk-${i}`} />
+            ))
+          : currentVendors.map((vendor) => (
+              <div key={vendor._id} className="fade-in">
+                <VendorCard
+                  id={vendor._id}
+                  name={vendor.name}
+                  location={vendor.location}
+                  rating={vendor.rating}
+                  price={vendor.price}
+                  image={vendor.image}
+                  slug={vendor.slug}
+                />
+              </div>
+            ))}
       </div>
 
-      {totalPages > 1 && (
+      {!loading && totalPages > 1 && (
         <div className="pagination">
           <button
             className="pagination_btn"
@@ -100,11 +130,9 @@ const AllVendors = () => {
           >
             Prev
           </button>
-
           <span className="pagination_info">
             {currentPage} of {totalPages}
           </span>
-
           <button
             className="pagination_btn"
             onClick={() => changePage(1)}

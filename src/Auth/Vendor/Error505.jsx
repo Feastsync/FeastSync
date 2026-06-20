@@ -1,12 +1,15 @@
 
 import React from 'react'
+import "../Vendor/onBoardingFiles/css/Error404.css"
 import Header from '../../Components/Header';
 import { FaArrowRight } from "react-icons/fa6";
 import Footer from '../../Components/Footer';
-import"../Vendor/onBoardingFiles/css/Error.css"
+import { useNavigate } from 'react-router-dom';
+
 const Error505 = () => {
+  const navigate = useNavigate();
   return (
-    <div className='errorContainer'>
+    <div className='error505Container'>
       <Header />
       <div className='error'>
         <img src="public/error/pana.png" alt="" />

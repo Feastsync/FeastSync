@@ -41,7 +41,7 @@ const VendorSignUp = () => {
         [name]: value,
       };
 
-      console.log("UPDATED STATE:", updated);
+
 
       return updated;
     });
@@ -104,7 +104,7 @@ const VendorSignUp = () => {
         text: "An unexpected error occurred",
         confirmButtonColor: "#330159",
       });
-      console.log(error);
+  
     }
   };
 

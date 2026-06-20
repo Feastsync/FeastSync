@@ -1,72 +1,109 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import Button from './Button'
 import { IoLocationOutline } from 'react-icons/io5'
-import { FaStar, FaHeart } from 'react-icons/fa' 
+import { FaStar, FaHeart } from 'react-icons/fa'
 import { FiHeart } from 'react-icons/fi'
 import "./Css/VendorsCard.css"
-import { useNavigate } from 'react-router-dom'
 
 const VendorCard = (props) => {
-
-  {console.log("vf : ", props)}
-
   const navigate = useNavigate()
   const [isLiked, setIsLiked] = useState(false)
+  const { isLoggedIn, accountType } = useSelector((state) => state.auth)
+  const isLoggedInUser = isLoggedIn && accountType === 'user'
 
-  const handleLikeClick = () => {
-    setIsLiked(!isLiked)
+// const handleProtectedNav = (targetPath) => {
+//   if (!isLoggedInUser) {
+//     navigate("/vendordashboard", { state: { from: targetPath } })
+//     return
+//   }
+//   navigate(targetPath)
+// }
+
+const handleBookNow = (e) => {
+  e.stopPropagation()
+  if (!isLoggedIn) {
+    navigate("/onboarding", { state: { from: `/vendor/${props.slug}` } })
+    return
   }
+  navigate(`/vendor/${props.slug}`) 
+}
+
+const handleWishlist = (e) => {
+  e.stopPropagation()
+  if (!isLoggedInUser) {
+    navigate("/onboarding", { state: { from: `/vendor/${props.slug}` } })
+    return
+  } 
+  setIsLiked(!isLiked)
+}
+
+ const goToVendor = () => {
+  if (!props.slug) return
+  navigate(`/vendor/${props.slug}`) 
+}
+
+  // const handleWishlist = (e) => {
+  //   e.stopPropagation()
+  //   if (!isLoggedIn) {
+  //     navigate("/onboarding", { state: { from: `/vendor/${props.slug}` } })
+  //     return
+  //   }
+  //   setIsLiked(!isLiked)
+  
+  // }
 
   return (
     <div className="vendor_card">
-      
       <div className="card_top_actions">
-        <span className="see_more_lnk" onClick={() => navigate('/epknorating')}>See More</span>
-        <Button 
-          className="wishlist_btn" 
-          onClick={handleLikeClick} 
-          btnText={
-            isLiked ? (
-              <FaHeart size={12} color="#330159;" /> 
-            ) : (
-              <FiHeart size={12} /> 
-            ) 
-          }
+        <span className="see_more_lnk" onClick={goToVendor}>
+          See More
+        </span>
+        <Button
+          className="wishlist_btn"
+          onClick={handleWishlist}
+          btnText={isLiked ? <FaHeart size={12} color="#330159" /> : <FiHeart size={12} />}
         />
       </div>
 
-      <div className="vendor_img_box">
+      <div className="vendor_img_box" onClick={goToVendor}>
         <img src={props.image} alt={props.name} className="vendor_img" />
       </div>
 
       <div className="vendor_info">
-        <h3 className="vendor_name">{props.name}</h3>
-        
+        <h3 className="vendor_name" onClick={goToVendor}>
+          {props.name}
+        </h3>
+
         <div className="vendor_location">
-          <IoLocationOutline className='Loc' size={22} />
-          <span className='location-text'>{props.location}</span>
+          <IoLocationOutline className="Loc" size={22} />
+          <span className="location-text">{props.location}</span>
         </div>
 
         <div className="vendor_rating">
-          {[...Array(5)].map((_, index) => (
+          {[...Array(5)].map((_, i) => (
             <FaStar 
-              key={index} 
+              key={i} 
               size={14} 
-              color={index < props.rating ? "#000000" : "#e0e0e0"} 
+              color={i < props.rating ? "#000" : "#e0e0e0"} 
             />
           ))}
         </div>
 
         <div className="vendor_card_footer">
-
-          {console.log("props : ",props)}
           <div className="price_box">
             <p className="price_lbl">Starting Price</p>
-            <p className="price_amt">₦{props.price ? props.price.toLocaleString() : 0}</p>
+            <p className="price_amt">
+              ₦{props.price ? props.price.toLocaleString() : 0}
+            </p>
           </div>
-          <Button className="btn_purple" onClick={() => navigate(`/epkrating/${props.id}`)} btnText="Book now" />
+          <Button 
+            className="btn_purple" 
+            onClick={handleBookNow}  
+            btnText="Book now" 
+          />
         </div>
-
       </div>
     </div>
   )

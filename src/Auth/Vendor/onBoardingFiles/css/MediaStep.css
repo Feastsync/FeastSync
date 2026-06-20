@@ -1,3 +1,8 @@
+*{
+   scrollbar-width: none;
+}
+
+
 .media-overlay {
   position: fixed;
   inset: 0;
@@ -8,24 +13,37 @@
   justify-content: center;
   z-index: 99999;
   padding: 40px 16px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   overflow-y: auto;
+}
+
+.media-overlay::-webkit-scrollbar {
+  display: none;
 }
 
 .media-modal {
   background: #ffffff;
   border-radius: 16px;
-  width: 90%;
-  max-width: 580px;
-  height: 85vh;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+  width: min(95%, 480px);
+  margin-top: 70px;
+  margin-left: 190px;
+  box-shadow: none;
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  max-height: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.media-modal::-webkit-scrollbar {
+  display: none;
 }
 
 .media-header {
-  background: #5A1F8A;
+  background: #5a1f8a;
   padding: 28px 32px 20px;
   border-radius: 16px 16px 0 0;
   flex-shrink: 0;
@@ -39,7 +57,6 @@
 }
 
 .media-header h2 {
-  font-family: 'Inter', sans-serif;
   font-size: 22px;
   font-weight: 700;
   margin: 0 0 4px 0;
@@ -47,7 +64,6 @@
 }
 
 .media-subtext {
-  font-family: 'Inter', sans-serif;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
@@ -89,42 +105,29 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #C9A8E8 #f0f0f0;
+  overflow: visible;
 }
 
 .media-body::-webkit-scrollbar {
-  width: 6px;
-}
-
-.media-body::-webkit-scrollbar-track {
-  background: #f0f0f0;
-  border-radius: 3px;
-}
-
-.media-body::-webkit-scrollbar-thumb {
-  background: #C9A8E8;
-  border-radius: 3px;
+  display: none;
 }
 
 .media-field label {
   display: block;
-  font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 600;
-  color: #1A1A1A;
+  color: #1a1a1a;
   margin-bottom: 10px;
 }
 
 .media-field textarea {
   width: 100%;
-  border: 1px solid #E0E0E0;
+  border: 1px solid #e0e0e0;
   border-radius: 10px;
   padding: 14px;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  color: #1A1A1A;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  color: #1a1a1a;
   resize: vertical;
   background: #ffffff;
   box-sizing: border-box;
@@ -132,38 +135,42 @@
 
 .media-field textarea:focus {
   outline: none;
-  border-color: #5A1F8A;
+  border-color: #5a1f8a;
 }
 
 .media-field textarea::placeholder {
-  color: #BBBBBB;
+  color: #bbbbbb;
 }
 
 .media-word-count {
   display: block;
   text-align: right;
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
+  font-size: 1px;
   color: #999999;
   margin-top: 6px;
 }
 
 .media-upload-box {
-  border: 1.5px dashed #C9A8E8;
+  border: 1.5px dashed #c9a8e8;
   border-radius: 12px;
-  background: #F3EFFE;
+  position: relative;
+  background: #f3effe;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  color: #5A1F8A;
+  color: #5a1f8a;
 }
 
 .media-upload-box:hover {
-  border-color: #5A1F8A;
-  background: #EDE5FA;
+  border-color: #5a1f8a;
+  background: #ede5fa;
+}
+
+.media-upload-box input[type="file"] {
+  display: none;
 }
 
 .media-upload-box.video {
@@ -179,15 +186,15 @@
 }
 
 .media-upload-title {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 14px;
   font-weight: 600;
-  color: #1A1A1A;
+  color: #1a1a1a;
   margin: 0;
 }
 
 .media-upload-sub {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 12px;
   color: #888888;
   margin: 0;
@@ -200,7 +207,7 @@
 }
 
 .media-upload-note {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 12px;
   color: #999999;
   margin: 10px 0 0 0;
@@ -208,7 +215,7 @@
 
 .media-footer {
   padding: 20px 32px 28px;
-  border-top: 1px solid #F0F0F0;
+  border-top: 1px solid #f0f0f0;
   background: #ffffff;
   border-radius: 0 0 16px 16px;
   display: flex;
@@ -220,8 +227,8 @@
 .media-btn-skip {
   background: transparent;
   border: none;
-  color: #1A1A1A;
-  font-family: 'Inter', sans-serif;
+  color: #1a1a1a;
+  font-family: "Inter", sans-serif;
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
@@ -239,11 +246,11 @@
 
 .media-btn-back {
   background: #ffffff;
-  color: #1A1A1A;
-  border: 1.5px solid #D1D1D1;
+  color: #1a1a1a;
+  border: 1.5px solid #d1d1d1;
   border-radius: 10px;
   padding: 12px 28px;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
@@ -251,7 +258,7 @@
 }
 
 .media-btn-back:hover {
-  background: #F7F7F7;
+  background: #f7f7f7;
 }
 
 .media-btn-continue {
@@ -260,7 +267,8 @@
   border: none;
   border-radius: 10px;
   padding: 12px 28px;
-  font-family: 'Inter', sans-serif;
+  scrollbar-width: none;
+  font-family: "Inter", sans-serif;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;

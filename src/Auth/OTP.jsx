@@ -1,9 +1,14 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { verifyOTP, clearError, resendOTP } from "../Redux/features/authslice";
+import {
+  verifyOTP,
+  verifyResetOTP,
+  clearError,
+  resendOTP,
+  forgotPassword,
+} from "../Redux/features/authslice";
 import { Input, message } from "antd";
-import api from "../Redux/app/axios.js";
 import "./Css/OTP.css";
 import FeastLogo from "../assets/logos/Headerlogo.png";
 import Button from "../Props/Button.jsx";
@@ -24,13 +29,10 @@ const OTPVerification = () => {
   const [countdown, setCountdown] = useState(60);
   const [resendingReset, setResendingReset] = useState(false);
 
-  console.log(location);
-
   const email = location.state?.email;
   const accountType = location.state?.accountType || "user";
   const isForgotPassword = location.state?.isForgotPassword || false;
 
-  // ✅ FIX: prevent redirect loop
   useEffect(() => {
     if (!email && !redirectedRef.current) {
       redirectedRef.current = true;
@@ -80,16 +82,22 @@ const OTPVerification = () => {
     }
 
     try {
-      await dispatch(
-        verifyOTP({
-          email,
-          otp: otpCode,
-          accountType,
-        }),
-      ).unwrap();
+      if (isForgotPassword) {
+        await dispatch(
+          verifyResetOTP({ email, otp: otpCode, accountType })
+        ).unwrap();
 
-      message.success("Account verified successfully!");
-      navigate("/login");
+        navigate("/reset-password", {
+          state: { email, otp: otpCode, accountType },
+        });
+      } else {
+        await dispatch(
+          verifyOTP({ email, otp: otpCode, accountType })
+        ).unwrap();
+
+        message.success("Account verified successfully!");
+        navigate("/login");
+      }
     } catch (err) {
       message.error(err || "Verification failed");
     }
@@ -101,7 +109,7 @@ const OTPVerification = () => {
     try {
       if (isForgotPassword) {
         setResendingReset(true);
-        await api.post("/user/forgot-password", { email });
+        await dispatch(forgotPassword({ email, accountType })).unwrap();
         setResendingReset(false);
       } else {
         await dispatch(resendOTP({ email, accountType })).unwrap();
@@ -113,7 +121,7 @@ const OTPVerification = () => {
       inputs.current[0]?.focus();
     } catch (err) {
       setResendingReset(false);
-      message.error(err.response?.data?.message || err || "Resend failed");
+      message.error(err || "Resend failed");
     }
   };
 
@@ -131,8 +139,8 @@ const OTPVerification = () => {
               isForgotPassword
                 ? "/forgot-password"
                 : accountType === "vendor"
-                  ? "/vendor/signup"
-                  : "/user/signup"
+                ? "/vendor/signup"
+                : "/user/signup"
             }
             className="otp-back-wrap"
           >
@@ -171,8 +179,8 @@ const OTPVerification = () => {
             {isLoading
               ? "Verifying..."
               : isForgotPassword
-                ? "Continue"
-                : "Verify OTP"}
+              ? "Continue"
+              : "Verify OTP"}
           </Button>
 
           <p className="otp-resend">
@@ -182,11 +190,7 @@ const OTPVerification = () => {
             ) : (
               <span
                 onClick={handleResend}
-                style={{
-                  color: "#330159",
-                  cursor: "pointer",
-                  fontWeight: 600,
-                }}
+                style={{ color: "#330159", cursor: "pointer", fontWeight: 600 }}
               >
                 {resendingReset ? "Sending..." : "Resend"}
               </span>
