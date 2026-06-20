@@ -4,8 +4,6 @@ import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 import api from "../../Redux/app/socketAxios";
 import sendIcon from "../../assets/logos/sendicon.png";
-import profileIcon from "../../assets/logos/focusIcon.png";
-import calendarIcon from "../../assets/logos/calender.png";
 import verifiedIcon from "../../assets/logos/verifiedicon.png";
 import "./Chat.css";
 
@@ -382,26 +380,22 @@ export default function ChatsPage() {
             </div>
 
             <div className="chats-chat__actions">
-              <button
-                className="chats-icon-btn"
-                aria-label="View profile"
-              >
-                <img
-                  src={profileIcon}
-                  alt="profile"
-                  onClick={() => navigate("/")}
-                />
-              </button>
-
-              <button
-                className="chats-icon-btn"
-                aria-label="View calendar"
-              >
-                <img
-                  src={calendarIcon}
-                  alt="calendar"
-                />
-              </button>
+<div className="chats-chat__actions">
+  <button
+    className="chats-back-header-btn"
+    onClick={() => navigate("/")}
+  >
+    Back
+  </button>
+  {!isVendor && (
+    <button
+      className="chats-pay-btn"
+      onClick={() => navigate(`/payment/${bookingId}`)}
+    >
+      Proceed to Payment
+    </button>
+  )}
+</div>
             </div>
           </div>
 

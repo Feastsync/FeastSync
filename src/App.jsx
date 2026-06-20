@@ -1,5 +1,6 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import PrivateRoute from "./lib/Private.jsx";
 
 // Pages
 import Home from "./Page/Home.jsx";
@@ -27,7 +28,6 @@ import Userdashboard from "./Auth/User/Userdashboard.jsx";
 import GetStarted from "./Page/GetStarted.jsx";
 import About from "./Page/About.jsx";
 import Services from "./Page/Services.jsx";
-import VendorOnboarding from "./Auth/Vendor/onBoardingFiles/VendorOnboarding.jsx";
 import WalletLedger from "./Page/Wallet/WalletLedger.jsx";
 import VendorWallet from "./Page/Wallet/VendorWallet.jsx";
 import AllNotifications from "./Page/NotitficationsPages/AllNotifications.jsx";
@@ -35,27 +35,26 @@ import Chat from "./Page/chatPage/Chat.jsx";
 import MediaStep from "./Auth/Vendor/onBoardingFiles/MediaStep.jsx";
 import Error505 from "./Auth/Vendor/Error505.jsx";
 import Error404 from "./Auth/Vendor/Error404.jsx";
-// import BookingRequest from "./Page/BookingRequest.jsx";
 import RatingReview from "./Page/RatingReview.jsx";
-// import VendorSetting from "./Auth/Vendor/VendorSetting.jsx";
 import Settings from "./Page/SettingsPage/Settings.jsx";
-import { ScrollToTop } from "./Components/Highfunction.jsx";
 import Epknorating from "./Auth/Vendor/Epknorating.jsx";
 import Epkrating from "./Auth/Vendor/Epkrating.jsx";
 import BookingModal from "./Page/Booking/Booking.jsx";
 import Vendormediagallery from "./Auth/Vendor/Vendormediagallery.jsx";
 import PricingStep from "./Auth/Vendor/onBoardingFiles/PricingStep.jsx";
-import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
 import BookingRequest from "./Page/Booking/BookingRequest.jsx";
-// import AllNotifications from "./Page/NotitficationsPages/AllNotifications.jsx";
 import BookingNotifications from "./Page/NotitficationsPages/BookingNotifications.jsx";
-import PaymentNotifications from "./Page/NotitficationsPages/PaymentNotifications.jsx"
-import ReviewsNotification from "./Page/NotitficationsPages/ReviewsNotifications.jsx"
+import PaymentNotifications from "./Page/NotitficationsPages/PaymentNotifications.jsx";
+import ReviewsNotification from "./Page/NotitficationsPages/ReviewsNotifications.jsx";
 import NotificationsWrapper from "./Page/NotitficationsPages/NotificationsWrapper.jsx";
-import { TokenValidator, OnboardingPage  } from "./Components/Highfunction.jsx";
+import { ScrollToTop, TokenValidator, OnboardingPage } from "./Components/Highfunction.jsx";
 import Inbox from "./Page/Inbox/Inbox.jsx";
-import VendorChat from "./Page/chatPage/VendorChats.jsx"
+import VendorChat from "./Page/chatPage/VendorChats.jsx";
+const PublicLayout = () => {
+  const { vendorInfo, token } = useSelector((s) => s.auth);
+  if (token && vendorInfo) return <Navigate to="/vendordashboard" replace />;
+  return <Layout />;
+};
 
 const App = () => {
   return (
@@ -63,7 +62,7 @@ const App = () => {
       <ScrollToTop />
       <TokenValidator />
       <Routes>
-        <Route element={<Layout />}>
+        <Route element={<PublicLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/howitworks/*" element={<Howitworks />} />
           <Route path="/vendors" element={<VendorsPage />}>
@@ -75,10 +74,9 @@ const App = () => {
             <Route path="videography" element={<Videography />} />
           </Route>
           <Route path="/contact" element={<Contact />} />
-          <Route path="about" element={<About />} />
-          <Route path="services" element={<Services />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
         </Route>
-
         <Route path="/onboarding" element={<OnBoarding />} />
         <Route path="/login" element={<Login />} />
         <Route path="/verify-otp" element={<OTP />} />
@@ -86,51 +84,47 @@ const App = () => {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/vendor/signup" element={<VendorSignUp />} />
         <Route path="/user/signup" element={<UserSignUp />} />
-        <Route path="getStarted" element={<GetStarted />} />
-        <Route path="bookings" element={<BookingModal />} />
-        
-        <Route path="/vendor/onboarding" element={<OnboardingPage />} />
-        <Route path="/epknorating/:vendorId" element={<Epknorating />} />
-        <Route path="/epkrating/:id" element={<Epkrating />} />
-        <Route path="/505" element={<Error505 />} />
-        <Route path="/vendordashboard" element={<Vendordashboard />} />
         <Route path="/vendor/:slug" element={<Vendordashboard />} />
-        <Route path="/vendordashboardrating" element={<Vendordashboardrating />} />
-        <Route path="/userdashboard" element={<Userdashboard />} />
-        <Route path="/bookingrequest" element={<BookingRequest />} />
-        <Route path="/ratingreview" element={<RatingReview />} />
-        <Route path="/wallet/transactions" element={<VendorWallet />} />
-        <Route path="/transaction/histories" element={<WalletLedger />} />
-        {/* <Route path="/notifications/:category?" element={<AllNotifications />} /> */}
+        <Route path="/getStarted" element={<GetStarted />} />
+        <Route path="/505" element={<Error505 />} />
 
-
-
-   <Route path="/inbox" element={<Inbox />} />
-
-       
-<Route path="/request/:requestId" element={<BookingRequest />} />
-<Route path="/notifications" element={<NotificationsWrapper />}>
-  <Route path="all" element={<AllNotifications />} />
-  <Route path="booking" element={<BookingNotifications />} />
-  <Route path="payment" element={<PaymentNotifications />} />
-  <Route path="reviews" element={<ReviewsNotification />} />
-  <Route index element={<Navigate to="all" replace />} />
-</Route> 
-        {/* <Route path="/chats/:Id" element={<Chat />} /> */}
-        <Route path="/chats" element={<Chat />} />
-<Route path="/chats/:bookingId" element={<Chat />} />
-         <Route path="/VendorChat/:Id" element={<VendorChat />} />
-        <Route path="/mediastep" element={<MediaStep />} />
-        <Route path="/Settings" element={<Settings />} />
-        {/* <Route path="/vendorsetting" element={<VendorSetting />} /> */}
-        {/* <Route path="/vendorsetting" element={<VendorSetting />} /> */}
-        <Route path="vendormediagallery" element={<Vendormediagallery />} />
-        <Route path="/vendor/kyc" element={<VendorKYC />} />
-        <Route path="/pricingstep" element={<PricingStep />} />
-        <Route path="/request/:requestId" element={<BookingRequest />} />
-         {/* <Route path="/requestId/:requestId" element={<BookingRequest />} /> */}
-        {/* <Route path="Calenderrr" element={<CalendarStep />} /> */}
+        <Route element={<PrivateRoute allowedRoles={["user", "vendor"]} />}>
+          <Route path="/vendor/:slug" element={<Vendordashboard />} />
+          <Route path="/epkrating/:id" element={<Epkrating />} />
+          <Route path="/chats" element={<Chat />} />
+          <Route path="/chats/:bookingId" element={<Chat />} />
+        </Route>
+        <Route element={<PrivateRoute allowedRoles={["user"]} />}>
+          <Route path="/userdashboard" element={<Userdashboard />} />
+          <Route path="/bookings" element={<BookingModal />} />
+          <Route path="/bookingrequest" element={<BookingRequest />} />
+          <Route path="/request/:requestId" element={<BookingRequest />} />
+          <Route path="/ratingreview" element={<RatingReview />} />
+          
+        </Route>
+        <Route element={<PrivateRoute allowedRoles={["vendor"]} />}>
+          <Route path="/vendordashboard" element={<Vendordashboard />} />
+           <Route path="/transaction/histories" element={<WalletLedger />} />
+          <Route path="/inbox" element={<Inbox />} />
+          <Route path="/Settings" element={<Settings />} />
+          <Route path="/vendordashboardrating" element={<Vendordashboardrating />} />
+          <Route path="/vendor/onboarding" element={<OnboardingPage />} />
+          <Route path="/vendor/kyc" element={<VendorKYC />} />
+          <Route path="/mediastep" element={<MediaStep />} />
+          <Route path="/pricingstep" element={<PricingStep />} />
+          <Route path="/vendormediagallery" element={<Vendormediagallery />} />
+          <Route path="/VendorChat/:Id" element={<VendorChat />} />
+          <Route path="/wallet/transactions" element={<VendorWallet />} />
+          <Route path="/notifications" element={<NotificationsWrapper />}>
+            <Route index element={<Navigate to="all" replace />} />
+            <Route path="all" element={<AllNotifications />} />
+            <Route path="booking" element={<BookingNotifications />} />
+            <Route path="payment" element={<PaymentNotifications />} />
+            <Route path="reviews" element={<ReviewsNotification />} />
+          </Route>
+        </Route>
         <Route path="*" element={<Error404 />} />
+
       </Routes>
     </BrowserRouter>
   );
