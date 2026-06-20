@@ -50,6 +50,8 @@ import NotificationsWrapper from "./Page/NotitficationsPages/NotificationsWrappe
 import { ScrollToTop, TokenValidator, OnboardingPage } from "./Components/Highfunction.jsx";
 import Inbox from "./Page/Inbox/Inbox.jsx";
 import VendorChat from "./Page/chatPage/VendorChats.jsx";
+
+
 const PublicLayout = () => {
   const { vendorInfo, token } = useSelector((s) => s.auth);
   if (token && vendorInfo) return <Navigate to="/vendordashboard" replace />;
@@ -62,6 +64,7 @@ const App = () => {
       <ScrollToTop />
       <TokenValidator />
       <Routes>
+
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/howitworks/*" element={<Howitworks />} />
@@ -77,6 +80,8 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
         </Route>
+
+
         <Route path="/onboarding" element={<OnBoarding />} />
         <Route path="/login" element={<Login />} />
         <Route path="/verify-otp" element={<OTP />} />
@@ -84,29 +89,33 @@ const App = () => {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/vendor/signup" element={<VendorSignUp />} />
         <Route path="/user/signup" element={<UserSignUp />} />
-        <Route path="/vendor/:slug" element={<Vendordashboard />} />
         <Route path="/getStarted" element={<GetStarted />} />
         <Route path="/505" element={<Error505 />} />
 
+
         <Route element={<PrivateRoute allowedRoles={["user", "vendor"]} />}>
           <Route path="/vendor/:slug" element={<Vendordashboard />} />
+          <Route path="/epknorating/:vendorId" element={<Epknorating />} />
           <Route path="/epkrating/:id" element={<Epkrating />} />
           <Route path="/chats" element={<Chat />} />
           <Route path="/chats/:bookingId" element={<Chat />} />
         </Route>
+
+
         <Route element={<PrivateRoute allowedRoles={["user"]} />}>
           <Route path="/userdashboard" element={<Userdashboard />} />
           <Route path="/bookings" element={<BookingModal />} />
           <Route path="/bookingrequest" element={<BookingRequest />} />
           <Route path="/request/:requestId" element={<BookingRequest />} />
           <Route path="/ratingreview" element={<RatingReview />} />
-          
-        </Route>
-        <Route element={<PrivateRoute allowedRoles={["vendor"]} />}>
-          <Route path="/vendordashboard" element={<Vendordashboard />} />
-           <Route path="/transaction/histories" element={<WalletLedger />} />
+          <Route path="/transaction/histories" element={<WalletLedger />} />
           <Route path="/inbox" element={<Inbox />} />
           <Route path="/Settings" element={<Settings />} />
+        </Route>
+
+
+        <Route element={<PrivateRoute allowedRoles={["vendor"]} />}>
+          <Route path="/vendordashboard" element={<Vendordashboard />} />
           <Route path="/vendordashboardrating" element={<Vendordashboardrating />} />
           <Route path="/vendor/onboarding" element={<OnboardingPage />} />
           <Route path="/vendor/kyc" element={<VendorKYC />} />
@@ -123,6 +132,8 @@ const App = () => {
             <Route path="reviews" element={<ReviewsNotification />} />
           </Route>
         </Route>
+
+        {/* ── CATCH-ALL ─────────────────────────────────────────────────────── */}
         <Route path="*" element={<Error404 />} />
 
       </Routes>
