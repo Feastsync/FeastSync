@@ -1,0 +1,68 @@
+.sidebar{
+    background: linear-gradient(
+    180deg,
+    #0a0015 0%,
+    #0b0017 8.33%,
+    #0d0119 16.67%,
+    #0e011b 25%,
+    #0f021d 33.33%,
+    #11021f 41.67%,
+    #120321 50%,
+    #130423 58.33%,
+    #150525 66.67%,
+    #160628 75%,
+    #17072a 83.33%,
+    #19092c 91.67%,
+    #1a0a2e 100%
+  );
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 280px;
+  height: 100vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+ gap: 20px;
+}
+.sidebar .sidebarLogoHolder{
+    background: linear-gradient(
+     180deg,
+     #0A0015 0%,
+     #0B0017 8.33%,
+     #0D0119 16.67%,
+     #0E011B 25%,
+     #0F021D 33.33%,
+     #11021F 41.67%,
+     #120321 50%,
+     #130423 58.33%,
+     #150525 66.67%,
+     #160628 75%,
+     #17072A 83.33%,
+     #19092C 91.67%,
+     #1A0A2E 100%
+    );
+    padding: 26px 0 26px 50px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.sidebar .sidebarLogoHolder img{
+    width: 50px;
+}
+.sidebar .sidebarLogoHolder .logoText{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.adminDashboardLayout{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+}
+.adminDashboardWrapper{
+    display: flex;
+    gap: 10px;
+    
+}
