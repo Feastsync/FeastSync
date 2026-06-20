@@ -151,7 +151,19 @@
   position: relative;
 }
 
-.bank-field select,
+.bank-field select{
+   width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #d1d1d1;
+  border-radius: 8px;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #1a1a1a;
+  background: #ffffff;
+  appearance: none;
+  cursor: pointer;
+}
 .bank-field input {
   width: 100%;
   padding: 14px 16px;
@@ -163,7 +175,7 @@
   color: #1a1a1a;
   background: #ffffff;
   appearance: none;
-  cursor: pointer;
+  cursor: text;
 }
 
 .bank-field select:focus,

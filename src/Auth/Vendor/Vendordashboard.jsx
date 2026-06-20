@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useMemo,
-  useCallback,
-} from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../Css/Vendordashboard.css";
 import Vendorheader from "./Vendorheader.jsx";
@@ -17,22 +11,16 @@ import BookingModal from "../../Page/Booking/Booking.jsx";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { getVendorById } from "../../Redux/features/authslice.js";
 import VendorDashboardSkeleton from "../../Props/Vendordashboardskeleton.jsx";
-import { message } from "antd";
-
+import {message} from "antd"
 const Vendordashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const { slug } = useParams();
 
-  const hasFetchedRef = useRef(false);
-
   const [expandedCards, setExpandedCards] = useState({});
   const [showOnboarding, setShowOnboarding] = useState(false);
-  const [bookingModal, setBookingModal] = useState({
-    open: false,
-    pricingId: null,
-  });
+  const [bookingModal, setBookingModal] = useState({ open: false, pricingId: null });
 
   const {
     vendorInfo,
@@ -42,34 +30,14 @@ const Vendordashboard = () => {
     accountType,
   } = useSelector((state) => state.auth);
 
-  // ✅ SAFE FETCH (ONLY ONE EFFECT)
-  useEffect(() => {
-    if (hasFetchedRef.current) return;
-    if (!slug && !isLoggedIn) return;
+  
+  const isPublicView =!!slug ||!isLoggedIn;
+  const displayVendor = slug
+  ? viewingVendor
+  : viewingVendor?._id === vendorInfo?._id
+  ? viewingVendor
+  : vendorInfo;
 
-    hasFetchedRef.current = true;
-
-    if (slug) {
-      dispatch(getVendorById(slug));
-    } else if (isLoggedIn && accountType === "vendor") {
-      if (vendorInfo?.slug) {
-        dispatch(getVendorById(vendorInfo.slug));
-      }
-    }
-  }, [slug, isLoggedIn, accountType, dispatch, vendorInfo?.slug]);
-
-  useEffect(() => {
-    if (!slug && !isLoggedIn) return;
-    if (hasFetchedRef.current) return;
-
-    hasFetchedRef.current = true;
-
-    const targetSlug = slug || vendorInfo?.slug;
-
-    if (targetSlug) {
-      dispatch(getVendorById(targetSlug));
-    }
-  }, [slug, isLoggedIn, dispatch]);
 
   const isOwner =
     accountType === "vendor" &&
@@ -80,18 +48,30 @@ const Vendordashboard = () => {
 
   const [vendorName, setVendorName] = useState("");
 
-  // onboarding logic
+
+useEffect(() => {
+  if (slug) {
+    dispatch(getVendorById(slug));
+  } else if (isLoggedIn && accountType === "vendor" && vendorInfo?.slug) {
+    dispatch(getVendorById(vendorInfo.slug));
+  }
+}, [slug, isLoggedIn, accountType, dispatch, vendorInfo?.slug]);
+
+  // useEffect(() => {
+  //   if (shouldRefreshVendor) {
+  //     dispatch(getCurrentUser());
+  //   }
+  // }, [shouldRefreshVendor, dispatch]);
+
+  
   useEffect(() => {
-    if (!isOwner || !vendorInfo?._id) {
+    if (!isOwner ||!vendorInfo?._id) {
       setShowOnboarding(false);
       return;
     }
 
     setVendorName(vendorInfo.stageName || vendorInfo.firstName || "");
-
-    const shouldShow =
-      location.state?.showOnboarding || !vendorInfo.isOnboarded;
-
+    const shouldShow = location.state?.showOnboarding ||!vendorInfo.isOnboarded;
     setShowOnboarding(shouldShow);
 
     if (location.state?.showOnboarding) {
@@ -99,34 +79,34 @@ const Vendordashboard = () => {
     }
   }, [isOwner, vendorInfo, location.state, navigate, location.pathname]);
 
+ 
   useEffect(() => {
-    if (!slug && !isLoggedIn) {
+    if (!slug &&!isLoggedIn) {
       navigate("/login");
     }
   }, [slug, isLoggedIn, navigate]);
 
-  const handleOnboardingClose = () => {
-    setShowOnboarding(false);
-    if (isOwner && vendorInfo?.slug) {
-      dispatch(getVendorById(vendorInfo.slug));
-    }
+const handleOnboardingClose = () => {
+  setShowOnboarding(false);
+  if (isOwner && vendorInfo?.slug) {
+    dispatch(getVendorById(vendorInfo.slug));
+  }
+};
+
+  const toggleExpand = (id) => {
+    setExpandedCards((prev) => ({...prev, [id]:!prev[id] }));
   };
+const [messageApi, contextHolder] = message.useMessage();
 
-  const toggleExpand = useCallback((id) => {
-    setExpandedCards((prev) => ({ ...prev, [id]: !prev[id] }));
-  }, []);
-
-  const [messageApi, contextHolder] = message.useMessage();
-
-  const handleCopyLink = useCallback(async () => {
-    const link = `https://www.feastsync.com/fs/${displayVendor?.slug}`;
-    try {
-      await navigator.clipboard.writeText(link);
-      messageApi.success("Link copied to clipboard!");
-    } catch (err) {
-      messageApi.error("Failed to copy link");
-    }
-  }, [displayVendor, messageApi]);
+const handleCopyLink = async () => {
+  const link = `https://www.feastsync.com/fs/${displayVendor?.slug}`;
+  try {
+    await navigator.clipboard.writeText(link);
+    messageApi.success('Link copied to clipboard!');
+  } catch (err) {
+    messageApi.error('Failed to copy link');
+  }
+};
 
 console.log("isOwner:", isOwner)
 console.log("isLoggedIn:", isLoggedIn)
@@ -141,113 +121,190 @@ console.log("vendorInfo:", vendorInfo?._id)
   ];
 
   const displayPackages = basePackages.map((base) => {
-   const saved = displayVendor?.pricingId?.find(
-  (p) => p.packageName?.toLowerCase() === base.id
-);
+const saved = displayVendor?.pricingId?.find(
+  (p) => p.packageName?.toLowerCase() === base.title.toLowerCase()
+)
     //  console.log(displayVendor?.pricingPackages)
 
-      if (!saved) return base;
+    if (!saved) return base;
 
-      const rawPrice = saved.packagePrice || saved.price || "0";
-      const cleanPrice = rawPrice.toString().replace(/,/g, "").replace("₦", "");
-      const formattedPrice = `₦${Number(cleanPrice).toLocaleString()}`;
+    const rawPrice = saved.packagePrice || saved.price || "0";
+    const cleanPrice = rawPrice.toString().replace(/,/g, "").replace("₦", "");
+    const formattedPrice = `₦${Number(cleanPrice).toLocaleString()}`;
+    const desc = saved.packageDescription || saved.description || "";
+    const highlights = desc ? desc.split("\n").filter((l) => l.trim()) : [];
 
-      const desc = saved.packageDescription || saved.description || "";
-      const highlights = desc ? desc.split("\n").filter(Boolean) : [];
+    return {
+     ...base,
+      savedId: saved._id || null,
+      price: formattedPrice,
+      highlights,
+    };
+  });
 
-      return {
-        ...base,
-        savedId: saved._id || null,
-        price: formattedPrice,
-        highlights,
-      };
-    });
-  }, [basePackages, displayVendor]);
+//   console.log("displayVendor", displayVendor)
+// console.log("vendorInfo", vendorInfo)
 
   if (viewingVendorLoading && slug) return <VendorDashboardSkeleton />;
-  if (slug && !viewingVendor && !viewingVendorLoading)
+  if (slug &&!viewingVendor &&!viewingVendorLoading)
     return <div className="vendor-error">Vendor not found</div>;
   if (!displayVendor) return <VendorDashboardSkeleton />;
 
   return (
     <main className="vendordashboard-vendor-dashboard-container">
-      {contextHolder}
-
       <Vendorheader vendor={displayVendor} isOwner={isOwner} />
       <Vendorhero vendor={displayVendor} isOwner={isOwner} />
 
       <div className="vendordashboard-vendor-details-container">
+   
         <div className="vendordashboard-trust-stats">
-          <h4>Trust Stats</h4>
-
+          <h4 className="vendordashboard-trust-title">Trust Stats</h4>
           <div className="vendordashboard-stats-row">
             <div className="vendordashboard-stat-item">
               <h3>{displayVendor?.rating || 4.9}</h3>
+              <div className="vendordashboard-stars">★★★★★</div>
               <span>Rating</span>
             </div>
-
             <div className="vendordashboard-stat-item">
               <h3>{displayVendor?.reviewCount || 0}</h3>
               <span>Reviews</span>
             </div>
-
             <div className="vendordashboard-stat-item">
               <h3>{displayVendor?.bookingCount || 0}</h3>
               <span>Bookings</span>
             </div>
+           
+            {isOwner && (
+              <div className="vendordashboard-stat-item">
+                <h3>{displayVendor?.responseRate || 98}%</h3>
+                <span>Response</span>
+              </div>
+            )}
           </div>
         </div>
 
+        
         {!isOwner && isLoggedIn && (
           <button
-            onClick={() =>
-              navigate("/chats", { state: { vendorId: displayVendor?._id } })
-            }
+            className="vendordashboard-send-message-btn"
+            onClick={() => navigate("/chats", { state: { vendorId: displayVendor?._id } })}
           >
             Send a message
           </button>
         )}
 
-        <div>
-          <h3>Bio</h3>
+        <div className="vendordashboard-vendor-bio">
+          <h3>Bio / About</h3>
+          <h4>
+            About {displayVendor?.stageName},{" "}
+            {displayVendor?.stateOfResidence || "Lagos"}
+          </h4>
           <p>{displayVendor?.bio || "No bio added yet"}</p>
-
-          <button onClick={handleCopyLink}>
-            Copy link <img src={Copyicon} alt="" />
-          </button>
+          <div className="vendordashboard-vendor-link-row">
+            <span>{displayVendor?.vendorUrl}</span>
+            <button
+              className="vendordashboard-vendorcopy-link-btn"
+              onClick={handleCopyLink}
+            >
+              Copy link
+              <img src={Copyicon} alt="" />
+            </button>
+          </div>
         </div>
       </div>
 
-      <section>
-        <h2>Services & Pricing</h2>
+      <section className="vendordashboard-pricing-section">
+        <h2 className="vendordashboard-section-title">Services & Pricing</h2>
 
-        <div>
+        <div className="vendordashboard-pricing-grid">
           {displayPackages.map((item) => {
-            const isExpanded = expandedCards[item.id];
+            const isExpanded = !!expandedCards[item.id];
 
             return (
-              <div key={item.id}>
-                <h3>{item.title}</h3>
-                <p>{item.price}</p>
+              <div key={item.id} className="vendordashboard-pricing-card">
+                <div className="vendordashboard-card-header">
+                  <h3 className="vendordashboard-package-title">{item.title}</h3>
+                  <p className="vendordashboard-package-price">{item.price}</p>
+                </div>
 
-                <ul>
-                  {item.highlights.length ? (
-                    item.highlights.map((h, i) => <li key={i}>{h}</li>)
+                <div className="vendordashboard-card-body-wrapper">
+                  <div
+                    className={`vendordashboard-card-body ${
+                      isExpanded? "vendordashboard-scrollable" : ""
+                    }`}
+                  >
+                    <h4 className="vendordashboard-highlights-heading">
+                      Service Highlights
+                    </h4>
+                    <ul className="vendordashboard-highlights-list">
+                      {item.highlights.length > 0 ? (
+                        item.highlights.map((highlight, index) => (
+                          <li key={index} className="vendordashboard-highlight-item">
+                            {highlight}
+                          </li>
+                        ))
+                      ) : (
+                        <li className="vendordashboard-highlight-item">
+                          No details added yet
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+
+                  <button
+                    className="vendordashboard-toggle-expand-btn"
+                    onClick={() => toggleExpand(item.id)}
+                    aria-label={isExpanded ? "Disable scroll" : "Enable scroll"}
+                  >
+                    <svg
+                      className={`vendordashboard-dropdown-icon ${
+                        isExpanded? "vendordashboard-open" : ""
+                      }`}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                    >
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </button>
+                </div>
+
+                <div className="vendordashboard-card-footer">
+                 
+                  {isOwner? (
+                    // <button
+                    //   className="vendordashboard-edit-btn"
+                    //   onClick={() => navigate("/vendor/packages")}
+                    // >
+                    //   Edit Package
+                    // </button>
+                    null
                   ) : (
-                    <li>No details added</li>
+                    <button
+                      className="vendordashboard-book-now-btn"
+                      disabled={!item.savedId}
+                      onClick={() => {
+                        if (!isLoggedIn) {
+                          navigate("/login", { state: { from: location.pathname } });
+                          return;
+                        }
+                        setBookingModal({ open: true, pricingId: item.savedId });
+                      }}
+                    >
+                      {!item.savedId? "Not Available" : "Book Now"}
+                    </button>
                   )}
-                </ul>
-
-                <button onClick={() => toggleExpand(item.id)}>Toggle</button>
+                </div>
               </div>
             );
           })}
         </div>
       </section>
 
+   
       <Vendorcalendar vendor={displayVendor} isOwner={isOwner} />
       <Vendormediagallery vendor={displayVendor} isOwner={isOwner} />
-
       {isOwner && (
         <VendorOnboarding
           isOpen={showOnboarding}
@@ -255,10 +312,9 @@ console.log("vendorInfo:", vendorInfo?._id)
           vendorName={vendorName}
         />
       )}
-
-      {bookingModal.open && isLoggedIn && !isOwner && (
+      {bookingModal.open && isLoggedIn &&!isOwner && (
         <BookingModal
-          vendorName={displayVendor?.stageName || "Vendor"}
+          vendorName={displayVendor?.stageName || displayVendor?.firstName || "Vendor"}
           vendorId={displayVendor?._id}
           pricingId={bookingModal.pricingId}
           onClose={() => setBookingModal({ open: false, pricingId: null })}

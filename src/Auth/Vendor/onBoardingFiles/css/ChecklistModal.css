@@ -131,6 +131,7 @@
   border-radius: 12px;
   background: #ffffff;
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .profile-item.done {

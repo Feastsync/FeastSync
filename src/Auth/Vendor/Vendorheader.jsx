@@ -6,7 +6,10 @@ import Messageicon from "../../assets/logos/Messageicon.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { getNotifications } from "../../Redux/features/authslice.js";
+import { persistor } from '../../Redux/app/store'
+import api from '../../Redux/app/axios'
+import { message } from 'antd'
+import { logoutUser, getNotifications } from "../../Redux/features/authslice.js";
 
 const Vendorheader = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,6 +43,7 @@ const Vendorheader = () => {
 
   const isOwner = isOwnerOnDashboard || isOwnerOnPublicPage;
   const showFullHeader = isOwnerOnDashboard;
+  const [showLogout, setShowLogout] = useState(false);
 
   const getInitials = () => {
     const name =
@@ -61,6 +65,17 @@ const Vendorheader = () => {
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
+
+   const handleLogout = async () => {
+      try {
+        await dispatch(logoutUser()).unwrap()
+        message.success('Logged out successfully')
+        navigate('/login')
+      } catch (err) {
+        await persistor.purge()
+        navigate('/login')
+      }
+    }
 
   const closeMenu = () => setIsOpen(false);
 
@@ -113,17 +128,43 @@ const Vendorheader = () => {
               </button>
 
               <div className="vendorheader-footerActions">
-                <div className="avatar-circle">{getInitials()}</div>
-                <button
-                  className="edit-profile-btn"
-                  onClick={() => {
-                    navigate("/Settings");
-                    closeMenu();
-                  }}
+              {!showLogout ? (
+                <div
+                  className="avatar-circle"
+                  onClick={() => setShowLogout(true)}
                 >
-                  Edit Profile
-                </button>
-              </div>
+                  {getInitials()}
+                </div>
+              ) : (
+                <div className="logout-confirm">
+                  <span>Logout?</span>
+              
+                  <button
+                    className="logout-yes"
+                    onClick={handleLogout}
+                  >
+                    Yes
+                  </button>
+              
+                  <button
+                    className="logout-no"
+                    onClick={() => setShowLogout(false)}
+                  >
+                    No
+                  </button>
+                </div>
+              )}
+            
+              <button
+                className="edit-profile-btn"
+                onClick={() => {
+                  navigate("/Settings");
+                  closeMenu();
+                }}
+              >
+                Edit Profile
+              </button>
+            </div>
             </div>
 
             <div

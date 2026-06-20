@@ -283,6 +283,18 @@
   transition: background 0.2s;
 }
 
+.disabled-btn {
+  background: #cfcfcf !important;
+  color: #777 !important;
+  cursor: not-allowed !important;
+  opacity: 1 !important;
+}
+
+.disabled-btn:hover {
+  background: #cfcfcf !important;
+  color: #777 !important;
+}
+
 .ps-btn-continue:hover {
   background: #4a0180;
 }

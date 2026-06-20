@@ -32,20 +32,52 @@ const VendorSignUp = () => {
     password: "",
     confirmPassword: "",
   });
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+ const handleChange = (e) => {
+  const { name, value } = e.target;
 
-    setUserInfo((prev) => {
-      const updated = {
-        ...prev,
-        [name]: value,
-      };
+  let updatedValue = value;
 
+  if (name === "phoneNumber") {
+    updatedValue = value.replace(/\D/g, "").slice(0, 11);
+  }
 
+  setUserInfo((prev) => ({
+    ...prev,
+    [name]: updatedValue,
+  }));
 
-      return updated;
-    });
-  };
+  if (errors[name]) {
+    const updatedUserInfo = {
+      ...userInfo,
+      [name]: updatedValue,
+    };
+
+    const validation = vendorSignupSchema.safeParse(updatedUserInfo);
+
+    if (validation.success) {
+      setErrors({});
+    } else {
+      const fieldErrors = {};
+
+      validation.error.issues.forEach((issue) => {
+        fieldErrors[issue.path[0]] = issue.message;
+      });
+
+      if (!fieldErrors[name]) {
+        setErrors((prev) => {
+          const newErrors = { ...prev };
+          delete newErrors[name];
+          return newErrors;
+        });
+      } else {
+        setErrors((prev) => ({
+          ...prev,
+          [name]: fieldErrors[name],
+        }));
+      }
+    }
+  }
+};
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -173,6 +205,8 @@ const VendorSignUp = () => {
                 placeholder="Your phone Number"
                 value={userInfo.phoneNumber}
                 onChange={handleChange}
+                maxLength={11}
+                inputMode="numeric"
               />
               {errors.phoneNumber && (
                 <span className="vr-error">{errors.phoneNumber}</span>
