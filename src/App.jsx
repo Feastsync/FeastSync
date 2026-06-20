@@ -41,11 +41,9 @@ import Epknorating from "./Auth/Vendor/Epknorating.jsx";
 import Epkrating from "./Auth/Vendor/Epkrating.jsx";
 import BookingModal from "./Page/Booking/Booking.jsx";
 import AdminLayout from "./Page/Admin/AdminLayout.jsx";
-import Adminsignup from "./Page/Admin/Adminsignup.jsx";
-import AdminOtp from "./Page/Admin/AdminOtp.jsx"
-import AdminLogin from "./Page/Admin/AdminLogin.jsx"
-import AdminForgot from "./Page/Admin/AdminForgot.jsx"
 import AdminDashboard from "./Page/Admin/AdminDashboard.jsx"
+import VendorChat from "./Page/chatPage/VendorChats.jsx";
+import VendorSetting from "./Auth/Vendor/VendorSetting.jsx";
 import Vendormediagallery from "./Auth/Vendor/Vendormediagallery.jsx";
 import PricingStep from "./Auth/Vendor/onBoardingFiles/PricingStep.jsx";
 import BookingRequest from "./Page/Booking/BookingRequest.jsx";
@@ -55,7 +53,6 @@ import ReviewsNotification from "./Page/NotitficationsPages/ReviewsNotifications
 import NotificationsWrapper from "./Page/NotitficationsPages/NotificationsWrapper.jsx";
 import { ScrollToTop, TokenValidator, OnboardingPage } from "./Components/Highfunction.jsx";
 import Inbox from "./Page/Inbox/Inbox.jsx";
-import VendorChat from "./Page/chatPage/VendorChats.jsx";
 
 
 const PublicLayout = () => {
@@ -114,11 +111,6 @@ const App = () => {
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="dashboard" element={<AdminDashboard />} />
         </Route>
-
-        <Route path ="adminSignup" element={<Adminsignup />} />
-        <Route path="adminOtp" element={<AdminOtp />} />
-        <Route path="adminLogin" element={<AdminLogin />} />
-        <Route path="adminForgot" element={<AdminForgot />} />
 
         <Route element={<PrivateRoute allowedRoles={["user", "vendor"]} />}>
           <Route path="/vendor/:slug" element={<Vendordashboard />} />
