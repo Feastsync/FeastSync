@@ -363,9 +363,9 @@ const authSlice = createSlice({
   initialState: {
     userInfo: null,
     vendorInfo: null,
-    token: localStorage.getItem("token") || null,
+    token: null,          
     accountType: null,
-    isLoggedIn: !!localStorage.getItem("token"),
+    isLoggedIn: false,    
     isLoading: false,
     error: null,
     pricingPackages: [],

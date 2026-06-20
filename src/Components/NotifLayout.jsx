@@ -25,29 +25,47 @@ export default function NotifLayout({ notifications, currentPage, totalPages, on
   const handleMarkAllRead = () => {
     dispatch(markAllNotificationsRead());
   };
-const handleNotifClick = (notif) => {
-  if (!notif.isRead) {
-    dispatch(markNotificationRead(notif.id));
-  }
-  
-  // You need THIS line, not requestId
-  // const bookingId = notif.booking?.id || notif.bookingId;
-  const bookingId = notif.booking?._id || notif.requestId;
 
-  
-  if (bookingId) {
-    navigate(`/request/${bookingId}`); 
-  } else {
-    console.error('No booking ID found in notification:', notif);
-  }
-};
+  const handleNotifClick = (notif) => {
+    console.log("=== NOTIFICATION CLICKED ===");
+    console.log("Full notif object:", notif);
+    console.log("notif.id:", notif.id);
+    console.log("notif._id:", notif._id);
+    console.log("notif.booking:", notif.booking);
+    console.log("notif.requestId:", notif.requestId);
+    console.log("notif.bookingId:", notif.bookingId);
+    console.log("notif.isRead:", notif.isRead);
+
+    const notifId = notif._id || notif.id;
+    console.log("Resolved notifId:", notifId);
+
+    if (!notif.isRead && notifId) {
+      console.log("Dispatching markNotificationRead with:", notifId);
+      dispatch(markNotificationRead(notifId));
+    }
+
+    const bookingId =
+      notif.booking?._id ||
+      notif.booking?.id ||
+      notif.requestId ||
+      notif.bookingId;
+
+    console.log("Resolved bookingId:", bookingId);
+
+    if (bookingId) {
+      console.log("Navigating to:", `/request/${bookingId}`);
+      navigate(`/request/${bookingId}`);
+    } else {
+      console.error("❌ No booking ID found in notification:", notif);
+    }
+  };
 
   return (
     <div className="notif-page">
       <div className="notif-datebar">
         <span className="notif-dateline" />
         <span className="notif-datetext">
-          Today, {dayjs().format('Do MMMM, YYYY')}
+          Today, {dayjs().format("Do MMMM, YYYY")}
         </span>
         <span className="notif-dateline" />
       </div>
@@ -91,33 +109,35 @@ const handleNotifClick = (notif) => {
         {notifications.length === 0 ? (
           <p className="notif-empty">No notifications here yet.</p>
         ) : (
-          notifications.map((notif) => (
-            <div
-              // FIX 3: Use notif.id. Fallback to requestId if id is missing
-              key={notif.id || notif.requestId}
-              className={`notif-item ${!notif.isRead ? "notif-item--new" : ""}`}
-              onClick={() => handleNotifClick(notif)}
-            >
-              <div className="notif-item-left">
-                {!notif.isRead && <span className="notif-dot" />}
-              </div>
-              <div className="notif-item-body">
-                {notif.title && (
-                  <div className="notif-item-title-row">
-                    <span className="notif-item-title">{notif.title}</span>
-                    {!notif.isRead && <span className="notif-badge">New</span>}
-                  </div>
-                )}
-                <p className="notif-item-msg">{notif.message}</p>
-                <span className="notif-item-date">
-                  {dayjs(notif.createdAt).format("YYYY-MM-DD HH:mm:ss")}
+          notifications.map((notif) => {
+            const key = notif._id || notif.id || notif.requestId;
+            return (
+              <div
+                key={key}
+                className={`notif-item ${!notif.isRead ? "notif-item--new" : ""}`}
+                onClick={() => handleNotifClick(notif)}
+              >
+                <div className="notif-item-left">
+                  {!notif.isRead && <span className="notif-dot" />}
+                </div>
+                <div className="notif-item-body">
+                  {notif.title && (
+                    <div className="notif-item-title-row">
+                      <span className="notif-item-title">{notif.title}</span>
+                      {!notif.isRead && <span className="notif-badge">New</span>}
+                    </div>
+                  )}
+                  <p className="notif-item-msg">{notif.message}</p>
+                  <span className="notif-item-date">
+                    {dayjs(notif.createdAt).format("YYYY-MM-DD HH:mm:ss")}
+                  </span>
+                </div>
+                <span className="notif-item-time">
+                  {dayjs(notif.createdAt).fromNow()}
                 </span>
               </div>
-              <span className="notif-item-time">
-                {dayjs(notif.createdAt).fromNow()}
-              </span>
-            </div>
-          ))
+            );
+          })
         )}
       </div>
 

@@ -27,6 +27,26 @@
   gap: 10px;
   flex-shrink: 0;
 }
+/* ── Chat icon button (add to Userheader.css) ── */
+.userheader_chat_btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.userheader_chat_icon {
+  width: 24px;
+  height: 24px;
+  color: var(--primary-color);
+}
+
+.userheader_chat_icon:hover {
+  color: #7b2fbe;
+}
 
 .feastHeader_logoImg {
   height: 50px;

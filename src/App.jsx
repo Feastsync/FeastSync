@@ -54,7 +54,8 @@ import PaymentNotifications from "./Page/NotitficationsPages/PaymentNotification
 import ReviewsNotification from "./Page/NotitficationsPages/ReviewsNotifications.jsx"
 import NotificationsWrapper from "./Page/NotitficationsPages/NotificationsWrapper.jsx";
 import { TokenValidator, OnboardingPage  } from "./Components/Highfunction.jsx";
-
+import Inbox from "./Page/Inbox/Inbox.jsx";
+import VendorChat from "./Page/chatPage/VendorChats.jsx"
 
 const App = () => {
   return (
@@ -104,6 +105,8 @@ const App = () => {
 
 
 
+   <Route path="/inbox" element={<Inbox />} />
+
        
 <Route path="/request/:requestId" element={<BookingRequest />} />
 <Route path="/notifications" element={<NotificationsWrapper />}>
@@ -113,7 +116,10 @@ const App = () => {
   <Route path="reviews" element={<ReviewsNotification />} />
   <Route index element={<Navigate to="all" replace />} />
 </Route> 
+        {/* <Route path="/chats/:Id" element={<Chat />} /> */}
         <Route path="/chats" element={<Chat />} />
+<Route path="/chats/:bookingId" element={<Chat />} />
+         <Route path="/VendorChat/:Id" element={<VendorChat />} />
         <Route path="/mediastep" element={<MediaStep />} />
         <Route path="/Settings" element={<Settings />} />
         {/* <Route path="/vendorsetting" element={<VendorSetting />} /> */}
