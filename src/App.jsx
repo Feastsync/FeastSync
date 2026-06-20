@@ -248,8 +248,12 @@ import Epknorating from "./Auth/Vendor/Epknorating.jsx";
 import Epkrating from "./Auth/Vendor/Epkrating.jsx";
 import BookingModal from "./Page/Booking/Booking.jsx";
 import { useSelector } from "react-redux";
+import AdminLayout from "./Page/Admin/AdminLayout.jsx";
 import Adminsignup from "./Page/Admin/Adminsignup.jsx";
-
+import AdminOtp from "./Page/Admin/AdminOtp.jsx"
+import AdminLogin from "./Page/Admin/AdminLogin.jsx"
+import AdminForgot from "./Page/Admin/AdminForgot.jsx"
+import AdminDashboard from "./Page/Admin/AdminDashboard.jsx"
 const OnboardingPage = () => {
   const { vendorInfo } = useSelector((state) => state.auth);
   const vendorName = vendorInfo?.stageName || vendorInfo?.firstName || "";
@@ -313,8 +317,16 @@ const App = () => {
         <Route path="/Settings" element={<Settings />} />
         <Route path="/vendorsetting" element={<VendorSetting />} />
         <Route path="/vendor/kyc" element={<VendorKYC />} />
-        <Route path="*" element={<Error404 />} />
+
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route path="dashboard" element={<AdminDashboard />} />
+        </Route>
+
         <Route path ="adminSignup" element={<Adminsignup />} />
+        <Route path="adminOtp" element={<AdminOtp />} />
+        <Route path="adminLogin" element={<AdminLogin />} />
+        <Route path="adminForgot" element={<AdminForgot />} />
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </BrowserRouter>
   );
