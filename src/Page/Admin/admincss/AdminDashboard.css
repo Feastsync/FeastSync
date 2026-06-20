@@ -1,0 +1,332 @@
+.adminDashboardholder{
+    width: 100%;
+}
+.adminDashboardContainer{
+    display: flex;
+    gap: 20px;
+}
+
+.adminDashboardleft{
+           background: linear-gradient(
+    180deg,
+    #0a0015 0%,
+    #0b0017 8.33%,
+    #0d0119 16.67%,
+    #0e011b 25%,
+    #0f021d 33.33%,
+    #11021f 41.67%,
+    #120321 50%,
+    #130423 58.33%,
+    #150525 66.67%,
+    #160628 75%,
+    #17072a 83.33%,
+    #19092c 91.67%,
+    #1a0a2e 100%
+  );
+  width: 190px;
+  height: 250vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+ gap: 20px;
+}
+.adminDashboardImageHolder{
+    height: 80px;
+    background: linear-gradient(
+     180deg,
+     #0A0015 0%,
+     #0B0017 8.33%,
+     #0D0119 16.67%,
+     #0E011B 25%,
+     #0F021D 33.33%,
+     #11021F 41.67%,
+     #120321 50%,
+     #130423 58.33%,
+     #150525 66.67%,
+     #160628 75%,
+     #17072A 83.33%,
+     #19092C 91.67%,
+     #1A0A2E 100%
+     );
+     padding: 10px;
+
+}
+.adminDashboardImage img{
+    width: 30px;
+}
+.admindashboardHeader{
+    height: 80px;
+border-bottom: 0.1px solid gray;
+}
+.adminDashboardImageHolder{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.adminDashboardLogo{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+      font-size: 12px;
+}
+.adminDashboardLayout{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+}
+.adminDashboardWrapper{
+    display: flex;
+    gap: 10px;
+    
+}
+.adminDashboardRight{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.adminDashBoardDiv{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.adminDashboardInput{
+    display:flex;
+    gap: 100px;
+    justify-content: space-between;
+    align-items: center;
+   padding-left: 100px;
+}
+.adminDashboardInputholder{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 15px;
+}
+ .adminDashboardInputholder input{
+    width: 500px;
+       height: 50px;
+    border-radius: 40px;
+    padding-left: 10px;
+    background: rgb(209, 207, 207);
+    border: none;
+    outline: none;
+}
+.adminDashboardNotification{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+}
+.adminDashboardlogo{
+    background: linear-gradient(
+        135deg, #6D28D9 0%,
+         #F97316 100%
+         );
+         width: 40px;
+         height: 40px;
+         border-radius: 15px;
+         color: white;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+}
+.adminDashboardName{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.adminDashboardTitle{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.adminDashboardNotificationlogo{
+    font-size: 30px;
+}
+.adminDashboardFullname{
+    font-size: 17px;
+    font-weight: 600;
+}
+.adminDashboardReview{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+}
+.adminDashboardGrid{
+    display: grid;
+    column-gap: 25px;
+    row-gap: 25px;
+    grid-template-columns:  repeat(5,200px);
+}
+.adminDashboardSection{
+    background: white;
+    box-shadow: 2px 1px 2px 1px rgb(212, 206, 206);
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+     border-radius: 5px;
+     padding:15px;
+}
+.adminDashboardImageWrapper{
+    display: flex;
+    justify-content: space-between;
+}
+.adminDashboardNaira{
+    font-size: 25px;
+    font-weight: 700;
+}
+.adminDashboardActivities{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.adminDashboardButtonholder{
+    color: #6D28D9;
+    display: flex;
+    gap: 10px;
+      border: none;
+}
+.adminDashboardButton{
+    border: none;
+  background: rgb(214, 214, 214);
+}
+.adminDashboardButton:hover{
+    border: 0.5px black;
+    color: white;
+}
+.adminDashboardButtonholder :hover{
+          background: linear-gradient(
+    180deg,
+    #0a0015 0%,
+    #0b0017 8.33%,
+    #0d0119 16.67%,
+    #0e011b 25%,
+    #0f021d 33.33%,
+    #11021f 41.67%,
+    #120321 50%,
+    #130423 58.33%,
+    #150525 66.67%,
+    #160628 75%,
+    #17072a 83.33%,
+    #19092c 91.67%,
+    #1a0a2e 100%
+  );
+  color: white;
+}
+.adminDashboardButton{
+  border-radius: 100px;
+}
+.adminDashboardAll{
+    width: 1050px;
+    height: 100px;
+    border-bottom: 1px solid gray;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+}
+.adminDashboardAllHolder{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.adminDashboardVarieties{
+    display: flex;
+    gap: 10px;
+}
+.admindashboardAlllogo{
+    width: 30px;
+    height: 30px;
+    background:  #160628;
+    color: white;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 10px;
+}
+.admindashboardVerification{
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+.admindashboardVerification span{
+    font-weight: 600;
+}
+.admindashboardCheckout{
+    display: flex;
+    gap: 10px;
+}
+.admindashboardKyc{
+    display: flex;
+    gap: 5px;
+}
+
+.admindashboardCheckout img{
+    width: 20px;
+    height: 20px;
+}
+.adminRevenueHolder{
+    display: flex;
+    gap: 80px;
+    padding-left: 20px;
+}
+.adminRevenueContainer{
+    background: white;
+    box-shadow: 1px 1px 1px 1px gray;
+    width: 47%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+}
+.adminRevenueContain{
+    background: white;
+    box-shadow: 1px 1px 1px 1px gray;
+    width: 30%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+}
+.adminRevenueSection{
+    display: flex;
+    justify-content: space-between;
+}
+.adminRevenueText{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.adminRevenue{
+    font-weight: 800;
+    font-size: 20px;
+}
+.adminRevenueButton{
+    background: rgb(231, 231, 231);
+    border-radius: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 5px;
+    height: 35px;
+}
+.adminBtn{
+    width: auto;
+    height: 30px;
+    background: transparent;
+    border-radius: 20px;
+    border: none;
+}
+.adminRevenueButton:hover{
+   
+}
+.adminBtn:hover{
+    background:white;
+     color: purple;
+}
+
