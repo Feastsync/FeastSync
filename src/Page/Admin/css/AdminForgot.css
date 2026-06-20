@@ -1,0 +1,136 @@
+.forgotPasswordLogo{
+    padding-left: 100px;
+    padding-top: 10px;
+   
+    
+}
+
+
+.forgotPaswwordContainer{
+    display: flex;
+    gap: 50px;
+    /* justify-content: center; */
+     padding: 10px 120px 10px 120px;
+}
+
+.forgotPasswordHolder{
+   justify-content: center;
+      display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 542.5px;
+height: 524px;
+padding: 10px 50px 10px 50px;
+line-height: 30px;
+}
+
+
+.forgotPasswordButton{
+    display: flex;
+    gap: 10px;
+}
+.forgotPasswordButton Button{
+    background: transparent;
+    border: 1px solid black;
+    width: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.forgotPasswordButton p{
+    display: flex;
+    align-items: center;
+}
+
+
+.forgotPasswordAssurance{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    line-height: 25px;
+    
+}
+.forgotPasswordText{
+    font-size: 24px;
+    font-weight: bold;
+}
+.forgotPasswordLink{
+    color: gray;
+    /* font-family: Plus Jakarta Sans; */
+
+}
+.passwordEmailWrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.passwordEmail{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    text-align: center;
+    
+}
+.passwordEmail label{
+    text-align: start;
+}
+.passwordEmail input{
+    height: 60px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    font-size: 15px;
+    padding: 13px;
+}
+.passwordEmail Button{
+background: #330159;
+color: white;
+height: 60px;
+}
+.passwordEmail Button:hover{
+    background: white;
+    border: 1px solid #330159;
+    color: black;
+}
+.forgotPasswordImage{
+       background: linear-gradient(
+    180deg,
+    #0a0015 0%,
+    #0b0017 8.33%,
+    #0d0119 16.67%,
+    #0e011b 25%,
+    #0f021d 33.33%,
+    #11021f 41.67%,
+    #120321 50%,
+    #130423 58.33%,
+    #150525 66.67%,
+    #160628 75%,
+    #17072a 83.33%,
+    #19092c 91.67%,
+    #1a0a2e 100%
+  );
+height: 600px;
+width: 550px;
+border-radius: 5px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.forgotPasswordImage img{
+    width: 100%;
+    object-fit: cover;
+}
+@media (max-width: 480px) {
+    .forgotPasswordLogo{
+        padding-left: 0px;
+    }
+    .forgotPaswwordContainer{
+        padding: 0px;
+    }
+    .forgotPasswordImage{
+        display: none;
+    }
+    .forgotPasswordHolder{
+       padding: 20px;
+    }
+}
