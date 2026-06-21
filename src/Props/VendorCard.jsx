@@ -67,10 +67,15 @@ const handleWishlist = (e) => {
         />
       </div>
 
-      <div className="vendor_img_box" onClick={goToVendor}>
-        <img src={props.image} alt={props.name} className="vendor_img" />
-      </div>
-
+<div className="vendor_img_box" onClick={goToVendor}>
+  {props.image ? (
+    <img src={props.image} alt={props.name} className="vendor_img" />
+  ) : (
+    <div className="vendor_avatar_fallback">
+      {props.name?.charAt(0).toUpperCase() || "V"}
+    </div>
+  )}
+</div>
       <div className="vendor_info">
         <h3 className="vendor_name" onClick={goToVendor}>
           {props.name}

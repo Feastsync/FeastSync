@@ -15,7 +15,7 @@ const Vendorhero = () => {
     (state) => state.auth,
   );
 
-  // 🔥 Only show upload buttons on dashboard OR if owner on public page
+
   const isDashboard = location.pathname === "/vendordashboard";
   const isOwner = vendorInfo?._id === currentVendor?._id;
   const canEdit = isDashboard || isOwner;
@@ -52,8 +52,16 @@ const Vendorhero = () => {
     window.history.back();
   };
 
-  // 🔥 Display data: use currentVendor on public page, vendorInfo on dashboard
-  const displayData = isDashboard ? vendorInfo : currentVendor;
+  
+  // const displayData = isDashboard ? vendorInfo : currentVendor;
+  const displayData = isDashboard
+  ? {
+      ...vendorInfo,
+      profilePicture: currentVendor?.profilePicture || vendorInfo?.profilePicture,
+      coverPhoto: currentVendor?.coverPhoto || vendorInfo?.coverPhoto,
+    }
+  : currentVendor;
+
 
   return (
     <div className="vendorhero-container">
