@@ -7,7 +7,7 @@ const AdminLayout = ()=>{
     return(
         <div style={{display:'flex'}}>
             <Sidebar />
-            <div style={{marginLeft:280}}>
+            <div style={{marginLeft:280, flex:1}}>
                 <AdminLayoutHeader />
                 <Outlet/>
             </div>

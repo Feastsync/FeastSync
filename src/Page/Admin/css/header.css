@@ -1,0 +1,47 @@
+.adminHeader{
+    height: 112px;
+    width: 100%;
+    border-bottom: 0.1px solid gray;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:0 50px;
+}
+ .adminHeader input{
+    width: 500px;
+    height: 50px;
+    border-radius: 40px;
+    padding-left: 10px;
+    background: rgb(209, 207, 207);
+    border: none;
+    outline: none;
+}
+.adminInfo{
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+.adminInitials{
+    background: linear-gradient(
+        135deg, #6D28D9 0%,
+         #F97316 100%
+         );
+         width: 40px;
+         height: 40px;
+         border-radius: 15px;
+         color: white;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+}
+.adminNameContainer{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-right: 40px;
+}
+.adminNameContainerInner{
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}

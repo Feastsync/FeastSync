@@ -10,7 +10,7 @@ import { FaArrowTrendUp } from "react-icons/fa6";
 const AdminDashboard = () => {
   return (
     <div className='adminDashboardholder'>
-      <div className='adminDashboardContainer'>
+      {/* <div className='adminDashboardContainer'>
         <div className='adminDashboardRight'>
             <div>
           <div className='adminDashBoardDiv'>
@@ -20,7 +20,7 @@ const AdminDashboard = () => {
             </div>   
             </div>
         </div>
-       </div>
+       </div> */}
     </div>
   )
 }

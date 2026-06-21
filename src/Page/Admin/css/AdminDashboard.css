@@ -1,14 +1,9 @@
 .adminDashboardholder{
-    width: 100%;
+    /* width: 100%; */
 }
 .adminDashboardContainer{
     display: flex;
     gap: 20px;
-}
-
-.admindashboardHeader{
-    height: 80px;
-border-bottom: 0.1px solid gray;
 }
 .adminDashboardRight{
     display: flex;
@@ -19,64 +14,6 @@ border-bottom: 0.1px solid gray;
     display: flex;
     flex-direction: column;
     gap: 40px;
-}
-.adminDashboardInput{
-    display:flex;
-    gap: 100px;
-    justify-content: space-between;
-    align-items: center;
-   padding-left: 100px;
-}
-.adminDashboardInputholder{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 15px;
-}
- .adminDashboardInputholder input{
-    width: 500px;
-       height: 50px;
-    border-radius: 40px;
-    padding-left: 10px;
-    background: rgb(209, 207, 207);
-    border: none;
-    outline: none;
-}
-.adminDashboardNotification{
-    display: flex;
-    gap: 10px;
-    align-items: center;
-
-}
-.adminDashboardlogo{
-    background: linear-gradient(
-        135deg, #6D28D9 0%,
-         #F97316 100%
-         );
-         width: 40px;
-         height: 40px;
-         border-radius: 15px;
-         color: white;
-         display: flex;
-         align-items: center;
-         justify-content: center;
-}
-.adminDashboardName{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.adminDashboardTitle{
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-.adminDashboardNotificationlogo{
-    font-size: 30px;
-}
-.adminDashboardFullname{
-    font-size: 17px;
-    font-weight: 600;
 }
 .adminDashboardReview{
     display: flex;
