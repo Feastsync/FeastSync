@@ -284,11 +284,16 @@ const handlePayment = async () => {
             : ""
         }`}
       >
-        <div className="chats-sidebar__header">
-          <h2 className="chats-sidebar__title">
-            Messages
-          </h2>
-        </div>
+<div className="chats-sidebar__header">
+  <button
+    className="chats-sidebar__back-btn"
+    onClick={() => navigate(-1)}
+    aria-label="Go back"
+  >
+    ‹
+  </button>
+  <h2 className="chats-sidebar__title">Messages</h2>
+</div>
 
         {inboxLoading && (
           <div className="chats-sidebar__skeletons">
