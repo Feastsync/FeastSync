@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateVendorProfile } from "../../Redux/features/authslice";
 import "../Css/Vendorhero.css";
@@ -11,7 +11,7 @@ import { useLocation } from "react-router-dom";
 const Vendorhero = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { vendorInfo, currentVendor, loading } = useSelector(
+  const { vendorInfo, currentVendor, isLoading } = useSelector(
     (state) => state.auth,
   );
 
@@ -34,6 +34,7 @@ const Vendorhero = () => {
     e.target.value = "";
   };
 
+
   const handleCoverUpload = (e) => {
     const file = e.target.files[0];
     if (!file || !vendorInfo?._id) return;
@@ -54,6 +55,11 @@ const Vendorhero = () => {
 
   // 🔥 Display data: use currentVendor on public page, vendorInfo on dashboard
   const displayData = isDashboard ? vendorInfo : currentVendor;
+    useEffect(() => {
+  console.log("vendorInfo:", vendorInfo);
+  console.log("currentVendor:", currentVendor);
+  console.log("displayData:", displayData);
+}, [vendorInfo, currentVendor, displayData]);
 
   return (
     <div className="vendorhero-container">
@@ -73,7 +79,7 @@ const Vendorhero = () => {
       {canEdit && (
         <>
           <label htmlFor="cover-upload" className="vendorhero-cover-upload">
-            <span>{loading ? "Uploading..." : "Upload Cover"}</span>
+            <span>{isLoading ? "Uploading..." : "Upload Cover"}</span>
           </label>
           <input
             id="cover-upload"
@@ -81,7 +87,7 @@ const Vendorhero = () => {
             accept="image/*"
             onChange={handleCoverUpload}
             hidden
-            disabled={loading}
+            disabled={isLoading}
           />
         </>
       )}
@@ -101,7 +107,7 @@ const Vendorhero = () => {
                 htmlFor="profile-upload"
                 className="vendorhero-avatar-overlay"
               >
-                <span>{loading ? "Uploading..." : "Upload Profile"}</span>
+                <span>{isLoading ? "Uploading..." : "Upload Profile"}</span>
                 <img src={Vedorprofileview} alt="" />
               </label>
               <input
@@ -110,7 +116,7 @@ const Vendorhero = () => {
                 accept="image/*"
                 onChange={handleProfileUpload}
                 hidden
-                disabled={loading}
+                disabled={isLoading}
               />
             </>
           )}

@@ -6,14 +6,21 @@ import Messageicon from "../../assets/logos/Messageicon.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { persistor } from '../../Redux/app/store'
+import api from '../../Redux/app/axios'
+import { message } from 'antd'
+import { MdLogout } from "react-icons/md";
+import { logoutUser, getNotifications } from "../../Redux/features/authslice.js";
+// import { getNotifications } from "../../Redux/features/authslice.js";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
-import { getNotifications } from "../../Redux/features/authslice.js";
+// import { getNotifications } from "../../Redux/features/authslice.js";
 
 const Vendorheader = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const [modal, setModal] = useState(null);
 
   const {
     vendorInfo,
@@ -43,6 +50,7 @@ const Vendorheader = () => {
 
   const isOwner = isOwnerOnDashboard || isOwnerOnPublicPage;
   const showFullHeader = isOwnerOnDashboard;
+  // const [showLogout, setShowLogout] = useState(false);
 
   const getInitials = () => {
     const name =
@@ -65,6 +73,38 @@ const Vendorheader = () => {
     };
   }, [isOpen]);
 
+  const openLogoutModal = () => {
+  setModal("logout");
+};
+
+const closeModal = () => {
+  setModal(null);
+};
+
+const handleLogout = async () => {
+  try {
+    await dispatch(logoutUser()).unwrap();
+    message.success("Logged out successfully");
+    closeModal();
+    navigate("/login");
+  } catch (err) {
+    await persistor.purge();
+    closeModal();
+    navigate("/login");
+  }
+};
+
+  //  const handleLogout = async () => {
+  //     try {
+  //       await dispatch(logoutUser()).unwrap()
+  //       message.success('Logged out successfully')
+  //       navigate('/login')
+  //     } catch (err) {
+  //       await persistor.purge()
+  //       navigate('/login')
+  //     }
+  //   }
+
   const closeMenu = () => setIsOpen(false);
 
   return (
@@ -84,8 +124,8 @@ const Vendorheader = () => {
         {showFullHeader && (
           <>
             <div className={`vendorheader-right ${isOpen ? "active" : ""}`}>
-
              
+              {/* Chat / Messages */}
               <button
                 className="icon-btn"
                 aria-label="Wallet"
@@ -135,18 +175,66 @@ const Vendorheader = () => {
                 <span className="vendorheader-navLabel">Notifications</span>
               </button>
 
-              <div className="vendorheader-footerActions">
-                <div className="avatar-circle">{getInitials()}</div>
-                <button
-                  className="edit-profile-btn"
-                  onClick={() => {
-                    navigate("/Settings");
-                    closeMenu();
-                  }}
-                >
-                  Edit Profile
-                </button>
-              </div>
+             <div className="vendorheader-footerActions">
+  {/* Avatar */}
+  <div
+    className="avatar-circle"
+    onClick={openLogoutModal}
+  >
+    {getInitials()}
+  </div>
+
+  {/* Logout Modal */}
+  {modal === "logout" && (
+    <div
+      className="vendorlogout-overlay"
+      onClick={closeModal}
+    >
+      <div
+        className="vendorlogout-modal"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="vendorlogout-icon">
+          <MdLogout size={28} />
+        </div>
+
+        <h3 className="vendorlogout-title">
+          Log out?
+        </h3>
+
+        <p className="vendorlogout-subtitle">
+          You'll need to sign in again to access your account.
+        </p>
+
+        <div className="vendorlogout-actions">
+          <button
+            className="vendorlogout-cancel"
+            onClick={closeModal}
+          >
+            Cancel
+          </button>
+
+          <button
+            className="vendorlogout-confirm"
+            onClick={handleLogout}
+          >
+            Yes, log out
+          </button>
+        </div>
+      </div>
+    </div>
+  )}
+
+  <button
+    className="edit-profile-btn"
+    onClick={() => {
+      navigate("/Settings");
+      closeMenu();
+    }}
+  >
+    Edit Profile
+  </button>
+</div>
             </div>
 
             <div

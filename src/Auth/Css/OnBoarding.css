@@ -114,6 +114,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  cursor: pointer;
 }
 .onboarding-image2 {
   width: 50px;

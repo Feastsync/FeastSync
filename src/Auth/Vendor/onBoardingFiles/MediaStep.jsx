@@ -24,37 +24,50 @@ const MediaStep = ({
     setProfileData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleFileChange = (field, files, limit, maxSizeMB) => {
-    const currentFiles = profileData?.[field] || [];
-    const remainingSlots = limit - currentFiles.length;
+ const handleFileChange = (field, files, limit, maxSizeMB) => {
+  const currentFiles = profileData?.[field] || [];
+  const remainingSlots = limit - currentFiles.length;
 
-    if (remainingSlots <= 0) {
-      message.warning(`You have already reached the maximum limit of ${limit} files.`);
-      return;
+  if (remainingSlots <= 0) {
+    message.warning(`You have already reached the maximum limit of ${limit} files.`);
+    return;
+  }
+
+  const newlySelected = Array.from(files).slice(0, remainingSlots);
+  const validNewFiles = [];
+
+  for (let file of newlySelected) {
+    if (field === "videoCatalogue" && !file.type.startsWith("video/")) {
+      message.error(`"${file.name}" is not a valid video file.`);
+      continue;
     }
 
-    const newlySelected = Array.from(files).slice(0, remainingSlots);
-    const validNewFiles = [];
-
-    for (let file of newlySelected) {
-      if (file.size > maxSizeMB * 1024 * 1024) {
-        message.error(`"${file.name}" exceeds the ${maxSizeMB}MB limit and was skipped.`);
-        continue;
-      }
-      
-      const isDuplicate = currentFiles.some((f) => f.name === file.name && f.size === file.size);
-      if (!isDuplicate) {
-        validNewFiles.push(file);
-      }
+    if (field === "photoCatalogue" && !file.type.startsWith("image/")) {
+      message.error(`"${file.name}" is not a valid image file.`);
+      continue;
     }
 
-    if (validNewFiles.length === 0) return;
+    if (file.size > maxSizeMB * 1024 * 1024) {
+      message.error(`"${file.name}" exceeds the ${maxSizeMB}MB limit and was skipped.`);
+      continue;
+    }
 
-    setProfileData((prev) => ({
-      ...prev,
-      [field]: [...(prev[field] || []), ...validNewFiles],
-    }));
-  };
+    const isDuplicate = currentFiles.some(
+      (f) => f.name === file.name && f.size === file.size
+    );
+
+    if (!isDuplicate) {
+      validNewFiles.push(file);
+    }
+  }
+
+  if (validNewFiles.length === 0) return;
+
+  setProfileData((prev) => ({
+    ...prev,
+    [field]: [...(prev[field] || []), ...validNewFiles],
+  }));
+};
 
   const handleRemoveFile = (field, indexToRemove) => {
     setProfileData((prev) => ({

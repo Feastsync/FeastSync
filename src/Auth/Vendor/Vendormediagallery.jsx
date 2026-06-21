@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { message } from "antd";
 import api from "../../Redux/app/axios";
-import { getVendorById } from "../../Redux/features/authslice";
+import { getVendorById, replaceVendorMedia } from "../../Redux/features/authslice";
 import "../Css/Vendormediagallery.css";
 
 const Vendormediagallery = () => {
@@ -47,7 +47,7 @@ const Vendormediagallery = () => {
       formData.append("file", file);
       formData.append("mediaType", selectedMedia.mediaType);
       formData.append("publicId", selectedMedia.publicId);
-
+      console.log (currentVendor)
       await api.put(
         `/vendor/replace-media/${currentVendor._id}`,
         formData,
@@ -126,7 +126,7 @@ const Vendormediagallery = () => {
                 <button
                   className="media-edit-btn"
                   onClick={() =>
-                    handleEdit(videoInputRef, item, "video")
+                    handleEdit(videoInputRef, item, "videoCatalogue")
                   }
                 >
                   Edit
@@ -166,7 +166,7 @@ const Vendormediagallery = () => {
                 <button
                   className="media-edit-btn"
                   onClick={() =>
-                    handleEdit(photoInputRef, item, "photo")
+                    handleEdit(photoInputRef, item, "photoCatalogue")
                   }
                 >
                   Edit
