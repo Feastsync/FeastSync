@@ -7,20 +7,39 @@
 
 .user-dashboard-content {
   width: 100%;
-  height: 45%;
+  height: 50%;
   background-color: var(--primary-color);
 }
 
 .user-dashboard-wrapper{
   width: 100%;
-  height: 45%;
+  height: 50%;
   display:flex;
   justify-content: center;
   border-bottom: 0.01px solid rgb(207, 203, 203);
 }
 .user-dashboard-contentleft1{
   width:90%;
-  height:100%
+  height:100%;
+  margin-top: 15px;
+}
+.user-dashboard-contentleft1a{
+  display: flex;
+  justify-content: space-between;
+}
+.user-dashboard-contentleft1a-btn{
+  /* width: 7%;
+  height: 50%; */
+  padding: 4px 7px;
+  border: 1px solid white;
+  color: white;
+  background: var(--primary-color);
+  border-radius: 6px;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+
 }
 .user-dashboard-contentleft1 h2{
   font-size: 32px;
@@ -38,7 +57,7 @@
 
 .user-dashboard-contentright2{
   width:100%;
-  height: 55%;
+  height: 50%;
   display:flex;
   justify-content: center;
 }

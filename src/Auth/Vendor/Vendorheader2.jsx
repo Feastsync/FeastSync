@@ -1,8 +1,10 @@
 import React from 'react'
 import "../Css/Vendorheader2.css"
 import Times from "../../assets/logos/Times.svg"
+import { useNavigate } from 'react-router-dom'
 
 const Vendorheader2 = () => {
+  const navigate = useNavigate();
   return (
     <div className="vendorheader2-banner">
       <div className="vendorheader2-left">
@@ -23,7 +25,7 @@ const Vendorheader2 = () => {
         </div>
       </div>
 
-      <div className="vendorheader2-close">
+      <div className="vendorheader2-close" onClick={() => navigate("/userdashboard")}>
         <img src={Times} alt="" />
       </div>
     </div>

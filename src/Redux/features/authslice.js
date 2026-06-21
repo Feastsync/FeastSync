@@ -358,6 +358,32 @@ export const getCurrentUser = createAsyncThunk(
   },
 );
 
+export const createReview = createAsyncThunk(
+  "review/createReview",
+  async ({ bookingId, reviewData }, thunkAPI) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await axios.post(
+        `/review/create-review/${bookingId}`,
+        reviewData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data || error.message
+      );
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -718,6 +744,23 @@ const authSlice = createSlice({
       });
   },
 });
+
+extraReducers: (builder) => {
+  builder
+    .addCase(createReview.pending, (state) => {
+      state.reviewLoading = true;
+    })
+
+    .addCase(createReview.fulfilled, (state, action) => {
+      state.reviewLoading = false;
+      state.reviewData = action.payload;
+    })
+
+    .addCase(createReview.rejected, (state, action) => {
+      state.reviewLoading = false;
+      state.reviewError = action.payload;
+    });
+}
 
 export const { logout, clearError, updateVendorInfo } = authSlice.actions;
 export default authSlice.reducer;

@@ -148,7 +148,7 @@ import { persistor } from '../../Redux/app/store'
 import api from '../../Redux/app/axios'
 import { message } from 'antd'
 import { logoutUser, getNotifications } from "../../Redux/features/authslice.js";
-import { getNotifications } from "../../Redux/features/authslice.js";
+// import { getNotifications } from "../../Redux/features/authslice.js";
 
 const Vendorheader = () => {
   const [isOpen, setIsOpen] = useState(false);

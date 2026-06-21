@@ -1,300 +1,120 @@
 .ratingreview-container {
   width: 100%;
-  height: 100vh;
-  min-height: max-content;
-  background: #ffffff;
+  min-height: 100vh;
+  background: #f7f8fc;
 }
 
 .ratingreview-wrapper {
-  width: calc(100% - 80px);
-  margin: 40px;
+  width: min(1100px, calc(100% - 40px));
+  margin: 40px auto;
 }
 
-.ratingreview-booking-text {
-  text-align: center;
-  font-size: 15px;
-  font-weight: 600;
-  color: #101010;
-  margin-bottom: 50px;
-}
-
-.ratingreview-rating-section {
-  text-align: center;
-  margin-bottom: 70px;
-}
-
-.ratingreview-rating-title {
-  font-size: 13px;
-  color: #101010;
+/* TEXT + UI BLOCKS (UNCHANGED STYLE CLEANUP) */
+.ratingreview-booking-text{
+    background: #fff;
+  padding: 20px;
+  border-radius: 12px;
   margin-bottom: 20px;
 }
+.ratingreview-rating-section,
+.ratingreview-note-section {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
 
+/* STARS */
 .ratingreview-stars {
   display: flex;
   justify-content: center;
-  gap: 18px;
+  gap: 12px;
 }
 
 .ratingreview-stars img {
-  width: 35px;
-  height: 35px;
-  cursor: pointer;
+  width: 30px;
+  height: 30px;
 }
 
-.ratingreview-note-section {
-  width: 100%;
-  margin-bottom: 40px;
-}
-
-.ratingreview-note-section label {
-  display: block;
-  margin-bottom: 12px;
-  font-size: 17.5px;
-  font-weight: 500;
-  color: #330159;
-}
-
+/* NOTE */
 .ratingreview-note-input {
   width: 100%;
-  height: 223px;
-  border: 1px solid #dcdcdc;
-  border-radius: 2px;
-  padding: 12px;
-  resize: none;
-  outline: none;
-  font-size: 14px;
+  height: 140px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
 }
 
-.ratingreview-note-input::placeholder {
-  color: #2b2a2a;
-}
-
+/* ===== EVIDENCE GRID ===== */
 .ratingreview-evidence-section {
-  width: 100%;
-  height: 65vh;
-  display: flex;
-  margin-top: 20px;
-}
-.ratingreview-evidence-left{
-  width: 50%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ratingreview-evidence-right{
-  width: 50%;
-  height: 100%;
-}
-.ratingreview-evidence-rightup{
-  width: 100%;
-  height: 50%;
-  display: flex;
-}
-.ratingreview-evidence-rightup-left{
-  width: 50%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ratingreview-evidence-rightup-right{
-  width: 50%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ratingreview-evidence-rightup-right h2{
-  display: none;
-}
-.ratingreview-evidence-rightdown{
-  width: 100%;
-  height: 50%;
-  border-radius: var(--radius-xs, 6px);
-  background: var(--Color-2, #4A5565);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ratingreview-evidence-rightdown h2{
-  display: none;
-}
-.ratingreview-submit{
-  width: 100%;
-  height: 15vh;
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
 }
 
+/* CARD (IMAGE + VIDEO SAME SIZE) */
+.ratingreview-card {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px dashed #ccc;
+  background: #fff;
+}
+
+/* INPUT OVER FULL CARD */
+.ratingreview-card input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* IMAGE + VIDEO FULL FIT */
+.ratingreview-card img,
+.ratingreview-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* PLACEHOLDER TEXT */
+.ratingreview-card span {
+  position: absolute;
+  color: #888;
+  font-weight: 500;
+}
+
+/* SUBMIT */
 .ratingreview-submit-btn {
   width: 100%;
   height: 45px;
+  background: #5b21b6;
+  color: white;
   border: none;
-  background: var(--primary-color);
-  font-size: 17px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 30px;
-  color: #ffffff;
-  cursor: pointer;
-  border-radius: 3px;
+  border-radius: 10px;
 }
 
-.ratingreview-submit-btn:hover {
-  border: 1px solid var(--primary-color);
-  background: transparent;
-  color: var(--primary-color);
-}
-
-
-@media screen and (max-width: 1200px) {
-  .ratingreview-wrapper {
-    width: calc(100% - 40px);
-    margin: 20px;
-  }
-
-  .ratingreview-booking-text {
-    margin-bottom: 30px;
-  }
-
-  .ratingreview-rating-section {
-    margin-bottom: 40px;
-  }
- .ratingreview-evidence-rightup-right span{
-  display: none;
-}
- .ratingreview-evidence-rightup-right h2{
-  display: flex;
-  font-size: 16px;
-  font-weight: 500;
-}
-  .ratingreview-evidence-rightdown p{
-  display: none;
-}
-  .ratingreview-evidence-rightdown h2{
-   display: flex;
-   font-size: 16px;
-   font-weight: 500;
- }
-}
-
-@media screen and (max-width: 680px) {
-  .ratingreview-container {
-    height: auto;
-  }
-
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
   .ratingreview-evidence-section {
-    flex-direction: column;
-    height: auto;
-    gap: 16px;
+    grid-template-columns: 1fr;
   }
 
-  .ratingreview-evidence-left {
-    width: 100%;
-    height: 200px;
-    border-radius: var(--radius-xs, 6px);
-    background: var(--Color, #EEE);
-  }
-
-  .ratingreview-evidence-right {
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .ratingreview-evidence-rightup {
-    flex-direction: column;
-    height: auto;
-    gap: 16px;
-  }
-
-  .ratingreview-evidence-rightup-left {
-    width: 100%;
-    height: 200px;
-    border-radius: var(--radius-xs, 6px);
-    background: var(--Color, #EEE);
-  }
-
-  .ratingreview-evidence-rightup-right {
-    width: 100%;
-    height: 200px;
-    border-radius: var(--radius-xs, 6px);
-    background: var(--Color, #EEE);
-  }
-.ratingreview-evidence-rightup-right span{
-  display: none;
-}
- .ratingreview-evidence-rightup-right h2{
-  display: flex;
-  font-size: 16px;
-  font-weight: 500;
-}
-  .ratingreview-evidence-rightdown {
-    width: 100%;
-    height: 200px;
-    border-radius: var(--radius-xs, 6px);
-    background: var(--Color, #EEE);   
-  }
-    .ratingreview-evidence-rightdown p{
-  display: none;
-}
-  .ratingreview-evidence-rightdown h2{
-   display: flex;
-   font-size: 16px;
-   font-weight: 500;
- }
-
-  .ratingreview-submit {
-    height: auto;
-    margin-top: 30px;
-    padding-bottom: 20px;
+  .ratingreview-card {
+    height: 220px;
   }
 }
 
-@media screen and (max-width: 678px) {
+@media (max-width: 480px) {
   .ratingreview-wrapper {
-    width: calc(100% - 32px);
-    margin: 16px;
+    width: calc(100% - 24px);
   }
 
-  .ratingreview-booking-text {
-    font-size: 14px;
-    margin-bottom: 24px;
+  .ratingreview-card {
+    height: 200px;
   }
-
-  .ratingreview-stars {
-    gap: 12px;
-  }
-
-  .ratingreview-stars img {
-    width: 30px;
-    height: 30px;
-  }
-
-  .ratingreview-note-section label {
-    font-size: 15px;
-  }
-
-  .ratingreview-note-input {
-    height: 160px;
-  }
-.ratingreview-evidence-rightup-right span{
-  display: none;
-}
- .ratingreview-evidence-rightup-right h2{
-  display: flex;
-  font-size: 16px;
-  font-weight: 500;
-}
-    .ratingreview-evidence-rightdown p{
-  display: none;
-}
-  .ratingreview-evidence-rightdown h2{
-   display: flex;
-   font-size: 16px;
-   font-weight: 500;
- }
 }

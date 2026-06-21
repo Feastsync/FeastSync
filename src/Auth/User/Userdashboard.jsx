@@ -15,12 +15,17 @@ const Userdashboard = () => {
       <section className="user-dashboard-content">
         <section className="user-dashboard-wrapper">
           <section className="user-dashboard-contentleft1">
-         
+            {/* <div className="user-dashboard-contentleft1a"> */}
             <h2>Welcome, {userInfo?.firstName}</h2>
+            {/* <button className="user-dashboard-contentleft1a-btn">My Review</button> */}
+            {/* </div> */}
+            <div className="user-dashboard-contentleft1a">
             <p>
               Welcome back! Explore our vendors and start booking the <br /> 
               industry's best talent right now.
             </p>
+             <button className="user-dashboard-contentleft1a-btn" onClick={() => navigate("/ratingreview")} >My Review</button>
+            </div>
           </section>
         </section>
         
