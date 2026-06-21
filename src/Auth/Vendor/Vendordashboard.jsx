@@ -108,11 +108,11 @@ const handleCopyLink = async () => {
   }
 };
 
-console.log("isOwner:", isOwner)
-console.log("isLoggedIn:", isLoggedIn)
-console.log("accountType:", accountType)
-console.log("displayVendor:", displayVendor?._id)
-console.log("vendorInfo:", vendorInfo?._id)
+// console.log("isOwner:", isOwner)
+// console.log("isLoggedIn:", isLoggedIn)
+// console.log("accountType:", accountType)
+// console.log("displayVendor:", displayVendor?._id)
+// console.log("vendorInfo:", vendorInfo?._id)
 
   const basePackages = [
     { id: "basic", title: "Basic Package", price: "₦0", highlights: [] },
@@ -149,7 +149,7 @@ const saved = displayVendor?.pricingId?.find(
   if (slug &&!viewingVendor &&!viewingVendorLoading)
     return <div className="vendor-error">Vendor not found</div>;
   if (!displayVendor) return <VendorDashboardSkeleton />;
-
+// console.log("displayVendor full:", displayVendor)
   return (
     <main className="vendordashboard-vendor-dashboard-container">
       <Vendorheader vendor={displayVendor} isOwner={isOwner} />
@@ -161,7 +161,7 @@ const saved = displayVendor?.pricingId?.find(
           <h4 className="vendordashboard-trust-title">Trust Stats</h4>
           <div className="vendordashboard-stats-row">
             <div className="vendordashboard-stat-item">
-              <h3>{displayVendor?.rating || 4.9}</h3>
+              <h3>{displayVendor?.averageRating || 0}</h3>
               <div className="vendordashboard-stars">★★★★★</div>
               <span>Rating</span>
             </div>
@@ -176,7 +176,7 @@ const saved = displayVendor?.pricingId?.find(
            
             {isOwner && (
               <div className="vendordashboard-stat-item">
-                <h3>{displayVendor?.responseRate || 98}%</h3>
+                <h3>{displayVendor?.responseRate || 0}%</h3>
                 <span>Response</span>
               </div>
             )}
