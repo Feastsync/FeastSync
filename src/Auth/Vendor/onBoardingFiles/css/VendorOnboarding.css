@@ -1,14 +1,24 @@
-.onboard-overlay {
+.vo-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
+  z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
-  padding: 20px;
-  animation: fadeIn 0.2s ease;
+  padding: 20px 16px;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.3)),
+    url("../../../assets/BackgroundImage/Vendorbackgroundimage.jpg")
+      center/cover no-repeat;
+  backdrop-filter: blur(1.8px);
+  overflow-y: auto;
+}
+
+.vo-modal-container {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  z-index: 1;
 }
 
 @keyframes fadeIn {

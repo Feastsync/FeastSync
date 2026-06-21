@@ -26,8 +26,8 @@ const FeaturedVendors = () => {
           location: vendor.stateOfResidence || vendor.location || '',
           rating: Math.floor(vendor.averageRating || 0), 
           pprice: vendor.pricingId?.find(
-  (p) => p.packageName?.toLowerCase() === "basic package"
-)?.packagePrice || vendor.bookingFee || 0,
+  (p) => p.packageName === "Basic Package"
+         )?.packagePrice || vendor.bookingFee || 0,
           image: vendor.profilePicture?.secureUrl || vendor.profilePicture || ''
         }))
         setVendors(mappedVendors)
@@ -104,7 +104,7 @@ const FeaturedVendors = () => {
                       name={vendor.stageName}
                       location={vendor.location}
                       rating={vendor.rating}
-                      price={vendor.price}
+                      price={vendor.pprice}
                       image={vendor.image}
                     />
                   </div>
@@ -140,7 +140,7 @@ const FeaturedVendors = () => {
                         name={vendor.stageName}
                         location={vendor.location}
                         rating={vendor.rating}
-                        price={vendor.price}
+                        price={vendor.pprice}
                         image={vendor.image}
                       />
                     </div>

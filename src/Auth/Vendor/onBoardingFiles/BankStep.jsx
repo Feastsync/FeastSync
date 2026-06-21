@@ -46,92 +46,96 @@ const BankStep = ({
   };
 
   return (
-    <div className="bank-modal">
-      <div className="bank-modal-header">
-        <div className="bank-header-top">
-          <h2>Bank Information</h2>
-        </div>
-        <p className="bank-subtext">Add your bank details for secure payouts</p>
-        <div className="bank-progress-bar">
-          <div className="bank-progress-fill" style={{ width: `${percentComplete}%` }} />
-        </div>
-      </div>
+    // <div className="bank-modal-overlay">
+      <div className="bank-modal">
 
-      <div className="bank-modal-body">
-        <div className="bank-warning">
-          <div className="bank-warning-bar"></div>
-          <p>
-            Ensure your account name matches your ID. Payouts follow the 70/30
-            escrow system.
-          </p>
+        <div className="bank-modal-header">
+          <div className="bank-header-top">
+            <h2>Bank Information</h2>
+          </div>
+          <p className="bank-subtext">Add your bank details for secure payouts</p>
+          <div className="bank-progress-bar">
+            <div className="bank-progress-fill" style={{ width: `${percentComplete}%` }} />
+          </div>
         </div>
 
-        <div className="bank-form-section">
-          <h3>Bank Details</h3>
-
-          <div className="bank-field">
-            <label>State of Residence</label>
-            <input
-              type="text"
-              placeholder="Enter your state of residence"
-              value={safeProfile.stateOfResidence || ""}
-              onChange={(e) => updateField("stateOfResidence", e.target.value)}
-            />
+        <div className="bank-modal-body">
+          <div className="bank-warning">
+            <div className="bank-warning-bar"></div>
+            <p>
+              Ensure your account name matches your ID. Payouts follow the 70/30
+              escrow system.
+            </p>
           </div>
 
-          <div className="bank-field">
-            <label>Select Bank</label>
-            <div className="bank-select-wrapper">
-              <select
-                value={safeProfile.bankName || ""}
-                onChange={(e) => updateField("bankName", e.target.value)}
-              >
-                <option value="">Select your bank</option>
-                {nigerianBanks.map((bank) => (
-                  <option key={bank} value={bank}>{bank}</option>
-                ))}
-              </select>
-              <FiChevronDown className="bank-select-icon" />
+          <div className="bank-form-section">
+            <h3>Bank Details</h3>
+
+            <div className="bank-field">
+              <label>State of Residence</label>
+              <input
+                type="text"
+                placeholder="Enter your state of residence"
+                value={safeProfile.stateOfResidence || ""}
+                onChange={(e) => updateField("stateOfResidence", e.target.value)}
+              />
+            </div>
+
+            <div className="bank-field">
+              <label>Select Bank</label>
+              <div className="bank-select-wrapper">
+                <select
+                  value={safeProfile.bankName || ""}
+                  onChange={(e) => updateField("bankName", e.target.value)}
+                >
+                  <option value="">Select your bank</option>
+                  {nigerianBanks.map((bank) => (
+                    <option key={bank} value={bank}>{bank}</option>
+                  ))}
+                </select>
+                <FiChevronDown className="bank-select-icon" />
+              </div>
+            </div>
+
+            <div className="bank-field">
+              <label>Account Number</label>
+              <input
+                type="text"
+                placeholder="Enter your 10-digit account number"
+                value={safeProfile.accountNumber || ""}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, "");
+                  if (value.length <= 10) updateField("accountNumber", value);
+                }}
+                maxLength={10}
+              />
+              {safeProfile.accountNumber && safeProfile.accountNumber.length !== 10 && (
+                <small style={{ color: "red", marginTop: "5px", display: "block" }}>
+                  Account number must be exactly 10 digits
+                </small>
+              )}
             </div>
           </div>
+        </div>
 
-          <div className="bank-field">
-            <label>Account Number</label>
-            <input
-              type="text"
-              placeholder="Enter your 10-digit account number"
-              value={safeProfile.accountNumber || ""}
-              onChange={(e) => {
-                const value = e.target.value.replace(/\D/g, "");
-                if (value.length <= 10) updateField("accountNumber", value);
-              }}
-              maxLength={10}
-            />
-            {safeProfile.accountNumber && safeProfile.accountNumber.length !== 10 && (
-              <small style={{ color: "red", marginTop: "5px", display: "block" }}>
-                Account number must be exactly 10 digits
-              </small>
-            )}
+        <div className="bank-modal-footer">
+          <div className="bank-footer-actions">
+            <button className="bank-btn-secondary" onClick={onBack}>
+              Back
+            </button>
+            <button
+              type="button"
+              className="bank-btn-primary"
+              onClick={handleContinue}
+              disabled={!isFormValid}
+            >
+              Continue
+            </button>
           </div>
         </div>
-      </div>
 
-      <div className="bank-modal-footer">
-        <div className="bank-footer-actions">
-          <button className="bank-btn-secondary" onClick={onBack}>
-            Back
-          </button>
-          <button
-            type="button"
-            className="bank-btn-primary"
-            onClick={handleContinue}
-            disabled={!isFormValid}
-          >
-            Continue
-          </button>
-        </div>
       </div>
-    </div>
+    // </div>
   );
 };
 
