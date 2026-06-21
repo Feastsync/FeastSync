@@ -115,7 +115,7 @@ const Vendorheader = () => {
                 <span className="vendorheader-navLabel">Chat</span>
               </button>
 
-              {/* Notifications */}
+          
               <button
                 className="icon-btn notification-btn"
                 aria-label="Notifications"
