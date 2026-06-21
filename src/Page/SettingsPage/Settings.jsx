@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateVendorInfo, getAllPricing } from '../../Redux/features/authslice'
+import { logoutUser, updateVendorInfo, getAllPricing } from '../../Redux/features/authslice'
 import { message } from 'antd'
 import { persistor } from '../../Redux/app/store'
 import api from '../../Redux/app/axios'
@@ -129,6 +129,17 @@ const Settings = () => {
     setModal('pricing')
   }
 
+  const handleLogout = async () => {
+    try {
+      await dispatch(logoutUser()).unwrap()
+      message.success('Logged out successfully')
+      navigate('/login')
+    } catch (err) {
+      await persistor.purge()
+      navigate('/login')
+    }
+  }
+
   return (
     <div className="settings_page">
       <div className="settings_container">
@@ -163,7 +174,7 @@ const Settings = () => {
           </div>
           <div className="settings_row_right">
             <span className="settings_value">{vendorInfo?.stageName}</span>
-            {/* <button className="settings_btn" onClick={() => setModal('display-name')}>Edit</button> */}
+            <button className="settings_btn" onClick={() => setModal('display-name')}>Edit</button>
           </div>
         </div>
 
@@ -218,15 +229,15 @@ const Settings = () => {
           </div>
         </div>
 
-        {/* <div className="settings_row"> */}
-          {/* <div className="settings_row_left">
+        <div className="settings_row">
+          <div className="settings_row_left">
             <span className="settings_label">Availability Calendar</span>
             <span className="settings_sublabel">Edit and set date here</span>
           </div>
           <div className="settings_row_right">
             <button className="settings_btn">Edit</button>
-          </div> */}
-        {/* </div> */}
+          </div>
+        </div>
 
         <div className="settings_row">
           <div className="settings_row_left">
@@ -284,6 +295,7 @@ const Settings = () => {
             <div className="settings_badge_approved">✓ Approved</div>
           </div>
         </div>
+
       </div>
       {modal === 'logout' && (
         <div className="modal_overlay" onClick={closeModal}>
