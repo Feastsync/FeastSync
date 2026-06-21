@@ -6,6 +6,7 @@ import api from "../Redux/app/socketAxios";
 const STAR_COUNT = 5;
 
 const RatingReview = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { bookingId } = useParams();
   const location = useLocation();

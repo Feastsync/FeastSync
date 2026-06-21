@@ -136,7 +136,6 @@ const PricingStep = ({
   (pkg.packageName || pkg.pacakageName || "").toLowerCase()
 );
 
-
 const hasAllPackages =
   savedNames.includes("basic package") &&
   savedNames.includes("standard package") &&

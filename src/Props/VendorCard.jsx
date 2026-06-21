@@ -33,7 +33,7 @@ const handleBookNow = (e) => {
 const handleWishlist = (e) => {
   e.stopPropagation()
   if (!isLoggedInUser) {
-    navigate("/onboarding", { state: { from: `/vendor/${props.slug}` } })
+    navigate("/vendordashboard", { state: { from: `/vendor/${props.slug}` } })
     return
   } 
   setIsLiked(!isLiked)
@@ -62,7 +62,7 @@ const handleWishlist = (e) => {
         </span>
         <Button
           className="wishlist_btn"
-          onClick={handleWishlist}
+          onClick={()=>navigate("/userdashboard")}
           btnText={isLiked ? <FaHeart size={12} color="#330159" /> : <FiHeart size={12} />}
         />
       </div>

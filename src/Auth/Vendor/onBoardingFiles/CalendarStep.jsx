@@ -16,6 +16,10 @@ const CalendarStep = ({
   const [activeStartDate, setActiveStartDate] = useState(new Date());
 
   const bookedDates = profileData?.availability?.bookedDays || profileData?.bookedDays || [];
+  
+  const isSaveDisabled = isLoading || !profileData || !profileData.availability 
+  || !Array.isArray(profileData.availability.bookedDays);
+
 
   const formatDate = (date) => {
     const year = date.getFullYear();
@@ -116,12 +120,12 @@ const CalendarStep = ({
                 Back
               </button>
               <button
-                className="cs-btn-primary"
-                onClick={onNext}
-                disabled={isLoading}
-              >
-                {isLoading ? "Saving..." : "Complete Setup"}
-              </button>
+               className="cs-btn-primary"
+               onClick={onNext}
+               disabled={isSaveDisabled}
+             >
+               {isLoading ? "Saving..." : "Complete Setup"}
+             </button>
             </div>
           </div>
         </div>
