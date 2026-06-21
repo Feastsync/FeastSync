@@ -594,7 +594,7 @@
 }
 
 .bubble {
-  max-width: 52%;
+  max-width: 65%;        /* was 52% — give it more room */
   padding: 12px 16px;
   border-radius: 14px;
   font-family: "Plus Jakarta Sans", sans-serif;
@@ -603,6 +603,8 @@
   line-height: 22px;
   color: #fff;
   position: relative;
+  word-break: break-word;   /* ADD THIS — forces long text to wrap */
+  overflow-wrap: break-word; /* ADD THIS — backup for older browsers */
 }
 
 .bubble--them {

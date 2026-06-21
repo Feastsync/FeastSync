@@ -275,9 +275,15 @@
   transition: background 0.2s;
 }
 
-.media-btn-continue:hover {
-  background: #4a0180;
+.media-btn-continue:hover:not(:disabled) {
+  background: #250142;
 }
+
+.media-btn-continue--disabled {
+   background: #cccccc;
+  cursor: not-allowed;
+}
+
 
 @media (max-width: 640px) {
   .media-overlay {

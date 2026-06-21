@@ -26,6 +26,11 @@ const PricingStep = ({
     dispatch(getAllPricing());
   }, [dispatch]);
 
+  const formatNumber = (value) => {
+  const cleaned = value.replace(/[^0-9]/g, "");
+  return cleaned.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
   const handleChange = (field, value) => {
     setProfileData((prev) => ({
       ...prev,
@@ -127,6 +132,16 @@ const PricingStep = ({
     onNext();
   };
 
+  const savedNames = (pricingPackages || []).map((pkg) =>
+  (pkg.packageName || pkg.pacakageName || "").toLowerCase()
+);
+
+
+const hasAllPackages =
+  savedNames.includes("basic package") &&
+  savedNames.includes("standard package") &&
+  savedNames.includes("premium package");
+
   return (
     <div className="ps-modal">
       <div className="ps-header">
@@ -143,15 +158,19 @@ const PricingStep = ({
 
       <div className="ps-body">
         <div className="ps-field">
-          <label>Starting Price</label>
+          <label>Price</label>
           <div className="ps-input-prefix-wrap">
             <span className="ps-prefix">₦</span>
             <input
-              type="text"
-              placeholder="50,000"
-              value={startingPrice}
-              onChange={(e) => handleChange("startingPrice", e.target.value)}
-            />
+            type="text"
+            inputMode="numeric"
+            placeholder="50,000"
+            value={startingPrice}
+            onChange={(e) => {
+              const raw = e.target.value.replace(/[^0-9]/g, "");
+              handleChange("startingPrice", raw);
+            }}
+          />
           </div>
         </div>
 
@@ -222,18 +241,34 @@ const PricingStep = ({
 
       <div className="ps-footer">
         <div className="ps-footer-left">
-          <button className="ps-btn-save" onClick={handleSave}>
-            Save
-          </button>
+          <button
+          className={`ps-btn-save ${hasAllPackages ? "disabled-btn" : ""}`}
+          onClick={handleSave}
+          disabled={hasAllPackages}
+          title={
+            hasAllPackages
+              ? "All three packages have been added"
+              : ""
+          }
+        >
+          Save
+        </button>
         </div>
         <div className="ps-footer-right">
           <button className="ps-btn-back" onClick={onBack}>
             Back
           </button>
           <button
-            className="ps-btn-continue"
-            onClick={handleContinue}
-            disabled={isSubmitting}
+           className={`ps-btn-continue ${
+             isSubmitting || !hasAllPackages ? "disabled-btn" : ""
+           }`}
+           onClick={handleContinue}
+           disabled={isSubmitting || !hasAllPackages}
+           title={
+             !hasAllPackages
+               ? "Please save Basic, Standard and Premium packages before continuing"
+               : ""
+           }
           >
             {isSubmitting ? "Saving..." : "Continue"}
           </button>
