@@ -22,7 +22,7 @@ const Header = () => {
 
   const { isLoggedIn, activeUser, isVendor } = useAuth()
 
-  // Close avatar dropdown when clicking outside
+  
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -33,7 +33,7 @@ const Header = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  // Lock body scroll when mobile menu is open
+  
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : 'unset'
     return () => { document.body.style.overflow = 'unset' }
@@ -69,7 +69,6 @@ const Header = () => {
         <nav className="userheader">
           <div className="userheader_wrapper">
 
-            {/* LEFT: logo */}
             <div className="userheader_left">
               <img
                 src={Headerlogo}
@@ -80,9 +79,8 @@ const Header = () => {
               <span className="userheader_logo_text">FeastSync</span>
             </div>
 
-            {/* MIDDLE: nav links (desktop always visible, mobile inside hamburger) */}
+      
             <div className={`userheader_middle ${mobileOpen ? 'active' : ''}`}>
-              {/* Mobile-only profile card at top of drawer */}
               <div className="userheader_mobile_profile">
                 <div className="userheader_mobile_avatar">
                   {getInitials(activeUser)}
@@ -102,8 +100,6 @@ const Header = () => {
               <NavLink to="/vendors" className="userheader_nav_link" onClick={closeMobile}>Vendors</NavLink>
               <NavLink to="/services" className="userheader_nav_link" onClick={closeMobile}>Services</NavLink>
               <NavLink to="/contact" className="userheader_nav_link" onClick={closeMobile}>Contact</NavLink>
-
-              {/* Mobile-only actions */}
               <div className="userheader_mobile_actions">
                 <button className="userheader_mobile_action_btn" onClick={() => { navigate('/notifications'); closeMobile() }}>
                   <IoNotificationsOutline size={20} /> Notifications
@@ -119,16 +115,10 @@ const Header = () => {
                 </button>
               </div>
             </div>
-
-            {/* RIGHT: desktop controls + mobile icons */}
             <div className="userheader_right">
-
-              {/* Bell — desktop only */}
               <button className="userheader_icon_btn userheader_desktop_only" aria-label="Notifications">
                 <IoNotificationsOutline className="userheader_bell_icon" />
               </button>
-
-              {/* Chat — always visible */}
               <button
                 className="userheader_icon_btn"
                 aria-label="Messages"
@@ -136,8 +126,6 @@ const Header = () => {
               >
                 <IoChatbubbleEllipsesOutline className="userheader_chat_icon" />
               </button>
-
-              {/* Avatar + dropdown — desktop only */}
               <div className="userheader_avatar_wrapper userheader_desktop_only" ref={dropdownRef}>
                 <button
                   className="userheader_avatar_btn"
@@ -193,8 +181,6 @@ const Header = () => {
                   </div>
                 )}
               </div>
-
-              {/* Hamburger — mobile only */}
               <button
                 className="userheader_hamburger"
                 onClick={() => setMobileOpen(!mobileOpen)}
@@ -206,13 +192,9 @@ const Header = () => {
 
           </div>
         </nav>
-
-        {/* Mobile overlay */}
         {mobileOpen && (
           <div className="userheader_overlay" onClick={closeMobile} />
         )}
-
-        {/* Logout confirmation modal */}
         {showLogoutModal && (
           <div className="userheader_modal_backdrop" onClick={() => setShowLogoutModal(false)}>
             <div className="userheader_modal" onClick={(e) => e.stopPropagation()}>

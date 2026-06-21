@@ -98,19 +98,18 @@ const App = () => {
           <Route path="/epknorating/:vendorId" element={<Epknorating />} />
           <Route path="/epkrating/:id" element={<Epkrating />} />
           <Route path="/chats" element={<Chat />} />
+          <Route path="/bookings" element={<BookingModal />} />
+          <Route path="/bookingrequest" element={<BookingRequest />} />
+          <Route path="/request/:requestId" element={<BookingRequest />} />
           <Route path="/chats/:bookingId" element={<Chat />} />
         </Route>
 
 
         <Route element={<PrivateRoute allowedRoles={["user"]} />}>
           <Route path="/userdashboard" element={<Userdashboard />} />
-          <Route path="/bookings" element={<BookingModal />} />
-          <Route path="/bookingrequest" element={<BookingRequest />} />
-          <Route path="/request/:requestId" element={<BookingRequest />} />
-          <Route path="/ratingreview" element={<RatingReview />} />
+          <Route path="/ratingreview/:bookingId" element={<RatingReview />} />
           <Route path="/transaction/histories" element={<WalletLedger />} />
           <Route path="/inbox" element={<Inbox />} />
-          <Route path="/Settings" element={<Settings />} />
         </Route>
 
 
@@ -120,11 +119,13 @@ const App = () => {
           <Route path="/vendor/onboarding" element={<OnboardingPage />} />
           <Route path="/vendor/kyc" element={<VendorKYC />} />
           <Route path="/mediastep" element={<MediaStep />} />
+             <Route path="/Settings" element={<Settings />} />
           <Route path="/pricingstep" element={<PricingStep />} />
           <Route path="/vendormediagallery" element={<Vendormediagallery />} />
           <Route path="/VendorChat/:Id" element={<VendorChat />} />
           <Route path="/wallet/transactions" element={<VendorWallet />} />
           <Route path="/notifications" element={<NotificationsWrapper />}>
+          
             <Route index element={<Navigate to="all" replace />} />
             <Route path="all" element={<AllNotifications />} />
             <Route path="booking" element={<BookingNotifications />} />

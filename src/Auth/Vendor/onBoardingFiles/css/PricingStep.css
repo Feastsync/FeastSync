@@ -181,6 +181,7 @@
   transform: translateY(-50%);
   color: #888888;
   pointer-events: none;
+  
 }
 
 .ps-field textarea {
@@ -281,6 +282,16 @@
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
+}
+
+.disabled-btn {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+.disabled-btn:hover {
+  background: #cfcfcf !important;
+  color: #777 !important;
 }
 
 .ps-btn-continue:hover {
