@@ -116,7 +116,7 @@ const Header = () => {
               </div>
             </div>
             <div className="userheader_right">
-              <button className="userheader_icon_btn userheader_desktop_only" aria-label="Notifications">
+              <button className="userheader_icon_btn userheader_desktop_only" aria-label="Notifications" onClick={() => navigate('/notifications/all')}>
                 <IoNotificationsOutline className="userheader_bell_icon" />
               </button>
               <button
