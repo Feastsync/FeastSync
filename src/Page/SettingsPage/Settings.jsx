@@ -5,6 +5,7 @@ import { updateVendorInfo, getAllPricing } from '../../Redux/features/authslice'
 import { message } from 'antd'
 import { persistor } from '../../Redux/app/store'
 import api from '../../Redux/app/axios'
+import { MdLogout } from 'react-icons/md'
 import './Settings.css'
 
 const Settings = () => {
@@ -18,7 +19,6 @@ const Settings = () => {
   const [updateLoading, setUpdateLoading] = useState(false)
   const [pendingUpdate, setPendingUpdate] = useState({})
 
-  // Field states
   const [phoneNumber, setPhoneNumber] = useState(vendorInfo?.phoneNumber || '')
   const [displayName, setDisplayName] = useState(vendorInfo?.stageName || '')
   const [location, setLocation] = useState(vendorInfo?.stateOfResidence || '')
@@ -58,7 +58,6 @@ const Settings = () => {
     }
   }
 
-  // For phone, bio, location, bank — goes through OTP flow
   const handleSaveUpdate = async (fields) => {
     try {
       setUpdateLoading(true)
@@ -73,7 +72,6 @@ const Settings = () => {
     }
   }
 
-  // Confirm OTP → finalize update
   const verifyOtp = async () => {
     const otpString = otp.join('')
     if (otpString.length < 4) {
@@ -93,7 +91,6 @@ const Settings = () => {
     }
   }
 
-  // Pricing uses its own dedicated endpoints — no OTP needed
   const handlePricingSave = async () => {
     if (!pricing.packageName || !pricing.startingPrice) {
       message.error('Please fill in package name and price')
@@ -122,7 +119,6 @@ const Settings = () => {
     }
   }
 
-  // Open pricing modal pre-filled with an existing package
   const handleEditPricing = (pkg) => {
     setPricing({
       id: pkg.id || pkg._id || '',
@@ -146,6 +142,7 @@ const Settings = () => {
 
         <div className="settings_section_header">
           <h4 className="settings_subsection_title">Account</h4>
+          <button className="settings_logout_btn" onClick={() => setModal('logout')}>Logout</button>
         </div>
 
         <div className="settings_profile_card">
@@ -231,7 +228,6 @@ const Settings = () => {
           </div> */}
         {/* </div> */}
 
-        {/* Pricing packages list */}
         <div className="settings_row">
           <div className="settings_row_left">
             <span className="settings_label">Package and Pricing</span>
@@ -250,7 +246,6 @@ const Settings = () => {
           </div>
         </div>
 
-        {/* Show existing pricing packages */}
         {Array.isArray(pricingPackages) && pricingPackages.map((pkg) => (
           <div className="settings_row" key={pkg.id || pkg._id}>
             <div className="settings_row_left">
@@ -290,8 +285,24 @@ const Settings = () => {
           </div>
         </div>
       </div>
+      {modal === 'logout' && (
+        <div className="modal_overlay" onClick={closeModal}>
+          <div className="logout_modal_box" onClick={(e) => e.stopPropagation()}>
+            <div className="logout_modal_icon">
+             <MdLogout size={28} />
+            </div>
+            <h3 className="logout_modal_title">Log out?</h3>
+            <p className="logout_modal_subtitle">
+              You'll need to sign in again to access your account.
+            </p>
+            <div className="logout_modal_actions">
+              <button className="logout_modal_cancel" onClick={closeModal}>Cancel</button>
+              <button className="logout_modal_confirm" onClick={handleLogout}>Yes, log out</button>
+            </div>
+          </div>
+        </div>
+      )}
 
-      {/* ── Phone Modal ── */}
       {modal === 'phone' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box" onClick={(e) => e.stopPropagation()}>
@@ -323,7 +334,6 @@ const Settings = () => {
         </div>
       )}
 
-      {/* ── Display Name / Bio Modal ── */}
       {(modal === 'display-name' || modal === 'bio') && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box" onClick={(e) => e.stopPropagation()}>
@@ -368,7 +378,7 @@ const Settings = () => {
         </div>
       )}
 
-      {/* ── Location Modal ── */}
+      
       {modal === 'location' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box" onClick={(e) => e.stopPropagation()}>
@@ -406,7 +416,7 @@ const Settings = () => {
         </div>
       )}
 
-      {/* ── Bank Modal ── */}
+      
       {modal === 'bank' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box" onClick={(e) => e.stopPropagation()}>
@@ -455,7 +465,7 @@ const Settings = () => {
         </div>
       )}
 
-      {/* ── Pricing Modal ── */}
+      
       {modal === 'pricing' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box pricing_modal" onClick={(e) => e.stopPropagation()}>
@@ -510,7 +520,7 @@ const Settings = () => {
         </div>
       )}
 
-      {/* ── OTP Verify Modal ── */}
+  
       {modal === 'otp-verify' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box" onClick={(e) => e.stopPropagation()}>

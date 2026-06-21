@@ -4,10 +4,9 @@ import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 import api from "../../Redux/app/socketAxios";
 import sendIcon from "../../assets/logos/sendicon.png";
-import profileIcon from "../../assets/logos/focusIcon.png";
-import calendarIcon from "../../assets/logos/calender.png";
 import verifiedIcon from "../../assets/logos/verifiedicon.png";
 import "./Chat.css";
+import { message } from "antd";
 
 function getInitials(name = "") {
   return name
@@ -56,6 +55,8 @@ export default function ChatsPage() {
   const [activeChatName, setActiveChatName] = useState("");
   const [activeChatAvatar, setActiveChatAvatar] = useState(null);
   const [booking, setBooking] = useState(null);
+  const [paymentLoading, setPaymentLoading] = useState(false);
+
 
   const bodyRef = useRef(null);
   const socketRef = useRef(null);
@@ -204,6 +205,38 @@ export default function ChatsPage() {
         bodyRef.current.scrollHeight;
     }
   }, [messages]);
+
+const handlePayment = async () => {
+  if (!booking || !bookingId) {
+    message.warning("Booking details not loaded yet");
+    return;
+  }
+  const vendorId = booking.vendorId?._id || booking.vendorId;
+  if (!vendorId) {
+    message.error("Vendor ID missing from booking");
+    return;
+  }
+  setPaymentLoading(true);
+  try {
+    const res = await api.post(
+      `/api/v1/payment/initialize-payment/${vendorId}/${bookingId}`
+    );
+    const paymentData = res.data?.data || res.data;
+    const paymentUrl = paymentData?.checkout_url || paymentData?.authorization_url || paymentData?.link;
+
+    if (paymentUrl) {
+      message.loading("Redirecting to KoraPay...", 1);
+      window.location.href = paymentUrl;
+    } else {
+      message.error("Payment link not received from server");
+    }
+  } catch (error) {
+    console.error("Payment initialization failed:", error);
+    message.error(error.response?.data?.message || "Could not start payment");
+  } finally {
+    setPaymentLoading(false);
+  }
+};
 
   // Send message
   const handleSend = async () => {
@@ -382,26 +415,24 @@ export default function ChatsPage() {
             </div>
 
             <div className="chats-chat__actions">
-              <button
-                className="chats-icon-btn"
-                aria-label="View profile"
-              >
-                <img
-                  src={profileIcon}
-                  alt="profile"
-                  onClick={() => navigate("/")}
-                />
-              </button>
-
-              <button
-                className="chats-icon-btn"
-                aria-label="View calendar"
-              >
-                <img
-                  src={calendarIcon}
-                  alt="calendar"
-                />
-              </button>
+<div className="chats-chat__actions">
+  <button
+    className="chats-back-header-btn"
+    onClick={() => navigate(-1)}
+  >
+    Back
+  </button>
+  {!isVendor && (
+    <button
+      className="chats-pay-btn"
+      // onClick={() => navigate(`/payment/${bookingId}`)}
+       onClick={handlePayment}
+       disabled={paymentLoading || !booking}
+    >
+      Proceed to Payment
+    </button>
+  )}
+</div>
             </div>
           </div>
 

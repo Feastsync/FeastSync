@@ -1,20 +1,112 @@
+/* ── Container ─────────────────────────────────────── */
 .ratingreview-container {
-  width: 100%;
   min-height: 100vh;
-  background: #f7f8fc;
+  background: #f7f7f7;
 }
 
 .ratingreview-wrapper {
-  width: min(1100px, calc(100% - 40px));
-  margin: 40px auto;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 32px 24px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-/* TEXT + UI BLOCKS (UNCHANGED STYLE CLEANUP) */
-.ratingreview-booking-text{
-    background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 20px;
+/* ── Vendor banner ─────────────────────────────────── */
+.ratingreview-vendor-banner {
+  background: #330159;
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ratingreview-vendor-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ratingreview-vendor-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #6d28d9;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ratingreview-vendor-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ratingreview-vendor-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.ratingreview-vendor-meta {
+  font-size: 12px;
+  color: rgba(255,255,255,0.65);
+}
+
+.ratingreview-vendor-status {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #22c55e;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.ratingreview-vendor-close {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.7);
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+/* ── Booking notice ─────────────────────────────────── */
+.ratingreview-booking-text {
+  font-size: 13px;
+  color: #888;
+  text-align: center;
+  margin: 0;
+}
+
+.ratingreview-booking-text strong {
+  color: #330159;
+}
+
+/* ── Rating section ─────────────────────────────────── */
+.ratingreview-rating-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.ratingreview-rating-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #0F0F10;
+  margin: 0;
 }
 .ratingreview-rating-section,
 .ratingreview-note-section {
@@ -28,29 +120,240 @@
 /* STARS */
 .ratingreview-stars {
   display: flex;
-  justify-content: center;
-  gap: 12px;
+  gap: 10px;
 }
 
-.ratingreview-stars img {
-  width: 30px;
-  height: 30px;
+.ratingreview-star {
+  background: none;
+  border: none;
+  font-size: 32px;
+  cursor: pointer;
+  color: #ccc;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.15s ease, transform 0.12s ease;
+}
+
+.ratingreview-star:hover,
+.ratingreview-star--filled {
+  color: #f5a623;
+}
+
+.ratingreview-star:hover {
+  transform: scale(1.15);
+}
+
+.ratingreview-rating-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #330159;
+}
+
+/* ── Note / Comment ─────────────────────────────────── */
+.ratingreview-note-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ratingreview-note-section label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #0F0F10;
 }
 
 /* NOTE */
 .ratingreview-note-input {
   width: 100%;
-  height: 140px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 10px;
+  min-height: 120px;
+  padding: 14px 16px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #0F0F10;
+  background: #fff;
+  resize: none;
+  font-family: inherit;
+  transition: border-color 0.18s;
+  box-sizing: border-box;
 }
 
-/* ===== EVIDENCE GRID ===== */
+.ratingreview-note-input:focus {
+  outline: none;
+  border-color: #330159;
+}
+
+.ratingreview-note-input::placeholder {
+  color: #bbb;
+}
+
+.ratingreview-char-count {
+  font-size: 12px;
+  color: #999;
+  text-align: right;
+}
+
+/* ── Evidence title ─────────────────────────────────── */
+.ratingreview-evidence-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #0F0F10;
+  margin: 0;
+}
+
+/* ── Evidence layout (matches Figma) ───────────────── */
 .ratingreview-evidence-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ratingreview-evidence-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 18px;
+  gap: 12px;
+}
+
+/* Single tall slot (Photo left) */
+.ratingreview-media-slot {
+  border: 1.5px dashed #ccc;
+  border-radius: 10px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #888;
+  transition: border-color 0.18s, background 0.18s, color 0.18s;
+  min-height: 120px;
+  padding: 16px;
+}
+
+.ratingreview-media-slot:hover {
+  border-color: #330159;
+  background: #f5eeff;
+  color: #330159;
+}
+
+.ratingreview-media-slot--tall {
+  min-height: 200px;
+}
+
+.ratingreview-add-icon {
+  font-size: 28px;
+}
+
+/* Bottom row: previews + add more */
+.ratingreview-evidence-bottom {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Preview thumb */
+.ratingreview-preview-thumb {
+  width: 90px;
+  height: 90px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  border: 1.5px solid #e0e0e0;
+  background: #f0f0f0;
+  flex-shrink: 0;
+}
+
+.ratingreview-preview-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ratingreview-preview-thumb--video {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  font-size: 11px;
+  color: #555;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Add more slot */
+.ratingreview-addmore-slot {
+  width: 90px;
+  height: 90px;
+  border: 1.5px dashed #ccc;
+  border-radius: 10px;
+  background: #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #666;
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s;
+  flex-shrink: 0;
+}
+
+.ratingreview-addmore-slot:hover {
+  border-color: #330159;
+  background: #f5eeff;
+  color: #330159;
+}
+
+/* Remove button */
+.ratingreview-remove-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ratingreview-remove-btn:hover {
+  background: #c64a0c;
+}
+
+/* ── Feedback ───────────────────────────────────────── */
+.ratingreview-error {
+  font-size: 13px;
+  color: #c0392b;
+  background: #fff0ef;
+  border: 1px solid #f5c6c2;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 0;
+}
+
+.ratingreview-success {
+  font-size: 13px;
+  color: #1a7a3c;
+  background: #edfaf3;
+  border: 1px solid #b2e6cb;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 0;
+}
+
+/* ── Submit — full width ────────────────────────────── */
+.ratingreview-submit {
+  width: 100%;
 }
 
 /* CARD (IMAGE + VIDEO SAME SIZE) */
@@ -91,30 +394,37 @@
 /* SUBMIT */
 .ratingreview-submit-btn {
   width: 100%;
-  height: 45px;
-  background: #5b21b6;
-  color: white;
+  padding: 15px;
+  background: #330159;
+  color: #fff;
   border: none;
   border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s;
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  .ratingreview-evidence-section {
-    grid-template-columns: 1fr;
-  }
-
-  .ratingreview-card {
-    height: 220px;
-  }
+.ratingreview-submit-btn:hover:not(:disabled) {
+  background: #4a0280;
 }
 
-@media (max-width: 480px) {
+.ratingreview-submit-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 640px) {
   .ratingreview-wrapper {
-    width: calc(100% - 24px);
+    padding: 20px 16px 48px;
   }
 
-  .ratingreview-card {
-    height: 200px;
+  .ratingreview-evidence-row {
+    grid-template-columns: 1fr 1fr;
   }
-}
+
+  .ratingreview-star {
+    font-size: 28px;
+  }
+}  

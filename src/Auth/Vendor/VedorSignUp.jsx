@@ -32,52 +32,91 @@ const VendorSignUp = () => {
     password: "",
     confirmPassword: "",
   });
- const handleChange = (e) => {
-  const { name, value } = e.target;
 
+const handleChange = (e) => {
+  const { name, value } = e.target;
   let updatedValue = value;
 
   if (name === "phoneNumber") {
     updatedValue = value.replace(/\D/g, "").slice(0, 11);
   }
 
-  setUserInfo((prev) => ({
-    ...prev,
+  const updatedUserInfo = {
+   ...userInfo,
     [name]: updatedValue,
-  }));
+  };
 
-  if (errors[name]) {
-    const updatedUserInfo = {
-      ...userInfo,
-      [name]: updatedValue,
-    };
+  setUserInfo(updatedUserInfo);
 
-    const validation = vendorSignupSchema.safeParse(updatedUserInfo);
-
-    if (validation.success) {
-      setErrors({});
+  // Validate this single field immediately
+  const fieldSchema = vendorSignupSchema.shape[name];
+  if (fieldSchema) {
+    const result = fieldSchema.safeParse(updatedValue);
+    if (!result.success) {
+      setErrors((prev) => ({
+       ...prev,
+        [name]: result.error.issues[0].message,
+      }));
     } else {
-      const fieldErrors = {};
-
-      validation.error.issues.forEach((issue) => {
-        fieldErrors[issue.path[0]] = issue.message;
+      // Clear error if field is now valid
+      setErrors((prev) => {
+        const newErrors = {...prev };
+        delete newErrors[name];
+        return newErrors;
       });
+    }
+  }
 
-      if (!fieldErrors[name]) {
-        setErrors((prev) => {
-          const newErrors = { ...prev };
-          delete newErrors[name];
-          return newErrors;
-        });
-      } else {
-        setErrors((prev) => ({
-          ...prev,
-          [name]: fieldErrors[name],
-        }));
-      }
+  // Special case: if password changes, re-check confirmPassword
+  if (name === "password" && userInfo.confirmPassword) {
+    if (updatedValue!== userInfo.confirmPassword) {
+      setErrors((prev) => ({
+       ...prev,
+        confirmPassword: "Passwords do not match",
+      }));
+    } else {
+      setErrors((prev) => {
+        const newErrors = {...prev };
+        delete newErrors.confirmPassword;
+        return newErrors;
+      });
+    }
+  }
+
+  // Special case: if confirmPassword changes, check against password
+  if (name === "confirmPassword") {
+    if (updatedValue!== updatedUserInfo.password) {
+      setErrors((prev) => ({
+       ...prev,
+        confirmPassword: "Passwords do not match",
+      }));
+    } else {
+      setErrors((prev) => {
+        const newErrors = {...prev };
+        delete newErrors.confirmPassword;
+        return newErrors;
+      });
     }
   }
 };
+
+const handleBlur = (e) => {
+  const { name, value } = e.target;
+
+  // On blur, validate even if empty so user sees error before moving on
+  const fieldSchema = vendorSignupSchema.shape[name];
+  if (fieldSchema) {
+    const result = fieldSchema.safeParse(value);
+    if (!result.success) {
+      setErrors((prev) => ({
+       ...prev,
+        [name]: result.error.issues[0].message,
+      }));
+    }
+  }
+};
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -166,6 +205,7 @@ const VendorSignUp = () => {
                 placeholder="Your stage name"
                 value={userInfo.stageName}
                 onChange={handleChange}
+                onBlur={handleBlur}
               />
               {errors.stageName && (
                 <span className="vr-error">{errors.stageName}</span>
@@ -192,6 +232,7 @@ const VendorSignUp = () => {
                 placeholder="Your last name"
                 value={userInfo.lastName}
                 onChange={handleChange}
+                onBlur={handleBlur}
               />
               {errors.lastName && (
                 <span className="vr-error">{errors.lastName}</span>
@@ -205,6 +246,7 @@ const VendorSignUp = () => {
                 placeholder="Your phone Number"
                 value={userInfo.phoneNumber}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 maxLength={11}
                 inputMode="numeric"
               />
@@ -221,6 +263,7 @@ const VendorSignUp = () => {
                 placeholder="Your email address"
                 value={userInfo.email}
                 onChange={handleChange}
+                onBlur={handleBlur}
               />
               {errors.email && <span className="vr-error">{errors.email}</span>}
             </div>
@@ -234,6 +277,7 @@ const VendorSignUp = () => {
                   placeholder="Enter your password"
                   value={userInfo.password}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                 />
                 <button
                   type="button"
@@ -263,6 +307,7 @@ const VendorSignUp = () => {
                   placeholder="Confirm your password"
                   value={userInfo.confirmPassword}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                 />
 
                 <button

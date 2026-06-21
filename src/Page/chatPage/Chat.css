@@ -16,6 +16,41 @@
   background: #fff;
   overflow: hidden;
 }
+.chats-pay-btn {
+  background: #fff;
+  color: var(--primary-color);
+  border: 1.5px solid rgba(255,255,255,0.7);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+.chats-back-header-btn {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.7);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.chats-back-header-btn:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.chats-pay-btn:hover {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
 
 .chats-sidebar__header {
   padding: 24px 20px 20px;
@@ -559,7 +594,7 @@
 }
 
 .bubble {
-  max-width: 52%;
+  max-width: 65%;        /* was 52% — give it more room */
   padding: 12px 16px;
   border-radius: 14px;
   font-family: "Plus Jakarta Sans", sans-serif;
@@ -568,6 +603,8 @@
   line-height: 22px;
   color: #fff;
   position: relative;
+  word-break: break-word;   /* ADD THIS — forces long text to wrap */
+  overflow-wrap: break-word; /* ADD THIS — backup for older browsers */
 }
 
 .bubble--them {

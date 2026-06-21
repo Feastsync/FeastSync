@@ -181,6 +181,7 @@
   transform: translateY(-50%);
   color: #888888;
   pointer-events: none;
+  
 }
 
 .ps-field textarea {
@@ -284,10 +285,8 @@
 }
 
 .disabled-btn {
-  background: #cfcfcf !important;
-  color: #777 !important;
-  cursor: not-allowed !important;
-  opacity: 1 !important;
+  background: #cccccc;
+  cursor: not-allowed;
 }
 
 .disabled-btn:hover {
