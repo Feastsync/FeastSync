@@ -417,7 +417,7 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
               </p>
 
               <button className="bm-btn-primary" onClick={onClose}>
-                Proceed to payment
+                OK
               </button>
             </div>
           </>

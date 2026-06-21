@@ -185,9 +185,11 @@
 }
 
 .media-upload-box.photo {
-  width: 160px;
-  height: 160px;
+  width: 100%;
+  min-height: 120px;
   gap: 8px;
+  box-sizing: border-box;
+  padding: 30px 20px;
 }
 
 .media-upload-title {
@@ -203,6 +205,7 @@
   font-size: 12px;
   color: #888888;
   margin: 0;
+  /* height: 20vh; */
 }
 
 .media-upload-grid {
