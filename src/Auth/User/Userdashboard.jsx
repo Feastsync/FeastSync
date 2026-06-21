@@ -134,15 +134,21 @@ const Userdashboard = () => {
                       </span>
                       <div className="udb-card__actions">
                         {canReview && (
-                          <button
-                            className="udb-card__review-btn"
-                            onClick={(e) => {
-                              e.stopPropagation(); 
-                              navigate(`/ratingreview/${booking._id}`);
-                            }}
-                          >
-                            ★ Review
-                          </button>
+<button
+  className="udb-card__review-btn"
+  onClick={(e) => {
+    e.stopPropagation();
+    navigate(`/ratingreview/${booking._id}`, {
+      state: {
+        vendorName: booking.vendorId?.stageName || "Vendor",
+        eventType: booking.eventType || "",
+        bookingRef: booking.bookingRef || booking._id,
+      },
+    });
+  }}
+>
+  leave a review  
+</button>
                         )}
                         <span className="udb-card__cta">Open Chat →</span>
                       </div>

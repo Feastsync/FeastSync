@@ -18,7 +18,7 @@ export default function NotifLayout({ notifications, currentPage, totalPages, on
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const { actionLoading } = useSelector((state) => state.auth);
+  const { actionLoading,accountType  } = useSelector((state) => state.auth);
 
   const newCount = notifications.filter((n) => !n.isRead).length;
 
@@ -27,17 +27,17 @@ export default function NotifLayout({ notifications, currentPage, totalPages, on
   };
 
   const handleNotifClick = (notif) => {
-    console.log("=== NOTIFICATION CLICKED ===");
-    console.log("Full notif object:", notif);
-    console.log("notif.id:", notif.id);
-    console.log("notif._id:", notif._id);
-    console.log("notif.booking:", notif.booking);
-    console.log("notif.requestId:", notif.requestId);
-    console.log("notif.bookingId:", notif.bookingId);
-    console.log("notif.isRead:", notif.isRead);
+    // console.log("=== NOTIFICATION CLICKED ===");
+    // console.log("Full notif object:", notif);
+    // console.log("notif.id:", notif.id);
+    // console.log("notif._id:", notif._id);
+    // console.log("notif.booking:", notif.booking);
+    // console.log("notif.requestId:", notif.requestId);
+    // console.log("notif.bookingId:", notif.bookingId);
+    // console.log("notif.isRead:", notif.isRead);
 
     const notifId = notif._id || notif.id;
-    console.log("Resolved notifId:", notifId);
+    // console.log("Resolved notifId:", notifId);
 
     if (!notif.isRead && notifId) {
       console.log("Dispatching markNotificationRead with:", notifId);
@@ -56,7 +56,7 @@ export default function NotifLayout({ notifications, currentPage, totalPages, on
       console.log("Navigating to:", `/request/${bookingId}`);
       navigate(`/request/${bookingId}`);
     } else {
-      console.error("❌ No booking ID found in notification:", notif);
+      // console.error("❌ No booking ID found in notification:", notif);
     }
   };
 
@@ -72,7 +72,7 @@ export default function NotifLayout({ notifications, currentPage, totalPages, on
 
       <div className="notif-header">
         <div className="notif-header-left">
-          <button className="notif-back-btn" onClick={() => navigate("/vendordashboard")}>
+         <button className="notif-back-btn" onClick={() => navigate(accountType === "vendor" ? "/vendordashboard" : "/userdashboard")}>
             <span>←</span> Back
           </button>
           <div>

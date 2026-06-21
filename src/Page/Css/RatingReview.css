@@ -1,42 +1,32 @@
 /* ── Container ─────────────────────────────────────── */
 .ratingreview-container {
   min-height: 100vh;
-  background: #f7f7f7;
+  background: #fff;
 }
 
-.ratingreview-wrapper {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 32px 24px 60px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-/* ── Vendor banner ─────────────────────────────────── */
-.ratingreview-vendor-banner {
+/* ── Single top bar ─────────────────────────────────── */
+.ratingreview-topbar {
   background: #330159;
-  border-radius: 10px;
-  padding: 14px 18px;
+  padding: 20px 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
 }
 
-.ratingreview-vendor-info {
+.ratingreview-topbar-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
 }
 
-.ratingreview-vendor-avatar {
-  width: 40px;
-  height: 40px;
+.ratingreview-topbar-avatar {
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: #6d28d9;
   color: #fff;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -44,54 +34,70 @@
   flex-shrink: 0;
 }
 
-.ratingreview-vendor-details {
+.ratingreview-topbar-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 5px;
 }
 
-.ratingreview-vendor-name {
-  font-size: 14px;
-  font-weight: 600;
+.ratingreview-topbar-name {
+  font-size: 17px;
+  font-weight: 700;
   color: #fff;
 }
 
-.ratingreview-vendor-meta {
-  font-size: 12px;
-  color: rgba(255,255,255,0.65);
+.ratingreview-topbar-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
-.ratingreview-vendor-status {
-  font-size: 11px;
+.ratingreview-topbar-status {
+  font-size: 12px;
   font-weight: 600;
-  padding: 3px 10px;
+  padding: 3px 12px;
   border-radius: 999px;
   background: #22c55e;
   color: #fff;
-  white-space: nowrap;
 }
 
-.ratingreview-vendor-close {
+.ratingreview-topbar-booking {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.ratingreview-topbar-close {
   background: none;
   border: none;
-  color: rgba(255,255,255,0.7);
-  font-size: 20px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 22px;
   cursor: pointer;
-  line-height: 1;
-  padding: 0;
+  padding: 4px;
   flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.ratingreview-topbar-close:hover {
+  color: #fff;
+}
+
+/* ── Wrapper ────────────────────────────────────────── */
+.ratingreview-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 80px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
 /* ── Booking notice ─────────────────────────────────── */
 .ratingreview-booking-text {
-  font-size: 13px;
+  font-size: 14px;
   color: #888;
   text-align: center;
   margin: 0;
-}
-
-.ratingreview-booking-text strong {
-  color: #330159;
 }
 
 /* ── Rating section ─────────────────────────────────── */
@@ -99,12 +105,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .ratingreview-rating-title {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
   color: #0F0F10;
   margin: 0;
 }
@@ -120,13 +126,13 @@
 /* STARS */
 .ratingreview-stars {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .ratingreview-star {
   background: none;
   border: none;
-  font-size: 32px;
+  font-size: 42px;
   cursor: pointer;
   color: #ccc;
   padding: 0;
@@ -144,7 +150,7 @@
 }
 
 .ratingreview-rating-label {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: #330159;
 }
@@ -153,11 +159,11 @@
 .ratingreview-note-section {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .ratingreview-note-section label {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   color: #0F0F10;
 }
@@ -165,11 +171,11 @@
 /* NOTE */
 .ratingreview-note-input {
   width: 100%;
-  min-height: 120px;
-  padding: 14px 16px;
+  min-height: 160px;
+  padding: 16px 18px;
   border: 1.5px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: 10px;
+  font-size: 15px;
   color: #0F0F10;
   background: #fff;
   resize: none;
@@ -195,41 +201,40 @@
 
 /* ── Evidence title ─────────────────────────────────── */
 .ratingreview-evidence-title {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   color: #0F0F10;
   margin: 0;
 }
 
-/* ── Evidence layout (matches Figma) ───────────────── */
+/* ── Evidence layout ────────────────────────────────── */
 .ratingreview-evidence-section {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
 .ratingreview-evidence-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 16px;
 }
 
-/* Single tall slot (Photo left) */
 .ratingreview-media-slot {
   border: 1.5px dashed #ccc;
-  border-radius: 10px;
-  background: #fff;
+  border-radius: 12px;
+  background: #fafafa;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 14px;
   color: #888;
   transition: border-color 0.18s, background 0.18s, color 0.18s;
-  min-height: 120px;
-  padding: 16px;
+  min-height: 160px;
+  padding: 20px;
 }
 
 .ratingreview-media-slot:hover {
@@ -238,26 +243,21 @@
   color: #330159;
 }
 
-.ratingreview-media-slot--tall {
-  min-height: 200px;
-}
-
 .ratingreview-add-icon {
-  font-size: 28px;
+  font-size: 34px;
 }
 
-/* Bottom row: previews + add more */
+/* Bottom preview row */
 .ratingreview-evidence-bottom {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   flex-wrap: wrap;
 }
 
-/* Preview thumb */
 .ratingreview-preview-thumb {
-  width: 90px;
-  height: 90px;
-  border-radius: 10px;
+  width: 110px;
+  height: 110px;
+  border-radius: 12px;
   overflow: hidden;
   position: relative;
   border: 1.5px solid #e0e0e0;
@@ -278,28 +278,29 @@
   justify-content: center;
   flex-direction: column;
   gap: 4px;
-  padding: 8px;
+  padding: 10px;
   font-size: 11px;
   color: #555;
   text-align: center;
   word-break: break-all;
 }
 
-/* Add more slot */
 .ratingreview-addmore-slot {
-  width: 90px;
-  height: 90px;
+  width: 110px;
+  height: 110px;
   border: 1.5px dashed #ccc;
-  border-radius: 10px;
+  border-radius: 12px;
   background: #e8e8e8;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 13px;
   color: #666;
   cursor: pointer;
   transition: border-color 0.18s, background 0.18s;
   flex-shrink: 0;
+  text-align: center;
+  padding: 8px;
 }
 
 .ratingreview-addmore-slot:hover {
@@ -308,18 +309,17 @@
   color: #330159;
 }
 
-/* Remove button */
 .ratingreview-remove-btn {
   position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 20px;
-  height: 20px;
+  top: 5px;
+  right: 5px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   color: #fff;
   border: none;
-  font-size: 13px;
+  font-size: 14px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -332,26 +332,26 @@
 
 /* ── Feedback ───────────────────────────────────────── */
 .ratingreview-error {
-  font-size: 13px;
+  font-size: 14px;
   color: #c0392b;
   background: #fff0ef;
   border: 1px solid #f5c6c2;
   border-radius: 8px;
-  padding: 10px 14px;
+  padding: 12px 16px;
   margin: 0;
 }
 
 .ratingreview-success {
-  font-size: 13px;
+  font-size: 14px;
   color: #1a7a3c;
   background: #edfaf3;
   border: 1px solid #b2e6cb;
   border-radius: 8px;
-  padding: 10px 14px;
+  padding: 12px 16px;
   margin: 0;
 }
 
-/* ── Submit — full width ────────────────────────────── */
+/* ── Submit full width ──────────────────────────────── */
 .ratingreview-submit {
   width: 100%;
 }
@@ -394,15 +394,16 @@
 /* SUBMIT */
 .ratingreview-submit-btn {
   width: 100%;
-  padding: 15px;
+  padding: 18px;
   background: #330159;
   color: #fff;
   border: none;
-  border-radius: 10px;
-  font-size: 15px;
+  border-radius: 12px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.18s;
+  letter-spacing: 0.2px;
 }
 
 .ratingreview-submit-btn:hover:not(:disabled) {
@@ -415,16 +416,27 @@
 }
 
 /* ── Responsive ─────────────────────────────────────── */
-@media (max-width: 640px) {
-  .ratingreview-wrapper {
-    padding: 20px 16px 48px;
+@media (max-width: 768px) {
+  .ratingreview-topbar {
+    padding: 16px 20px;
   }
 
-  .ratingreview-evidence-row {
-    grid-template-columns: 1fr 1fr;
+  .ratingreview-wrapper {
+    padding: 32px 20px 60px;
+    gap: 24px;
   }
 
   .ratingreview-star {
-    font-size: 28px;
+    font-size: 34px;
   }
-}  
+
+  .ratingreview-note-input {
+    min-height: 130px;
+  }
+
+  .ratingreview-preview-thumb,
+  .ratingreview-addmore-slot {
+    width: 90px;
+    height: 90px;
+  }
+}
