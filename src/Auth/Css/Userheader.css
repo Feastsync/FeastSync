@@ -200,7 +200,7 @@
   animation: dropdown_in 0.18s ease;
 }
 
-/
+
 .userheader_dropdown::before {
   content: "";
   position: absolute;
