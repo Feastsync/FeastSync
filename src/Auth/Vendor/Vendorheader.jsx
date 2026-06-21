@@ -164,13 +164,6 @@ const Vendorheader = () => {
                   <span>Wallet</span>
                 </button>
 
-                {/* <button
-                  className="drawer-nav-item"
-                  onClick={() => { navigate("/chats"); closeMenu(); }}
-                >
-                  <IoChatbubbleEllipsesOutline size={20} className="drawer-nav-icon" />
-                  <span>Chat</span>
-                </button> */}
 
                 <button
                   className="drawer-nav-item"

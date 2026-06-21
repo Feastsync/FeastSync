@@ -137,7 +137,7 @@ const Vendormediagallery = () => {
         </div>
       </div>
 
-      {/* SECTION 2: PHOTOS */}
+   
       <div className="showcase-wrapper-section">
         <h3 className="showcase-section-title">Media Gallery</h3>
         <span className="showcase-section-subtitle">

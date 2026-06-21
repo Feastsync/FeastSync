@@ -65,7 +65,7 @@ const CategoryStep = ({
   };
 
   return (
-    // <div className="vendor-category-header-overlay">
+    <div className="vendor-category-header-overlay">
       <div className="vendor-category-header-modal">
 
         <div className="vendor-category-header">
@@ -142,7 +142,7 @@ const CategoryStep = ({
         </div>
 
       </div>
-    // </div>
+    </div>
   );
 };
 
