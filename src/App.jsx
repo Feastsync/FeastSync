@@ -102,6 +102,13 @@ const App = () => {
           <Route path="/bookingrequest" element={<BookingRequest />} />
           <Route path="/request/:requestId" element={<BookingRequest />} />
           <Route path="/chats/:bookingId" element={<Chat />} />
+            <Route path="/notifications" element={<NotificationsWrapper />}>
+            <Route index element={<Navigate to="all" replace />} />
+            <Route path="all" element={<AllNotifications />} />
+            <Route path="booking" element={<BookingNotifications />} />
+            <Route path="payment" element={<PaymentNotifications />} />
+            <Route path="reviews" element={<ReviewsNotification />} />
+          </Route>
         </Route>
 
 
@@ -124,14 +131,6 @@ const App = () => {
           <Route path="/vendormediagallery" element={<Vendormediagallery />} />
           <Route path="/VendorChat/:Id" element={<VendorChat />} />
           <Route path="/wallet/transactions" element={<VendorWallet />} />
-          <Route path="/notifications" element={<NotificationsWrapper />}>
-          
-            <Route index element={<Navigate to="all" replace />} />
-            <Route path="all" element={<AllNotifications />} />
-            <Route path="booking" element={<BookingNotifications />} />
-            <Route path="payment" element={<PaymentNotifications />} />
-            <Route path="reviews" element={<ReviewsNotification />} />
-          </Route>
         </Route>
 
         {/* ── CATCH-ALL ─────────────────────────────────────────────────────── */}

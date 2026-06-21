@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import "./Css/RatingReview.css";
-import Vendorheader2 from "../Auth/Vendor/Vendorheader2";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import api from "../Redux/app/socketAxios";
 
@@ -9,6 +8,11 @@ const STAR_COUNT = 5;
 const RatingReview = () => {
   const navigate = useNavigate();
   const { bookingId } = useParams();
+  const location = useLocation();
+
+  const vendorName = location.state?.vendorName || "Vendor";
+  const eventType = location.state?.eventType || "";
+  const bookingRef = location.state?.bookingRef || bookingId;
 
   const [rating, setRating] = useState(0);
   const [hovered, setHovered] = useState(0);
@@ -18,11 +22,6 @@ const RatingReview = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-
-  const location = useLocation();
-  const vendorName = location.state?.vendorName || "Vendor";
-  const eventType = location.state?.eventType || "";
-  const bookingRef = location.state?.bookingRef || bookingId;
 
   const imageInputRef = useRef(null);
   const videoInputRef = useRef(null);
@@ -74,36 +73,39 @@ const RatingReview = () => {
 
   return (
     <div className="ratingreview-container">
-      <Vendorheader2 />
+
+      {/* ── Single top bar (matches Figma) ── */}
+      <div className="ratingreview-topbar">
+        <div className="ratingreview-topbar-left">
+          <div className="ratingreview-topbar-avatar">
+            {vendorName.charAt(0).toUpperCase()}
+          </div>
+          <div className="ratingreview-topbar-info">
+            <span className="ratingreview-topbar-name">{vendorName}</span>
+            <div className="ratingreview-topbar-meta">
+              <span className="ratingreview-topbar-status">
+                ✓ KYC Verified
+              </span>
+              <span className="ratingreview-topbar-booking">
+                Booking #{(bookingRef || bookingId)?.slice(-6).toUpperCase()} · {eventType || "Event completed"}
+              </span>
+            </div>
+          </div>
+        </div>
+        <button
+          className="ratingreview-topbar-close"
+          onClick={() => navigate("/userdashboard")}
+          aria-label="Close"
+        >
+          ✕
+        </button>
+      </div>
 
       <div className="ratingreview-wrapper">
 
-        {/* ── Vendor banner (matches Figma purple bar) ── */}
-        <div className="ratingreview-vendor-banner">
-          <div className="ratingreview-vendor-info">
-            <div className="ratingreview-vendor-avatar">
-              {vendorName.charAt(0).toUpperCase()}
-            </div>
-            <div className="ratingreview-vendor-details">
-              <span className="ratingreview-vendor-name">{vendorName}</span>
-              <span className="ratingreview-vendor-meta">
-                {eventType && `${eventType} • `}Booking #{bookingRef?.slice(-6).toUpperCase()}
-              </span>
-              <span className="ratingreview-vendor-status">Completed</span>
-            </div>
-          </div>
-          <button
-            className="ratingreview-vendor-close"
-            onClick={() => navigate("/userdashboard")}
-            aria-label="Close"
-          >
-            ✕
-          </button>
-        </div>
-
         {/* ── Booking notice ── */}
         <p className="ratingreview-booking-text">
-          This review is linked to booking #{bookingRef?.slice(-6).toUpperCase()} and cannot be edited after submission
+          This review is linked to booking #{(bookingRef || bookingId)?.slice(-6).toUpperCase()} and cannot be edited after submission
         </p>
 
         {/* ── Stars ── */}
@@ -153,7 +155,6 @@ const RatingReview = () => {
         <p className="ratingreview-evidence-title">Add photo evidence</p>
 
         <div className="ratingreview-evidence-section">
-          {/* Top row: Photo slot | Video slot */}
           <div className="ratingreview-evidence-row">
             <button
               type="button"
@@ -163,7 +164,6 @@ const RatingReview = () => {
               <span className="ratingreview-add-icon">🖼️</span>
               <span>Photo</span>
             </button>
-
             <button
               type="button"
               className="ratingreview-media-slot ratingreview-media-slot--tall"
@@ -174,7 +174,6 @@ const RatingReview = () => {
             </button>
           </div>
 
-          {/* Bottom row: previews + add more */}
           <div className="ratingreview-evidence-bottom">
             {images.map((img, i) => (
               <div key={i} className="ratingreview-preview-thumb">
@@ -183,28 +182,16 @@ const RatingReview = () => {
                   type="button"
                   className="ratingreview-remove-btn"
                   onClick={() => removeImage(i)}
-                  aria-label="Remove image"
-                >
-                  ×
-                </button>
+                >×</button>
               </div>
             ))}
-
             {video && (
               <div className="ratingreview-preview-thumb ratingreview-preview-thumb--video">
                 <span>🎥</span>
                 <span>{video.name}</span>
-                <button
-                  type="button"
-                  className="ratingreview-remove-btn"
-                  onClick={removeVideo}
-                  aria-label="Remove video"
-                >
-                  ×
-                </button>
+                <button type="button" className="ratingreview-remove-btn" onClick={removeVideo}>×</button>
               </div>
             )}
-
             {remainingSlots > 0 && images.length > 0 && (
               <button
                 type="button"
@@ -217,29 +204,12 @@ const RatingReview = () => {
           </div>
         </div>
 
-        {/* Hidden inputs */}
-        <input
-          ref={imageInputRef}
-          type="file"
-          accept="image/*"
-          multiple
-          hidden
-          onChange={handleImageChange}
-        />
-        <input
-          ref={videoInputRef}
-          type="file"
-          accept="video/*"
-          hidden
-          onChange={handleVideoChange}
-        />
+        <input ref={imageInputRef} type="file" accept="image/*" multiple hidden onChange={handleImageChange} />
+        <input ref={videoInputRef} type="file" accept="video/*" hidden onChange={handleVideoChange} />
 
         {error && <p className="ratingreview-error">{error}</p>}
-        {success && (
-          <p className="ratingreview-success">✓ Review submitted! Redirecting...</p>
-        )}
+        {success && <p className="ratingreview-success">✓ Review submitted! Redirecting...</p>}
 
-        {/* ── Submit full width ── */}
         <div className="ratingreview-submit">
           <button
             className="ratingreview-submit-btn"
@@ -249,7 +219,6 @@ const RatingReview = () => {
             {loading ? "Submitting..." : "Submit"}
           </button>
         </div>
-
       </div>
     </div>
   );
