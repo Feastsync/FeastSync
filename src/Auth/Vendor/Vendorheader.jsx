@@ -124,8 +124,8 @@ const handleLogout = async () => {
         {showFullHeader && (
           <>
             <div className={`vendorheader-right ${isOpen ? "active" : ""}`}>
-
              
+              {/* Chat / Messages */}
               <button
                 className="icon-btn"
                 aria-label="Wallet"
