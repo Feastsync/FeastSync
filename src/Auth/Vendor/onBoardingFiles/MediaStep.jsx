@@ -170,7 +170,7 @@ const MediaStep = ({
             className="media-upload-files"
             size={28}
           />
-          <p className="media-upload-title">Click to upload</p>
+          <p className="media-upload-title">Click to upload max of 2 vidoes</p>
           <p className="media-upload-sub">Each video not more than 10MB</p>
           {videoCatalogue.length > 0 && (
             <div className="media-selected-files">
@@ -182,7 +182,7 @@ const MediaStep = ({
                     size={16} 
                     style={{ cursor: "pointer", color: "#330159" }} 
                     onClick={(e) => {
-                      e.stopPropagation(); // prevents opening file picker when deleting
+                      e.stopPropagation();
                       handleRemoveFile("videoCatalogue", index);
                     }} 
                   />
@@ -206,7 +206,7 @@ const MediaStep = ({
             onChange={(e) => handleFileChange("photoCatalogue", e.target.files, 4, 5)}
           />
           <FiUpload size={22} />
-          <p className="media-upload-title">Add more</p>
+          <p className="media-upload-title">Click to upload max of 4 photos</p>
           {photoCatalogue.length > 0 && (
             <div className="media-selected-files" style={{ width: "100%", marginTop: "10px" }}>
               {photoCatalogue.map((file, index) => (
@@ -216,7 +216,7 @@ const MediaStep = ({
                     size={16} 
                     style={{ cursor: "pointer", color: "#330159" }} 
                     onClick={(e) => {
-                      e.stopPropagation(); // prevents opening file picker when deleting
+                      e.stopPropagation();
                       handleRemoveFile("photoCatalogue", index);
                     }} 
                   />

@@ -1,11 +1,126 @@
-.ds-category-list {
+.vendor-category-header-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.vendor-category-header-modal {
+  background: #ffffff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+}
+
+.vendor-category-header {
+  background: #5A1F8A;
+  padding: 28px 32px 20px;
+  border-radius: 16px 16px 0 0;
+  flex-shrink: 0;
+}
+
+.vendor-category-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.vendor-category-header h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: #ffffff;
+}
+
+.vendor-category-header-subtext {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+.vendor-category-header-close {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  opacity: 0.9;
+  flex-shrink: 0;
+}
+
+.vendor-category-header-close:hover {
+  opacity: 1;
+}
+
+.vendor-category-header-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.vendor-category-header-progress-fill {
+  height: 100%;
+  background: #ffffff;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.vendor-category-header-body {
+  padding: 28px 32px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #C9A8E8 #f0f0f0;
+}
+
+.vendor-category-header-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.vendor-category-header-body::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 3px;
+}
+
+.vendor-category-header-body::-webkit-scrollbar-thumb {
+  background: #C9A8E8;
+  border-radius: 3px;
+}
+
+.vendor-category-header-instruction {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #1A1A1A;
+  margin: 0;
+}
+
+.vendor-category-header-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
   width: 100%;
 }
 
-.ds-category-row {
+.vendor-category-header-row {
   display: flex;
   align-items: flex-start;
   gap: 14px;
@@ -20,17 +135,17 @@
   box-sizing: border-box;
 }
 
-.ds-category-row:hover {
+.vendor-category-header-row:hover {
   border-color: #c7d2fe;
   background: #fafbff;
 }
 
-.ds-category-row.selected {
+.vendor-category-header-row.selected {
   border-color: #5A1F8A;
   background: #f5f3ff;
 }
 
-.ds-category-input {
+.vendor-category-header-input {
   position: absolute;
   opacity: 0;
   pointer-events: none;
@@ -38,7 +153,7 @@
   height: 0;
 }
 
-.ds-category-checkbox {
+.vendor-category-header-checkbox {
   width: 20px;
   height: 20px;
   min-width: 20px;
@@ -54,12 +169,12 @@
   margin-top: 1px;
 }
 
-.ds-category-row.selected .ds-category-checkbox {
+.vendor-category-header-row.selected .vendor-category-header-checkbox {
   background: #5A1F8A;
   border-color: #5A1F8A;
 }
 
-.ds-category-content {
+.vendor-category-header-content {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -67,53 +182,126 @@
   text-align: left;
 }
 
-.ds-category-title {
+.vendor-category-header-title {
   font-size: 15px;
   font-weight: 600;
   color: #111827;
   line-height: 1.4;
 }
 
-.ds-category-desc {
+.vendor-category-header-desc {
   font-size: 13px;
   font-weight: 400;
   color: #6b7280;
   line-height: 1.5;
 }
 
-.ds-category-row.selected .ds-category-title {
+.vendor-category-header-row.selected .vendor-category-header-title {
   color: #1f2937;
 }
 
-/* Disabled Continue button */
-.ds-btn-upload:disabled {
+.vendor-category-header-footer {
+  padding: 20px 32px 28px;
+  border-top: 1px solid #F0F0F0;
+  background: #ffffff;
+  border-radius: 0 0 16px 16px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.vendor-category-header-footer-right {
+  display: flex;
+  gap: 12px;
+}
+
+.vendor-category-header-btn-back {
+  background: #ffffff;
+  color: #1A1A1A;
+  border: 1.5px solid #D1D1D1;
+  border-radius: 10px;
+  padding: 12px 28px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.vendor-category-header-btn-back:hover {
+  background: #F7F7F7;
+}
+
+.vendor-category-header-btn-continue {
+  background: #330159;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 28px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.vendor-category-header-btn-continue:hover {
+  background: #4a0180;
+}
+
+.vendor-category-header-btn-continue:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   background: #5A1F8A;
 }
 
-.ds-btn-upload:disabled:hover {
+.vendor-category-header-btn-continue:disabled:hover {
   background: #5A1F8A;
 }
 
-/* Mobile */
 @media (max-width: 640px) {
-  .ds-category-row {
+  .vendor-category-header-overlay {
+    padding: 16px 12px;
+  }
+
+  .vendor-category-header,
+  .vendor-category-header-body,
+  .vendor-category-header-footer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .vendor-category-header-footer {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .vendor-category-header-footer-right {
+    width: 100%;
+  }
+
+  .vendor-category-header-btn-back,
+  .vendor-category-header-btn-continue {
+    flex: 1;
+  }
+
+  .vendor-category-header-row {
     padding: 14px 16px;
     gap: 12px;
   }
-  
-  .ds-category-checkbox {
+
+  .vendor-category-header-checkbox {
     width: 18px;
     height: 18px;
     min-width: 18px;
   }
-  
-  .ds-category-title {
+
+  .vendor-category-header-title {
     font-size: 14px;
   }
-  
-  .ds-category-desc {
+
+  .vendor-category-header-desc {
     font-size: 12px;
   }
 }

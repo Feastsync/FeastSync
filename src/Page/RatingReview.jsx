@@ -6,7 +6,7 @@ import api from "../Redux/app/socketAxios";
 const STAR_COUNT = 5;
 
 const RatingReview = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
   const { bookingId } = useParams();
   const location = useLocation();
@@ -104,12 +104,10 @@ const RatingReview = () => {
 
       <div className="ratingreview-wrapper">
 
-        {/* ── Booking notice ── */}
+      
         <p className="ratingreview-booking-text">
           This review is linked to booking #{(bookingRef || bookingId)?.slice(-6).toUpperCase()} and cannot be edited after submission
         </p>
-
-        {/* ── Stars ── */}
         <div className="ratingreview-rating-section">
           <p className="ratingreview-rating-title">Overall Rating</p>
           <div className="ratingreview-stars">

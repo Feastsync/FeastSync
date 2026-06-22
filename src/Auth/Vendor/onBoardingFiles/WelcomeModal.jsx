@@ -8,21 +8,21 @@ const WelcomeModal = ({ vendorName = "", onContinue }) => {
       : "there";
 
   return (
-    <div className="welcome-card">
-      <h2 className="welcome-title">Welcome, {stageName}</h2>
-
-      <p className="welcome-desc">
-        Complete your vendor verification to start receiving bookings and
-        payouts.
-      </p>
-
-      <button
-        type="button"
-        className="welcome-btn-primary"
-        onClick={onContinue}
-      >
-        Continue verification
-      </button>
+    <div className="welcome-overlay">
+      <div className="welcome-card">
+        <h2 className="welcome-title">Welcome, {stageName}!</h2>
+        <p className="welcome-desc">
+          Complete your vendor verification to start receiving bookings and
+          payouts.
+        </p>
+        <button
+          type="button"
+          className="welcome-btn-primary"
+          onClick={onContinue}
+        >
+          Continue verification
+        </button>
+      </div>
     </div>
   );
 };

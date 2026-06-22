@@ -11,7 +11,6 @@ const getItemsPerPage = () => {
   return 9
 }
 
-
 const CategoryVendors = ({ category }) => {
   const [vendors, setVendors] = useState([])
   const [loading, setLoading] = useState(true)
@@ -37,7 +36,12 @@ const CategoryVendors = ({ category }) => {
           name: vendor.stageName || `${vendor.firstName} ${vendor.lastName}`,
           location: vendor.stateOfResidence || '',
           rating: Math.floor(vendor.averageRating || 0),
-          price: vendor.bookingFee || 0,
+          price: vendor.pricingId?.find((p) =>
+                  p.packageName?.toLowerCase().includes("basic")
+                )?.packagePrice
+                || vendor.pricingId?.[0]?.packagePrice
+                || vendor.bookingFee
+                || 0,
           image: vendor.profilePicture?.secureUrl || '',
         }))
 
@@ -74,11 +78,11 @@ const CategoryVendors = ({ category }) => {
     if (next >= 1 && next <= totalPages) setCurrentPage(next)
   }
 
-  if (error && !loading) {
+  if (error &&!loading) {
     return (
       <div className="vendor-state-wrap">
         <div className="vendor-state-card">
-          <span className="vendor-state-icon">⚠️</span>
+          <span className="vendor-state-icon">⚠</span>
           <h2>Something went wrong</h2>
           <p>{error}</p>
         </div>
@@ -102,7 +106,7 @@ const CategoryVendors = ({ category }) => {
     <div className="all-vendors-page">
       <div className="category_grid">
         {loading
-          ? skeletonArray.map((_, i) => <VendorCardSkeleton key={`sk-${i}`} />)
+      ? skeletonArray.map((_, i) => <VendorCardSkeleton key={`sk-${i}`} />)
           : currentVendors.map((vendor) => (
               <div key={vendor._id} className="fade-in">
                 <VendorCard
