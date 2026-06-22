@@ -106,7 +106,7 @@ export const forgotPassword = createAsyncThunk(
 export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
   async (
-    { email, otp, password, confirmPassword, accountType },
+    { email, password, confirmPassword, accountType },
     { rejectWithValue },
   ) => {
     try {
@@ -115,12 +115,7 @@ export const resetPassword = createAsyncThunk(
           ? "/user/reset-password"
           : "/vendor/reset-password";
 
-      const body =
-        accountType === "vendor"
-          ? { email, password, confirmPassword }
-          : { email, otp, password, confirmPassword };
-
-      const res = await api.post(endpoint, body);
+      const res = await api.post(endpoint, { email, password, confirmPassword });
       return res.data;
     } catch (err) {
       return rejectWithValue(
@@ -331,7 +326,9 @@ export const verifyResetOTP = createAsyncThunk(
   async ({ email, otp, accountType }, { rejectWithValue }) => {
     try {
       const endpoint =
-        accountType === "user" ? "/user/verify-otp" : "/vendor/verify-otp";
+        accountType === "user"
+          ? "/user/verify-reset-otp"
+          : "/vendor/verify-otp";
       const res = await api.post(endpoint, { email, otp });
       return res.data;
     } catch (err) {

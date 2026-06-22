@@ -134,7 +134,7 @@ const Settings = () => {
       await dispatch(logoutUser()).unwrap()
       message.success('Logged out successfully')
       navigate('/login')
-    } catch (err) {
+    } catch {
       await persistor.purge()
       navigate('/login')
     }
@@ -273,7 +273,11 @@ const Settings = () => {
             <span className="settings_label">KYC VERIFICATION</span>
           </div>
           <div className="settings_row_right">
-            <div className="settings_badge_approved">✓ Approved</div>
+            {vendorInfo?.isKycVerified ? (
+              <div className="settings_badge_approved">✓ Approved</div>
+            ) : (
+              <div className="settings_badge_pending">⏳ {vendorInfo?.verificationStatus || 'Pending'}</div>
+            )}
           </div>
         </div>
 
