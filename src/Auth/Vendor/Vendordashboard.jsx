@@ -82,7 +82,7 @@ useEffect(() => {
  
   useEffect(() => {
     if (!slug &&!isLoggedIn) {
-      navigate("/login");
+      navigate("/");
     }
   }, [slug, isLoggedIn, navigate]);
 
