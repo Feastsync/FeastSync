@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { IoClose, IoChevronBack, IoChevronForward } from "react-icons/io5";
+import React, { useState, useEffect } from "react";
+import { notification } from "antd";
+import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./css/CalendarStep.css";
@@ -13,8 +14,22 @@ const CalendarStep = ({
   isLoading,
   error,
 }) => {
+  const [notifApi, contextHolder] = notification.useNotification();
   const [activeStartDate, setActiveStartDate] = useState(new Date());
 
+    useEffect(() => {
+    if (error) {
+      notifApi.error({
+        message: "Setup Failed",
+        description: error,
+        placement: "topRight",
+        duration: 5,
+      });
+    }
+  }, [error]);
+
+
+  
   const bookedDates = profileData?.availability?.bookedDays || profileData?.bookedDays || [];
   
   const isSaveDisabled = isLoading || !profileData || !profileData.availability 
@@ -56,6 +71,7 @@ const CalendarStep = ({
 
   return (
     <div className="cs-overlay">
+      {contextHolder}
       <div className="cs-modal">
         <div className="cs-purple-top-section">
           <div className="cs-header">
@@ -111,8 +127,6 @@ const CalendarStep = ({
               }}
             />
           </div>
-
-          {error && <p className="cs-error">{error}</p>}
 
           <div className="cs-footer">
             <div className="cs-btn-group">

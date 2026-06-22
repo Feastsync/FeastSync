@@ -118,7 +118,7 @@ const Settings = () => {
       setUpdateLoading(false)
     }
   }
-
+ console.log("object",vendorInfo)
   const handleEditPricing = (pkg) => {
     setPricing({
       id: pkg.id || pkg._id || '',
@@ -150,11 +150,11 @@ const Settings = () => {
         <div className="settings_section_header">
           <h3 className="settings_section_title">SETTINGS</h3>
         </div>
-
+{/* 
         <div className="settings_section_header">
           <h4 className="settings_subsection_title">Account</h4>
           <button className="settings_logout_btn" onClick={() => setModal('logout')}>Logout</button>
-        </div>
+        </div> */}
 
         <div className="settings_profile_card">
           <div className="settings_avatar">
@@ -164,7 +164,7 @@ const Settings = () => {
             <h3 className="settings_profile_name">
               {vendorInfo?.stageName || `${vendorInfo?.firstName} ${vendorInfo?.lastName}`}
             </h3>
-            <p className="settings_profile_role">Vendor — DJ</p>
+            <p className="settings_profile_role">{vendorInfo?.category}</p>
           </div>
         </div>
 
@@ -238,25 +238,6 @@ const Settings = () => {
             <button className="settings_btn">Edit</button>
           </div>
         </div>
-
-        <div className="settings_row">
-          <div className="settings_row_left">
-            <span className="settings_label">Package and Pricing</span>
-            <span className="settings_sublabel">Edit and set pricing</span>
-          </div>
-          <div className="settings_row_right">
-            <button
-              className="settings_btn"
-              onClick={() => {
-                setPricing({ id: '', startingPrice: '', packageName: '', description: '' })
-                setModal('pricing')
-              }}
-            >
-              + Add New
-            </button>
-          </div>
-        </div>
-
         {Array.isArray(pricingPackages) && pricingPackages.map((pkg) => (
           <div className="settings_row" key={pkg.id || pkg._id}>
             <div className="settings_row_left">

@@ -26,39 +26,26 @@ export default function NotifLayout({ notifications, currentPage, totalPages, on
     dispatch(markAllNotificationsRead());
   };
 
-  const handleNotifClick = (notif) => {
-    // console.log("=== NOTIFICATION CLICKED ===");
-    // console.log("Full notif object:", notif);
-    // console.log("notif.id:", notif.id);
-    // console.log("notif._id:", notif._id);
-    // console.log("notif.booking:", notif.booking);
-    // console.log("notif.requestId:", notif.requestId);
-    // console.log("notif.bookingId:", notif.bookingId);
-    // console.log("notif.isRead:", notif.isRead);
+const handleNotifClick = (notif) => {
 
-    const notifId = notif._id || notif.id;
-    // console.log("Resolved notifId:", notifId);
+  if (accountType !== "vendor") return;
 
-    if (!notif.isRead && notifId) {
-      console.log("Dispatching markNotificationRead with:", notifId);
-      dispatch(markNotificationRead(notifId));
-    }
+  const notifId = notif._id || notif.id;
 
-    const bookingId =
-      notif.booking?._id ||
-      notif.booking?.id ||
-      notif.requestId ||
-      notif.bookingId;
+  if (!notif.isRead && notifId) {
+    dispatch(markNotificationRead(notifId));
+  }
 
-    console.log("Resolved bookingId:", bookingId);
+  const bookingId =
+    notif.booking?._id ||
+    notif.booking?.id ||
+    notif.requestId ||
+    notif.bookingId;
 
-    if (bookingId) {
-      console.log("Navigating to:", `/request/${bookingId}`);
-      navigate(`/request/${bookingId}`);
-    } else {
-      // console.error("❌ No booking ID found in notification:", notif);
-    }
-  };
+  if (bookingId) {
+    navigate(`/request/${bookingId}`);
+  }
+};
 
   return (
     <div className="notif-page">
