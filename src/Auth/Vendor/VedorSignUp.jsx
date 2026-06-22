@@ -142,7 +142,10 @@ const handleBlur = (e) => {
     }
 
     try {
-      const result = await dispatch(signupVendor(userInfo));
+      // Remove confirmPassword before sending to backend
+      const { confirmPassword, ...dataToSend } = userInfo;
+
+      const result = await dispatch(signupVendor(dataToSend));
 
       if (signupVendor.fulfilled.match(result)) {
         await Swal.fire({
@@ -175,7 +178,6 @@ const handleBlur = (e) => {
         text: "An unexpected error occurred",
         confirmButtonColor: "#330159",
       });
-  
     }
   };
 
