@@ -10,7 +10,7 @@ const Error404 = () => {
   const navigate = useNavigate();
   return (
     <div className='errorContainer'>
-      <Header />
+      {/* <Header /> */}
       <div className='error'>
         <img src="/error/pana.png" alt="" />
         <p>Mic check one-two. We can't find that page</p>

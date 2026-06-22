@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../Css/Vendordashboard.css";
@@ -29,12 +28,16 @@ const Vendordashboard = () => {
     currentVendorLoading: viewingVendorLoading,
     isLoggedIn,
     accountType,
-    // shouldRefreshVendor
   } = useSelector((state) => state.auth);
 
   
   const isPublicView =!!slug ||!isLoggedIn;
-  const displayVendor = slug? viewingVendor : vendorInfo;
+  const displayVendor = slug
+  ? viewingVendor
+  : viewingVendor?._id === vendorInfo?._id
+  ? viewingVendor
+  : vendorInfo;
+
 
   const isOwner =
     accountType === "vendor" &&
@@ -46,13 +49,13 @@ const Vendordashboard = () => {
   const [vendorName, setVendorName] = useState("");
 
 
-  useEffect(() => {
-    if (slug) {
-      dispatch(getVendorById(slug));
-    } else if (isLoggedIn && accountType === "vendor" &&!vendorInfo?._id) {
-      dispatch(getCurrentUser());
-    }
-  }, [slug, isLoggedIn, accountType, dispatch, vendorInfo?._id]);
+useEffect(() => {
+  if (slug) {
+    dispatch(getVendorById(slug));
+  } else if (isLoggedIn && accountType === "vendor" && vendorInfo?.slug) {
+    dispatch(getVendorById(vendorInfo.slug));
+  }
+}, [slug, isLoggedIn, accountType, dispatch, vendorInfo?.slug]);
 
   // useEffect(() => {
   //   if (shouldRefreshVendor) {
@@ -83,12 +86,12 @@ const Vendordashboard = () => {
     }
   }, [slug, isLoggedIn, navigate]);
 
-  const handleOnboardingClose = () => {
-    setShowOnboarding(false);
-    // if (isOwner) {
-    //   dispatch(getCurrentUser());
-    // }
-  };
+const handleOnboardingClose = () => {
+  setShowOnboarding(false);
+  if (isOwner && vendorInfo?.slug) {
+    dispatch(getVendorById(vendorInfo.slug));
+  }
+};
 
   const toggleExpand = (id) => {
     setExpandedCards((prev) => ({...prev, [id]:!prev[id] }));
@@ -105,6 +108,11 @@ const handleCopyLink = async () => {
   }
 };
 
+// console.log("isOwner:", isOwner)
+// console.log("isLoggedIn:", isLoggedIn)
+// console.log("accountType:", accountType)
+// console.log("displayVendor:", displayVendor?._id)
+// console.log("vendorInfo:", vendorInfo?._id)
 
   const basePackages = [
     { id: "basic", title: "Basic Package", price: "₦0", highlights: [] },
@@ -113,9 +121,10 @@ const handleCopyLink = async () => {
   ];
 
   const displayPackages = basePackages.map((base) => {
-    const saved = displayVendor?.pricingPackages?.find(
-      (p) => (p.packageName || p.pacakageName)?.toLowerCase() === base.id
-    );
+const saved = displayVendor?.pricingId?.find(
+  (p) => p.packageName?.toLowerCase() === base.title.toLowerCase()
+)
+    //  console.log(displayVendor?.pricingPackages)
 
     if (!saved) return base;
 
@@ -133,11 +142,14 @@ const handleCopyLink = async () => {
     };
   });
 
+//   console.log("displayVendor", displayVendor)
+// console.log("vendorInfo", vendorInfo)
+
   if (viewingVendorLoading && slug) return <VendorDashboardSkeleton />;
   if (slug &&!viewingVendor &&!viewingVendorLoading)
     return <div className="vendor-error">Vendor not found</div>;
   if (!displayVendor) return <VendorDashboardSkeleton />;
-
+// console.log("displayVendor full:", displayVendor)
   return (
     <main className="vendordashboard-vendor-dashboard-container">
       <Vendorheader vendor={displayVendor} isOwner={isOwner} />
@@ -149,7 +161,7 @@ const handleCopyLink = async () => {
           <h4 className="vendordashboard-trust-title">Trust Stats</h4>
           <div className="vendordashboard-stats-row">
             <div className="vendordashboard-stat-item">
-              <h3>{displayVendor?.rating || 4.9}</h3>
+              <h3>{displayVendor?.averageRating || 0}</h3>
               <div className="vendordashboard-stars">★★★★★</div>
               <span>Rating</span>
             </div>
@@ -161,10 +173,10 @@ const handleCopyLink = async () => {
               <h3>{displayVendor?.bookingCount || 0}</h3>
               <span>Bookings</span>
             </div>
-          
+           
             {isOwner && (
               <div className="vendordashboard-stat-item">
-                <h3>{displayVendor?.responseRate || 98}%</h3>
+                <h3>{displayVendor?.responseRate || 0}%</h3>
                 <span>Response</span>
               </div>
             )}
@@ -184,12 +196,12 @@ const handleCopyLink = async () => {
         <div className="vendordashboard-vendor-bio">
           <h3>Bio / About</h3>
           <h4>
-            About {displayVendor?.stageName || "Vendor"},{" "}
+            About {displayVendor?.stageName},{" "}
             {displayVendor?.stateOfResidence || "Lagos"}
           </h4>
           <p>{displayVendor?.bio || "No bio added yet"}</p>
           <div className="vendordashboard-vendor-link-row">
-            <span>www.feastsync.com/fs/{displayVendor?.slug}</span>
+            <span>{displayVendor?.vendorUrl}</span>
             <button
               className="vendordashboard-vendorcopy-link-btn"
               onClick={handleCopyLink}
@@ -259,14 +271,15 @@ const handleCopyLink = async () => {
                 </div>
 
                 <div className="vendordashboard-card-footer">
-                  {/* Owner sees Edit, public sees Book Now */}
+                 
                   {isOwner? (
-                    <button
-                      className="vendordashboard-edit-btn"
-                      onClick={() => navigate("/vendor/packages")}
-                    >
-                      Edit Package
-                    </button>
+                    // <button
+                    //   className="vendordashboard-edit-btn"
+                    //   onClick={() => navigate("/vendor/packages")}
+                    // >
+                    //   Edit Package
+                    // </button>
+                    null
                   ) : (
                     <button
                       className="vendordashboard-book-now-btn"

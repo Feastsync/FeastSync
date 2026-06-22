@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateVendorProfile } from "../../Redux/features/authslice";
 import "../Css/Vendorhero.css";
@@ -13,34 +13,41 @@ import { useLocation } from "react-router-dom";
 const Vendorhero = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { vendorInfo, currentVendor, loading } = useSelector((state) => state.auth);
+  const { vendorInfo, currentVendor, isLoading } = useSelector(
+    (state) => state.auth,
+  );
 
-  // 🔥 Only show upload buttons on dashboard OR if owner on public page
-  const isDashboard = location.pathname === '/vendordashboard';
+
+  const isDashboard = location.pathname === "/vendordashboard";
   const isOwner = vendorInfo?._id === currentVendor?._id;
   const canEdit = isDashboard || isOwner;
 
   const handleProfileUpload = (e) => {
     const file = e.target.files[0];
-    if (!file ||!vendorInfo?._id) return;
+    if (!file || !vendorInfo?._id) return;
     const formData = new FormData();
     formData.append("profilePicture", file);
-    dispatch(updateVendorProfile({
-      id: vendorInfo._id,
-      profileData: formData
-    }));
+    dispatch(
+      updateVendorProfile({
+        id: vendorInfo._id,
+        profileData: formData,
+      }),
+    );
     e.target.value = "";
   };
 
+
   const handleCoverUpload = (e) => {
     const file = e.target.files[0];
-    if (!file ||!vendorInfo?._id) return;
+    if (!file || !vendorInfo?._id) return;
     const formData = new FormData();
     formData.append("coverPhoto", file);
-    dispatch(updateVendorProfile({
-      id: vendorInfo._id,
-      profileData: formData
-    }));
+    dispatch(
+      updateVendorProfile({
+        id: vendorInfo._id,
+        profileData: formData,
+      }),
+    );
     e.target.value = "";
   };
 
@@ -48,8 +55,16 @@ const Vendorhero = () => {
     window.history.back();
   };
 
-  // 🔥 Display data: use currentVendor on public page, vendorInfo on dashboard
-  const displayData = isDashboard? vendorInfo : currentVendor;
+  
+  // const displayData = isDashboard ? vendorInfo : currentVendor;
+  const displayData = isDashboard
+  ? {
+      ...vendorInfo,
+      profilePicture: currentVendor?.profilePicture || vendorInfo?.profilePicture,
+      coverPhoto: currentVendor?.coverPhoto || vendorInfo?.coverPhoto,
+    }
+  : currentVendor;
+
 
   return (
     <div className="vendorhero-container">
@@ -69,7 +84,7 @@ const Vendorhero = () => {
       {canEdit && (
         <>
           <label htmlFor="cover-upload" className="vendorhero-cover-upload">
-            <span>{loading? "Uploading..." : "Upload Cover"}</span>
+            <span>{isLoading ? "Uploading..." : "Upload Cover"}</span>
           </label>
           <input
             id="cover-upload"
@@ -77,7 +92,7 @@ const Vendorhero = () => {
             accept="image/*"
             onChange={handleCoverUpload}
             hidden
-            disabled={loading}
+            disabled={isLoading}
           />
         </>
       )}
@@ -91,11 +106,13 @@ const Vendorhero = () => {
             key={displayData?.profilePicture}
           />
 
-          {/* 🔥 Only owner can upload profile */}
           {canEdit && (
             <>
-              <label htmlFor="profile-upload" className="vendorhero-avatar-overlay">
-                <span>{loading? "Uploading..." : "Upload Profile"}</span>
+              <label
+                htmlFor="profile-upload"
+                className="vendorhero-avatar-overlay"
+              >
+                <span>{isLoading ? "Uploading..." : "Upload Profile"}</span>
                 <img src={Vedorprofileview} alt="" />
               </label>
               <input
@@ -104,7 +121,7 @@ const Vendorhero = () => {
                 accept="image/*"
                 onChange={handleProfileUpload}
                 hidden
-                disabled={loading}
+                disabled={isLoading}
               />
             </>
           )}

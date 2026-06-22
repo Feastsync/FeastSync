@@ -1,26 +1,23 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Booking.css";
-
 import { createBooking, resetBooking } from "../../Redux/features/Bookingslice";
 
-import calendarIcon  from "../../assets/logos/calender.png";
-import hourglassIcon from "../../assets/logos/Times.svg";
-import usersIcon     from "../../assets/logos/budget.png";
-import locationIcon  from "../../assets/logos/budget.png";
-import notesIcon     from "../../assets/logos/budget.png";
-import mailIcon      from "../../assets/logos/budget.png";
-import phoneIcon     from "../../assets/logos/budget.png";
-import backIcon      from "../../assets/logos/budget.png";
-import closeIcon     from "../../assets/logos/budget.png";
-import checkIcon     from "../../assets/logos/budget.png";
-import eventIcon     from "../../assets/logos/budget.png";
+import bookinCalender from "../../assets/logos/bookinCalender.png";
+import hourglassIcon  from "../../assets/logos/eventTime.png";
+import closeIcon      from "../../assets/logos/closeIcon.png";
+import backIcon       from "../../assets/logos/backIcon.png";
+import checkIcon      from "../../assets/logos/bookinCalender.png";
+import eventIcon      from "../../assets/logos/bookinCalender.png";
+import usersIcon      from "../../assets/logos/usersIcon.png"
+import locationIcon   from "../../assets/logos/boxicons_location.svg";
+import notesIcon      from "../../assets/logos/noteIcon.png";
+import mailIcon       from "../../assets/logos/Email.svg";
+import phoneIcon      from "../../assets/logos/Phone.svg";
 
 const EVENT_TYPES = [
-  "Wedding", "Birthday Party", "Corporate Event", "Engagement Party",
-  "Baby Shower", "Graduation Party", "Anniversary", "Burial / Funeral",
-  "Naming Ceremony", "Dinner Party", "Product Launch", "Concert / Show",
-  "Religious Event", "School Event", "Sports Event", "Other",
+  'wedding', 'birthday party', 'corporate event', 'product launch',
+  'cultural festival', 'anniversary', 'graduation', 'burial'
 ];
 
 const START_TIMES = [
@@ -29,23 +26,11 @@ const START_TIMES = [
   "6:00 PM","7:00 PM","8:00 PM","9:00 PM","10:00 PM","11:00 PM",
 ];
 
-const DURATIONS = [
-  "1 hour","2 hours","3 hours","4 hours","5 hours","6 hours",
-  "Half day (4–5 hrs)","All day","2 days","3 days","Custom",
-];
+const DURATIONS = ['2 hours', '4 hours', '6 hours', '8 hours', 'full day'];
 
-const GUEST_COUNTS = [
-  "1–50","51–100","101–200","201–300","301–500","500–1000","600+","1000+",
-];
-
-const BUDGETS = [
-  "Under ₦50,000","₦50k – ₦100k","₦100k – ₦200k",
-  "₦200k – ₦500k","₦500k – ₦1M","Above ₦1M",
-];
+const GUEST_COUNTS = ['50-100', '100-200', '200-300', '300-400', '400-500', '600+'];
 
 const STEP_LABELS = ["Event Details", "Review", "Confirmed"];
-
-/* ── Sub-components ─────────────────────────────────────────── */
 
 const StepDots = ({ current }) => (
   <div className="bm-stepper">
@@ -79,55 +64,107 @@ const ReviewItem = ({ icon, label, value, full }) => (
   </div>
 );
 
-/* ── Main component ──────────────────────────────────────────── */
-
 const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose }) => {
   const dispatch = useDispatch();
   const { isLoading, error, success, booking } = useSelector((s) => s.booking);
+  const { userInfo, accountType } = useSelector((s) => s.auth);
 
-  const [step, setStep]   = useState(0);
-  const [form, setForm]   = useState({
+  const [step, setStep] = useState(0);
+  const [form, setForm] = useState({
     eventType: "", eventDate: "", startTime: "", duration: "",
     guestCount: "", budget: "", location: "", additionalDetails: "",
     firstName: "", lastName: "", email: "", phone: "",
   });
+  const [errors, setErrors] = useState({});
 
-  const set = (key) => (e) => setForm((prev) => ({ ...prev, [key]: e.target.value }));
+  useEffect(() => {
+    if (userInfo && accountType === "user") {
+      setForm(prev => ({
+        ...prev,
+        firstName: userInfo.firstName || "",
+        lastName:  userInfo.lastName  || "",
+        email:     userInfo.email     || "",
+        phone:     userInfo.phoneNumber || ""
+      }));
+    }
+  }, [userInfo, accountType]);
 
-  /* move to step 2 when redux reports success */
+  const set = (key) => (e) => {
+    setForm((prev) => ({ ...prev, [key]: e.target.value }));
+    if (errors[key]) setErrors(prev => ({ ...prev, [key]: "" }));
+  };
+
+  const validateStep0 = () => {
+    const newErrors = {};
+    if (!form.eventType)       newErrors.eventType  = "Event type is required";
+    if (!form.eventDate)       newErrors.eventDate  = "Event date is required";
+    if (!form.startTime)       newErrors.startTime  = "Start time is required";
+    if (!form.duration)        newErrors.duration   = "Duration is required";
+    if (!form.guestCount)      newErrors.guestCount = "Guest count is required";
+    if (!form.budget.trim())   newErrors.budget     = "Budget is required";
+    if (!form.location.trim()) newErrors.location   = "Location is required";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validateStep1 = () => {
+    const newErrors = {};
+    if (!form.firstName.trim()) newErrors.firstName = "First name is required";
+    if (!form.lastName.trim())  newErrors.lastName  = "Last name is required";
+    if (!form.email.trim())     newErrors.email     = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = "Invalid email";
+    if (!form.phone.trim())     newErrors.phone     = "Phone number is required";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleNextStep = () => {
+    if (validateStep0()) setStep(1);
+  };
+
   useEffect(() => {
     if (success) setStep(2);
   }, [success]);
 
-  /* clean up slice on unmount so stale state doesn't bleed into next open */
   useEffect(() => {
     return () => dispatch(resetBooking());
   }, [dispatch]);
 
   const handleSubmit = () => {
-    dispatch(createBooking({
+    if (!validateStep1()) return;
+
+    const payload = {
       pricingId,
       vendorId,
-      bookingDate:   form.eventDate,
-      bookingTitle:  `${form.eventType} – ${vendorName}`,
-      eventType:     form.eventType,
-      eventLocation: form.location,
-    }));
+      eventDate:        form.eventDate,
+      bookingTitle:     `${form.eventType} – ${vendorName}`,
+      eventType:        form.eventType,
+      eventLocation:    form.location,
+      startTime:        form.startTime,
+      duration:         form.duration,
+      guestCount:       form.guestCount,
+      budget:           form.budget,
+      additionalDetails: form.additionalDetails,
+      contact: {
+        firstName: form.firstName,
+        lastName:  form.lastName,
+        email:     form.email,
+        phone:     form.phone
+      }
+    };
+
+    dispatch(createBooking(payload));
   };
 
-  /* booking ref — use real ref from API response if available, else fallback */
   const bookingRef = booking?.bookingRef
     || booking?._id?.slice(-8).toUpperCase()
     || "FS-PENDING";
 
   return (
-    <div
-      className="bm-backdrop"
-      onClick={(e) => e.target === e.currentTarget && onClose?.()}
-    >
+    <div className="bm-backdrop">
       <div className="bm-modal" role="dialog" aria-modal="true" aria-label="Booking modal">
 
-        {/* ══ STEP 0 — Event Details ══════════════════════════════ */}
+        {/* ── STEP 0: Event Details ── */}
         {step === 0 && (
           <>
             <div className="bm-header">
@@ -145,68 +182,79 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
 
               <div className="bm-grid-2">
                 <div className="bm-field">
-                  <label>Event Type</label>
-                  <div className="bm-select-wrap">
+                  <label>Event Type *</label>
+                  <div className={`bm-select-wrap ${errors.eventType ? 'bm-error-field' : ''}`}>
                     <select value={form.eventType} onChange={set("eventType")}>
                       <option value="" disabled>Select event type</option>
                       {EVENT_TYPES.map((t) => <option key={t}>{t}</option>)}
                     </select>
                   </div>
+                  {errors.eventType && <p className="bm-error-text">{errors.eventType}</p>}
                 </div>
+
                 <div className="bm-field">
-                  <label>Event Date</label>
-                  <div className="bm-input-wrap has-icon">
-                    <img src={calendarIcon} alt="" className="bm-input-icon" />
+                  <label>Event Date *</label>
+                  <div className={`bm-input-wrap has-icon ${errors.eventDate ? 'bm-error-field' : ''}`}>
+                    <img src={bookinCalender} alt="" className="bm-input-icon" />
                     <input type="date" value={form.eventDate} onChange={set("eventDate")} />
                   </div>
+                  {errors.eventDate && <p className="bm-error-text">{errors.eventDate}</p>}
                 </div>
               </div>
 
               <div className="bm-grid-2">
                 <div className="bm-field">
-                  <label>Start Time</label>
-                  <div className="bm-select-wrap">
+                  <label>Start Time *</label>
+                  <div className={`bm-select-wrap ${errors.startTime ? 'bm-error-field' : ''}`}>
                     <select value={form.startTime} onChange={set("startTime")}>
                       <option value="" disabled>Select time</option>
                       {START_TIMES.map((t) => <option key={t}>{t}</option>)}
                     </select>
                   </div>
+                  {errors.startTime && <p className="bm-error-text">{errors.startTime}</p>}
                 </div>
+
                 <div className="bm-field">
-                  <label>Duration</label>
-                  <div className="bm-select-wrap">
+                  <label>Duration *</label>
+                  <div className={`bm-select-wrap ${errors.duration ? 'bm-error-field' : ''}`}>
                     <select value={form.duration} onChange={set("duration")}>
                       <option value="" disabled>Select duration</option>
                       {DURATIONS.map((d) => <option key={d}>{d}</option>)}
                     </select>
                   </div>
+                  {errors.duration && <p className="bm-error-text">{errors.duration}</p>}
                 </div>
               </div>
 
               <div className="bm-grid-2">
                 <div className="bm-field">
-                  <label>Guest Count</label>
-                  <div className="bm-select-wrap">
+                  <label>Guest Count *</label>
+                  <div className={`bm-select-wrap ${errors.guestCount ? 'bm-error-field' : ''}`}>
                     <select value={form.guestCount} onChange={set("guestCount")}>
                       <option value="" disabled>Expected guests</option>
                       {GUEST_COUNTS.map((g) => <option key={g}>{g}</option>)}
                     </select>
                   </div>
+                  {errors.guestCount && <p className="bm-error-text">{errors.guestCount}</p>}
                 </div>
+
                 <div className="bm-field">
-                  <label>Budget Range</label>
-                  <div className="bm-select-wrap">
-                    <select value={form.budget} onChange={set("budget")}>
-                      <option value="" disabled>Select budget</option>
-                      {BUDGETS.map((b) => <option key={b}>{b}</option>)}
-                    </select>
+                  <label>Budget *</label>
+                  <div className={`bm-input-wrap ${errors.budget ? 'bm-error-field' : ''}`}>
+                    <input
+                      type="text"
+                      value={form.budget}
+                      onChange={set("budget")}
+                      placeholder="e.g. ₦200,000"
+                    />
                   </div>
+                  {errors.budget && <p className="bm-error-text">{errors.budget}</p>}
                 </div>
               </div>
 
               <div className="bm-field">
-                <label>Add Location</label>
-                <div className="bm-input-wrap">
+                <label>Add Location *</label>
+                <div className={`bm-input-wrap ${errors.location ? 'bm-error-field' : ''}`}>
                   <input
                     type="text"
                     value={form.location}
@@ -214,6 +262,7 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
                     placeholder="e.g. Civic Event Centre, Mokola, Ibadan"
                   />
                 </div>
+                {errors.location && <p className="bm-error-text">{errors.location}</p>}
               </div>
 
               <div className="bm-field">
@@ -227,14 +276,14 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
                 />
               </div>
 
-              <button className="bm-btn-primary" onClick={() => setStep(1)}>
+              <button className="bm-btn-primary" onClick={handleNextStep}>
                 Send to {vendorName}
               </button>
             </div>
           </>
         )}
 
-        {/* ══ STEP 1 — Review ════════════════════════════════════ */}
+        {/* ── STEP 1: Review ── */}
         {step === 1 && (
           <>
             <div className="bm-header">
@@ -253,11 +302,11 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
 
               <p className="bm-section-label">EVENT DETAILS</p>
               <div className="bm-review-grid">
-                <ReviewItem icon={eventIcon}    label="Event Type"     value={form.eventType} />
-                <ReviewItem icon={calendarIcon} label="Event Date"     value={form.eventDate} />
-                <ReviewItem icon={hourglassIcon}label="Duration"       value={form.duration} />
-                <ReviewItem icon={usersIcon}    label="Guest Count"    value={form.guestCount} />
-                <ReviewItem icon={locationIcon} label="Location/Venue" value={form.location} full />
+                <ReviewItem icon={eventIcon}      label="Event Type"     value={form.eventType} />
+                <ReviewItem icon={bookinCalender} label="Event Date"     value={form.eventDate} />
+                <ReviewItem icon={hourglassIcon}  label="Duration"       value={form.duration} />
+                <ReviewItem icon={usersIcon}      label="Guest Count"    value={form.guestCount} />
+                <ReviewItem icon={locationIcon}   label="Location/Venue" value={form.location} full />
               </div>
 
               <div className="bm-divider" />
@@ -265,8 +314,8 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
               <p className="bm-section-label">CONTACT INFORMATION</p>
               <div className="bm-grid-2">
                 <div className="bm-field">
-                  <label>First Name</label>
-                  <div className="bm-input-wrap">
+                  <label>First Name *</label>
+                  <div className={`bm-input-wrap ${errors.firstName ? 'bm-error-field' : ''}`}>
                     <input
                       type="text"
                       value={form.firstName}
@@ -274,10 +323,11 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
                       placeholder="Adeyemi"
                     />
                   </div>
+                  {errors.firstName && <p className="bm-error-text">{errors.firstName}</p>}
                 </div>
                 <div className="bm-field">
-                  <label>Last Name</label>
-                  <div className="bm-input-wrap">
+                  <label>Last Name *</label>
+                  <div className={`bm-input-wrap ${errors.lastName ? 'bm-error-field' : ''}`}>
                     <input
                       type="text"
                       value={form.lastName}
@@ -285,12 +335,13 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
                       placeholder="Rahul"
                     />
                   </div>
+                  {errors.lastName && <p className="bm-error-text">{errors.lastName}</p>}
                 </div>
               </div>
 
               <div className="bm-field">
-                <label>Email</label>
-                <div className="bm-input-wrap has-icon">
+                <label>Email *</label>
+                <div className={`bm-input-wrap has-icon ${errors.email ? 'bm-error-field' : ''}`}>
                   <img src={mailIcon} alt="" className="bm-input-icon" />
                   <input
                     type="email"
@@ -299,11 +350,12 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
                     placeholder="rahuladeyemi@example.com"
                   />
                 </div>
+                {errors.email && <p className="bm-error-text">{errors.email}</p>}
               </div>
 
               <div className="bm-field">
-                <label>Phone Number</label>
-                <div className="bm-input-wrap has-icon">
+                <label>Phone Number *</label>
+                <div className={`bm-input-wrap has-icon ${errors.phone ? 'bm-error-field' : ''}`}>
                   <img src={phoneIcon} alt="" className="bm-input-icon" />
                   <input
                     type="tel"
@@ -312,6 +364,7 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
                     placeholder="+234 XXX XXX XXXX"
                   />
                 </div>
+                {errors.phone && <p className="bm-error-text">{errors.phone}</p>}
               </div>
 
               <div className="bm-field">
@@ -337,7 +390,7 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
           </>
         )}
 
-        {/* ══ STEP 2 — Success ═══════════════════════════════════ */}
+        {/* ── STEP 2: Confirmed ── */}
         {step === 2 && (
           <>
             <div className="bm-header bm-header-slim">
@@ -355,7 +408,7 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
               <div className="bm-confirmed-pill">Booking Confirmed</div>
 
               <h2 className="bm-success-title">
-                Booking {bookingRef} has been submitted
+                Your Booking has been submitted
               </h2>
               <p className="bm-success-sub">
                 Thank you{form.firstName ? ` ${form.firstName}` : ""}, your booking
@@ -364,7 +417,7 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
               </p>
 
               <button className="bm-btn-primary" onClick={onClose}>
-                Proceed to payment
+                OK
               </button>
             </div>
           </>

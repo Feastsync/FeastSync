@@ -52,6 +52,9 @@
     border:none
   }
 }
+.vendordashboard-vendor-bio{
+    margin-top: 20px;
+}
 .vendordashboard-vendor-bio h3 {
   font-size: 15px;
   font-weight: 550;

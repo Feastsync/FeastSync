@@ -7,21 +7,24 @@ import "./css/CalendarStep.css";
 const CalendarStep = ({
   onNext,
   onBack,
-  onSkip,
   percentComplete = 100,
   profileData,
   setProfileData,
   isLoading,
-  error
+  error,
 }) => {
   const [activeStartDate, setActiveStartDate] = useState(new Date());
-  
+
   const bookedDates = profileData?.availability?.bookedDays || profileData?.bookedDays || [];
+  
+  const isSaveDisabled = isLoading || !profileData || !profileData.availability 
+  || !Array.isArray(profileData.availability.bookedDays);
+
 
   const formatDate = (date) => {
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
 
@@ -32,13 +35,9 @@ const CalendarStep = ({
       const updated = current.includes(dateStr)
         ? current.filter((d) => d !== dateStr)
         : [...current, dateStr];
-
       return {
         ...prev,
-        availability: {
-          ...prev.availability,
-          bookedDays: updated,
-        },
+        availability: { ...prev.availability, bookedDays: updated },
         bookedDays: updated,
       };
     });
@@ -52,13 +51,8 @@ const CalendarStep = ({
     setActiveStartDate((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
   };
 
-  const formatMonthYearLabel = (date) => {
-    return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
-  };
-
-  const handleContinue = () => {
-    onNext();
-  };
+  const formatMonthYearLabel = (date) =>
+    date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
 
   return (
     <div className="cs-overlay">
@@ -67,19 +61,11 @@ const CalendarStep = ({
           <div className="cs-header">
             <div>
               <h2>Availability Calendar</h2>
-              <p>Select dates you're unavailable for customers</p>
-              
+              <p>View all available days</p>
               <div className="cs-progress-bar">
-                <div
-                  className="cs-progress-fill"
-                  style={{ width: `${percentComplete}%` }}
-                />
+                <div className="cs-progress-fill" style={{ width: `${percentComplete}%` }} />
               </div>
             </div>
-            
-            <button className="cs-close" onClick={onSkip}>
-              <IoClose size={20} />
-            </button>
           </div>
 
           <div className="cs-custom-navigation">
@@ -120,7 +106,6 @@ const CalendarStep = ({
                 const isBooked = bookedDates.includes(dateStr);
                 const tileMonth = date.getMonth();
                 const currentMonth = activeStartDate.getMonth();
-                
                 if (tileMonth !== currentMonth) return "neighboring-month";
                 return isBooked ? "booked-date" : "available-date";
               }}
@@ -130,21 +115,17 @@ const CalendarStep = ({
           {error && <p className="cs-error">{error}</p>}
 
           <div className="cs-footer">
-            <button className="cs-btn-text" onClick={onSkip}>
-              Skip for Now
-            </button>
-
             <div className="cs-btn-group">
               <button className="cs-btn-outline" onClick={onBack}>
                 Back
               </button>
-              <button 
-                className="cs-btn-primary" 
-                onClick={handleContinue}
-                disabled={isLoading}
-              >
-                {isLoading ? "Saving..." : "Complete Setup"}
-              </button>
+              <button
+               className="cs-btn-primary"
+               onClick={onNext}
+               disabled={isSaveDisabled}
+             >
+               {isLoading ? "Saving..." : "Complete Setup"}
+             </button>
             </div>
           </div>
         </div>

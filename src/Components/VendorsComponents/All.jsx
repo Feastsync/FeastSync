@@ -17,36 +17,37 @@ const AllVendors = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage());
 
-  const fetchVendors = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const res = await api.get("/vendor/all-vendors");
-
-      const mappedVendors = (res.data?.data || []).map((vendor) => ({
-        _id:      vendor._id,
-        name:     vendor.stageName || "Unknown Artist",
-        location: vendor.city || vendor.stateOfResidence || vendor.location || "Lagos, NG",
-        rating:   vendor.averageRating || vendor.rating || 4.5,
-        price:    vendor.startingPrice
-          ? `₦${Number(vendor.startingPrice).toLocaleString()}`
-          : "Contact for price",
-        image:    vendor.profileImage || vendor.avatar || vendor.image || "",
-      }));
-
-      setVendors(mappedVendors);
-    } catch (err) {
-      setError(err.response?.data?.message || "Failed to fetch vendors");
-  
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
-    // eslint-disable-next-line
-    fetchVendors();
-  }, []);
+    const fetchVendors = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+        const res = await api.get('/vendor/all-vendors')
+        console.log("First vendor:", res.data?.data?.[0])
+        const mappedVendors = (res.data?.data || []).map(vendor => ({
+          _id: vendor._id,
+          slug: vendor.slug, 
+          stageName: vendor.stageName || '',
+          name: vendor.stageName || '',
+          location: vendor.stateOfResidence || vendor.location || '',
+          rating: Math.floor(vendor.averageRating || 0), 
+            pprice: vendor.pricingId?.find(
+  (p) => p.packageName === "Basic Package"
+         )?.packagePrice || vendor.bookingFee || 0,
+          image: vendor.profilePicture?.secureUrl || vendor.profilePicture || ''
+        }))
+        setVendors(mappedVendors)
+    
+      } catch (err) {
+        setError(err.response?.data?.message || 'Failed to fetch vendors')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchVendors()
+  }, [])
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -71,7 +72,7 @@ const AllVendors = () => {
     if (next >= 1 && next <= totalPages) setCurrentPage(next);
   };
 
-  /* ── error state ── */
+ 
   if (error && !loading) {
     return (
       <div className="vendor-state-wrap">
@@ -87,7 +88,7 @@ const AllVendors = () => {
     );
   }
 
-  /* ── empty state ── */
+
   if (!loading && vendors.length === 0) {
     return (
       <div className="vendor-state-wrap">
@@ -114,8 +115,9 @@ const AllVendors = () => {
                   name={vendor.name}
                   location={vendor.location}
                   rating={vendor.rating}
-                  price={vendor.price}
+                  price={vendor.pprice}
                   image={vendor.image}
+                  slug={vendor.slug}
                 />
               </div>
             ))}

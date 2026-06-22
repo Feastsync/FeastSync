@@ -3,6 +3,8 @@ import "../Css/VendorSetting.css";
 import Header from "../../Components/Header"
 
 const VendorSetting = () => {
+
+  
   return (
     <div className="vendorsetting-container">
       <Header />

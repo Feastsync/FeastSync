@@ -1,6 +1,6 @@
 .ib-overlay {
   inset: 9;
-  background: rgba(109, 6, 6, 0.5);
+  background: rgba(250, 248, 248, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,14 +10,13 @@
 .ib-banner {
   background: white;
   border-radius: 12px;
-  margin-top: 180px;
-  margin-left: 100px;
-  padding: 24px 28px;
+  margin-left: 10px; padding: 24px 28px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   gap: 5px;
   max-width: 680px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
 .ib-title-row {
@@ -94,3 +93,4 @@
 .ib-btn:hover {
   background: #3A0066;
 }
+ 

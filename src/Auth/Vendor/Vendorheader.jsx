@@ -2,29 +2,49 @@ import React, { useState, useEffect } from "react";
 import "../Css/Vendorheader.css";
 import Headerlogo2 from "../../assets/logos/Headerlogo2.svg";
 import Bellicon2 from "../../assets/logos/Bellicon2.svg";
-import Messageicon from "../../assets/logos/Messageicon.svg";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+import { persistor } from '../../Redux/app/store'
+import { message } from 'antd'
+import { MdLogout } from "react-icons/md";
+import { logoutUser, getNotifications } from "../../Redux/features/authslice.js";
+import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
+import { TbWallet } from "react-icons/tb";
 
 const Vendorheader = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { vendorInfo, currentVendor, isLoggedIn, accountType } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const [modal, setModal] = useState(null);
 
-  const isDashboard = location.pathname === '/vendordashboard' || location.pathname === '/vendor';
-  const isOwnerOnDashboard = isLoggedIn && accountType === 'vendor' && isDashboard;
-  const isOwnerOnPublicPage = isLoggedIn && 
-                              accountType === 'vendor' && 
-                              currentVendor?._id && 
-                              vendorInfo?._id === currentVendor?._id;
-  
-  const isOwner = isOwnerOnDashboard || isOwnerOnPublicPage;
+  const {
+    vendorInfo,
+    isLoggedIn,
+    accountType,
+    notifications = [],
+  } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (isLoggedIn && notifications.length === 0) {
+      dispatch(getNotifications());
+    }
+  }, [dispatch, isLoggedIn, notifications.length]);
+
+  const unreadCount = notifications.filter((n) => !n.isRead).length;
+
+  const isDashboard =
+    location.pathname === "/vendordashboard" ||
+    location.pathname === "/vendor";
+  const isOwnerOnDashboard = isLoggedIn && accountType === "vendor" && isDashboard;
   const showFullHeader = isOwnerOnDashboard;
 
   const getInitials = () => {
-    const name = vendorInfo?.stageName || vendorInfo?.firstName || vendorInfo?.businessName || "";
+    const name =
+      vendorInfo?.stageName ||
+      vendorInfo?.firstName ||
+      vendorInfo?.businessName ||
+      "";
     if (!name) return "FS";
     const names = name.trim().split(/\s+/);
     if (names.length >= 2) {
@@ -34,81 +54,180 @@ const Vendorheader = () => {
   };
 
   useEffect(() => {
-    document.body.style.overflow = isOpen? "hidden" : "unset";
-    return () => {
-      document.body.style.overflow = "unset";
-    };
+    document.body.style.overflow = isOpen ? "hidden" : "unset";
+    return () => { document.body.style.overflow = "unset"; };
   }, [isOpen]);
 
+  const openLogoutModal = () => setModal("logout");
+  const closeModal = () => setModal(null);
   const closeMenu = () => setIsOpen(false);
+
+  const handleLogout = async () => {
+    try {
+      await dispatch(logoutUser()).unwrap();
+      message.success("Logged out successfully");
+      closeModal();
+      navigate("/login");
+    } catch (err) {
+      await persistor.purge();
+      closeModal();
+      navigate("/login");
+    }
+  };
 
   return (
     <header className="vendorheader-container">
       <div className="vendorheader-wrapper">
-        <div
-          className="vendorheader-left"
-          onClick={() => {
-            navigate("/");
-            closeMenu();
-          }}
-        >
+
+        {/* Logo */}
+        <div className="vendorheader-left" onClick={() => { navigate("/"); closeMenu(); }}>
           <img src={Headerlogo2} alt="FeastSync Logo" className="logo-img" />
           <h2 className="logo-text">FeastSync</h2>
         </div>
 
         {showFullHeader && (
           <>
-            <div className={`vendorheader-right ${isOpen? "active" : ""}`}>
+            {/* Desktop Right Icons */}
+            <div className="vendorheader-desktop-right">
               <button
-                className="icon-btn"
-                aria-label="Messages"
-                onClick={() => {
-                  navigate("/wallet/transactions");
-                  closeMenu();
-                }}
+                className="icon-btn vendor-icon-btn"
+                aria-label="Wallet"
+                onClick={() => navigate("/wallet/transactions")}
               >
-                <img src={Messageicon} alt="" className="nav-icon1" />
-                <span className="vendorheader-navLabel">Messages</span>
+                <TbWallet size={24} className="vendor-header-icon" />
               </button>
 
               <button
-                className="icon-btn notification-btn"
+                className="icon-btn vendor-icon-btn"
+                aria-label="Chat"
+                onClick={() => navigate("/chats")}
+              >
+                <IoChatbubbleEllipsesOutline size={24} className="vendor-header-icon" />
+              </button>
+
+              <button
+                className="icon-btn notification-btn vendor-icon-btn"
                 aria-label="Notifications"
-                onClick={() => {
-                  navigate("/notifications");
-                  closeMenu();
-                }}
+                onClick={() => navigate("/notifications/all")}
               >
                 <div className="icon-wrapper">
                   <img src={Bellicon2} alt="" className="nav-icon" />
-                  <span className="notification-badge">1</span>
+                  {unreadCount > 0 && (
+                    <span className="notification-badge">
+                      {unreadCount > 99 ? "99+" : unreadCount}
+                    </span>
+                  )}
                 </div>
-                <span className="vendorheader-navLabel">Notifications</span>
               </button>
 
-              <div className="vendorheader-footerActions">
-                <div className="avatar-circle">{getInitials()}</div>
+              <div className="avatar-circle" onClick={openLogoutModal}>
+                {getInitials()}
+              </div>
+
+              <button
+                className="edit-profile-btn"
+                onClick={() => navigate("/Settings")}
+              >
+                Edit Profile
+              </button>
+            </div>
+
+            {/* Mobile Top Right */}
+            <div className="vendorheader-mobile-top">
+              <button
+                className="mobile-chat-btn"
+                aria-label="Chat"
+                onClick={() => navigate("/chats")}
+              >
+                <IoChatbubbleEllipsesOutline size={22} className="vendor-header-icon" />
+              </button>
+
+              <button
+                className={`hamburger-btn ${isOpen ? "open" : ""}`}
+                onClick={() => setIsOpen(!isOpen)}
+                aria-label="Toggle menu"
+              >
+                <span className="ham-line" />
+                <span className="ham-line" />
+                <span className="ham-line" />
+              </button>
+            </div>
+
+            {/* Mobile Drawer */}
+            <div className={`vendorheader-drawer ${isOpen ? "active" : ""}`}>
+              <nav className="drawer-nav">
                 <button
-                  className="edit-profile-btn"
-                  onClick={() => {
-                    navigate("/Settings");
-                    closeMenu();
-                  }}
+                  className="drawer-nav-item"
+                  onClick={() => { navigate("/wallet/transactions"); closeMenu(); }}
+                >
+                  <TbWallet size={20} className="drawer-nav-icon" />
+                  <span>Wallet</span>
+                </button>
+
+
+                <button
+                  className="drawer-nav-item"
+                  onClick={() => { navigate("/notifications/all"); closeMenu(); }}
+                >
+                  <div className="drawer-bell-wrapper">
+                    <img src={Bellicon2} alt="" className="drawer-bell-icon" />
+                  </div>
+                  <span>Notifications</span>
+                  {unreadCount > 0 && (
+                    <span className="drawer-unread-pill">
+                      {unreadCount > 99 ? "99+" : unreadCount}
+                    </span>
+                  )}
+                </button>
+              </nav>
+
+              <div className="drawer-footer">
+                <div className="drawer-avatar-row" onClick={openLogoutModal}>
+                  <div className="avatar-circle drawer-avatar">
+                    {getInitials()}
+                  </div>
+                  <div className="drawer-avatar-info">
+                    <span className="drawer-avatar-name">
+                      {vendorInfo?.stageName || vendorInfo?.firstName || "My Account"}
+                    </span>
+                    <span className="drawer-avatar-sub">Tap to log out</span>
+                  </div>
+                  <MdLogout size={18} className="drawer-logout-icon" />
+                </div>
+
+                <button
+                  className="edit-profile-btn drawer-edit-btn"
+                  onClick={() => { navigate("/Settings"); closeMenu(); }}
                 >
                   Edit Profile
                 </button>
               </div>
             </div>
 
-            <div
-              className="vendorheader_menuIcon"
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              {isOpen? <FaTimes /> : <FaBars />}
-            </div>
+            {/* Overlay */}
+            {isOpen && <div className="drawer-overlay" onClick={closeMenu} />}
           </>
         )}
       </div>
+
+      {/* Logout Modal */}
+      {modal === "logout" && (
+        <div className="vendorlogout-overlay" onClick={closeModal}>
+          <div className="vendorlogout-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="vendorlogout-icon">
+              <MdLogout size={28} />
+            </div>
+            <h3 className="vendorlogout-title">Log out?</h3>
+            <p className="vendorlogout-subtitle">
+              You'll need to sign in again to access your account.
+            </p>
+            <div className="vendorlogout-actions">
+              <button className="vendorlogout-cancel" onClick={closeModal}>Cancel</button>
+              <button className="vendorlogout-confirm" onClick={handleLogout}>Yes, log out</button>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

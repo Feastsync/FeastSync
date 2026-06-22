@@ -1,44 +1,44 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux' 
-import { logoutUser } from '../../Redux/features/authslice' 
-import { message } from 'antd' 
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { logoutUser, updateVendorInfo, getAllPricing } from '../../Redux/features/authslice'
+import { message } from 'antd'
+import { persistor } from '../../Redux/app/store'
+import api from '../../Redux/app/axios'
+import { MdLogout } from 'react-icons/md'
 import './Settings.css'
-import { persistor } from "../../Redux/app/store"
 
 const Settings = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch() 
+  const dispatch = useDispatch()
+  const { vendorInfo, pricingPackages } = useSelector((s) => s.auth)
+
   const [copied, setCopied] = useState(false)
   const [modal, setModal] = useState(null)
   const [otp, setOtp] = useState(['', '', '', ''])
-  const [phoneNumber, setPhoneNumber] = useState('')
-  const [displayName, setDisplayName] = useState('')
-  const [location, setLocation] = useState('')
-  const [bio, setBio] = useState('')
+  const [updateLoading, setUpdateLoading] = useState(false)
+  const [pendingUpdate, setPendingUpdate] = useState({})
+
+  const [phoneNumber, setPhoneNumber] = useState(vendorInfo?.phoneNumber || '')
+  const [displayName, setDisplayName] = useState(vendorInfo?.stageName || '')
+  const [location, setLocation] = useState(vendorInfo?.stateOfResidence || '')
+  const [bio, setBio] = useState(vendorInfo?.bio || '')
   const [bank, setBank] = useState({ name: '', account: '' })
-  const [showSuccess, setShowSuccess] = useState(false)
-  const [username, setUsername] = useState('')
-  const [toastType, setToastType] = useState('')
-const {  vendorInfo } = useSelector((s) => s.auth)
   const [pricing, setPricing] = useState({
+    id: '',
     startingPrice: '',
     packageName: '',
-    description: ''
+    description: '',
   })
 
   const handleBack = () => {
-    if (window.history.length > 1) {
-      navigate(-1)
-    } else {
-      navigate('/dashboard')
-    }
+    if (window.history.length > 1) navigate(-1)
+    else navigate('/dashboard')
   }
 
   const handleCopy = () => {
-    const link = `https://feastsync.com/${username}`
-    navigator.clipboard.writeText(link)
+    const slug = vendorInfo?.slug || vendorInfo?.username || ''
+    navigator.clipboard.writeText(`https://feastsync.com/vendor/${slug}`)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
@@ -54,65 +54,97 @@ const {  vendorInfo } = useSelector((s) => s.auth)
     newOtp[index] = value
     setOtp(newOtp)
     if (value && index < 3) {
-      document.getElementById(`otp-${index + 1}`).focus()
+      document.getElementById(`otp-${index + 1}`)?.focus()
     }
   }
 
-  const handlePhoneSave = () => {
-    setModal('otp-phone')
+  const handleSaveUpdate = async (fields) => {
+    try {
+      setUpdateLoading(true)
+      await api.post('/vendorSetting/request-update', fields)
+      setPendingUpdate(fields)
+      setModal('otp-verify')
+      message.success('OTP sent to your phone')
+    } catch (err) {
+      message.error(err.response?.data?.message || 'Failed to send OTP')
+    } finally {
+      setUpdateLoading(false)
+    }
   }
 
-  const handleBankSave = () => {
-    setModal('otp-bank')
+  const verifyOtp = async () => {
+    const otpString = otp.join('')
+    if (otpString.length < 4) {
+      message.error('Please enter the full 4-digit OTP')
+      return
+    }
+    try {
+      setUpdateLoading(true)
+      await api.post('/vendorSetting/confirm-update', { otp: otpString })
+      dispatch(updateVendorInfo(pendingUpdate))
+      message.success('Settings updated successfully!')
+      closeModal()
+    } catch (err) {
+      message.error(err.response?.data?.message || 'Invalid OTP. Try again.')
+    } finally {
+      setUpdateLoading(false)
+    }
   }
 
-  const verifyOtp = () => {
-    setToastType('phone')
-    setShowSuccess(true)
-    setModal(null)
-    setTimeout(() => setShowSuccess(false), 3000)
+  const handlePricingSave = async () => {
+    if (!pricing.packageName || !pricing.startingPrice) {
+      message.error('Please fill in package name and price')
+      return
+    }
+    try {
+      setUpdateLoading(true)
+      const payload = {
+        packageName: pricing.packageName,
+        packagePrice: pricing.startingPrice,
+        packageDescription: pricing.description,
+      }
+      if (pricing.id) {
+        await api.put(`/new-pricing/${pricing.id}`, payload)
+      } else {
+        await api.post('/pricing', payload)
+      }
+      dispatch(getAllPricing())
+      message.success('Pricing saved successfully!')
+      closeModal()
+      setPricing({ id: '', startingPrice: '', packageName: '', description: '' })
+    } catch (err) {
+      message.error(err.response?.data?.message || 'Failed to save pricing')
+    } finally {
+      setUpdateLoading(false)
+    }
   }
 
-  const handlePricingSave = () => {
-    setToastType('pricing')
-    setShowSuccess(true)
-    setModal(null)
-    setTimeout(() => setShowSuccess(false), 3000)
+  const handleEditPricing = (pkg) => {
+    setPricing({
+      id: pkg.id || pkg._id || '',
+      startingPrice: pkg.packagePrice || '',
+      packageName: pkg.packageName || '',
+      description: pkg.packageDescription || '',
+    })
+    setModal('pricing')
   }
 
-const handleLogout = async () => {
-
-  try {
-    await dispatch(logoutUser()).unwrap()
-    message.success('Logged out successfully')
-    navigate('/login')
-  } catch (err) {
-    await persistor.purge()
-    navigate('/login')
+  const handleLogout = async () => {
+    try {
+      await dispatch(logoutUser()).unwrap()
+      message.success('Logged out successfully')
+      navigate('/login')
+    } catch (err) {
+      await persistor.purge()
+      navigate('/login')
+    }
   }
-}
-
-  
 
   return (
     <div className="settings_page">
-      {showSuccess && (
-        <div className="settings_toast">
-          <span className="toast_icon">✓</span>
-          {toastType === 'pricing' ? 'Pricing updated successfully!' : 'Phone number updated successfully!'}
-          <br />
-          {toastType === 'pricing'
-            ? 'Your packages have been updated.'
-            : 'Your phone number has been verified and updated.'
-          }
-        </div>
-      )}
-
       <div className="settings_container">
         <div className="settings_back_row">
-          <button className="settings_back_btn" onClick={handleBack}>
-            ← Back
-          </button>
+          <button className="settings_back_btn" onClick={handleBack}>← Back</button>
         </div>
 
         <div className="settings_section_header">
@@ -121,12 +153,17 @@ const handleLogout = async () => {
 
         <div className="settings_section_header">
           <h4 className="settings_subsection_title">Account</h4>
+          <button className="settings_logout_btn" onClick={() => setModal('logout')}>Logout</button>
         </div>
 
         <div className="settings_profile_card">
-          <div className="settings_avatar"> {vendorInfo?.stageName?.charAt(0) || vendorInfo?.firstName?.charAt(0) || 'V'}</div>
+          <div className="settings_avatar">
+            {vendorInfo?.stageName?.charAt(0) || vendorInfo?.firstName?.charAt(0) || 'V'}
+          </div>
           <div className="settings_profile_info">
-            <h3 className="settings_profile_name"> {vendorInfo?.stageName || vendorInfo?.firstName + ' ' + vendorInfo?.lastName}</h3>
+            <h3 className="settings_profile_name">
+              {vendorInfo?.stageName || `${vendorInfo?.firstName} ${vendorInfo?.lastName}`}
+            </h3>
             <p className="settings_profile_role">Vendor — DJ</p>
           </div>
         </div>
@@ -162,10 +199,10 @@ const handleLogout = async () => {
 
         <div className="settings_row">
           <div className="settings_row_left">
-            <span className="settings_label">Location</span>
+            <span className="settings_label">State of Residence</span>
           </div>
           <div className="settings_row_right">
-            <span className="settings_value">{location}</span>
+            <span className="settings_value">{vendorInfo?.stateOfResidence || location}</span>
             <button className="settings_btn" onClick={() => setModal('location')}>Edit</button>
           </div>
         </div>
@@ -175,7 +212,7 @@ const handleLogout = async () => {
             <span className="settings_label">Bio/Description</span>
           </div>
           <div className="settings_row_right">
-            <span className="settings_value">{bio || 'Lagos, Nigeria'}</span>
+            <span className="settings_value">{vendorInfo?.bio || bio}</span>
             <button className="settings_btn" onClick={() => setModal('bio')}>Edit</button>
           </div>
         </div>
@@ -185,16 +222,16 @@ const handleLogout = async () => {
             <span className="settings_label">Public profile link</span>
           </div>
           <div className="settings_row_right">
-            <span className="settings_value">DJ Kolade Beats</span>
+            <span className="settings_value">{vendorInfo?.stageName || 'Your profile'}</span>
             <button className="settings_btn copy_btn" onClick={handleCopy}>
-              {copied ? 'Copied' : 'Copy link'}
+              {copied ? 'Copied!' : 'Copy link'}
             </button>
           </div>
         </div>
 
         <div className="settings_row">
           <div className="settings_row_left">
-            <span className="settings_label">Availability Calender</span>
+            <span className="settings_label">Availability Calendar</span>
             <span className="settings_sublabel">Edit and set date here</span>
           </div>
           <div className="settings_row_right">
@@ -208,9 +245,29 @@ const handleLogout = async () => {
             <span className="settings_sublabel">Edit and set pricing</span>
           </div>
           <div className="settings_row_right">
-            <button className="settings_btn" onClick={() => setModal('pricing')}>Edit</button>
+            <button
+              className="settings_btn"
+              onClick={() => {
+                setPricing({ id: '', startingPrice: '', packageName: '', description: '' })
+                setModal('pricing')
+              }}
+            >
+              + Add New
+            </button>
           </div>
         </div>
+
+        {Array.isArray(pricingPackages) && pricingPackages.map((pkg) => (
+          <div className="settings_row" key={pkg.id || pkg._id}>
+            <div className="settings_row_left">
+              <span className="settings_label">{pkg.packageName}</span>
+              <span className="settings_sublabel">₦{Number(pkg.packagePrice).toLocaleString()}</span>
+            </div>
+            <div className="settings_row_right">
+              <button className="settings_btn" onClick={() => handleEditPricing(pkg)}>Edit</button>
+            </div>
+          </div>
+        ))}
 
         <div className="settings_section_header">
           <h3 className="settings_section_title">PAYMENT</h3>
@@ -218,8 +275,12 @@ const handleLogout = async () => {
 
         <div className="settings_row">
           <div className="settings_row_left">
-            <span className="settings_label">GTBank</span>
-            <span className="settings_sublabel">...4421 · Savings · Primary</span>
+            <span className="settings_label">{vendorInfo?.bankName || 'Bank'}</span>
+            <span className="settings_sublabel">
+              {vendorInfo?.accountNumber
+                ? `...${vendorInfo.accountNumber.slice(-4)} · Savings · Primary`
+                : 'No bank added'}
+            </span>
           </div>
           <div className="settings_row_right">
             <button className="settings_btn" onClick={() => setModal('bank')}>Edit</button>
@@ -235,15 +296,25 @@ const handleLogout = async () => {
           </div>
         </div>
 
-      
-        <div className="settings_logout_section">
-          <button className="settings_logout_btn" onClick={handleLogout}>
-            Logout
-          </button>
-        </div>
       </div>
+      {modal === 'logout' && (
+        <div className="modal_overlay" onClick={closeModal}>
+          <div className="logout_modal_box" onClick={(e) => e.stopPropagation()}>
+            <div className="logout_modal_icon">
+             <MdLogout size={28} />
+            </div>
+            <h3 className="logout_modal_title">Log out?</h3>
+            <p className="logout_modal_subtitle">
+              You'll need to sign in again to access your account.
+            </p>
+            <div className="logout_modal_actions">
+              <button className="logout_modal_cancel" onClick={closeModal}>Cancel</button>
+              <button className="logout_modal_confirm" onClick={handleLogout}>Yes, log out</button>
+            </div>
+          </div>
+        </div>
+      )}
 
-  
       {modal === 'phone' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box" onClick={(e) => e.stopPropagation()}>
@@ -263,13 +334,206 @@ const handleLogout = async () => {
             </div>
             <div className="modal_footer">
               <button className="modal_btn_cancel" onClick={closeModal}>Cancel</button>
-              <button className="modal_btn_primary" onClick={handlePhoneSave}>Continue to Verify</button>
+              <button
+                className="modal_btn_primary"
+                disabled={updateLoading}
+                onClick={() => handleSaveUpdate({ phoneNumber })}
+              >
+                {updateLoading ? 'Sending...' : 'Continue to Verify'}
+              </button>
             </div>
           </div>
         </div>
       )}
 
-      {(modal === 'otp-phone' || modal === 'otp-bank') && (
+      {(modal === 'display-name' || modal === 'bio') && (
+        <div className="modal_overlay" onClick={closeModal}>
+          <div className="modal_box" onClick={(e) => e.stopPropagation()}>
+            <div className="modal_header">
+              <h3>{modal === 'display-name' ? 'Edit Display Name' : 'Edit Bio/Description'}</h3>
+              <button className="modal_close" onClick={closeModal}>×</button>
+            </div>
+            <div className="modal_body">
+              <label className="modal_label">
+                {modal === 'display-name' ? 'Display Name' : 'Bio/Description'}
+              </label>
+              {modal === 'display-name' ? (
+                <input
+                  type="text"
+                  className="modal_input"
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
+                />
+              ) : (
+                <textarea
+                  className="modal_textarea"
+                  placeholder="Tell us about yourself and your services"
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  rows="4"
+                />
+              )}
+            </div>
+            <div className="modal_footer">
+              <button className="modal_btn_cancel" onClick={closeModal}>Cancel</button>
+              <button
+                className="modal_btn_primary"
+                disabled={updateLoading}
+                onClick={() =>
+                  handleSaveUpdate({ bio: modal === 'display-name' ? displayName : bio })
+                }
+              >
+                {updateLoading ? 'Saving...' : 'Save'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      
+      {modal === 'location' && (
+        <div className="modal_overlay" onClick={closeModal}>
+          <div className="modal_box" onClick={(e) => e.stopPropagation()}>
+            <div className="modal_header">
+              <h3>Edit Location</h3>
+              <button className="modal_close" onClick={closeModal}>×</button>
+            </div>
+            <div className="modal_body">
+              <label className="modal_label">Select state of residence</label>
+              <select
+                className="modal_select"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              >
+                <option value="">Select State</option>
+                <option value="Lagos">Lagos, Nigeria</option>
+                <option value="Abuja">Abuja, Nigeria</option>
+                <option value="Rivers">Rivers, Nigeria</option>
+                <option value="Oyo">Oyo, Nigeria</option>
+                <option value="Kano">Kano, Nigeria</option>
+                <option value="Enugu">Enugu, Nigeria</option>
+              </select>
+            </div>
+            <div className="modal_footer">
+              <button className="modal_btn_cancel" onClick={closeModal}>Cancel</button>
+              <button
+                className="modal_btn_primary"
+                disabled={updateLoading}
+                onClick={() => handleSaveUpdate({ stateOfResidence: location })}
+              >
+                {updateLoading ? 'Saving...' : 'Save'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      
+      {modal === 'bank' && (
+        <div className="modal_overlay" onClick={closeModal}>
+          <div className="modal_box" onClick={(e) => e.stopPropagation()}>
+            <div className="modal_header">
+              <h3>Edit Bank Details</h3>
+              <button className="modal_close" onClick={closeModal}>×</button>
+            </div>
+            <div className="modal_body">
+              <label className="modal_label">Select Bank</label>
+              <select
+                className="modal_select"
+                value={bank.name}
+                onChange={(e) => setBank({ ...bank, name: e.target.value })}
+              >
+                <option value="">Select Bank</option>
+                <option value="GTBank">GTBank</option>
+                <option value="Access Bank">Access Bank</option>
+                <option value="First Bank">First Bank</option>
+                <option value="Zenith Bank">Zenith Bank</option>
+                <option value="UBA">UBA</option>
+                <option value="Opay">Opay</option>
+              </select>
+              <label className="modal_label">Account Number</label>
+              <input
+                type="text"
+                className="modal_input"
+                placeholder="Enter 10-digit account number"
+                value={bank.account}
+                onChange={(e) => setBank({ ...bank, account: e.target.value })}
+              />
+              <p className="modal_error">⚠ OTP verification will be required</p>
+            </div>
+            <div className="modal_footer">
+              <button className="modal_btn_cancel" onClick={closeModal}>Cancel</button>
+              <button
+                className="modal_btn_primary"
+                disabled={updateLoading}
+                onClick={() =>
+                  handleSaveUpdate({ bankName: bank.name, accountNumber: bank.account })
+                }
+              >
+                {updateLoading ? 'Sending...' : 'Continue to Verify'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      
+      {modal === 'pricing' && (
+        <div className="modal_overlay" onClick={closeModal}>
+          <div className="modal_box pricing_modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal_header modal_header_purple">
+              <div>
+                <h3>{pricing.id ? 'Edit Package' : 'Add New Package'}</h3>
+                <p className="modal_subtitle">Set your pricing details</p>
+              </div>
+              <button className="modal_close" onClick={closeModal}>×</button>
+            </div>
+            <div className="modal_body">
+              <label className="modal_label">Starting Price (₦)</label>
+              <input
+                type="number"
+                className="modal_input"
+                placeholder="e.g. 50000"
+                value={pricing.startingPrice}
+                onChange={(e) => setPricing({ ...pricing, startingPrice: e.target.value })}
+              />
+              <label className="modal_label">Package Name</label>
+              <select
+                className="modal_select"
+                value={pricing.packageName}
+                onChange={(e) => setPricing({ ...pricing, packageName: e.target.value })}
+              >
+                <option value="">Select package</option>
+                <option value="Basic Package">Basic Package</option>
+                <option value="Standard Package">Standard Package</option>
+                <option value="Premium Package">Premium Package</option>
+                <option value="Custom Package">Custom Package</option>
+              </select>
+              <label className="modal_label">Package Description</label>
+              <textarea
+                className="modal_textarea"
+                placeholder="What's included..."
+                value={pricing.description}
+                onChange={(e) => setPricing({ ...pricing, description: e.target.value })}
+                rows="4"
+              />
+            </div>
+            <div className="modal_footer">
+              <button className="modal_btn_cancel" onClick={closeModal}>Cancel</button>
+              <button
+                className="modal_btn_primary"
+                disabled={updateLoading}
+                onClick={handlePricingSave}
+              >
+                {updateLoading ? 'Saving...' : pricing.id ? 'Update Package' : 'Add Package'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+  
+      {modal === 'otp-verify' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box" onClick={(e) => e.stopPropagation()}>
             <div className="modal_header">
@@ -277,8 +541,9 @@ const handleLogout = async () => {
               <button className="modal_close" onClick={closeModal}>×</button>
             </div>
             <div className="modal_body">
-              <p className="modal_text">We've sent a verification code to verify your new {modal === 'otp-phone' ? 'phone number' : 'bank details'}</p>
-              <p className="modal_phone">080****0456</p>
+              <p className="modal_text">
+                We've sent a 4-digit verification code to confirm your update.
+              </p>
               <label className="modal_label">Enter verification code</label>
               <div className="otp_inputs">
                 {otp.map((digit, i) => (
@@ -297,170 +562,13 @@ const handleLogout = async () => {
             </div>
             <div className="modal_footer">
               <button className="modal_btn_cancel" onClick={closeModal}>Cancel</button>
-              <button className="modal_btn_primary" onClick={verifyOtp}>Verify</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {modal === 'location' && (
-        <div className="modal_overlay" onClick={closeModal}>
-          <div className="modal_box" onClick={(e) => e.stopPropagation()}>
-            <div className="modal_header">
-              <h3>Edit Location</h3>
-              <button className="modal_close" onClick={closeModal}>×</button>
-            </div>
-            <div className="modal_body">
-              <label className="modal_label">Select state of residence</label>
-              <select
-                className="modal_select"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
+              <button
+                className="modal_btn_primary"
+                disabled={updateLoading}
+                onClick={verifyOtp}
               >
-                <option>Select State</option>
-                <option>Lagos, Nigeria</option>
-                <option>Abuja, Nigeria</option>
-                <option>Rivers, Nigeria</option>
-                <option>Oyo, Nigeria</option>
-              </select>
-            </div>
-            <div className="modal_footer">
-              <button className="modal_btn_cancel" onClick={closeModal}>Cancel</button>
-              <button className="modal_btn_primary" onClick={closeModal}>Save</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {modal === 'bank' && (
-        <div className="modal_overlay" onClick={closeModal}>
-          <div className="modal_box" onClick={(e) => e.stopPropagation()}>
-            <div className="modal_header">
-              <h3>Edit bank details</h3>
-              <button className="modal_close" onClick={closeModal}>×</button>
-            </div>
-            <div className="modal_body">
-              <label className="modal_label">Select Bank</label>
-              <select
-                className="modal_select"
-                onChange={(e) => setBank({...bank, name: e.target.value})}
-              >
-                <option>Select Bank</option>
-                <option>GTBank</option>
-                <option>Access Bank</option>
-                <option>First Bank</option>
-                <option>Zenith Bank</option>
-              </select>
-              <label className="modal_label">Account number</label>
-              <input
-                type="text"
-                className="modal_input"
-                placeholder="8024000056"
-                onChange={(e) => setBank({...bank, account: e.target.value})}
-              />
-              <p className="modal_error">⚠ OTP verification will be required</p>
-            </div>
-            <div className="modal_footer">
-              <button className="modal_btn_cancel" onClick={closeModal}>Cancel</button>
-              <button className="modal_btn_primary" onClick={handleBankSave}>Continue to Verify</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {modal === 'display-name' && (
-        <div className="modal_overlay" onClick={closeModal}>
-          <div className="modal_box" onClick={(e) => e.stopPropagation()}>
-            <div className="modal_header">
-              <h3>Edit Display Name</h3>
-              <button className="modal_close" onClick={closeModal}>×</button>
-            </div>
-            <div className="modal_body">
-              <label className="modal_label">Display Name</label>
-              <input
-                type="text"
-                className="modal_input"
-                value={displayName}
-                onChange={(e) => setDisplayName(e.target.value)}
-              />
-            </div>
-            <div className="modal_footer">
-              <button className="modal_btn_cancel" onClick={closeModal}>Cancel</button>
-              <button className="modal_btn_primary" onClick={closeModal}>Save</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {modal === 'bio' && (
-        <div className="modal_overlay" onClick={closeModal}>
-          <div className="modal_box" onClick={(e) => e.stopPropagation()}>
-            <div className="modal_header">
-              <h3>Edit Bio/Description</h3>
-              <button className="modal_close" onClick={closeModal}>×</button>
-            </div>
-            <div className="modal_body">
-              <label className="modal_label">Bio/Description</label>
-              <textarea
-                className="modal_textarea"
-                placeholder="Tell us about yourself and your services"
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-                rows="4"
-              />
-            </div>
-            <div className="modal_footer">
-              <button className="modal_btn_cancel" onClick={closeModal}>Cancel</button>
-              <button className="modal_btn_primary" onClick={closeModal}>Save</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {modal === 'pricing' && (
-        <div className="modal_overlay" onClick={closeModal}>
-          <div className="modal_box pricing_modal" onClick={(e) => e.stopPropagation()}>
-            <div className="modal_header modal_header_purple">
-              <div>
-                <h3>Pricing & Packages</h3>
-                <p className="modal_subtitle">Set your starting price</p>
-              </div>
-              <button className="modal_close" onClick={closeModal}>×</button>
-            </div>
-            <div className="modal_body">
-              <label className="modal_label">Starting Price</label>
-              <input
-                type="text"
-                className="modal_input"
-                value={pricing.startingPrice}
-                onChange={(e) => setPricing({...pricing, startingPrice: e.target.value})}
-              />
-
-              <label className="modal_label">Package Name</label>
-              <select
-                className="modal_select"
-                value={pricing.packageName}
-                onChange={(e) => setPricing({...pricing, packageName: e.target.value})}
-              >
-                <option value="">Select package</option>
-                <option value="basic">Basic Package</option>
-                <option value="standard">Standard Package</option>
-                <option value="premium">Premium Package</option>
-                <option value="custom">Custom Package</option>
-              </select>
-
-              <label className="modal_label">Package Description</label>
-              <textarea
-                className="modal_textarea"
-                placeholder="What's included..."
-                value={pricing.description}
-                onChange={(e) => setPricing({...pricing, description: e.target.value})}
-                rows="4"
-              />
-            </div>
-            <div className="modal_footer">
-              <button className="modal_btn_cancel" onClick={closeModal}>Back</button>
-              <button className="modal_btn_primary" onClick={handlePricingSave}>Save</button>
+                {updateLoading ? 'Verifying...' : 'Verify'}
+              </button>
             </div>
           </div>
         </div>
@@ -468,6 +576,5 @@ const handleLogout = async () => {
     </div>
   )
 }
-
 
 export default Settings

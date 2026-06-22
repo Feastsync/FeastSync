@@ -72,8 +72,6 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
   const [submitError, setSubmitError] = useState(null);
   const [isFinalSubmitting, setIsFinalSubmitting] = useState(false);
 
-  // ── Ref to track if final submit is in progress ───────────────────
-  // This prevents the useEffect from firing showSuccess prematurely
   const isFinalSubmitDone = useRef(false);
 
   const [vendorProfile, setVendorProfile] = useState({
@@ -129,27 +127,39 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
   };
 
   // ── Advance step and save progress to backend ─────────────────────
-  const completeStep = async (stepName) => {
-    // Don't allow step changes while final submit is running
-    if (isFinalSubmitting) return;
+  // const completeStep = async (stepName) => {
+  //   // Don't allow step changes while final submit is running
+  //   if (isFinalSubmitting) return;
 
-    const nextIndex = STEP_ORDER.indexOf(stepName) + 1;
-    const nextStepName =
-      nextIndex < STEP_ORDER.length ? STEP_ORDER[nextIndex] : "completed";
-    const nextStepNumber = REVERSE_STEP_MAP[nextStepName];
+  //   const nextIndex = STEP_ORDER.indexOf(stepName) + 1;
+  //   const nextStepName =
+  //     nextIndex < STEP_ORDER.length ? STEP_ORDER[nextIndex] : "completed";
+  //   const nextStepNumber = REVERSE_STEP_MAP[nextStepName];
 
-    try {
-      const formData = new FormData();
-      formData.append("onboardingStep", String(nextStepNumber));
-      await dispatch(
-        updateVendorProfile({ id: vendorId, profileData: formData })
-      ).unwrap();
-    } catch (e) {
-      console.log("Failed to save step", e);
-    }
-  };
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("onboardingStep", String(nextStepNumber));
+  //     await dispatch(
+  //       updateVendorProfile({ id: vendorId, profileData: formData })
+  //     ).unwrap();
+  //   } catch (e) {
+  //     console.log("Failed to save step", e);
+  //   }
+  // };
+const completeStep = (stepName) => {
+  if (isFinalSubmitting) return;
 
-  // ── Final submit on calendar step ─────────────────────────────────
+  const nextIndex = STEP_ORDER.indexOf(stepName) + 1;
+  const nextStepName =
+    nextIndex < STEP_ORDER.length ? STEP_ORDER[nextIndex] : "completed";
+
+  dispatch(
+    updateVendorInfo({
+      onboardingStep: REVERSE_STEP_MAP[nextStepName],
+      currentStep: nextStepName,
+    })
+  );
+};
   const handleFinalSubmit = async () => {
     if (isFinalSubmitting) return;
     setSubmitError(null);
@@ -169,6 +179,8 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
       profileFormData.append("isOnboarded", "true");
       profileFormData.append("onboardingStep", "7");
       profileFormData.append("isProfileCompleted", "true");
+      profileFormData.append("pricing", JSON.stringify(vendorProfile.pricing));
+      
       profileFormData.append(
         "bookedDays",
         JSON.stringify(vendorProfile.bookedDays)
@@ -194,19 +206,16 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
         updateVendorProfile({ id, profileData: profileFormData })
       ).unwrap();
 
-      const { startingPrice, packageName, packageDescription } =
-        vendorProfile.pricing;
+      const { startingPrice, packageName, packageDescription } = vendorProfile.pricing;
       if (startingPrice && packageName) {
         await dispatch(
           createPricing({
             packagePrice: startingPrice,
             packageName,
-            pacakageName: packageName,
             packageDescription,
           })
         ).unwrap();
       }
-
 
       if (vendorProfile.document) {
         try {
@@ -217,22 +226,20 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
           console.log("KYC failed but continuing:", kycErr);
         }
       }
+
       isFinalSubmitDone.current = true;
       setShowSuccess(true);
-
-} catch (err) {
-  console.log("FULL ERROR:", JSON.stringify(err, null, 2));
-  console.log("ERROR MESSAGE:", err?.message);
-  console.log("ERROR PAYLOAD:", err?.payload || err?.data || err);
-  setSubmitError(
-    typeof err === "string" ? err : "Something went wrong. Please try again."
-  );
-} finally {
-  setIsFinalSubmitting(false);
-}
+    } catch (err) {
+      console.log("FULL ERROR:", JSON.stringify(err, null, 2));
+      setSubmitError(
+        typeof err === "string" ? err : "Something went wrong. Please try again."
+      );
+    } finally {
+      setIsFinalSubmitting(false);
+    }
   };
 
- 
+
 if (showSuccess) {
   return (
     <div className="vo-overlay">

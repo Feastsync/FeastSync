@@ -1,92 +1,176 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { message } from "antd";
+import api from "../../Redux/app/axios";
+import { getVendorById, replaceVendorMedia } from "../../Redux/features/authslice";
 import "../Css/Vendormediagallery.css";
-import Womanwithmic from "../../assets/logos/verified.png";
-import Hausamanandwoman from "../../assets/logos/Hausamanandwoman.jpg";
-import Yourabamanandwoman from "../../assets/logos/Yourabamanandwoman.jpg";
-import Yorubabride from "../../assets/logos/Yorubabride.jpg";
-import Yorubamancarryhisbride from "../../assets/logos/Yorubamancarryhisbride.jpg";
-import Coupleonthedancefloor from "../../assets/logos/Coupleonthedancefloor.jpg";
 
 const Vendormediagallery = () => {
-  
-  const mediaGalleryImages = [
-    Womanwithmic, 
-    Hausamanandwoman, 
-    Yourabamanandwoman, 
-    Yorubabride, 
-    Yorubamancarryhisbride, 
-    Coupleonthedancefloor
-  ];
+  const dispatch = useDispatch();
+  const { slug } = useParams();
 
-  const portfolioItems = [
-    {
-      id: 1,
-      image: "https://i.postimg.cc/NfVhL23D/4bbc686d517abc7a16757a9e6a0bf6eff79f1f7a-(1).jpg", 
-      title: "Tolu and Femi Wedding",
-      venue: "Eko Hotel",
-      date: "Jan 2026",
-      guests: "350 guests"
-    },
-    {
-      id: 2,
-      image: "https://i.postimg.cc/GmYf27P7/49425bb335d1d0b58bcb5e3d8dfd858efd53bd3f-(1).jpg",
-      title: "Adeola & Emeka Wedding",
-      venue: "Eko Hotel",
-      date: "Apr 2026",
-      guests: "350 guests"
-    },
-    {
-      id: 3,
-      image: "https://i.postimg.cc/xCsx7WYb/05a140a18c0e68c133e17fd7fc37077c4746c5b7.jpg",
-      title: "Adeola & Emeka Wedding",
-      venue: "Eko Hotel",
-      date: "Apr 2026",
-      guests: "350 guests"
-    },
-    {
-      id: 4,
-      image: "https://i.postimg.cc/hPQyyyYv/568f928767287a718e89a849caec8a1128f0f578.jpg",
-      title: "Adeola & Emeka Wedding",
-      venue: "Eko Hotel",
-      date: "Apr 2026",
-      guests: "350 guests"
+  const videoInputRef = useRef(null);
+  const photoInputRef = useRef(null);
+
+  const [selectedMedia, setSelectedMedia] = useState(null);
+
+  const { currentVendor, currentVendorLoading } = useSelector(
+    (state) => state.auth
+  );
+
+
+
+  const photos = currentVendor?.photoCatalogue || [];
+  const videos = currentVendor?.videoCatalogue || [];
+
+  const handleEdit = (ref, item, mediaType) => {
+     console.log("MEDIA ITEM:", item);
+    setSelectedMedia({
+      publicId: item.publicId,
+      mediaType,
+    });
+
+    if (ref.current) {
+      ref.current.click();
     }
-  ];
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+
+    if (!file || !selectedMedia) return;
+
+    try {
+      const formData = new FormData();
+
+      formData.append("file", file);
+      formData.append("mediaType", selectedMedia.mediaType);
+      formData.append("publicId", selectedMedia.publicId);
+      console.log (currentVendor)
+      await api.put(
+        `/vendor/replace-media/${currentVendor._id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      message.success("Media updated successfully");
+
+      dispatch(getVendorById(slug));
+
+      setSelectedMedia(null);
+      e.target.value = "";
+    } catch (error) {
+      console.error(error);
+
+      message.error(
+        error?.response?.data?.message ||
+        "Failed to update media"
+      );
+    }
+  };
+
+  if (currentVendorLoading) {
+    return <div className="loading">Loading gallery...</div>;
+  }
 
   return (
     <div className='vendormediagallery-container'>
+
+      {/* Hidden file inputs for editing */}
+      <input
+        type="file"
+        ref={videoInputRef}
+        style={{ display: 'none' }}
+        accept="video/*"
+        onChange={handleFileChange}
+      />
+
+      <input
+        type="file"
+        ref={photoInputRef}
+        style={{ display: 'none' }}
+        accept="image/*"
+        onChange={handleFileChange}
+      />
+
+      {/* SECTION 1: VIDEOS */}
       <div className="catalog-wrapper-section">
         <span className="gallery-small-label">Media gallery</span>
-        <h4 className="gallery-subtitle">Photos/Video Catalog</h4>
-        
+        <h4 className="gallery-subtitle">Video Showcase</h4>
+
         <div className="portfolio-white-card-box">
-          <h3 className="card-box-main-title">Portfolio</h3>
-          
           <div className="gallery-grid-three-columns">
-            {mediaGalleryImages.map((imgSrc, index) => (
-              <div key={index} className="gallery-thumbnail-wrap">
-                <img src={imgSrc} alt={`Gallery item ${index + 1}`} />
+            {videos.map((item) => (
+              <div
+                key={item._id}
+                className="gallery-thumbnail-wrap"
+                style={{ position: 'relative' }}
+              >
+                <video
+                  controls
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block"
+                  }}
+                >
+                  <source src={item.secureUrl} type="video/mp4" />
+                </video>
+
+                <button
+                  className="media-edit-btn"
+                  onClick={() =>
+                    handleEdit(videoInputRef, item, "videoCatalogue")
+                  }
+                >
+                  Edit
+                </button>
               </div>
             ))}
           </div>
         </div>
       </div>
 
+   
       <div className="showcase-wrapper-section">
-        <h3 className="showcase-section-title">Portfolio</h3>
-        <span className="showcase-section-subtitle">Media gallery</span>
+        <h3 className="showcase-section-title">Media Gallery</h3>
+        <span className="showcase-section-subtitle">
+          Pictures ShowCase
+        </span>
 
         <div className="portfolio-grid-two-columns">
-          {portfolioItems.map((item) => (
-            <div key={item.id} className="portfolio-detail-item-card">
+          {photos.map((item) => (
+            <div
+              key={item._id}
+              className="portfolio-detail-item-card"
+              style={{ position: 'relative' }}
+            >
               <div className="detail-card-image-wrap">
-                <img src={item.image} alt={item.title} />
-              </div>
-              <div className="detail-card-info-content">
-                <h4 className="detail-item-title">{item.title}</h4>
-                <p className="detail-item-metadata">
-                  {item.venue} . {item.date} . {item.guests}
-                </p>
+                <img
+                  src={item.secureUrl}
+                  alt="Vendor"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block"
+                  }}
+                />
+
+                <button
+                  className="media-edit-btn"
+                  onClick={() =>
+                    handleEdit(photoInputRef, item, "photoCatalogue")
+                  }
+                >
+                  Edit
+                </button>
               </div>
             </div>
           ))}

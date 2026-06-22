@@ -12,6 +12,19 @@
   --second-color: black;
 }
 
+.ant-message {
+  z-index: 99999 !important;
+}
+
+.ant-notification {
+  z-index: 99999 !important;
+}
+
+.ant-notification-notice {
+  z-index: 99999 !important;
+}
+
+
 .about-container {
   display: flex;
   flex-direction: column;

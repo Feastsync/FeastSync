@@ -1,7 +1,7 @@
 @import url('https://googleapis.com');
 
 :root {
-  --primary-purple: #4C1D95; 
+  --primary-purple: #4C1D95;
   --booked-orange: #C64A00;
 }
 
@@ -13,16 +13,17 @@
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  padding: 20px;
+  padding: 20px 16px;
+  overflow-y: auto;
 }
 
 .cs-modal {
-  background: #FFF;
+  background: #fff;
   border-radius: 16px;
-  width: 700px;          
-  min-height: 480px; 
-  margin-top: 150px;
-  margin-left: 50px;  
+  width: min(95%, 480px);
+  max-width: 480px;
+  max-height: 90vh;
+  margin: 0 auto;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
@@ -30,7 +31,7 @@
 }
 
 .cs-purple-top-section {
-  background: #F4EFFF; 
+  background: #f4efff;
   padding-bottom: 25px;
   flex-shrink: 0;
 }
@@ -46,7 +47,7 @@
   color: #101828;
   font-size: 18px;
   font-weight: 600;
-  margin: 0;
+  margin: 0 0 20px 0;
 }
 
 .cs-close {
@@ -72,7 +73,7 @@
   font-size: 18px;
   font-weight: 600;
   color: #101828;
-  width: 160px; 
+  width: 160px;
   text-align: center;
   display: inline-block;
 }
@@ -118,8 +119,8 @@
 }
 
 .available-box {
-  background: #FFFFFF;
-  border: 1px solid #E4E7EC;
+  background: #ffffff;
+  border: 1px solid #e4e7ec;
 }
 
 .booked-box {
@@ -127,10 +128,11 @@
 }
 
 .cs-white-bottom-section {
-  background: #FFFFFF;
+  background: #ffffff;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  flex: 1;
+  overflow-y: auto;
 }
 
 .cs-calendar-wrapper {
@@ -146,7 +148,7 @@
 }
 
 .cs-calendar-wrapper .react-calendar__month-view__days {
-  min-height: 240px !important; 
+  min-height: 240px !important;
 }
 
 .cs-calendar-wrapper .react-calendar__month-view__weekdays {
@@ -162,7 +164,7 @@
 }
 
 .cs-calendar-wrapper .react-calendar__tile {
-  height: 40px !important; 
+  height: 40px !important;
   padding: 0 !important;
   font-size: 11px;
   font-weight: 500;
@@ -176,7 +178,7 @@
 }
 
 .cs-calendar-wrapper .react-calendar__month-view__days__tile--neighboringMonth {
-  color: #D0D5DD !important;
+  color: #d0d5dd !important;
 }
 
 .cs-calendar-wrapper .hide-next-neighbor abbr {
@@ -189,7 +191,7 @@
 }
 
 .cs-calendar-wrapper .available-date {
-  background: #FFF !important;
+  background: #fff !important;
   color: #101828;
 }
 
@@ -202,20 +204,25 @@
 
 .cs-footer {
   padding: 16px 24px;
-  border-top: 1px solid #F2F4F7;
+  border-top: 1px solid #f2f4f7;
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  background: #FFF;
+  background: #fff;
   margin-top: auto;
   flex-shrink: 0;
 }
 
+.cs-btn-group {
+  display: flex;
+  gap: 14px;
+}
+
 .cs-btn-outline {
   height: 44px;
-  background: #FFF;
+  background: #fff;
   color: #344054;
-  border: 1px solid #D0D5DD;
+  border: 1px solid #d0d5dd;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
@@ -226,24 +233,24 @@
 }
 
 .cs-btn-outline:hover {
-  background: #F9FAFB;
-  border-color: #C4C5C5;
-  color: #1D2939;
+  background: #f9fafb;
+  border-color: #c4c5c5;
+  color: #1d2939;
 }
 
 .cs-btn-outline:focus-visible {
-  border-color: #98A2B3;
-  box-shadow: 0 0 0 4px #F2F4F7;
+  border-color: #98a2b3;
+  box-shadow: 0 0 0 4px #f2f4f7;
 }
 
 .cs-btn-outline:active {
-  background: #F2F4F7;
+  background: #f2f4f7;
 }
 
 .cs-btn-primary {
   height: 44px;
-  background: var(--primary-purple);
-  color: #FFF;
+  background: var(--primary-color);
+  color: #fff;
   border: none;
   border-radius: 8px;
   font-size: 14px;
@@ -265,5 +272,33 @@
 
 .cs-btn-primary:active {
   opacity: 1;
-  background: #3B1675;
+  background: var(--primary-color);
+}
+
+@media (max-width: 480px) {
+  .cs-overlay {
+    padding: 16px 12px;
+    align-items: flex-start;
+  }
+
+  .cs-modal {
+    max-height: 95vh;
+    margin: 0 auto;
+  }
+
+  .cs-header,
+  .cs-calendar-wrapper,
+  .cs-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .cs-btn-group {
+    width: 100%;
+  }
+
+  .cs-btn-outline,
+  .cs-btn-primary {
+    flex: 1;
+  }
 }
