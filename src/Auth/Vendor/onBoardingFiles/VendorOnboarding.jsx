@@ -97,7 +97,7 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
     bookedDays: [],
   });
 
-  // ── Sync vendorId into local profile state ────────────────────────
+
   useEffect(() => {
     if (vendorId && !vendorProfile.id) {
       setVendorProfile((prev) => ({ ...prev, id: vendorId }));
@@ -231,9 +231,13 @@ const completeStep = (stepName) => {
       setShowSuccess(true);
     } catch (err) {
       console.log("FULL ERROR:", JSON.stringify(err, null, 2));
-      setSubmitError(
-        typeof err === "string" ? err : "Something went wrong. Please try again."
-      );
+      const msg =
+        err?.response?.data?.message ||
+        err?.message ||
+        err?.data?.message ||
+        (typeof err === "string" && err) ||
+        "Something went wrong. Please try again.";
+      setSubmitError(msg);
     } finally {
       setIsFinalSubmitting(false);
     }
