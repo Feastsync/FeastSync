@@ -286,7 +286,7 @@ const saved = displayVendor?.pricingId?.find(
                       disabled={!item.savedId}
                       onClick={() => {
                         if (!isLoggedIn) {
-                          navigate("/login", { state: { from: location.pathname } });
+                          navigate("/", { state: { from: location.pathname } });
                           return;
                         }
                         setBookingModal({ open: true, pricingId: item.savedId });

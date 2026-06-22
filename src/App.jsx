@@ -74,27 +74,26 @@ const App = () => {
             <Route path="mcs" element={<MCs />} />
             <Route path="livebands" element={<LiveBands />} />
             <Route path="photography" element={<Photography />} />
-            <Route path="videography" element={<Videography />} />
+            <Route path="videogra `phy" element={<Videography />} />
           </Route>
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
-        </Route>
-
-
+        </Route> 
         <Route path="/onboarding" element={<OnBoarding />} />
         <Route path="/login" element={<Login />} />
         <Route path="/verify-otp" element={<OTP />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/vendor/signup" element={<VendorSignUp />} />
+         <Route path="/vendor/:slug" element={<Vendordashboard />} />
         <Route path="/user/signup" element={<UserSignUp />} />
         <Route path="/getStarted" element={<GetStarted />} />
         <Route path="/505" element={<Error505 />} />
 
 
         <Route element={<PrivateRoute allowedRoles={["user", "vendor"]} />}>
-          <Route path="/vendor/:slug" element={<Vendordashboard />} />
+          {/* <Route path="/vendor/:slug" element={<Vendordashboard />} /> */}
           <Route path="/epknorating/:vendorId" element={<Epknorating />} />
           <Route path="/epkrating/:id" element={<Epkrating />} />
           <Route path="/chats" element={<Chat />} />

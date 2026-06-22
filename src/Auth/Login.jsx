@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../Redux/features/authslice";
+import { login, getCurrentUser } from "../Redux/features/authslice";
 import { message } from "antd";
 import Input from "../Props/Imp";
 import Button from "../Props/Button";
@@ -23,31 +23,15 @@ const Login = () => {
   const [accountType, setAccountType] = useState("vendor");
   const [showVendorWelcome, setShowVendorWelcome] = useState(false);
   const [vendorName, setVendorName] = useState("");
-  const [EmailErrorMsg, setEmailErrorMsg] = useState({
-    err: false,
-    msg: "",
-    name: "",
-  });
-  const [PasswordErrorMsg, setPasswordErrorMsg] = useState({
-    err: false,
-    msg: "",
-    name: "",
-  });
+  const [EmailErrorMsg, setEmailErrorMsg] = useState({ err: false, msg: "", name: "" });
+  const [PasswordErrorMsg, setPasswordErrorMsg] = useState({ err: false, msg: "", name: "" });
 
   const validateEmail = (value) => {
     if (value.trim() === "") {
-      setEmailErrorMsg({
-        err: true,
-        name: "email",
-        msg: "Email must not be empty",
-      });
+      setEmailErrorMsg({ err: true, name: "email", msg: "Email must not be empty" });
       return false;
     } else if (!EmailRegex.test(value)) {
-      setEmailErrorMsg({
-        err: true,
-        name: "email",
-        msg: "Please enter a valid Email",
-      });
+      setEmailErrorMsg({ err: true, name: "email", msg: "Please enter a valid Email" });
       return false;
     } else {
       setEmailErrorMsg({ err: false, name: "", msg: "" });
@@ -57,11 +41,7 @@ const Login = () => {
 
   const validatePassword = (value) => {
     if (value.trim() === "") {
-      setPasswordErrorMsg({
-        err: true,
-        name: "password",
-        msg: "Password must not be empty",
-      });
+      setPasswordErrorMsg({ err: true, name: "password", msg: "Password must not be empty" });
       return false;
     } else {
       setPasswordErrorMsg({ err: false, name: "", msg: "" });
@@ -76,8 +56,7 @@ const Login = () => {
 
   const HoldPassword = (e) => {
     setUserInfo({ ...userInfo, password: e.target.value });
-    if (PasswordErrorMsg.err)
-      setPasswordErrorMsg({ err: false, name: "", msg: "" });
+    if (PasswordErrorMsg.err) setPasswordErrorMsg({ err: false, name: "", msg: "" });
   };
 
   const handleValidationAndSubmit = async () => {
@@ -91,34 +70,29 @@ const Login = () => {
 
     try {
       const result = await dispatch(
-        login({
-          email: userInfo.email,
-          password: userInfo.password,
-          accountType: accountType,
-        }),
+        login({ email: userInfo.email, password: userInfo.password, accountType }),
       ).unwrap();
 
       message.success("Login successful!");
 
       if (result.accountType === "vendor") {
         const vendor = result.vendor;
-        const vendorName = vendor?.stageName || vendor?.firstName || "Vendor";
-        setVendorName(vendorName.toString());
+        const name = vendor?.stageName || vendor?.firstName || "Vendor";
+        setVendorName(name.toString());
 
-     
+        await dispatch(getCurrentUser())
+
         if (!vendor?.isOnboarded) {
           setShowVendorWelcome(true);
         } else {
           navigate("/vendordashboard");
         }
       } else {
+        await dispatch(getCurrentUser())
         navigate("/userdashboard");
       }
     } catch (err) {
-      const errorMessage =
-        typeof err === "string"
-          ? err
-          : err?.message || "Invalid email or password";
+      const errorMessage = typeof err === "string" ? err : err?.message || "Invalid email or password";
       message.error(errorMessage);
     }
   };
@@ -128,18 +102,12 @@ const Login = () => {
       <div className="vl-left">
         <div className="vl-form-container">
           <div className="vl-logo">
-            <img
-              src={HeeaderLogo}
-              alt="FeastSync Logo"
-              className="vl-logo-img"
-            />
+            <img src={HeeaderLogo} alt="FeastSync Logo" className="vl-logo-img" />
             <div className="vl-logo-text">FeastSync</div>
           </div>
 
           <h1 className="vl-title">LOG IN</h1>
-          <p className="vl-subtitle">
-            Welcome back, please sign in to your account.
-          </p>
+          <p className="vl-subtitle">Welcome back, please sign in to your account.</p>
 
           <div className="vl-field-group">
             <label className="vl-label">Enter email</label>
@@ -149,9 +117,7 @@ const Login = () => {
               value={userInfo.email}
               onChange={HoldEmail}
               onBlur={() => validateEmail(userInfo.email)}
-              onFocus={() =>
-                setEmailErrorMsg({ err: false, name: "", msg: "" })
-              }
+              onFocus={() => setEmailErrorMsg({ err: false, name: "", msg: "" })}
               className={`vl-input${EmailErrorMsg.err ? " vl-input--error" : ""}`}
             />
             {EmailErrorMsg.err && EmailErrorMsg.name === "email" && (
@@ -168,21 +134,11 @@ const Login = () => {
                 value={userInfo.password}
                 onChange={HoldPassword}
                 onBlur={() => validatePassword(userInfo.password)}
-                onFocus={() =>
-                  setPasswordErrorMsg({ err: false, name: "", msg: "" })
-                }
+                onFocus={() => setPasswordErrorMsg({ err: false, name: "", msg: "" })}
                 className={`vl-input vl-input--password${PasswordErrorMsg.err ? " vl-input--error" : ""}`}
               />
-              <button
-                type="button"
-                className="vl-eye-btn"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <FaRegEyeSlash size={18} />
-                ) : (
-                  <FaRegEye size={18} />
-                )}
+              <button type="button" className="vl-eye-btn" onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <FaRegEyeSlash size={18} /> : <FaRegEye size={18} />}
               </button>
             </div>
             {PasswordErrorMsg.err && PasswordErrorMsg.name === "password" && (
@@ -193,36 +149,15 @@ const Login = () => {
           <div className="vl-role-row">
             <div className="vl-checkbox-group">
               <label className="vl-checkbox-label">
-                <input
-                  type="radio"
-                  name="accountType"
-                  value="vendor"
-                  checked={accountType === "vendor"}
-                  onChange={(e) => setAccountType(e.target.value)}
-                />
+                <input type="radio" name="accountType" value="vendor" checked={accountType === "vendor"} onChange={(e) => setAccountType(e.target.value)} />
                 <span>Vendor</span>
               </label>
-
               <label className="vl-checkbox-label">
-                <input
-                  type="radio"
-                  name="accountType"
-                  value="user"
-                  checked={accountType === "user"}
-                  onChange={(e) => setAccountType(e.target.value)}
-                />
+                <input type="radio" name="accountType" value="user" checked={accountType === "user"} onChange={(e) => setAccountType(e.target.value)} />
                 <span>Client/User</span>
               </label>
             </div>
-
-            <Link
-              to={
-                accountType === "vendor"
-                  ? "/forgot-password?role=vendor"
-                  : "/forgot-password"
-              }
-              className="vl-forgot"
-            >
+            <Link to={accountType === "vendor" ? "/forgot-password?role=vendor" : "/forgot-password"} className="vl-forgot">
               Forgot password?
             </Link>
           </div>
@@ -236,10 +171,7 @@ const Login = () => {
 
           <p className="vl-register-text">
             Don't have an account yet?{" "}
-            <Link
-              to={accountType === "vendor" ? "/vendor/signup" : "/user/signup"}
-              className="vl-register-link"
-            >
+            <Link to={accountType === "vendor" ? "/vendor/signup" : "/user/signup"} className="vl-register-link">
               REGISTER HERE
             </Link>
           </p>
@@ -253,9 +185,7 @@ const Login = () => {
               vendorName={vendorName}
               onContinue={() => {
                 setShowVendorWelcome(false);
-                navigate("/vendordashboard", {
-                  state: { showOnboarding: true, vendorName },
-                });
+                navigate("/vendordashboard", { state: { showOnboarding: true, vendorName } });
               }}
               onSkip={() => {
                 setShowVendorWelcome(false);
