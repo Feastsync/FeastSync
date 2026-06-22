@@ -65,7 +65,7 @@
 .nav-icon,
 .nav-icon1 {
     width: var(--icon-size);
-    height: 25px;
+    height: 17px;
     object-fit: contain;
     filter: brightness(0) invert(1);
 }
@@ -93,8 +93,8 @@
 
 .avatar-circle {
     position: relative;
-    width: 35px;
-    height: 35px;
+    width: 29px;
+    height: 29px;
     background-color: #ffffff;
     color: var(--primary-color);
     border-radius: 50%;
@@ -151,7 +151,7 @@
     border-radius: 6px;
     padding: 10px 12px;
     margin-right: 10px;
-    font-size: 12px;
+    font-size: 12px; 
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
