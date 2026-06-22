@@ -74,7 +74,7 @@ const App = () => {
             <Route path="mcs" element={<MCs />} />
             <Route path="livebands" element={<LiveBands />} />
             <Route path="photography" element={<Photography />} />
-            <Route path="videogra `phy" element={<Videography />} />
+            <Route path="videography" element={<Videography />} />
           </Route>
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
