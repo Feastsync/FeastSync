@@ -11,7 +11,7 @@ const CalendarStep = ({
   profileData,
   setProfileData,
   isLoading,
-  error,
+  error, 
 }) => {
   const [activeStartDate, setActiveStartDate] = useState(new Date());
 
