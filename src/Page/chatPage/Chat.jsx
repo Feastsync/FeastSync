@@ -376,7 +376,7 @@ export default function ChatsPage() {
             </div>
 
             <div className="chats-chat__actions">
-              <button className="chats-back-header-btn" onClick={() => navigate(-1)}>
+              <button className="chats-back-header-btn" onClick={() => navigate("/")}>
                 Back
               </button>
               {!isVendor && (

@@ -1,15 +1,13 @@
 import React from "react";
 import "./Css/Input.css";
 
-const Input = (props) => {
+const Input = ({ className = "", type = "text", value, style, ...props }) => {
   return (
     <input
-      type={props.type || "text"}
-      className={`input ${props.className || ""}`}
-      placeholder={props.placeholder || ""}
-      name={props.name}
-      value={props.value ?? ""} // 🔥 IMPORTANT FIX
-      onChange={props.onChange}
+      {...props}
+      type={type}
+      className={`input ${className}`}
+      value={value ?? ""}
       style={{
         width: "100%",
         height: "50px",
@@ -17,6 +15,7 @@ const Input = (props) => {
         fontSize: "16px",
         border: "1px solid #ccc",
         outline: "none",
+        ...style,
       }}
     />
   );

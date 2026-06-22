@@ -15,9 +15,10 @@ const ForgetPassword = () => {
   const dispatch = useDispatch();
 
   const params = new URLSearchParams(location.search);
-  const { isLoading, accountType } = useSelector((state) => state.auth);
+  const { isLoading } = useSelector((state) => state.auth);
 
-  const currentRole = params.get("role") || accountType || "user";
+  const roleParam = params.get("role");
+  const currentRole = roleParam === "vendor" ? "vendor" : "user";
 
   const [email, setEmail] = useState("");
 

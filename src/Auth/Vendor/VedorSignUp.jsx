@@ -142,10 +142,7 @@ const handleBlur = (e) => {
     }
 
     try {
-      // Remove confirmPassword before sending to backend
-      const { confirmPassword, ...dataToSend } = userInfo;
-
-      const result = await dispatch(signupVendor(dataToSend));
+      const result = await dispatch(signupVendor(userInfo));
 
       if (signupVendor.fulfilled.match(result)) {
         await Swal.fire({
