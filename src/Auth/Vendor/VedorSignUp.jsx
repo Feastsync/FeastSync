@@ -41,8 +41,6 @@ const VendorSignUp = () => {
         [name]: value,
       };
 
-
-
       return updated;
     });
   };
@@ -71,7 +69,10 @@ const VendorSignUp = () => {
     }
 
     try {
-      const result = await dispatch(signupVendor(userInfo));
+      // Remove confirmPassword before sending to backend
+      const { confirmPassword, ...dataToSend } = userInfo;
+
+      const result = await dispatch(signupVendor(dataToSend));
 
       if (signupVendor.fulfilled.match(result)) {
         await Swal.fire({
@@ -104,7 +105,6 @@ const VendorSignUp = () => {
         text: "An unexpected error occurred",
         confirmButtonColor: "#330159",
       });
-  
     }
   };
 

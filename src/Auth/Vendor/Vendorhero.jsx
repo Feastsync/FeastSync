@@ -6,6 +6,8 @@ import { IoArrowBack } from "react-icons/io5";
 import Vendorprofile from "../../assets/logos/Vendorprofile.png";
 import Vedorprofileview from "../../assets/logos/Vedorprofileview.svg";
 import Vendorbackgroundimage from "../../assets/BackgroundImage/Vendorbackgroundimage.jpg";
+import Vendoruploadprofile from "../../assets/logos/Vendoruploadprofile.jpg"
+import Vendorprofile1 from "../../assets/logos/Vendorprofile1.png"
 import { useLocation } from "react-router-dom";
 
 const Vendorhero = () => {
@@ -52,7 +54,7 @@ const Vendorhero = () => {
   return (
     <div className="vendorhero-container">
       <img
-        src={displayData?.coverPhoto || Vendorbackgroundimage}
+        src={displayData?.coverPhoto || Vendorprofile1}
         alt="Festival stage cover"
         className="vendorhero-cover"
         key={displayData?.coverPhoto}
@@ -64,7 +66,6 @@ const Vendorhero = () => {
       </button>
       <span className="vendorhero-back-text">Back</span>
 
-      {/* 🔥 Only owner can upload cover */}
       {canEdit && (
         <>
           <label htmlFor="cover-upload" className="vendorhero-cover-upload">
@@ -84,7 +85,7 @@ const Vendorhero = () => {
       <div className="vendorhero-profile">
         <div className="vendorhero-avatar-wrap">
           <img
-            src={displayData?.profilePicture || Vendorprofile}
+            src={displayData?.profilePicture || Vendoruploadprofile}
             alt="Profile"
             className="vendorhero-avatar"
             key={displayData?.profilePicture}
