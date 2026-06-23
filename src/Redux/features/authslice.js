@@ -275,7 +275,7 @@ export const markNotificationRead = createAsyncThunk(
   async (notificationId, { rejectWithValue }) => {
     try {
       const res = await api.put(
-        `/api/notification/read-notification/${notificationId}`,
+        `/notification/read-notification/${notificationId}`,
       );
       return res.data;
     } catch (err) {
@@ -290,7 +290,7 @@ export const markAllNotificationsRead = createAsyncThunk(
   "auth/markAllNotificationsRead",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await api.put("/api/notification/mark-all-read");
+      const res = await api.put("/notification/mark-all-read");
       return res.data;
     } catch (err) {
       return rejectWithValue(
@@ -412,6 +412,9 @@ const authSlice = createSlice({
     },
     updateVendorInfo: (state, action) => {
       state.vendorInfo = { ...state.vendorInfo, ...action.payload };
+    },
+    clearUnreadCount: (state) => {
+      state.unreadCount = 0;
     },
   },
   extraReducers: (builder) => {
@@ -657,7 +660,7 @@ const authSlice = createSlice({
       .addCase(getNotifications.fulfilled, (state, action) => {
         state.notificationsLoading = false;
         state.notifications = action.payload.data || [];
-        state.unreadCount = action.payload.count || 0;
+        state.unreadCount = action.payload.count || action.payload.unreadCount || 0;
       })
       .addCase(getNotifications.rejected, (state, action) => {
         state.notificationsLoading = false;
@@ -670,11 +673,12 @@ const authSlice = createSlice({
         );
         state.unreadCount = Math.max(0, state.unreadCount - 1);
       })
-      .addCase(markAllNotificationsRead.fulfilled, (state) => {
-        state.unreadCount = 0;
+      .addCase(markAllNotificationsRead.fulfilled, (state, action) => {
+        state.unreadCount = action.payload.count || action.payload.unreadCount || 0;
         state.notifications = state.notifications.map((n) => ({
           ...n,
           read: true,
+          isRead: true,
         }));
       })
       .addCase(getVendorById.pending, (state) => {
@@ -759,5 +763,5 @@ extraReducers: (builder) => {
     });
 }
 
-export const { logout, clearError, updateVendorInfo } = authSlice.actions;
+export const { logout, clearError, updateVendorInfo, clearUnreadCount } = authSlice.actions;
 export default authSlice.reducer;

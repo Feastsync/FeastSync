@@ -47,7 +47,7 @@ const Userdashboard = () => {
             <h2>Welcome, {userInfo?.firstName}</h2>
             {/* <button className="user-dashboard-contentleft1a-btn">My Review</button> */}
             {/* </div> */}
-            <div>
+            <div className="user-dashboard-contetnt-text">
               Welcome back! Explore our vendors and start booking the <br />
               industry's best talent right now.
             </div>
