@@ -67,7 +67,7 @@ const Userdashboard = () => {
             </div>
             <div
               className="user-dashboard-contentright2-right"
-              onClick={() => navigate("/ratingreview")}
+              // onClick={() => navigate("/ratingreview")}
             >
               <p>Review/Rating Given</p>
               <h2>0</h2>

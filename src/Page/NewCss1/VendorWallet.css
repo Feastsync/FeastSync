@@ -14,6 +14,25 @@
   align-items: flex-start;
   margin-bottom: 40px;
 }
+.Vendor_wallet_eye {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 4px;
+  font-size: 16px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  line-height: 1;
+}
+
+.Vendor_wallet_eye:hover {
+  opacity: 1;
+}
+
+.Vendor_wallet_eye:active {
+  transform: scale(0.95);
+}
 
 .Vendor_wallet_header_left {
   display: flex;
@@ -295,4 +314,77 @@
   .Vendor_wallet_action_btn.btn {
     width: 100%;
   }
+}
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+
+.skeleton-line {
+  background: #e5e7eb;
+  background-image: linear-gradient(90deg, #e5e7eb 0px, #f3f4f6 40px, #e5e7eb 80px);
+  background-size: 200px 100%;
+  animation: shimmer 1.2s infinite linear;
+  border-radius: 4px;
+}
+
+/* Balance skeleton */
+.skeleton-balance {
+  height: 36px;
+  width: 160px;
+  margin-top: 4px;
+}
+
+/* Stat card skeletons */
+.Vendor_wallet_stat_card--loading .skeleton-stat-label {
+  width: 70%;
+  height: 14px;
+  margin-bottom: 10px;
+}
+
+.Vendor_wallet_stat_card--loading .skeleton-stat-value {
+  width: 60%;
+  height: 28px;
+  margin-bottom: 6px;
+}
+
+.Vendor_wallet_stat_card--loading .skeleton-stat-sub {
+  width: 80%;
+  height: 12px;
+}
+
+/* Transaction skeletons */
+.Vendor_recent_tx--skeleton {
+  pointer-events: none;
+}
+
+.skeleton-tx-title {
+  width: 120px;
+  height: 16px;
+  margin-bottom: 6px;
+}
+
+.skeleton-tx-id {
+  width: 180px;
+  height: 12px;
+}
+
+.skeleton-tx-amount {
+  width: 80px;
+  height: 16px;
+  margin-bottom: 4px;
+  margin-left: auto;
+}
+
+.skeleton-tx-status {
+  width: 60px;
+  height: 14px;
+  margin-bottom: 4px;
+  margin-left: auto;
+}
+
+.skeleton-tx-date {
+  width: 70px;
+  height: 12px;
+  margin-left: auto;
 }

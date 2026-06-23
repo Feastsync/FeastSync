@@ -16,6 +16,18 @@
   top: 0;
   z-index: 1000;
 }
+.mobile-notif-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+ 
 
 .vendorheader-wrapper {
   width: 92%;

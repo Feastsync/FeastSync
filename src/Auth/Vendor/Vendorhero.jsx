@@ -75,11 +75,12 @@ const Vendorhero = () => {
         key={displayData?.coverPhoto}
       />
       <div className="vendorhero-overlay" />
-
+       {!isOwner && (<>
       <button className="vendorhero-back" type="button" onClick={handleBack}>
         <IoArrowBack />
       </button>
       <span className="vendorhero-back-text">Back</span>
+       </>)}
 
       {canEdit && (
         <>

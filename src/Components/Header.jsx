@@ -18,13 +18,13 @@ const Header = () => {
   const [avatarDropdownOpen, setAvatarDropdownOpen] = useState(false)
   const [showLogoutModal, setShowLogoutModal] = useState(false)
   const [unreadChats, setUnreadChats] = useState(0)
-  const skipSocketRefreshRef = useRef(false)
   const dropdownRef = useRef(null)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const { isLoggedIn, activeUser, isVendor } = useAuth()
-  const { unreadCount } = useSelector((state) => state.auth)
+  const { notifications = [] } = useSelector((state) => state.auth)
+  const unreadCount = notifications.filter((n) => !n.isRead && !n.read).length
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -48,11 +48,6 @@ const Header = () => {
     const newSocket = io(import.meta.env.VITE_SOCKET_URL || 'https://feastsyn-booking-app.onrender.com')
 
     newSocket.on('new_notification', () => {
-      // Skip refresh if we just marked all as read (avoid race condition)
-      if (skipSocketRefreshRef.current) {
-        skipSocketRefreshRef.current = false
-        return
-      }
       dispatch(getNotifications())
     })
 
@@ -98,9 +93,6 @@ const Header = () => {
   const handleNotificationsClick = () => {
     setUnreadChats(0)
     dispatch(clearUnreadCount())
-    // Prevent socket from overwriting the count for 2 seconds
-    skipSocketRefreshRef.current = true
-    setTimeout(() => { skipSocketRefreshRef.current = false }, 2000)
   }
 
   if (isLoggedIn && !isVendor) {
