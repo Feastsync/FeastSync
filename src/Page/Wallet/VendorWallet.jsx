@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../Props/Button";
 import { useWalletSummary, useWalletTransactions } from "./Usewallet";
@@ -14,26 +15,27 @@ const STATUS_COLOR = {
   pending: "Vendor_tx_status--pending",
 };
 
+const formatCurrency = (num) =>
+  `₦${Math.abs(Number(num) || 0).toLocaleString("en-NG", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  })}`;
+
 export default function VendorWallet() {
   const navigate = useNavigate();
   const { summary, loading: summaryLoading, error: summaryError } = useWalletSummary();
   const { transactions, loading: txLoading, error: txError } = useWalletTransactions();
+  
+  const [balanceVisible, setBalanceVisible] = useState(() => {
+    const saved = localStorage.getItem("balanceVisible");
+    return saved !== null ? JSON.parse(saved) : true;
+  });
 
-  const formatCurrency = (num) =>
-    `₦${Math.abs(Number(num) || 0).toLocaleString("en-NG", {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2,
-    })}`;
+  useEffect(() => {
+    localStorage.setItem("balanceVisible", JSON.stringify(balanceVisible));
+  }, [balanceVisible]);
 
   const recentTransactions = transactions.slice(0, 5);
-
-  if (summaryLoading || txLoading) {
-    return (
-      <div className="Vendor_wallet_container">
-        <div className="Vendor_wallet_loading">Loading wallet...</div>
-      </div>
-    );
-  }
 
   if (summaryError || txError) {
     return (
@@ -58,11 +60,25 @@ export default function VendorWallet() {
           </Button>
           <div className="Vendor_wallet_balance">
             <p className="Vendor_wallet_label">
-              <span>👁</span> Available balance
+              <button 
+                className="Vendor_wallet_eye"
+                onClick={() => setBalanceVisible(!balanceVisible)}
+                aria-label={balanceVisible ? "Hide balance" : "Show balance"}
+              >
+                <span>{balanceVisible ? "👁" : "👁‍🗨"}</span>
+              </button> 
+              Available balance
             </p>
-            <h1 className="Vendor_wallet_amount">
-              {formatCurrency(summary?.availableBalance)}
-            </h1>
+            {summaryLoading ? (
+              <div className="skeleton-line skeleton-balance" />
+            ) : (
+              <h1 className="Vendor_wallet_amount">
+                {balanceVisible 
+                  ? formatCurrency(summary?.availableBalance) 
+                  : "••••••"
+                }
+              </h1>
+            )}
           </div>
         </div>
 
@@ -82,33 +98,28 @@ export default function VendorWallet() {
         </div>
       </div>
 
-      {/* Stats */}
+      {/* Stats - always visible */}
       <div className="Vendor_wallet_stats">
-        <div className="Vendor_wallet_stat_card">
-          <p className="Vendor_wallet_stat_label">Total earned (2026)</p>
-          <h2 className="Vendor_wallet_stat_value">
-            {formatCurrency(summary?.totalEarnedThisYear)}
-          </h2>
-        </div>
-        <div className="Vendor_wallet_stat_card">
-          <p className="Vendor_wallet_stat_label">Pending release in escrow</p>
-          <h2 className="Vendor_wallet_stat_value">
-            {formatCurrency(summary?.pendingEscrow)}
-          </h2>
-          <p className="Vendor_wallet_stat_sub">Releases on event completion</p>
-        </div>
-        <div className="Vendor_wallet_stat_card">
-          <p className="Vendor_wallet_stat_label">Completed bookings</p>
-          <h2 className="Vendor_wallet_stat_value">
-            {summary?.completedBookings ?? 0}
-          </h2>
-          <p className="Vendor_wallet_stat_sub">
-            {summary?.pendingBookings ?? 0} pending
-          </p>
-        </div>
+        <StatCard
+          loading={summaryLoading}
+          label="Total earned (2026)"
+          value={formatCurrency(summary?.totalEarnedThisYear)}
+        />
+        <StatCard
+          loading={summaryLoading}
+          label="Pending release in escrow"
+          value={formatCurrency(summary?.pendingEscrow)}
+          sub="Releases on event completion"
+        />
+        <StatCard
+          loading={summaryLoading}
+          label="Completed bookings"
+          value={summary?.completedBookings ?? 0}
+          sub={`${summary?.pendingBookings ?? 0} pending`}
+        />
       </div>
 
-      {/* Recent transactions */}
+      {/* Recent transactions - amounts always visible */}
       <div className="Vendor_wallet_section">
         <div className="Vendor_wallet_section_header">
           <span>Recent transactions</span>
@@ -119,7 +130,9 @@ export default function VendorWallet() {
           />
         </div>
 
-        {recentTransactions.length > 0 ? (
+        {txLoading ? (
+          <RecentTransactionsSkeleton />
+        ) : recentTransactions.length > 0 ? (
           recentTransactions.map((tx) => (
             <div className="Vendor_recent_tx" key={tx.id}>
               <div>
@@ -147,4 +160,40 @@ export default function VendorWallet() {
       </div>
     </div>
   );
+}
+
+function StatCard({ loading, label, value, sub }) {
+  if (loading) {
+    return (
+      <div className="Vendor_wallet_stat_card Vendor_wallet_stat_card--loading">
+        <div className="skeleton-line skeleton-stat-label" />
+        <div className="skeleton-line skeleton-stat-value" />
+        {sub && <div className="skeleton-line skeleton-stat-sub" />}
+      </div>
+    );
+  }
+
+  return (
+    <div className="Vendor_wallet_stat_card">
+      <p className="Vendor_wallet_stat_label">{label}</p>
+      <h2 className="Vendor_wallet_stat_value">{value}</h2>
+      {sub && <p className="Vendor_wallet_stat_sub">{sub}</p>}
+    </div>
+  );
+}
+
+function RecentTransactionsSkeleton() {
+  return Array.from({ length: 3 }).map((_, i) => (
+    <div className="Vendor_recent_tx Vendor_recent_tx--skeleton" key={i}>
+      <div>
+        <div className="skeleton-line skeleton-tx-title" />
+        <div className="skeleton-line skeleton-tx-id" />
+      </div>
+      <div className="Vendor_recent_tx_right">
+        <div className="skeleton-line skeleton-tx-amount" />
+        <div className="skeleton-line skeleton-tx-status" />
+        <div className="skeleton-line skeleton-tx-date" />
+      </div>
+    </div>
+  ));
 }

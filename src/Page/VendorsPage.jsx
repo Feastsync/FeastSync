@@ -8,8 +8,8 @@ const categories = [
   { label: 'DJs', path: '/vendors/djs' },
   { label: 'MCs', path: '/vendors/mcs' },
   { label: 'Live Bands', path: '/vendors/livebands' },
-  { label: 'Photography', path: '/vendors/photography' },
-  { label: 'Videography', path: '/vendors/videography' },
+  { label: 'Photographers', path: '/vendors/photography' },
+  { label: 'Videographers', path: '/vendors/videography' },
 ]
 
 const VendorsPage = () => {

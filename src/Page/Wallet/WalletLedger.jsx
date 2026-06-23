@@ -6,7 +6,6 @@ import TransactionTable from "./TransactionTable";
 import { useWalletTransactions } from "./Usewallet";
 import "../NewCss1/WalletLedger.css";
 
-
 const TABS = [
   { key: "all", label: "All types" },
   { key: "release", label: "Milestone releases" },
@@ -15,6 +14,12 @@ const TABS = [
   { key: "pending", label: "Pending" },
 ];
 
+const formatCurrency = (num) =>
+  `₦${Math.abs(Number(num) || 0).toLocaleString("en-NG", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  })}`;
+
 export default function WalletLedger() {
   const navigate = useNavigate();
   const { transactions, pagination, loading, error } = useWalletTransactions();
@@ -22,13 +27,6 @@ export default function WalletLedger() {
   const [activeTab, setActiveTab] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const formatCurrency = (num) =>
-    `₦${Math.abs(Number(num) || 0).toLocaleString("en-NG", {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2,
-    })}`;
-
-  // Derive stats from live data
   const stats = useMemo(() => {
     const totalCredits = transactions
       .filter((tx) => tx.status === "successful")
@@ -50,7 +48,6 @@ export default function WalletLedger() {
     };
   }, [transactions, pagination]);
 
-  // Filter by tab + search
   const filtered = useMemo(() => {
     return transactions.filter((tx) => {
       const matchesTab =
@@ -67,14 +64,6 @@ export default function WalletLedger() {
       return matchesTab && matchesSearch;
     });
   }, [transactions, activeTab, searchTerm]);
-
-  if (loading) {
-    return (
-      <div className="Wallet_ledger_container">
-        <div className="Wallet_ledger_loading">Loading transactions...</div>
-      </div>
-    );
-  }
 
   if (error) {
     return (
@@ -102,34 +91,30 @@ export default function WalletLedger() {
       </div>
 
       <div className="Wallet_ledger_stats">
-        <div className="Wallet_ledger_stat_card">
-          <p className="Wallet_ledger_stat_label">Total successful</p>
-          <h2 className="Wallet_ledger_stat_value">
-            {formatCurrency(stats.totalCredits)}
-          </h2>
-          <p className="Wallet_ledger_stat_sub">Cleared transactions</p>
-        </div>
-        <div className="Wallet_ledger_stat_card">
-          <p className="Wallet_ledger_stat_label">Commission deducted</p>
-          <h2 className="Wallet_ledger_stat_value">
-            {formatCurrency(stats.commission)}
-          </h2>
-          <p className="Wallet_ledger_stat_sub">Platform fees</p>
-        </div>
-        <div className="Wallet_ledger_stat_card">
-          <p className="Wallet_ledger_stat_label">Currently in escrow</p>
-          <h2 className="Wallet_ledger_stat_value">
-            {formatCurrency(stats.inEscrow)}
-          </h2>
-          <p className="Wallet_ledger_stat_sub">Held — not yet cleared</p>
-        </div>
-        <div className="Wallet_ledger_stat_card">
-          <p className="Wallet_ledger_stat_label">Total records</p>
-          <h2 className="Wallet_ledger_stat_value">
-            {stats.totalTransactions}
-          </h2>
-          <p className="Wallet_ledger_stat_sub">transactions</p>
-        </div>
+        <StatCard 
+          loading={loading}
+          label="Total successful" 
+          value={formatCurrency(stats.totalCredits)}
+          sub="Cleared transactions" 
+        />
+        <StatCard 
+          loading={loading}
+          label="Commission deducted" 
+          value={formatCurrency(stats.commission)}
+          sub="Platform fees" 
+        />
+        <StatCard 
+          loading={loading}
+          label="Currently in escrow" 
+          value={formatCurrency(stats.inEscrow)}
+          sub="Held — not yet cleared" 
+        />
+        <StatCard 
+          loading={loading}
+          label="Total records" 
+          value={stats.totalTransactions}
+          sub="transactions" 
+        />
       </div>
 
       <div className="Wallet_ledger_search">
@@ -154,7 +139,27 @@ export default function WalletLedger() {
         ))}
       </div>
 
-      <TransactionTable transactions={filtered} />
+      <TransactionTable transactions={filtered} loading={loading} />
+    </div>
+  );
+}
+
+function StatCard({ loading, label, value, sub }) {
+  if (loading) {
+    return (
+      <div className="Wallet_ledger_stat_card Wallet_ledger_stat_card--loading">
+        <div className="skeleton-line skeleton-label" />
+        <div className="skeleton-line skeleton-value" />
+        <div className="skeleton-line skeleton-sub" />
+      </div>
+    );
+  }
+  
+  return (
+    <div className="Wallet_ledger_stat_card">
+      <p className="Wallet_ledger_stat_label">{label}</p>
+      <h2 className="Wallet_ledger_stat_value">{value}</h2>
+      <p className="Wallet_ledger_stat_sub">{sub}</p>
     </div>
   );
 }

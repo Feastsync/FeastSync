@@ -79,7 +79,6 @@ const Vendorheader = () => {
     <header className="vendorheader-container">
       <div className="vendorheader-wrapper">
 
-        {/* Logo */}
         <div className="vendorheader-left" onClick={() => { navigate("/"); closeMenu(); }}>
           <img src={Headerlogo2} alt="FeastSync Logo" className="logo-img" />
           <h2 className="logo-text">FeastSync</h2>
@@ -87,7 +86,6 @@ const Vendorheader = () => {
 
         {showFullHeader && (
           <>
-            {/* Desktop Right Icons */}
             <div className="vendorheader-desktop-right">
               <button
                 className="icon-btn vendor-icon-btn"
@@ -132,7 +130,6 @@ const Vendorheader = () => {
               </button>
             </div>
 
-            {/* Mobile Top Right */}
             <div className="vendorheader-mobile-top">
               <button
                 className="mobile-chat-btn"
@@ -140,6 +137,21 @@ const Vendorheader = () => {
                 onClick={() => navigate("/chats")}
               >
                 <IoChatbubbleEllipsesOutline size={22} className="vendor-header-icon" />
+              </button>
+
+              <button
+                className="mobile-notif-btn"
+                aria-label="Notifications"
+                onClick={() => navigate("/notifications/all")}
+              >
+                <div className="icon-wrapper">
+                  <img src={Bellicon2} alt="" className="nav-icon" />
+                  {unreadCount > 0 && (
+                    <span className="notification-badge">
+                      {unreadCount > 99 ? "99+" : unreadCount}
+                    </span>
+                  )}
+                </div>
               </button>
 
               <button
@@ -153,7 +165,6 @@ const Vendorheader = () => {
               </button>
             </div>
 
-            {/* Mobile Drawer */}
             <div className={`vendorheader-drawer ${isOpen ? "active" : ""}`}>
               <nav className="drawer-nav">
                 <button
@@ -162,22 +173,6 @@ const Vendorheader = () => {
                 >
                   <TbWallet size={20} className="drawer-nav-icon" />
                   <span>Wallet</span>
-                </button>
-
-
-                <button
-                  className="drawer-nav-item"
-                  onClick={() => { navigate("/notifications/all"); closeMenu(); }}
-                >
-                  <div className="drawer-bell-wrapper">
-                    <img src={Bellicon2} alt="" className="drawer-bell-icon" />
-                  </div>
-                  <span>Notifications</span>
-                  {unreadCount > 0 && (
-                    <span className="drawer-unread-pill">
-                      {unreadCount > 99 ? "99+" : unreadCount}
-                    </span>
-                  )}
                 </button>
               </nav>
 
@@ -204,13 +199,11 @@ const Vendorheader = () => {
               </div>
             </div>
 
-            {/* Overlay */}
             {isOpen && <div className="drawer-overlay" onClick={closeMenu} />}
           </>
         )}
       </div>
 
-      {/* Logout Modal */}
       {modal === "logout" && (
         <div className="vendorlogout-overlay" onClick={closeModal}>
           <div className="vendorlogout-modal" onClick={(e) => e.stopPropagation()}>

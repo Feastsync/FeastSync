@@ -12,7 +12,7 @@ const STATUS_CLASS = {
   pending: "Wallet_status--pending",
 };
 
-export default function TransactionTable({ transactions }) {
+export default function TransactionTable({ transactions, loading }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
@@ -28,6 +28,18 @@ export default function TransactionTable({ transactions }) {
       maximumFractionDigits: 2,
     })}`;
 
+  const renderSkeletonRows = () => {
+    return Array.from({ length: 6 }).map((_, i) => (
+      <div className="Wallet_table_row Wallet_table_row--skeleton" key={i}>
+        <span data-label="Type"><div className="skeleton-line" /></span>
+        <span data-label="Booking ID"><div className="skeleton-line" /></span>
+        <span data-label="Date"><div className="skeleton-line" /></span>
+        <span data-label="Amount"><div className="skeleton-line" /></span>
+        <span data-label="Status"><div className="skeleton-line" /></span>
+      </div>
+    ));
+  };
+
   return (
     <>
       <div className="Wallet_ledger_table">
@@ -39,7 +51,9 @@ export default function TransactionTable({ transactions }) {
           <span>Status</span>
         </div>
         <div className="Wallet_table_body">
-          {paginated.length === 0 ? (
+          {loading ? (
+            renderSkeletonRows()
+          ) : paginated.length === 0 ? (
             <p className="Wallet_empty">No transactions found</p>
           ) : (
             paginated.map((tx) => (
@@ -62,7 +76,7 @@ export default function TransactionTable({ transactions }) {
         </div>
       </div>
 
-      {totalPages > 1 && (
+      {!loading && totalPages > 1 && (
         <div className="Wallet_ledger_pagination">
           <Button
             className="Wallet_pg_btn"
