@@ -174,12 +174,7 @@ const saved = displayVendor?.pricingId?.find(
               <span>Bookings</span>
             </div>
            
-            {isOwner && (
-              <div className="vendordashboard-stat-item">
-                <h3>{displayVendor?.responseRate || 0}%</h3>
-                <span>Response</span>
-              </div>
-            )}
+           
           </div>
         </div>
 

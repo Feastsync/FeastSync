@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { FaBars, FaTimes } from 'react-icons/fa'
 import { IoChatbubbleEllipsesOutline, IoChevronDownOutline, IoNotificationsOutline } from 'react-icons/io5'
 import { MdDashboard, MdLogout } from 'react-icons/md'
@@ -9,20 +9,23 @@ import Button from '../Props/Button.jsx'
 import "./Css/Header.css"
 import "../Auth/Css/Userheader.css"
 import { persistor } from '../Redux/app/store'
-import { logoutUser } from '../Redux/features/authslice'
+import { logoutUser, getNotifications, clearUnreadCount } from '../Redux/features/authslice'
+import { io } from 'socket.io-client'
 import useAuth from '../lib/Myauth.jsx'
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [avatarDropdownOpen, setAvatarDropdownOpen] = useState(false)
   const [showLogoutModal, setShowLogoutModal] = useState(false)
+  const [unreadChats, setUnreadChats] = useState(0)
+  const skipSocketRefreshRef = useRef(false)
   const dropdownRef = useRef(null)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const { isLoggedIn, activeUser, isVendor } = useAuth()
+  const { unreadCount } = useSelector((state) => state.auth)
 
-  
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -34,6 +37,34 @@ const Header = () => {
   }, [])
 
   
+  // Fetch existing notifications and setup socket for new ones
+  useEffect(() => {
+    if (!isLoggedIn) return
+
+    // Load existing notifications immediately
+    dispatch(getNotifications())
+
+    // Setup socket for real-time new notifications
+    const newSocket = io(import.meta.env.VITE_SOCKET_URL || 'https://feastsyn-booking-app.onrender.com')
+
+    newSocket.on('new_notification', () => {
+      // Skip refresh if we just marked all as read (avoid race condition)
+      if (skipSocketRefreshRef.current) {
+        skipSocketRefreshRef.current = false
+        return
+      }
+      dispatch(getNotifications())
+    })
+
+    newSocket.on('receive_message', () => {
+      setUnreadChats(prev => prev + 1)
+    })
+
+    return () => {
+      newSocket.disconnect()
+    }
+  }, [isLoggedIn, dispatch])
+
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : 'unset'
     return () => { document.body.style.overflow = 'unset' }
@@ -60,7 +91,16 @@ const Header = () => {
   const handleDashboard = () => {
     setAvatarDropdownOpen(false)
     closeMobile()
+    setUnreadChats(0)
     navigate(isVendor ? '/vendordashboard' : '/userdashboard')
+  }
+
+  const handleNotificationsClick = () => {
+    setUnreadChats(0)
+    dispatch(clearUnreadCount())
+    // Prevent socket from overwriting the count for 2 seconds
+    skipSocketRefreshRef.current = true
+    setTimeout(() => { skipSocketRefreshRef.current = false }, 2000)
   }
 
   if (isLoggedIn && !isVendor) {
@@ -115,17 +155,19 @@ const Header = () => {
                 </button>
               </div>
             </div>
-            <div className="userheader_right">
-              <button className="userheader_icon_btn userheader_desktop_only" aria-label="Notifications" onClick={() => navigate('/notifications/all')}>
-                <IoNotificationsOutline className="userheader_bell_icon" />
-              </button>
-              <button
-                className="userheader_icon_btn"
-                aria-label="Messages"
-                onClick={() => navigate('/chats')}
-              >
-                <IoChatbubbleEllipsesOutline className="userheader_chat_icon" />
-              </button>
+              <div className="userheader_right">
+               <button className="userheader_icon_btn userheader_desktop_only" aria-label="Notifications" onClick={() => { navigate('/notifications/all'); handleNotificationsClick() }}>
+                 <IoNotificationsOutline className="userheader_bell_icon" />
+                 {unreadCount > 0 && <span className="userheader_badge">{unreadCount > 9 ? '9+' : unreadCount}</span>}
+               </button>
+               <button
+                 className="userheader_icon_btn"
+                 aria-label="Messages"
+                 onClick={() => { navigate('/chats'); setUnreadChats(0) }}
+               >
+                 <IoChatbubbleEllipsesOutline className="userheader_chat_icon" />
+                 {unreadChats > 0 && <span className="userheader_badge userheader_badge--chat">{unreadChats > 9 ? '9+' : unreadChats}</span>}
+               </button>
               <div className="userheader_avatar_wrapper userheader_desktop_only" ref={dropdownRef}>
                 <button
                   className="userheader_avatar_btn"

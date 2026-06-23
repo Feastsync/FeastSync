@@ -114,7 +114,7 @@ const App = () => {
         <Route element={<PrivateRoute allowedRoles={["user"]} />}>
           <Route path="/userdashboard" element={<Userdashboard />} />
           <Route path="/ratingreview/:bookingId" element={<RatingReview />} />
-          <Route path="/transaction/histories" element={<WalletLedger />} />
+          {/* <Route path="/transaction/histories" element={<WalletLedger />} /> */}
           <Route path="/inbox" element={<Inbox />} />
         </Route>
 
@@ -124,6 +124,7 @@ const App = () => {
           <Route path="/vendordashboardrating" element={<Vendordashboardrating />} />
           <Route path="/vendor/onboarding" element={<OnboardingPage />} />
           <Route path="/vendor/kyc" element={<VendorKYC />} />
+           <Route path="/transaction/histories" element={<WalletLedger />} />
           <Route path="/mediastep" element={<MediaStep />} />
              <Route path="/Settings" element={<Settings />} />
           <Route path="/pricingstep" element={<PricingStep />} />
@@ -132,7 +133,7 @@ const App = () => {
           <Route path="/wallet/transactions" element={<VendorWallet />} />
         </Route>
 
-        {/* ── CATCH-ALL ─────────────────────────────────────────────────────── */}
+     
         <Route path="*" element={<Error404 />} />
 
       </Routes>

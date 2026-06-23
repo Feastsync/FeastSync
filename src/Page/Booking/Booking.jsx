@@ -72,7 +72,7 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
   const [step, setStep] = useState(0);
   const [form, setForm] = useState({
     eventType: "", eventDate: "", startTime: "", duration: "",
-    guestCount: "", budget: "", location: "", additionalDetails: "",
+    guestCount: "", location: "", additionalDetails: "",
     firstName: "", lastName: "", email: "", phone: "",
   });
   const [errors, setErrors] = useState({});
@@ -94,26 +94,25 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
     if (errors[key]) setErrors(prev => ({ ...prev, [key]: "" }));
   };
 
-const validateStep0 = () => {
-  const newErrors = {};
+  const validateStep0 = () => {
+    const newErrors = {};
 
-  if (!form.eventType)       newErrors.eventType  = "Event type is required";
-  if (!form.eventDate)       newErrors.eventDate  = "Event date is required";
+    if (!form.eventType)       newErrors.eventType  = "Event type is required";
+    if (!form.eventDate)       newErrors.eventDate  = "Event date is required";
 
-  const today = new Date().toISOString().split("T")[0];
-  if (form.eventDate && form.eventDate < today) {
-    newErrors.eventDate = "Past dates cannot be selected";
-  }
+    const today = new Date().toISOString().split("T")[0];
+    if (form.eventDate && form.eventDate < today) {
+      newErrors.eventDate = "Past dates cannot be selected";
+    }
 
-  if (!form.startTime)       newErrors.startTime  = "Start time is required";
-  if (!form.duration)        newErrors.duration   = "Duration is required";
-  if (!form.guestCount)      newErrors.guestCount = "Guest count is required";
-  if (!form.budget.trim())   newErrors.budget     = "Budget is required";
-  if (!form.location.trim()) newErrors.location   = "Location is required";
+    if (!form.startTime)       newErrors.startTime  = "Start time is required";
+    if (!form.duration)        newErrors.duration   = "Duration is required";
+    if (!form.guestCount)      newErrors.guestCount = "Guest count is required";
+    if (!form.location.trim()) newErrors.location   = "Location is required";
 
-  setErrors(newErrors);
-  return Object.keys(newErrors).length === 0;
-};
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const validateStep1 = () => {
     const newErrors = {};
@@ -151,7 +150,6 @@ const validateStep0 = () => {
       startTime:        form.startTime,
       duration:         form.duration,
       guestCount:       form.guestCount,
-      budget:           form.budget,
       additionalDetails: form.additionalDetails,
       contact: {
         firstName: form.firstName,
@@ -201,18 +199,18 @@ const validateStep0 = () => {
                 </div>
 
                 <div className="bm-field">
-  <label>Event Date *</label>
-  <div className={`bm-input-wrap has-icon ${errors.eventDate ? 'bm-error-field' : ''}`}>
-    <img src={bookinCalender} alt="" className="bm-input-icon" />
-    <input
-      type="date"
-      value={form.eventDate}
-      onChange={set("eventDate")}
-      min={new Date().toISOString().split("T")[0]}
-    />
-  </div>
-  {errors.eventDate && <p className="bm-error-text">{errors.eventDate}</p>}
-</div>
+                  <label>Event Date *</label>
+                  <div className={`bm-input-wrap has-icon ${errors.eventDate ? 'bm-error-field' : ''}`}>
+                    <img src={bookinCalender} alt="" className="bm-input-icon" />
+                    <input
+                      type="date"
+                      value={form.eventDate}
+                      onChange={set("eventDate")}
+                      min={new Date().toISOString().split("T")[0]}
+                    />
+                  </div>
+                  {errors.eventDate && <p className="bm-error-text">{errors.eventDate}</p>}
+                </div>
               </div>
 
               <div className="bm-grid-2">
@@ -250,19 +248,6 @@ const validateStep0 = () => {
                   </div>
                   {errors.guestCount && <p className="bm-error-text">{errors.guestCount}</p>}
                 </div>
-
-                {/* <div className="bm-field">
-                  <label>Budget *</label>
-                  <div className={`bm-input-wrap ${errors.budget ? 'bm-error-field' : ''}`}>
-                    <input
-                      type="text"
-                      value={form.budget}
-                      onChange={set("budget")}
-                      placeholder="e.g. ₦200,000"
-                    />
-                  </div>
-                  {errors.budget && <p className="bm-error-text">{errors.budget}</p>}
-                </div> */}
               </div>
 
               <div className="bm-field">

@@ -1,4 +1,3 @@
-/* ── Base ─────────────────────────────────────────── */
 .user-dashboard-container {
   width: 100%;
   min-height: 100vh;
@@ -10,8 +9,11 @@
   background-color: var(--primary-color);
   padding: 32px 0 40px;
 }
+.user-dashboard-contetnt-text{
+  color: white
+}
 
-/* ── Welcome section ──────────────────────────────── */
+
 .user-dashboard-wrapper {
   width: 100%;
   display: flex;

@@ -20,7 +20,7 @@ export default function NotifLayout({ notifications, currentPage, totalPages, on
   const dispatch = useDispatch();
   const { actionLoading,accountType  } = useSelector((state) => state.auth);
 
-  const newCount = notifications.filter((n) => !n.isRead).length;
+  const newCount = notifications.filter((n) => !n.isRead && !n.read).length;
 
   const handleMarkAllRead = () => {
     dispatch(markAllNotificationsRead());
@@ -98,22 +98,22 @@ const handleNotifClick = (notif) => {
         ) : (
           notifications.map((notif) => {
             const key = notif._id || notif.id || notif.requestId;
-            return (
-              <div
-                key={key}
-                className={`notif-item ${!notif.isRead ? "notif-item--new" : ""}`}
-                onClick={() => handleNotifClick(notif)}
-              >
-                <div className="notif-item-left">
-                  {!notif.isRead && <span className="notif-dot" />}
-                </div>
-                <div className="notif-item-body">
-                  {notif.title && (
-                    <div className="notif-item-title-row">
-                      <span className="notif-item-title">{notif.title}</span>
-                      {!notif.isRead && <span className="notif-badge">New</span>}
-                    </div>
-                  )}
+      return (
+        <div
+          key={key}
+          className={`notif-item ${!notif.isRead && !notif.read ? "notif-item--new" : ""}`}
+          onClick={() => handleNotifClick(notif)}
+        >
+          <div className="notif-item-left">
+            {!notif.isRead && !notif.read && <span className="notif-dot" />}
+          </div>
+          <div className="notif-item-body">
+            {notif.title && (
+              <div className="notif-item-title-row">
+                <span className="notif-item-title">{notif.title}</span>
+                {!notif.isRead && !notif.read && <span className="notif-badge">New</span>}
+              </div>
+            )}
                   <p className="notif-item-msg">{notif.message}</p>
                   <span className="notif-item-date">
                     {dayjs(notif.createdAt).format("YYYY-MM-DD HH:mm:ss")}
