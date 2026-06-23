@@ -14,6 +14,40 @@
   align-items: flex-start;
   margin-bottom: 40px;
 }
+.Vendor_wallet_onboard {
+  text-align: center;
+  padding: 40px 20px;
+  border: 1px dashed #d1d5db;
+  border-radius: 8px;
+  background: #f9fafb;
+}
+
+.Vendor_wallet_onboard_icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.Vendor_wallet_onboard_title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: #111827;
+}
+
+.Vendor_wallet_onboard_text {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0 0 20px;
+}
+
+.Vendor_wallet_onboard_cta {
+  margin: 0 auto;
+}
+
+.Vendor_wallet_action_btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
 .Vendor_wallet_eye {
   background: none;
   border: none;
