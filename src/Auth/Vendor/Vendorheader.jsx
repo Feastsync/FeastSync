@@ -7,9 +7,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { persistor } from '../../Redux/app/store'
 import { message } from 'antd'
 import { MdLogout } from "react-icons/md";
-import { logoutUser, getNotifications } from "../../Redux/features/authslice.js";
+import { logoutUser, getNotifications, addNotification } from "../../Redux/features/authslice.js";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { TbWallet } from "react-icons/tb";
+import { socket } from "../../Socket.js";
 
 const Vendorheader = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,15 +24,27 @@ const Vendorheader = () => {
     isLoggedIn,
     accountType,
     notifications = [],
+    unreadCount,
   } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (isLoggedIn && notifications.length === 0) {
+    if (!isLoggedIn) return;
+
+    if (notifications.length === 0) {
       dispatch(getNotifications());
     }
-  }, [dispatch, isLoggedIn, notifications.length]);
 
-  const unreadCount = notifications.filter((n) => !n.isRead).length;
+    socket.connect();
+    socket.emit("join", vendorInfo?._id || vendorInfo?.id);
+
+    socket.on("notification", (newNotif) => {
+      dispatch(addNotification(newNotif));
+    });
+
+    return () => {
+      socket.off("notification");
+    };
+  }, [dispatch, isLoggedIn]);
 
   const isDashboard =
     location.pathname === "/vendordashboard" ||
@@ -64,6 +77,7 @@ const Vendorheader = () => {
 
   const handleLogout = async () => {
     try {
+      socket.disconnect();
       await dispatch(logoutUser()).unwrap();
       message.success("Logged out successfully");
       closeModal();

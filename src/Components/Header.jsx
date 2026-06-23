@@ -9,8 +9,8 @@ import Button from '../Props/Button.jsx'
 import "./Css/Header.css"
 import "../Auth/Css/Userheader.css"
 import { persistor } from '../Redux/app/store'
-import { logoutUser, getNotifications, clearUnreadCount } from '../Redux/features/authslice'
-import { io } from 'socket.io-client'
+import { logoutUser, getNotifications, markAllNotificationsRead, addNotification } from '../Redux/features/authslice'
+import { socket } from '../Socket.js'
 import useAuth from '../lib/Myauth.jsx'
 
 const Header = () => {
@@ -23,8 +23,7 @@ const Header = () => {
   const dispatch = useDispatch()
 
   const { isLoggedIn, activeUser, isVendor } = useAuth()
-  const { notifications = [] } = useSelector((state) => state.auth)
-  const unreadCount = notifications.filter((n) => !n.isRead && !n.read).length
+  const { notifications = [], unreadCount } = useSelector((state) => state.auth)
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -36,27 +35,26 @@ const Header = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  
-  // Fetch existing notifications and setup socket for new ones
   useEffect(() => {
     if (!isLoggedIn) return
 
-    // Load existing notifications immediately
     dispatch(getNotifications())
 
-    // Setup socket for real-time new notifications
-    const newSocket = io(import.meta.env.VITE_SOCKET_URL || 'https://feastsyn-booking-app.onrender.com')
+    const user = activeUser
+    socket.connect()
+    socket.emit('join', user?._id || user?.id)
 
-    newSocket.on('new_notification', () => {
-      dispatch(getNotifications())
+    socket.on('notification', (newNotif) => {
+      dispatch(addNotification(newNotif))
     })
 
-    newSocket.on('receive_message', () => {
+    socket.on('receive_message', () => {
       setUnreadChats(prev => prev + 1)
     })
 
     return () => {
-      newSocket.disconnect()
+      socket.off('notification')
+      socket.off('receive_message')
     }
   }, [isLoggedIn, dispatch])
 
@@ -78,6 +76,7 @@ const Header = () => {
     setShowLogoutModal(false)
     setAvatarDropdownOpen(false)
     closeMobile()
+    socket.disconnect()
     await dispatch(logoutUser())
     await persistor.purge()
     navigate('/login')
@@ -92,7 +91,8 @@ const Header = () => {
 
   const handleNotificationsClick = () => {
     setUnreadChats(0)
-    dispatch(clearUnreadCount())
+    dispatch(markAllNotificationsRead()) // ← marks as read on server + zeros out Redux
+    navigate('/notifications/all')
   }
 
   if (isLoggedIn && !isVendor) {
@@ -111,7 +111,6 @@ const Header = () => {
               <span className="userheader_logo_text">FeastSync</span>
             </div>
 
-      
             <div className={`userheader_middle ${mobileOpen ? 'active' : ''}`}>
               <div className="userheader_mobile_profile">
                 <div className="userheader_mobile_avatar">
@@ -133,7 +132,7 @@ const Header = () => {
               <NavLink to="/services" className="userheader_nav_link" onClick={closeMobile}>Services</NavLink>
               <NavLink to="/contact" className="userheader_nav_link" onClick={closeMobile}>Contact</NavLink>
               <div className="userheader_mobile_actions">
-                <button className="userheader_mobile_action_btn" onClick={() => { navigate('/notifications'); closeMobile() }}>
+                <button className="userheader_mobile_action_btn" onClick={() => { handleNotificationsClick(); closeMobile() }}>
                   <IoNotificationsOutline size={20} /> Notifications
                 </button>
                 <button className="userheader_mobile_action_btn" onClick={handleDashboard}>
@@ -147,19 +146,32 @@ const Header = () => {
                 </button>
               </div>
             </div>
-              <div className="userheader_right">
-               <button className="userheader_icon_btn userheader_desktop_only" aria-label="Notifications" onClick={() => { navigate('/notifications/all'); handleNotificationsClick() }}>
-                 <IoNotificationsOutline className="userheader_bell_icon" />
-                 {unreadCount > 0 && <span className="userheader_badge">{unreadCount > 9 ? '9+' : unreadCount}</span>}
-               </button>
-               <button
-                 className="userheader_icon_btn"
-                 aria-label="Messages"
-                 onClick={() => { navigate('/chats'); setUnreadChats(0) }}
-               >
-                 <IoChatbubbleEllipsesOutline className="userheader_chat_icon" />
-                 {unreadChats > 0 && <span className="userheader_badge userheader_badge--chat">{unreadChats > 9 ? '9+' : unreadChats}</span>}
-               </button>
+
+            <div className="userheader_right">
+              <button
+                className="userheader_icon_btn userheader_desktop_only"
+                aria-label="Notifications"
+                onClick={handleNotificationsClick}
+              >
+                <IoNotificationsOutline className="userheader_bell_icon" />
+                {unreadCount > 0 && (
+                  <span className="userheader_badge">
+                    {unreadCount > 9 ? '9+' : unreadCount}
+                  </span>
+                )}
+              </button>
+              <button
+                className="userheader_icon_btn"
+                aria-label="Messages"
+                onClick={() => { navigate('/chats'); setUnreadChats(0) }}
+              >
+                <IoChatbubbleEllipsesOutline className="userheader_chat_icon" />
+                {unreadChats > 0 && (
+                  <span className="userheader_badge userheader_badge--chat">
+                    {unreadChats > 9 ? '9+' : unreadChats}
+                  </span>
+                )}
+              </button>
               <div className="userheader_avatar_wrapper userheader_desktop_only" ref={dropdownRef}>
                 <button
                   className="userheader_avatar_btn"
@@ -179,38 +191,37 @@ const Header = () => {
                 {avatarDropdownOpen && (
                   <div className="userheader_dropdown">
                     <div className="userheader_dropdown_inner">
-                    {/* Profile info */}
-                    <div className="userheader_dropdown_profile">
-                      <div className="userheader_dropdown_avatar">
-                        {getInitials(activeUser)}
-                        <div className="userheader_dropdown_avatar_dot" />
-                      </div>
-                      <div>
-                        <div className="userheader_dropdown_name">
-                          {activeUser?.firstName} {activeUser?.lastName}
+                      <div className="userheader_dropdown_profile">
+                        <div className="userheader_dropdown_avatar">
+                          {getInitials(activeUser)}
+                          <div className="userheader_dropdown_avatar_dot" />
                         </div>
-                        <div className="userheader_dropdown_email">
-                          {activeUser?.email}
+                        <div>
+                          <div className="userheader_dropdown_name">
+                            {activeUser?.firstName} {activeUser?.lastName}
+                          </div>
+                          <div className="userheader_dropdown_email">
+                            {activeUser?.email}
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="userheader_dropdown_divider" />
+                      <div className="userheader_dropdown_divider" />
 
-                    <button className="userheader_dropdown_item" onClick={handleDashboard}>
-                      <MdDashboard size={17} />
-                      My Dashboard
-                    </button>
+                      <button className="userheader_dropdown_item" onClick={handleDashboard}>
+                        <MdDashboard size={17} />
+                        My Dashboard
+                      </button>
 
-                    <div className="userheader_dropdown_divider" />
+                      <div className="userheader_dropdown_divider" />
 
-                    <button
-                      className="userheader_dropdown_item userheader_dropdown_logout"
-                      onClick={() => setShowLogoutModal(true)}
-                    >
-                      <MdLogout size={17} />
-                      Logout
-                    </button>
+                      <button
+                        className="userheader_dropdown_item userheader_dropdown_logout"
+                        onClick={() => setShowLogoutModal(true)}
+                      >
+                        <MdLogout size={17} />
+                        Logout
+                      </button>
                     </div>
                   </div>
                 )}

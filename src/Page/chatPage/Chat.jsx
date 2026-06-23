@@ -216,6 +216,8 @@ export default function ChatsPage() {
 
       if (paymentUrl) {
         message.loading("Redirecting to KoraPay...", 1);
+        // Store bookingId in sessionStorage for callback
+        sessionStorage.setItem("pendingPaymentBookingId", bookingId);
         window.location.href = paymentUrl;
       } else {
         message.error("Payment link not received from server");
