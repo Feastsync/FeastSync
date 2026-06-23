@@ -75,8 +75,8 @@ const UserSignUp = () => {
     setUserInfo({...userInfo, phone: val })
     if (val.trim() === "") {
       setPhoneError({ err: true, name: "phone", msg: "Phone number must not be empty" })
-    } else if (val.length !== 10 && val.length !== 11) {
-      setPhoneError({ err: true, name: "phone", msg: "Phone number must be 10 or 11 digits" })
+    } else if (val.length !== 11) {
+      setPhoneError({ err: true, name: "phone", msg: "Phone number must be 11 digits" })
     } else {
       setPhoneError({ err: false, name: "", msg: "" })
     }
