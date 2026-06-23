@@ -416,6 +416,10 @@ const authSlice = createSlice({
     clearUnreadCount: (state) => {
       state.unreadCount = 0;
     },
+      addNotification: (state, action) => {
+    state.notifications = [action.payload, ...state.notifications];
+    state.unreadCount = state.unreadCount + 1;
+      },
   },
   extraReducers: (builder) => {
     builder
@@ -660,7 +664,10 @@ const authSlice = createSlice({
       .addCase(getNotifications.fulfilled, (state, action) => {
         state.notificationsLoading = false;
         state.notifications = action.payload.data || [];
-        state.unreadCount = action.payload.count || action.payload.unreadCount || 0;
+        // state.unreadCount = action.payload.count || action.payload.unreadCount || 0;
+          state.unreadCount = (action.payload.data || []).filter(
+    (n) => !n.isRead && !n.read
+  ).length;
       })
       .addCase(getNotifications.rejected, (state, action) => {
         state.notificationsLoading = false;
@@ -669,12 +676,12 @@ const authSlice = createSlice({
       .addCase(markNotificationRead.fulfilled, (state, action) => {
         const id = action.meta.arg;
         state.notifications = state.notifications.map((n) =>
-          n._id === id ? { ...n, read: true } : n,
-        );
+             n._id === id ? { ...n, read: true, isRead: true } : n
+);
         state.unreadCount = Math.max(0, state.unreadCount - 1);
       })
       .addCase(markAllNotificationsRead.fulfilled, (state, action) => {
-        state.unreadCount = action.payload.count || action.payload.unreadCount || 0;
+        state.unreadCount = 0;
         state.notifications = state.notifications.map((n) => ({
           ...n,
           read: true,
@@ -763,5 +770,5 @@ extraReducers: (builder) => {
     });
 }
 
-export const { logout, clearError, updateVendorInfo, clearUnreadCount } = authSlice.actions;
+export const { logout, clearError, updateVendorInfo, addNotification ,clearUnreadCount } = authSlice.actions;
 export default authSlice.reducer;

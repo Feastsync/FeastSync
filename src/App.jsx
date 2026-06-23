@@ -30,6 +30,7 @@ import About from "./Page/About.jsx";
 import Services from "./Page/Services.jsx";
 import WalletLedger from "./Page/Wallet/WalletLedger.jsx";
 import VendorWallet from "./Page/Wallet/VendorWallet.jsx";
+import PaymentCallback from "./Page/Wallet/PaymentCallback.jsx";
 import AllNotifications from "./Page/NotitficationsPages/AllNotifications.jsx";
 import Chat from "./Page/chatPage/Chat.jsx";
 import MediaStep from "./Auth/Vendor/onBoardingFiles/MediaStep.jsx";
@@ -101,6 +102,7 @@ const App = () => {
           <Route path="/bookingrequest" element={<BookingRequest />} />
           <Route path="/request/:requestId" element={<BookingRequest />} />
           <Route path="/chats/:bookingId" element={<Chat />} />
+          <Route path="/payment/callback" element={<PaymentCallback />} />
             <Route path="/notifications" element={<NotificationsWrapper />}>
             <Route index element={<Navigate to="all" replace />} />
             <Route path="all" element={<AllNotifications />} />

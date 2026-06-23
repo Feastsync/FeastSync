@@ -149,4 +149,4 @@ const handleNotifClick = (notif) => {
       </div>
     </div>
   );
-}
+} 
