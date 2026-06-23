@@ -12,8 +12,21 @@ export function useWalletSummary() {
         setLoading(true);
         const res = await api.get("/wallet/wallet-summary");
         setSummary(res.data.data);
+        setError(null);
       } catch (err) {
-        setError(err.response?.data?.message || err.message);
+    
+        if (err.response?.status === 404) {
+          setSummary({
+            availableBalance: 0,
+            totalEarnedThisYear: 0,
+            pendingEscrow: 0,
+            completedBookings: 0,
+            pendingBookings: 0,
+          });
+          setError(null);
+        } else {
+          setError(err.response?.data?.message || err.message);
+        }
       } finally {
         setLoading(false);
       }
@@ -35,10 +48,18 @@ export function useWalletTransactions() {
       try {
         setLoading(true);
         const res = await api.get("/wallet/wallet-transactions");
-        setTransactions(res.data.data);
-        setPagination(res.data.pagination);
+        setTransactions(res.data.data || []);
+        setPagination(res.data.pagination || { totalRecords: 0 });
+        setError(null);
       } catch (err) {
-        setError(err.response?.data?.message || err.message);
+      
+        if (err.response?.status === 404) {
+          setTransactions([]);
+          setPagination({ totalRecords: 0 });
+          setError(null);
+        } else {
+          setError(err.response?.data?.message || err.message);
+        }
       } finally {
         setLoading(false);
       }

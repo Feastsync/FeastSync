@@ -36,6 +36,7 @@ export default function VendorWallet() {
   }, [balanceVisible]);
 
   const recentTransactions = transactions.slice(0, 5);
+  const isNewUser = !summaryLoading && !txLoading && summary?.availableBalance === 0 && transactions.length === 0;
 
   if (summaryError || txError) {
     return (
@@ -86,6 +87,7 @@ export default function VendorWallet() {
           <Button
             className="Vendor_wallet_action_btn"
             onClick={() => navigate("/wallet/withdraw")}
+            disabled={isNewUser}
           >
             <span>📄</span> Withdraw
           </Button>
@@ -119,7 +121,7 @@ export default function VendorWallet() {
         />
       </div>
 
-      {/* Recent transactions - amounts always visible */}
+      {/* Recent transactions */}
       <div className="Vendor_wallet_section">
         <div className="Vendor_wallet_section_header">
           <span>Recent transactions</span>
@@ -132,6 +134,19 @@ export default function VendorWallet() {
 
         {txLoading ? (
           <RecentTransactionsSkeleton />
+        ) : isNewUser ? (
+          <div className="Vendor_wallet_onboard">
+            <div className="Vendor_wallet_onboard_icon">💰</div>
+            <h3 className="Vendor_wallet_onboard_title">Welcome to your wallet</h3>
+            <p className="Vendor_wallet_onboard_text">
+              You have no transaction yet 
+            </p>
+            {/* <Button
+              className="Vendor_wallet_onboard_cta"
+              onClick={() => navigate("/vendordashboard")}
+              btnText="View available jobs"
+            /> */}
+          </div>
         ) : recentTransactions.length > 0 ? (
           recentTransactions.map((tx) => (
             <div className="Vendor_recent_tx" key={tx.id}>
