@@ -60,11 +60,6 @@ const handleWishlist = (e) => {
         <span className="see_more_lnk" onClick={goToVendor}>
           See More
         </span>
-<Button
-  className="wishlist_btn"
-  onClick={handleWishlist}
-  btnText={isLiked ? <FaHeart size={12} color="#330159" /> : <FiHeart size={12} />}
-/>
       </div>
 
 <div className="vendor_img_box" onClick={goToVendor}>

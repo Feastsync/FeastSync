@@ -8,7 +8,7 @@ import { vendorSignupSchema } from "../../Validations/vendorSchema";
 import Button from "../../Props/Button";
 import "../Css/VendorSignUp.css";
 import FeastLogo from "../../assets/logos/Headerlogo.png";
-import GoogleLogo from "../../assets/logos/GoogleLogo.png";
+// import GoogleLogo from "../../assets/logos/GoogleLogo.png";
 import signup from "../../assets/BackgroundImage/SignUP.jpeg";
 import Input from "../../Props/Input";
 
@@ -175,7 +175,6 @@ const handleBlur = (e) => {
         text: "An unexpected error occurred",
         confirmButtonColor: "#330159",
       });
-  
     }
   };
 

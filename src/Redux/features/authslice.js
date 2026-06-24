@@ -106,7 +106,7 @@ export const forgotPassword = createAsyncThunk(
 export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
   async (
-    { email, otp, password, confirmPassword, accountType },
+    { email, password, confirmPassword, accountType },
     { rejectWithValue },
   ) => {
     try {
@@ -115,12 +115,7 @@ export const resetPassword = createAsyncThunk(
           ? "/user/reset-password"
           : "/vendor/reset-password";
 
-      const body =
-        accountType === "vendor"
-          ? { email, password, confirmPassword }
-          : { email, otp, password, confirmPassword };
-
-      const res = await api.post(endpoint, body);
+      const res = await api.post(endpoint, { email, password, confirmPassword });
       return res.data;
     } catch (err) {
       return rejectWithValue(
@@ -280,7 +275,7 @@ export const markNotificationRead = createAsyncThunk(
   async (notificationId, { rejectWithValue }) => {
     try {
       const res = await api.put(
-        `/api/notification/read-notification/${notificationId}`,
+        `/notification/read-notification/${notificationId}`,
       );
       return res.data;
     } catch (err) {
@@ -295,7 +290,7 @@ export const markAllNotificationsRead = createAsyncThunk(
   "auth/markAllNotificationsRead",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await api.put("/api/notification/mark-all-read");
+      const res = await api.put("/notification/mark-all-read");
       return res.data;
     } catch (err) {
       return rejectWithValue(
@@ -331,7 +326,9 @@ export const verifyResetOTP = createAsyncThunk(
   async ({ email, otp, accountType }, { rejectWithValue }) => {
     try {
       const endpoint =
-        accountType === "user" ? "/user/verify-otp" : "/vendor/verify-otp";
+        accountType === "user"
+          ? "/user/verify-reset-otp"
+          : "/vendor/verify-otp";
       const res = await api.post(endpoint, { email, otp });
       return res.data;
     } catch (err) {
@@ -416,6 +413,13 @@ const authSlice = createSlice({
     updateVendorInfo: (state, action) => {
       state.vendorInfo = { ...state.vendorInfo, ...action.payload };
     },
+    clearUnreadCount: (state) => {
+      state.unreadCount = 0;
+    },
+      addNotification: (state, action) => {
+    state.notifications = [action.payload, ...state.notifications];
+    state.unreadCount = state.unreadCount + 1;
+      },
   },
   extraReducers: (builder) => {
     builder
@@ -660,7 +664,10 @@ const authSlice = createSlice({
       .addCase(getNotifications.fulfilled, (state, action) => {
         state.notificationsLoading = false;
         state.notifications = action.payload.data || [];
-        state.unreadCount = action.payload.count || 0;
+        // state.unreadCount = action.payload.count || action.payload.unreadCount || 0;
+          state.unreadCount = (action.payload.data || []).filter(
+    (n) => !n.isRead && !n.read
+  ).length;
       })
       .addCase(getNotifications.rejected, (state, action) => {
         state.notificationsLoading = false;
@@ -669,15 +676,16 @@ const authSlice = createSlice({
       .addCase(markNotificationRead.fulfilled, (state, action) => {
         const id = action.meta.arg;
         state.notifications = state.notifications.map((n) =>
-          n._id === id ? { ...n, read: true } : n,
-        );
+             n._id === id ? { ...n, read: true, isRead: true } : n
+);
         state.unreadCount = Math.max(0, state.unreadCount - 1);
       })
-      .addCase(markAllNotificationsRead.fulfilled, (state) => {
+      .addCase(markAllNotificationsRead.fulfilled, (state, action) => {
         state.unreadCount = 0;
         state.notifications = state.notifications.map((n) => ({
           ...n,
           read: true,
+          isRead: true,
         }));
       })
       .addCase(getVendorById.pending, (state) => {
@@ -762,5 +770,5 @@ extraReducers: (builder) => {
     });
 }
 
-export const { logout, clearError, updateVendorInfo } = authSlice.actions;
+export const { logout, clearError, updateVendorInfo, addNotification ,clearUnreadCount } = authSlice.actions;
 export default authSlice.reducer;

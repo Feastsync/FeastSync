@@ -54,8 +54,8 @@ export default function BookingRequest() {
           </div>
         </div>
         <div className="Booking_request_vendor_actions">
-          <button className="Booking_request_icon_btn">
-            <span>💬</span>
+          <button onClick={()=>navigate("/chats")} className="Booking_request_icon_btn">
+            <span >💬</span>
           </button>
           <button className="Booking_request_icon_btn">
             <span>📅</span>

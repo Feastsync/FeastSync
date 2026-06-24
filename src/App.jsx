@@ -30,6 +30,7 @@ import About from "./Page/About.jsx";
 import Services from "./Page/Services.jsx";
 import WalletLedger from "./Page/Wallet/WalletLedger.jsx";
 import VendorWallet from "./Page/Wallet/VendorWallet.jsx";
+import PaymentCallback from "./Page/Wallet/PaymentCallback.jsx";
 import AllNotifications from "./Page/NotitficationsPages/AllNotifications.jsx";
 import Chat from "./Page/chatPage/Chat.jsx";
 import MediaStep from "./Auth/Vendor/onBoardingFiles/MediaStep.jsx";
@@ -74,7 +75,7 @@ const App = () => {
             <Route path="mcs" element={<MCs />} />
             <Route path="livebands" element={<LiveBands />} />
             <Route path="photography" element={<Photography />} />
-            <Route path="videogra `phy" element={<Videography />} />
+            <Route path="videography" element={<Videography />} />
           </Route>
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
@@ -101,6 +102,7 @@ const App = () => {
           <Route path="/bookingrequest" element={<BookingRequest />} />
           <Route path="/request/:requestId" element={<BookingRequest />} />
           <Route path="/chats/:bookingId" element={<Chat />} />
+          <Route path="/payment/callback" element={<PaymentCallback />} />
             <Route path="/notifications" element={<NotificationsWrapper />}>
             <Route index element={<Navigate to="all" replace />} />
             <Route path="all" element={<AllNotifications />} />
@@ -114,7 +116,7 @@ const App = () => {
         <Route element={<PrivateRoute allowedRoles={["user"]} />}>
           <Route path="/userdashboard" element={<Userdashboard />} />
           <Route path="/ratingreview/:bookingId" element={<RatingReview />} />
-          <Route path="/transaction/histories" element={<WalletLedger />} />
+          {/* <Route path="/transaction/histories" element={<WalletLedger />} /> */}
           <Route path="/inbox" element={<Inbox />} />
         </Route>
 
@@ -124,6 +126,7 @@ const App = () => {
           <Route path="/vendordashboardrating" element={<Vendordashboardrating />} />
           <Route path="/vendor/onboarding" element={<OnboardingPage />} />
           <Route path="/vendor/kyc" element={<VendorKYC />} />
+           <Route path="/transaction/histories" element={<WalletLedger />} />
           <Route path="/mediastep" element={<MediaStep />} />
              <Route path="/Settings" element={<Settings />} />
           <Route path="/pricingstep" element={<PricingStep />} />
@@ -132,7 +135,7 @@ const App = () => {
           <Route path="/wallet/transactions" element={<VendorWallet />} />
         </Route>
 
-        {/* ── CATCH-ALL ─────────────────────────────────────────────────────── */}
+     
         <Route path="*" element={<Error404 />} />
 
       </Routes>
