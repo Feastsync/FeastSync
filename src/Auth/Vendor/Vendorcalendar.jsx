@@ -23,9 +23,11 @@ const Vendorcalendar = ({ vendorId }) => {
 
         const res = await api.get(
           `/calendar/get-calendar/${vendorId}?month=${monthParam}`
+          
         );
+         console.log("Full response:", JSON.stringify(res.data, null, 2));
+         console.log("First booked item:", res.data?.bookedDates?.[0]);
 
-        console.log("Calendar API Response:", res);
 
         const dates =
           res.data?.bookedDates?.map((item) =>
