@@ -1,31 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useRef, useState } from 'react'; 
+import { useDispatch } from "react-redux";
 import { message } from "antd";
 import api from "../../Redux/app/axios";
-import { getVendorById, replaceVendorMedia } from "../../Redux/features/authslice";
+import { getVendorById } from "../../Redux/features/authslice";
 import "../Css/Vendormediagallery.css";
 
-const Vendormediagallery = () => {
+const Vendormediagallery = ({ vendor, isOwner }) => {
   const dispatch = useDispatch();
-  const { slug } = useParams();
 
   const videoInputRef = useRef(null);
   const photoInputRef = useRef(null);
 
   const [selectedMedia, setSelectedMedia] = useState(null);
 
-  const { currentVendor, currentVendorLoading } = useSelector(
-    (state) => state.auth
-  );
-
-
-
-  const photos = currentVendor?.photoCatalogue || [];
-  const videos = currentVendor?.videoCatalogue || [];
+  const photos = vendor?.photoCatalogue || [];
+  const videos = vendor?.videoCatalogue || [];
 
   const handleEdit = (ref, item, mediaType) => {
-     console.log("MEDIA ITEM:", item);
     setSelectedMedia({
       publicId: item.publicId,
       mediaType,
@@ -47,9 +38,9 @@ const Vendormediagallery = () => {
       formData.append("file", file);
       formData.append("mediaType", selectedMedia.mediaType);
       formData.append("publicId", selectedMedia.publicId);
-      console.log (currentVendor)
+
       await api.put(
-        `/vendor/replace-media/${currentVendor._id}`,
+        `/vendor/replace-media/${vendor._id}`,
         formData,
         {
           headers: {
@@ -60,7 +51,7 @@ const Vendormediagallery = () => {
 
       message.success("Media updated successfully");
 
-      dispatch(getVendorById(slug));
+      dispatch(getVendorById(vendor.slug));
 
       setSelectedMedia(null);
       e.target.value = "";
@@ -74,14 +65,9 @@ const Vendormediagallery = () => {
     }
   };
 
-  if (currentVendorLoading) {
-    return <div className="loading">Loading gallery...</div>;
-  }
-
   return (
     <div className='vendormediagallery-container'>
 
-      {/* Hidden file inputs for editing */}
       <input
         type="file"
         ref={videoInputRef}
@@ -98,7 +84,6 @@ const Vendormediagallery = () => {
         onChange={handleFileChange}
       />
 
-      {/* SECTION 1: VIDEOS */}
       <div className="catalog-wrapper-section">
         <span className="gallery-small-label">Media gallery</span>
         <h4 className="gallery-subtitle">Video Showcase</h4>
@@ -123,21 +108,22 @@ const Vendormediagallery = () => {
                   <source src={item.secureUrl} type="video/mp4" />
                 </video>
 
-                <button
-                  className="media-edit-btn"
-                  onClick={() =>
-                    handleEdit(videoInputRef, item, "videoCatalogue")
-                  }
-                >
-                  Edit
-                </button>
+                {isOwner && (
+                  <button
+                    className="media-edit-btn"
+                    onClick={() =>
+                      handleEdit(videoInputRef, item, "videoCatalogue")
+                    }
+                  >
+                    Edit
+                  </button>
+                )}
               </div>
             ))}
           </div>
         </div>
       </div>
 
-   
       <div className="showcase-wrapper-section">
         <h3 className="showcase-section-title">Media Gallery</h3>
         <span className="showcase-section-subtitle">
@@ -163,14 +149,16 @@ const Vendormediagallery = () => {
                   }}
                 />
 
-                <button
-                  className="media-edit-btn"
-                  onClick={() =>
-                    handleEdit(photoInputRef, item, "photoCatalogue")
-                  }
-                >
-                  Edit
-                </button>
+                {isOwner && (
+                  <button
+                    className="media-edit-btn"
+                    onClick={() =>
+                      handleEdit(photoInputRef, item, "photoCatalogue")
+                    }
+                  >
+                    Edit
+                  </button>
+                )}
               </div>
             </div>
           ))}

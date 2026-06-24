@@ -18,9 +18,8 @@
 .vendorhero-overlay {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.08) 48%, rgba(0, 0, 0, 0.38) 100%),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.22) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.08) 48%, rgba(0, 0, 0, 0.38) 100%),
+              linear-gradient(90deg, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.22) 100%);
   pointer-events: none;
 }
 
@@ -69,6 +68,7 @@
   border: 1px solid #ffffff;
   font-size: 12px;
   font-weight: 500;
+  z-index: 1;
 }
 
 .vendorhero-profile {
@@ -98,7 +98,6 @@
   z-index: 1;
 }
 
-/* KEY FIX: Remove pointer-events: none and add cursor + z-index */
 .vendorhero-avatar-overlay {
   position: absolute;
   top: 77px;
@@ -116,7 +115,7 @@
   border-radius: 4px;
   border: 1px solid #ffffff;
   cursor: pointer;
-  z-index: 2;
+  z-index: 10;
   backdrop-filter: blur(6px);
 }
 
@@ -130,101 +129,20 @@
 }
 
 @media (max-width: 768px) {
-  .vendorhero-container {
-    height: 400px;
-  }
-
-  .vendorhero-back {
-    left: 18px !important;
-    top: 16px !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 8px !important;
-    border-radius: 9px !important;
-    width: 34px !important;
-    height: 34px !important;
-    box-sizing: border-box !important;
-  }
-
-  .vendorhero-back-text {
-    position: absolute !important;
-    top: 24px !important; 
-    left: 60px !important; 
-    font-size: 14px !important;
-    font-weight: 500 !important;
-    color: #ffffff !important;
-    margin: 0 !important;
-    white-space: nowrap !important;
-    display: block !important;
-  }
-
-  .vendorhero-profile {
-    left: 24px;
-    bottom: 10px;
-  }
-
-  .vendorhero-avatar-wrap {
-    width: 150px;
-    height: 150px;
-    flex: 0 0 auto;
-  }
-
-  .vendorhero-avatar-overlay {
-    display: flex !important;
-    flex-direction: row !important; 
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 6px !important;
-    white-space: nowrap !important;
-    width: 76% !important;
-    height: 24px !important;
-    top: 68px !important;
-    left: 18px !important;
-    padding: 2px 4px !important;
-    box-sizing: border-box !important;
-    cursor: pointer !important;
-    z-index: 2 !important;
-  }
+  .vendorhero-container { height: 400px; }
+  .vendorhero-back { left: 18px !important; top: 16px !important; display: inline-flex !important; padding: 8px !important; border-radius: 9px !important; width: 34px !important; height: 34px !important; }
+  .vendorhero-back-text { position: absolute !important; top: 24px !important; left: 60px !important; font-size: 14px !important; }
+  .vendorhero-profile { left: 24px; bottom: 10px; }
+  .vendorhero-avatar-wrap { width: 150px; height: 150px; }
+  .vendorhero-avatar-overlay { z-index: 20 !important; display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: center !important; width: 76% !important; height: 24px !important; top: 68px !important; left: 18px !important; }
 }
 
 @media (max-width: 480px) {
-  .vendorhero-cover-upload {
-    top: 42%;
-  }
-
-  .vendorhero-profile {
-    left: 20px;
-    bottom: 10px;
-  }
-
-  .vendorhero-back {
-    left: 14px !important;
-    top: 14px !important;
-  }
-
-  .vendorhero-back-text {
-    top: 22px !important;
-    left: 54px !important;
-    font-size: 13px !important;
-  }
-
-  .vendorhero-avatar-wrap {
-    width: 120px;
-    height: 120px;
-    border-width: 3px;
-  }
-
-  .vendorhero-avatar-overlay {
-    width: 84% !important;
-    height: 22px !important;
-    top: 54px !important;
-    left: 10px !important;
-    font-size: 10px !important;
-  }
-  
-  .vendorhero-avatar-overlay img {
-    width: 11px !important;
-    height: 11px !important;
-  }
+  .vendorhero-cover-upload { top: 42%; }
+  .vendorhero-profile { left: 20px; bottom: 10px; }
+  .vendorhero-back { left: 14px !important; top: 14px !important; }
+  .vendorhero-back-text { top: 22px !important; left: 54px !important; font-size: 13px !important; }
+  .vendorhero-avatar-wrap { width: 120px; height: 120px; }
+  .vendorhero-avatar-overlay { width: 84% !important; height: 22px !important; top: 54px !important; left: 10px !important; font-size: 10px !important; }
+  .vendorhero-avatar-overlay img { width: 11px !important; height: 11px !important; }
 }
