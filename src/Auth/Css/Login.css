@@ -130,6 +130,7 @@
   width: 18px;
   height: 18px;
   cursor: pointer;
+  accent-color: #000;
 }
 
 .vl-role-label {
@@ -143,13 +144,6 @@
   text-decoration: none;
   font-weight: 600;
 }
-.vl-checkbox {
-  accent-color: #000;
-
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-}
 
 .vl-login-btn {
   width: 100%;
@@ -157,7 +151,6 @@
   background-color: var(--primary-color);
   color: white;
   border: none;
-
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -166,13 +159,6 @@
 
 .vl-login-btn:hover {
   opacity: 0.9;
-}
-
-.vl-role-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
 }
 
 .vl-checkbox-group {
@@ -193,19 +179,13 @@
   width: 18px;
   height: 18px;
   cursor: pointer;
-  accent-color: #4a148c; /* Purple from your design */
-}
-
-.vl-forgot {
-  font-size: 14px;
-  color: #4a148c;
-  text-decoration: none;
-  font-weight: 500;
+  accent-color: #4a148c;
 }
 
 .vl-forgot:hover {
   text-decoration: underline;
 }
+
 .vl-register-text {
   width: 100%;
   text-align: center;
@@ -297,12 +277,171 @@
   align-self: center;
 }
 
+/* ─── 1200px – Large tablets / small laptops ───────────────────────────── */
+@media (max-width: 1200px) {
+  .vl-left {
+    flex: 0 0 55%;
+    padding: 40px 36px;
+  }
+
+  .vl-right {
+    flex: 1;
+    max-width: 420px;
+  }
+
+  .vl-form-container {
+    max-width: 400px;
+  }
+
+  .vl-title {
+    font-size: 26px;
+  }
+}
+
+/* ─── 768px – Tablets / large phones (landscape) ───────────────────────── */
 @media (max-width: 768px) {
+  .vl-page {
+    height: auto;
+    min-height: 100vh;
+  }
+
   .vl-right {
     display: none;
   }
+
   .vl-left {
     flex: 0 0 100%;
-    padding: 24px;
+    width: 100%;
+    padding: 40px 32px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .vl-form-container {
+    max-width: 460px;
+    width: 100%;
+  }
+
+  .vl-logo {
+    margin-bottom: 24px;
+  }
+
+  .vl-title {
+    font-size: 24px;
+  }
+
+  .vl-subtitle {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .vl-input {
+    height: 46px;
+  }
+
+  .vl-login-btn {
+    height: 50px;
+    font-size: 15px;
+  }
+
+  .vl-popup-card {
+    margin-left: 0;
+    margin-bottom: 0;
+    width: min(400px, 100%);
   }
 }
+
+/* ─── 480px – Mobile phones ─────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .vl-left {
+    padding: 28px 20px;
+  }
+
+  .vl-form-container {
+    max-width: 100%;
+  }
+
+  .vl-logo {
+    margin-bottom: 20px;
+  }
+
+  .vl-logo-text {
+    font-size: 17px;
+  }
+
+  .vl-logo img {
+    height: 34px;
+  }
+
+  .vl-title {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+
+  .vl-subtitle {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .vl-field-group {
+    margin-bottom: 16px;
+  }
+
+  .vl-label {
+    font-size: 13px;
+  }
+
+  .vl-input {
+    height: 44px;
+    font-size: 13px;
+    padding: 0 12px;
+  }
+
+  .vl-role-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .vl-checkbox-group {
+    gap: 14px;
+  }
+
+  .vl-checkbox-label {
+    font-size: 13px;
+  }
+
+  .vl-checkbox-label input[type="radio"] {
+    width: 16px;
+    height: 16px;
+  }
+
+  .vl-forgot {
+    font-size: 13px;
+  }
+
+  .vl-login-btn {
+    height: 46px;
+    font-size: 14px;
+    border-radius: 8px;
+  }
+
+  .vl-register-text {
+    font-size: 13px;
+    margin-top: 18px;
+  }
+
+  .vl-popup-card {
+    margin-left: 0;
+    margin-bottom: 0;
+    width: 100%;
+    border-radius: 12px;
+  }
+
+  .vl-popup-btn {
+    min-width: 130px;
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+} 
