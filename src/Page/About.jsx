@@ -25,7 +25,7 @@ const About = () => {
           </p>
           <p className="about">
           Connect with top rated entainers for <br /> your next
-          event.Professional servi ce.<br />
+          event.Professional service. <br />
           transparent rates.
         </p>
         </div>
@@ -118,7 +118,7 @@ const About = () => {
         <div className="aboutValues">
           <div className="aboutValuesText">
             <p>
-              <span style={{ marginRight: "200px" }}>
+              <span style={{ marginRight: "230px" }}>
                 {" "}
                 <FaHandsHelping /> Trust
               </span>
@@ -126,7 +126,7 @@ const About = () => {
               escrow-protected. Trust is not a feature-it is the foundation
             </p>
             <p>
-              <span style={{ marginRight: "120px" }}>
+              <span style={{ marginRight: "140px" }}>
                 {" "}
                 <PiStarFour /> Seamlessness
               </span>
@@ -143,14 +143,14 @@ const About = () => {
 
           <div className="aboutValuesText">
             <p>
-              <span style={{ marginRight: "150px" }}>
+              <span style={{ marginRight: "180px" }}>
                 <TbTargetArrow /> Excellence
               </span>
               We curate.not aggregate.Every entertainer on feastsync meets a
               professional standard before their profile goes live
             </p>
             <p>
-              <span style={{ marginRight: "120px" }}>
+              <span style={{ marginRight: "155px" }}>
                 <FaHandsHelping /> Transparency
               </span>
               Transparent pricing.Milestone based payouts.Dispute resolution
@@ -179,7 +179,7 @@ const About = () => {
       </section>
 
       <section className="aboutTeamWrapper">
-        <div>
+        <div className="aboutTeamBox1">
           <p className="aboutTeamTitle">Meet the Team</p>
           <p>The brain behind feastsync</p>
         </div>

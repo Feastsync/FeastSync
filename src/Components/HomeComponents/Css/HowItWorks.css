@@ -1,6 +1,6 @@
 .hiw_sec {
   width: 100%;
-  padding: 50px 2px;
+  padding: 50px 20px;  /* add horizontal padding */
   background-color: #0B0017;
   font-family: "Plus Jakarta Sans", sans-serif;
   box-sizing: border-box;
@@ -39,10 +39,10 @@
 
 .hiw_grid {
   width: 100%;
-  height: 80vh;
+  /* REMOVE height: 80vh — this was the main culprit */
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  column-gap: 120px;
+  column-gap: 40px;   /* was 120px — way too wide */
   row-gap: 40px;
 }
 
@@ -55,25 +55,25 @@
 
 .hiw_icon_box {
   background-color: #26004d;
-  width: 110px;
-  /* height: ; */
-  min-width: 120px;
+  width: 80px;
+  min-width: 80px;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .hiw_logo_img {
-  width: 45px;
-  height: 90px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
 }
 
 .hiw_text_card {
   background-color: #1e003b;
   border-radius: 14px;
-  padding: 35px;
+  padding: 24px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -82,7 +82,7 @@
 }
 
 .hiw_card_title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   color: #ffffff;
   margin: 0;
@@ -92,32 +92,31 @@
   font-size: 14px;
   line-height: 1.6;
   color: #f1f5f9;
+  margin: 0;
 }
+
 @media (max-width: 768px) {
   .hiw_sec {
-    padding: 40px 20px;
+    padding: 40px 16px;
   }
 
   .hiw_container {
-    width: 92%;
-    gap: 32px;
+    width: 100%;
+    gap: 28px;
   }
 
   .hiw_main_title {
-    font-size: 24px;
-    margin-bottom: 8px;
+    font-size: 22px;
   }
 
   .hiw_subtitle {
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.5;
-    padding: 0 8px;
   }
 
   .hiw_grid {
     grid-template-columns: 1fr;
-    height: auto;
-    row-gap: 14px;
+    row-gap: 16px;
     column-gap: 0;
   }
 
@@ -125,36 +124,31 @@
     flex-direction: row;
     align-items: stretch;
     gap: 12px;
-    min-height: 110px;
   }
 
   .hiw_icon_box {
-    width: 80px;
-    min-width: 80px;
-    height: auto;
-    border-radius: 12px;
-    flex-shrink: 0;
+    width: 64px;
+    min-width: 64px;
+    border-radius: 10px;
   }
 
   .hiw_logo_img {
-    width: 36px;
-    height: 36px;
+    width: 30px;
+    height: 30px;
   }
 
   .hiw_text_card {
-    padding: 18px 16px;
+    padding: 16px;
     gap: 6px;
-    justify-content: center;
   }
 
   .hiw_card_title {
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.3;
   }
 
   .hiw_card_desc {
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.5;
-    opacity: 0.9;
   }
 }

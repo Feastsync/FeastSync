@@ -129,11 +129,37 @@
   margin: 0;
 }
 
+
+.vendor_card_footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  gap: 8px;          
+  flex-wrap: wrap;   
+}
+
+.price_box {
+  min-width: 0;      
+  flex: 1;          
+}
+
+.price_amt {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0F0F10;
+  margin: 0;
+  white-space: nowrap;   
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .vendor_card_footer .btn_purple {
   height: 40px;
   padding: 0 20px;
   font-size: 14px;
   border-radius: 6px;
+  flex-shrink: 0;    
 }
 @media (max-width: 768px) {
 

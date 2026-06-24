@@ -309,7 +309,7 @@
   padding: 5px;
 }
 .btnmore:hover {
-  background: #e748ec;
+  background: var(--primary-color);
   border-radius: 5px;
 }
 
