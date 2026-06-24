@@ -25,7 +25,7 @@ const About = () => {
           </p>
           <p className="about">
           Connect with top rated entainers for <br /> your next
-          event.Professional service. <br />
+          event.Professional servi ce.<br />
           transparent rates.
         </p>
         </div>
