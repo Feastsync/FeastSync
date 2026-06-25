@@ -30,7 +30,7 @@ const Userdashboard = () => {
 
   const totalSpent = bookings
     .filter((b) => (b.bookingStatus || b.status)?.toLowerCase() === "completed")
-    .reduce((sum, b) => sum + (b.totalAmount || b.amount || 0), 0);
+    .reduce((sum, b) => sum + (b.totalAmount || b.amount || b.packagePrice || 0), 0);
 
   const activeBookings = bookings.filter((b) => {
     const status = (b.bookingStatus || b.status)?.toLowerCase();

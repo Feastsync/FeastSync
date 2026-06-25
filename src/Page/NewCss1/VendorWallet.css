@@ -263,6 +263,49 @@
   font-size: 16px;
   color: #666666;
 }
+.withdraw_bank_card {
+  background: var(--background-color);
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.withdraw_bank_info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+}
+
+.withdraw_input_wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.withdraw_currency {
+  position: absolute;
+  left: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #666;
+  z-index: 1;
+}
+
+.withdraw_input_wrap .modal_input {
+  padding-left: 32px;
+}
+
+.Vendor_wallet_empty_state {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.Vendor_wallet_empty_state p {
+  margin-bottom: 16px;
+  color: #666;
+}
 
 @media (max-width: 1024px) {
   .Vendor_wallet_stats {

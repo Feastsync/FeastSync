@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Button from "../../Props/Button";
 import { useWalletSummary, useWalletTransactions } from "./Usewallet";
+import api from "../../Redux/app/axios";
+import { message } from "antd";
 import "../NewCss1/VendorWallet.css";
 
 const TYPE_LABEL = {
@@ -23,17 +26,46 @@ const formatCurrency = (num) =>
 
 export default function VendorWallet() {
   const navigate = useNavigate();
+  const { vendorInfo } = useSelector((s) => s.auth);
   const { summary, loading: summaryLoading, error: summaryError } = useWalletSummary();
   const { transactions, loading: txLoading, error: txError } = useWalletTransactions();
-  
+
   const [balanceVisible, setBalanceVisible] = useState(() => {
     const saved = localStorage.getItem("balanceVisible");
     return saved !== null ? JSON.parse(saved) : true;
   });
 
+  const [modal, setModal] = useState(null);
+  const [withdrawAmount, setWithdrawAmount] = useState('');
+  const [withdrawLoading, setWithdrawLoading] = useState(false);
+
   useEffect(() => {
     localStorage.setItem("balanceVisible", JSON.stringify(balanceVisible));
   }, [balanceVisible]);
+
+  const closeModal = () => {
+    setModal(null);
+    setWithdrawAmount('');
+  };
+
+  const handleWithdraw = async () => {
+    try {
+      setWithdrawLoading(true);
+      await api.post('/api/v1/payment/payout-funds', {
+        bankName: vendorInfo.bankName,
+        accountNumber: vendorInfo.accountNumber,
+        bankCode: vendorInfo.bankCode, // assumes you save bankCode in vendorInfo
+        amount: Number(withdrawAmount)
+      });
+      message.success('Withdrawal initiated successfully');
+      closeModal();
+      window.location.reload();
+    } catch (err) {
+      message.error(err.response?.data?.message || 'Something went wrong');
+    } finally {
+      setWithdrawLoading(false);
+    }
+  };
 
   const recentTransactions = transactions.slice(0, 5);
   const isNewUser = !summaryLoading && !txLoading && summary?.availableBalance === 0 && transactions.length === 0;
@@ -61,21 +93,21 @@ export default function VendorWallet() {
           </Button>
           <div className="Vendor_wallet_balance">
             <p className="Vendor_wallet_label">
-              <button 
+              <button
                 className="Vendor_wallet_eye"
                 onClick={() => setBalanceVisible(!balanceVisible)}
                 aria-label={balanceVisible ? "Hide balance" : "Show balance"}
               >
-                <span>{balanceVisible ? "👁" : "👁‍🗨"}</span>
-              </button> 
+                <span>{balanceVisible ? "👁" : "👁🗨"}</span>
+              </button>
               Available balance
             </p>
             {summaryLoading ? (
               <div className="skeleton-line skeleton-balance" />
             ) : (
               <h1 className="Vendor_wallet_amount">
-                {balanceVisible 
-                  ? formatCurrency(summary?.availableBalance) 
+                {balanceVisible
+                  ? formatCurrency(summary?.availableBalance)
                   : "••••••"
                 }
               </h1>
@@ -86,7 +118,7 @@ export default function VendorWallet() {
         <div className="Vendor_wallet_actions">
           <Button
             className="Vendor_wallet_action_btn"
-            onClick={() => navigate("/wallet/withdraw")}
+            onClick={() => setModal('withdraw')}
             disabled={isNewUser}
           >
             <span>📄</span> Withdraw
@@ -100,7 +132,6 @@ export default function VendorWallet() {
         </div>
       </div>
 
-      {/* Stats - always visible */}
       <div className="Vendor_wallet_stats">
         <StatCard
           loading={summaryLoading}
@@ -121,7 +152,6 @@ export default function VendorWallet() {
         />
       </div>
 
-      {/* Recent transactions */}
       <div className="Vendor_wallet_section">
         <div className="Vendor_wallet_section_header">
           <span>Recent transactions</span>
@@ -139,13 +169,8 @@ export default function VendorWallet() {
             <div className="Vendor_wallet_onboard_icon">💰</div>
             <h3 className="Vendor_wallet_onboard_title">Welcome to your wallet</h3>
             <p className="Vendor_wallet_onboard_text">
-              You have no transaction yet 
+              You have no transaction yet
             </p>
-            {/* <Button
-              className="Vendor_wallet_onboard_cta"
-              onClick={() => navigate("/vendordashboard")}
-              btnText="View available jobs"
-            /> */}
           </div>
         ) : recentTransactions.length > 0 ? (
           recentTransactions.map((tx) => (
@@ -173,6 +198,76 @@ export default function VendorWallet() {
           <p className="Vendor_wallet_empty">No recent transactions</p>
         )}
       </div>
+
+      {modal === 'withdraw' && (
+        <div className="modal_overlay" onClick={closeModal}>
+          <div className="modal_box" onClick={(e) => e.stopPropagation()}>
+            <div className="modal_header">
+              <h3>Withdraw Funds</h3>
+              <button className="modal_close" onClick={closeModal}>×</button>
+            </div>
+            <div className="modal_body">
+              {!vendorInfo?.bankName || !vendorInfo?.accountNumber ? (
+                <div className="Vendor_wallet_empty_state">
+                  <p>No bank account found.</p>
+                  <Button
+                    className="modal_btn_primary"
+                    onClick={() => navigate('/settings')}
+                    btnText="Add Bank in Settings"
+                  />
+                </div>
+              ) : (
+                <>
+                  <div className="withdraw_bank_card">
+                    <p className="modal_label">To</p>
+                    <div className="withdraw_bank_info">
+                      <strong>{vendorInfo.bankName}</strong>
+                      <span>•••• {vendorInfo.accountNumber.slice(-4)}</span>
+                    </div>
+                  </div>
+
+                  <label className="modal_label">Amount</label>
+                  <div className="withdraw_input_wrap">
+                    <span className="withdraw_currency">₦</span>
+                    <input
+                      type="number"
+                      className="modal_input"
+                      placeholder="0.00"
+                      value={withdrawAmount}
+                      onChange={(e) => setWithdrawAmount(e.target.value)}
+                      max={summary?.availableBalance || 0}
+                    />
+                  </div>
+                  <p className="modal_sublabel">
+                    Available: {formatCurrency(summary?.availableBalance || 0)}
+                  </p>
+
+                  {withdrawAmount && Number(withdrawAmount) > (summary?.availableBalance || 0) && (
+                    <p className="modal_error">Amount exceeds available balance</p>
+                  )}
+                </>
+              )}
+            </div>
+            {vendorInfo?.bankName && vendorInfo?.accountNumber && (
+              <div className="modal_footer">
+                <button className="modal_btn_cancel" onClick={closeModal}>Cancel</button>
+                <button
+                  className="modal_btn_primary"
+                  disabled={
+                    withdrawLoading ||
+                   !withdrawAmount ||
+                    Number(withdrawAmount) <= 0 ||
+                    Number(withdrawAmount) > (summary?.availableBalance || 0)
+                  }
+                  onClick={handleWithdraw}
+                >
+                  {withdrawLoading ? 'Processing...' : 'Withdraw'}
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
