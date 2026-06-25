@@ -2,10 +2,8 @@ import React, {useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateVendorProfile } from "../../Redux/features/authslice";
 import "../Css/Vendorhero.css";
-import { IoArrowBack } from "react-icons/io5";
-import Vendorprofile from "../../assets/logos/Vendorprofile.png";
+import { IoArrowBack } from "react-icons/io5"
 import Vedorprofileview from "../../assets/logos/Vedorprofileview.svg";
-import Vendorbackgroundimage from "../../assets/BackgroundImage/Vendorbackgroundimage.jpg";
 import Vendoruploadprofile from "../../assets/logos/Vendoruploadprofile.jpg"
 import Vendorprofile1 from "../../assets/logos/Vendorprofile1.png"
 import { useLocation } from "react-router-dom";

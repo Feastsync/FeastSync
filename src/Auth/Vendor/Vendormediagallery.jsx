@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'; 
+import React, { useRef, useState } from 'react'; 
 import { useDispatch } from "react-redux";
 import { message } from "antd";
 import api from "../../Redux/app/axios";
@@ -12,6 +12,7 @@ const Vendormediagallery = ({ vendor, isOwner }) => {
   const photoInputRef = useRef(null);
 
   const [selectedMedia, setSelectedMedia] = useState(null);
+  const [lightbox, setLightbox] = useState(null);
 
   const photos = vendor?.photoCatalogue || [];
   const videos = vendor?.videoCatalogue || [];
@@ -50,17 +51,13 @@ const Vendormediagallery = ({ vendor, isOwner }) => {
       );
 
       message.success("Media updated successfully");
-
       dispatch(getVendorById(vendor.slug));
-
       setSelectedMedia(null);
       e.target.value = "";
     } catch (error) {
       console.error(error);
-
       message.error(
-        error?.response?.data?.message ||
-        "Failed to update media"
+        error?.response?.data?.message || "Failed to update media"
       );
     }
   };
@@ -68,22 +65,26 @@ const Vendormediagallery = ({ vendor, isOwner }) => {
   return (
     <div className='vendormediagallery-container'>
 
-      <input
-        type="file"
-        ref={videoInputRef}
-        style={{ display: 'none' }}
-        accept="video/*"
-        onChange={handleFileChange}
-      />
+      <input type="file" ref={videoInputRef} style={{ display: 'none' }} accept="video/*" onChange={handleFileChange} />
+      <input type="file" ref={photoInputRef} style={{ display: 'none' }} accept="image/*" onChange={handleFileChange} />
 
-      <input
-        type="file"
-        ref={photoInputRef}
-        style={{ display: 'none' }}
-        accept="image/*"
-        onChange={handleFileChange}
-      />
+      {/* ── LIGHTBOX ── */}
+      {lightbox && (
+        <div className="vmg-lightbox-overlay" onClick={() => setLightbox(null)}>
+          <div className="vmg-lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <button className="vmg-lightbox-close" onClick={() => setLightbox(null)}>✕</button>
+            {lightbox.type === 'image' ? (
+              <img src={lightbox.url} alt="Preview" className="vmg-lightbox-media" />
+            ) : (
+              <video controls autoPlay className="vmg-lightbox-media">
+                <source src={lightbox.url} type="video/mp4" />
+              </video>
+            )}
+          </div>
+        </div>
+      )}
 
+      {/* ── VIDEO SECTION ── */}
       <div className="catalog-wrapper-section">
         <span className="gallery-small-label">Media gallery</span>
         <h4 className="gallery-subtitle">Video Showcase</h4>
@@ -98,12 +99,8 @@ const Vendormediagallery = ({ vendor, isOwner }) => {
               >
                 <video
                   controls
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block"
-                  }}
+                  onClick={() => setLightbox({ type: 'video', url: item.secureUrl })}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", cursor: "pointer" }}
                 >
                   <source src={item.secureUrl} type="video/mp4" />
                 </video>
@@ -111,9 +108,7 @@ const Vendormediagallery = ({ vendor, isOwner }) => {
                 {isOwner && (
                   <button
                     className="media-edit-btn"
-                    onClick={() =>
-                      handleEdit(videoInputRef, item, "videoCatalogue")
-                    }
+                    onClick={() => handleEdit(videoInputRef, item, "videoCatalogue")}
                   >
                     Edit
                   </button>
@@ -124,11 +119,10 @@ const Vendormediagallery = ({ vendor, isOwner }) => {
         </div>
       </div>
 
+      {/* ── PHOTO SECTION ── */}
       <div className="showcase-wrapper-section">
         <h3 className="showcase-section-title">Media Gallery</h3>
-        <span className="showcase-section-subtitle">
-          Pictures ShowCase
-        </span>
+        <span className="showcase-section-subtitle">Pictures ShowCase</span>
 
         <div className="portfolio-grid-two-columns">
           {photos.map((item) => (
@@ -141,20 +135,14 @@ const Vendormediagallery = ({ vendor, isOwner }) => {
                 <img
                   src={item.secureUrl}
                   alt="Vendor"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block"
-                  }}
+                  onClick={() => setLightbox({ type: 'image', url: item.secureUrl })}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", cursor: "pointer" }}
                 />
 
                 {isOwner && (
                   <button
                     className="media-edit-btn"
-                    onClick={() =>
-                      handleEdit(photoInputRef, item, "photoCatalogue")
-                    }
+                    onClick={() => handleEdit(photoInputRef, item, "photoCatalogue")}
                   >
                     Edit
                   </button>

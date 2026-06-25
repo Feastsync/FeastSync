@@ -57,7 +57,7 @@ export default function VendorWallet() {
       });
       message.success('Withdrawal initiated successfully');
       closeModal();
-      window.location.reload();
+      // window.location.reload();
     } catch (err) {
       message.error(err.response?.data?.message || 'Something went wrong');
     } finally {
