@@ -17,6 +17,7 @@ import {
   createPricing,
   uploadKyc,
   updateVendorInfo,
+  getCurrentUser,
 } from "../../../Redux/features/authslice.js";
 
 const STEP_ORDER = ["category", "bank", "media", "pricing", "docs", "calendar"];
@@ -85,6 +86,7 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
     profilePicture: null,
     coverPhoto: null,
     coverVideo: null,
+    bankCode: "",
     photoCatalogue: [],
     videoCatalogue: [],
     pricing: {
@@ -104,7 +106,7 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
     }
   }, [vendorId, vendorProfile.id]);
 
-  // ── Only show success after final submit fully completes ──────────
+  
   useEffect(() => {
     if (
       isFinalSubmitDone.current &&
@@ -116,7 +118,7 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
 
   if (!isOpen && !showSuccess) return null;
 
-  // ── Go back without hitting the API ──────────────────────────────
+ 
   const goToStep = (stepName) => {
     dispatch(
       updateVendorInfo({
@@ -126,26 +128,7 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
     );
   };
 
-  // ── Advance step and save progress to backend ─────────────────────
-  // const completeStep = async (stepName) => {
-  //   // Don't allow step changes while final submit is running
-  //   if (isFinalSubmitting) return;
 
-  //   const nextIndex = STEP_ORDER.indexOf(stepName) + 1;
-  //   const nextStepName =
-  //     nextIndex < STEP_ORDER.length ? STEP_ORDER[nextIndex] : "completed";
-  //   const nextStepNumber = REVERSE_STEP_MAP[nextStepName];
-
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append("onboardingStep", String(nextStepNumber));
-  //     await dispatch(
-  //       updateVendorProfile({ id: vendorId, profileData: formData })
-  //     ).unwrap();
-  //   } catch (e) {
-  //     console.log("Failed to save step", e);
-  //   }
-  // };
 const completeStep = (stepName) => {
   if (isFinalSubmitting) return;
 
@@ -180,7 +163,7 @@ const completeStep = (stepName) => {
       profileFormData.append("onboardingStep", "7");
       profileFormData.append("isProfileCompleted", "true");
       profileFormData.append("pricing", JSON.stringify(vendorProfile.pricing));
-      
+      profileFormData.append("bankCode", vendorProfile.bankCode);
       profileFormData.append(
         "bookedDays",
         JSON.stringify(vendorProfile.bookedDays)
@@ -205,6 +188,7 @@ const completeStep = (stepName) => {
       await dispatch(
         updateVendorProfile({ id, profileData: profileFormData })
       ).unwrap();
+      await dispatch(getCurrentUser());
 
       const { startingPrice, packageName, packageDescription } = vendorProfile.pricing;
       if (startingPrice && packageName) {

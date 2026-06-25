@@ -51,10 +51,8 @@ export default function VendorWallet() {
   const handleWithdraw = async () => {
     try {
       setWithdrawLoading(true);
-      await api.post('/api/v1/payment/payout-funds', {
-        bankName: vendorInfo.bankName,
-        accountNumber: vendorInfo.accountNumber,
-        bankCode: vendorInfo.bankCode, // assumes you save bankCode in vendorInfo
+      await api.post('/payment/payout-funds', {
+        bankCode: vendorInfo.bankCode, 
         amount: Number(withdrawAmount)
       });
       message.success('Withdrawal initiated successfully');

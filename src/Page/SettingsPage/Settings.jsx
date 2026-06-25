@@ -7,7 +7,7 @@ import { persistor } from '../../Redux/app/store'
 import api from '../../Redux/app/axios'
 import { MdLogout } from 'react-icons/md'
 import './Settings.css'
-
+import { nigerianBanks } from '../../mock/moc'
 const Settings = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -23,7 +23,7 @@ const Settings = () => {
   const [displayName, setDisplayName] = useState(vendorInfo?.stageName || '')
   const [location, setLocation] = useState(vendorInfo?.stateOfResidence || '')
   const [bio, setBio] = useState(vendorInfo?.bio || '')
-  const [bank, setBank] = useState({ name: '', account: '' })
+  const [bank, setBank] = useState({ name: '', code: '', account: '' })
   const [pricing, setPricing] = useState({
     id: '',
     startingPrice: '',
@@ -424,18 +424,18 @@ const Settings = () => {
             <div className="modal_body">
               <label className="modal_label">Select Bank</label>
               <select
-                className="modal_select"
-                value={bank.name}
-                onChange={(e) => setBank({ ...bank, name: e.target.value })}
-              >
-                <option value="">Select Bank</option>
-                <option value="GTBank">GTBank</option>
-                <option value="Access Bank">Access Bank</option>
-                <option value="First Bank">First Bank</option>
-                <option value="Zenith Bank">Zenith Bank</option>
-                <option value="UBA">UBA</option>
-                <option value="Opay">Opay</option>
-              </select>
+  className="modal_select"
+  value={bank.code}
+  onChange={(e) => {
+    const selected = nigerianBanks.find(b => b.code === e.target.value);
+    setBank({ ...bank, name: selected?.name || "", code: selected?.code || "" });
+  }}
+>
+  <option value="">Select Bank</option>
+  {nigerianBanks.map((b) => (
+    <option key={b.code} value={b.code}>{b.name}</option>
+  ))}
+</select>
               <label className="modal_label">Account Number</label>
               <input
                 type="text"
@@ -451,9 +451,11 @@ const Settings = () => {
               <button
                 className="modal_btn_primary"
                 disabled={updateLoading}
-                onClick={() =>
-                  handleSaveUpdate({ bankName: bank.name, accountNumber: bank.account })
-                }
+           onClick={() => handleSaveUpdate({ 
+  bankName: bank.name, 
+  bankCode: bank.code, 
+  accountNumber: bank.account 
+})}
               >
                 {updateLoading ? 'Sending...' : 'Continue to Verify'}
               </button>
