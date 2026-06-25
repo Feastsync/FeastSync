@@ -344,7 +344,7 @@ export const getCurrentUser = createAsyncThunk(
   async (_, { getState, rejectWithValue }) => {
     try {
       const { accountType } = getState().auth;
-      const endpoint = accountType === "user" ? "/user/me" : "/vendor/me";
+      const endpoint = accountType === "user" ? "/user/user-dashboard" : "/vendor/vendor-dashboard"; 
       const res = await api.get(endpoint);
       return res.data;
     } catch (err) {

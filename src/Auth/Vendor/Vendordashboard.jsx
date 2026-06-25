@@ -89,7 +89,8 @@ const Vendordashboard = () => {
   };
 
   const handleCopyLink = async () => {
-    const link = `https://www.feastsync.com/fs/${displayVendor?.slug}`;
+    // const link = `https://www.feastsync.com/fs/${displayVendor?.slug}`;
+    const link = displayVendor?.vendorUrl;
     try {
       await navigator.clipboard.writeText(link);
       messageApi.success("Link copied to clipboard!");
