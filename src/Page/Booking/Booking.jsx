@@ -178,7 +178,6 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
     <div className="bm-backdrop">
       <div className="bm-modal" role="dialog" aria-modal="true" aria-label="Booking modal">
 
-        {/* ── STEP 0: Event Details ── */}
         {step === 0 && (
           <>
             <div className="bm-header">
@@ -232,7 +231,7 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
                   </div>
                   {errors.startTime && <p className="bm-error-text">{errors.startTime}</p>}
                 </div>
-
+                
                 <div className="bm-field">
                   <label>Duration *</label>
                   <div className={`bm-select-wrap ${errors.duration ? 'bm-error-field' : ''}`}>
@@ -291,7 +290,6 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
           </>
         )}
 
-        {/* ── STEP 1: Review ── */}
         {step === 1 && (
           <>
             <div className="bm-header">
@@ -404,7 +402,6 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
           </>
         )}
 
-        {/* ── STEP 2: Confirmed ── */}
         {step === 2 && (
           <>
             <div className="bm-header bm-header-slim">

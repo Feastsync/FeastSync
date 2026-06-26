@@ -21,6 +21,18 @@
   cursor: not-allowed;
 }
 
+.chats-pay-btn--paid {
+  background: #10b981 !important;
+  color: #fff !important;
+  border-color: #10b981 !important;
+  cursor: default;
+}
+
+.chats-pay-btn--paid:hover {
+  background: #10b981 !important;
+  color: #fff !important;
+}
+
 .chats-sidebar {
   width: 320px;
   flex-shrink: 0;
