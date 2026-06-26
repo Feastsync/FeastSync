@@ -1,5 +1,5 @@
 import "../Css/Userdashboard.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Header from "../../Components/Header";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -11,13 +11,15 @@ const Userdashboard = () => {
 
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const [markingDelivered, setMarkingDelivered] = useState(null);
+  const dropdownRefs = useRef({});
 
   useEffect(() => {
     const fetchBookings = async () => {
       try {
         const res = await api.get("/api/v1/bookings/client");
         const data = res.data?.bookings || res.data?.data || [];
-        console.log("data", res.data);
         setBookings(data);
       } catch (err) {
         console.error("Failed to fetch bookings:", err);
@@ -27,6 +29,40 @@ const Userdashboard = () => {
     };
     fetchBookings();
   }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (openDropdown !== null) {
+        const ref = dropdownRefs.current[openDropdown];
+        if (ref && !ref.contains(e.target)) {
+          setOpenDropdown(null);
+        }
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [openDropdown]);
+
+  const handleMarkDelivered = async (e, bookingId) => {
+    e.stopPropagation();
+    try {
+      setMarkingDelivered(bookingId);
+      await api.patch(`/api/v1/bookings/${bookingId}/delivered`);
+      setBookings((prev) =>
+        prev.map((b) =>
+          b._id === bookingId
+            ? { ...b, bookingStatus: "completed", status: "completed" }
+            : b
+        )
+      );
+      setOpenDropdown(null);
+    } catch (err) {
+      console.error("Failed to mark as delivered:", err);
+    } finally {
+      setMarkingDelivered(null);
+    }
+  };
 
   const totalSpent = bookings
     .filter((b) => (b.bookingStatus || b.status)?.toLowerCase() === "completed")
@@ -45,13 +81,10 @@ const Userdashboard = () => {
         <section className="user-dashboard-wrapper">
           <section className="user-dashboard-contentleft1">
             <h2>Welcome, {userInfo?.firstName}</h2>
-            {/* <button className="user-dashboard-contentleft1a-btn">My Review</button> */}
-            {/* </div> */}
             <div className="user-dashboard-contetnt-text">
               Welcome back! Explore our vendors and start booking the <br />
               industry's best talent right now.
             </div>
-          
           </section>
         </section>
 
@@ -65,10 +98,7 @@ const Userdashboard = () => {
               <p>Total Spent</p>
               <h2>₦{loading ? "..." : totalSpent.toLocaleString()}</h2>
             </div>
-            <div
-              className="user-dashboard-contentright2-right"
-              // onClick={() => navigate("/ratingreview")}
-            >
+            <div className="user-dashboard-contentright2-right">
               <p>Review/Rating Given</p>
               <h2>0</h2>
             </div>
@@ -98,8 +128,8 @@ const Userdashboard = () => {
                   booking.bookingStatus || booking.status || "pending"
                 ).toLowerCase();
 
-                const canReview =
-                  status === "confirmed" || status === "completed";
+                const canReview = status === "confirmed" || status === "completed";
+                const canMarkDelivered = status === "confirmed" || status === "accepted";
 
                 return (
                   <div
@@ -107,9 +137,54 @@ const Userdashboard = () => {
                     className="udb-card"
                     onClick={() => navigate(`/chats/${booking._id}`)}
                   >
-                    <div className="udb-card__avatar">
-                      {booking.vendorId?.stageName?.charAt(0) || "V"}
+                    {/* Top row: avatar + dropdown */}
+                    <div className="udb-card__top">
+                      <div className="udb-card__avatar">
+                        {booking.vendorId?.stageName?.charAt(0) || "V"}
+                      </div>
+
+                      {/* Delivered dropdown - only show when relevant */}
+                      {canMarkDelivered && (
+                        <div
+                          className="udb-delivered-wrapper"
+                          ref={(el) => (dropdownRefs.current[booking._id] = el)}
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <button
+                            className="udb-delivered-trigger"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setOpenDropdown(
+                                openDropdown === booking._id ? null : booking._id
+                              );
+                            }}
+                          >
+                            ••• 
+                          </button>
+
+                          {openDropdown === booking._id && (
+                            <div className="udb-delivered-dropdown">
+                              <p className="udb-delivered-dropdown__label">
+                                Confirm service delivery?
+                              </p>
+                              <p className="udb-delivered-dropdown__sub">
+                                This will release payment to the vendor.
+                              </p>
+                              <button
+                                className="udb-delivered-dropdown__btn"
+                                disabled={markingDelivered === booking._id}
+                                onClick={(e) => handleMarkDelivered(e, booking._id)}
+                              >
+                                {markingDelivered === booking._id
+                                  ? "Processing..."
+                                  : "✓ Mark as Delivered"}
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
+
                     <div className="udb-card__body">
                       <h4 className="udb-card__vendor">
                         {booking.vendorId?.stageName || "Vendor"}
@@ -126,27 +201,28 @@ const Userdashboard = () => {
                           : "Date TBD"}
                       </p>
                     </div>
+
                     <div className="udb-card__footer">
                       <span className={`udb-card__status udb-status--${status}`}>
                         {status}
                       </span>
                       <div className="udb-card__actions">
                         {canReview && (
-<button
-  className="udb-card__review-btn"
-  onClick={(e) => {
-    e.stopPropagation();
-    navigate(`/ratingreview/${booking._id}`, {
-      state: {
-        vendorName: booking.vendorId?.stageName || "Vendor",
-        eventType: booking.eventType || "",
-        bookingRef: booking.bookingRef || booking._id,
-      },
-    });
-  }}
->
-  leave a review  
-</button>
+                          <button
+                            className="udb-card__review-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/ratingreview/${booking._id}`, {
+                                state: {
+                                  vendorName: booking.vendorId?.stageName || "Vendor",
+                                  eventType: booking.eventType || "",
+                                  bookingRef: booking.bookingRef || booking._id,
+                                },
+                              });
+                            }}
+                          >
+                            leave a review
+                          </button>
                         )}
                         <span className="udb-card__cta">Open Chat →</span>
                       </div>
