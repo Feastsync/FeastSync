@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { resetPassword, clearError } from '../Redux/features/authslice'
-import { message } from 'antd'
+import { App } from 'antd'
 import Button from '../Props/Button'
 import { FaArrowLeft } from "react-icons/fa6"
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa"
@@ -12,6 +12,7 @@ const ResetPassword = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const location = useLocation()
+  const { message } = App.useApp();
 
   const { isLoading, error } = useSelector((state) => state.auth)
 
@@ -57,6 +58,7 @@ const ResetPassword = () => {
       navigate("/login")
     } catch (err) {
       // error handled by useEffect above
+      console.error("Reset password error:", err);
     }
   }
 

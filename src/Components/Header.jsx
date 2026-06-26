@@ -18,6 +18,7 @@ const Header = () => {
   const [avatarDropdownOpen, setAvatarDropdownOpen] = useState(false)
   const [showLogoutModal, setShowLogoutModal] = useState(false)
   const [unreadChats, setUnreadChats] = useState(0)
+  const [logoutLoading, setLogoutLoading] = useState(false)
   const dropdownRef = useRef(null)
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -95,12 +96,14 @@ const Header = () => {
   }
 
   const confirmLogout = async () => {
+    setLogoutLoading(true)
     setShowLogoutModal(false)
     setAvatarDropdownOpen(false)
     closeMobile()
     socket.disconnect()
     await dispatch(logoutUser())
     await persistor.purge()
+    setLogoutLoading(false)
     navigate('/login')
   }
 
@@ -282,8 +285,9 @@ const Header = () => {
                 <button
                   className="userheader_modal_confirm"
                   onClick={confirmLogout}
+                  disabled={logoutLoading}
                 >
-                  Yes, log out
+                  {logoutLoading ? "Logging out..." : "Yes, log out"}
                 </button>
               </div>
             </div>

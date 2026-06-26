@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -8,7 +8,7 @@ import {
   resendOTP,
   forgotPassword,
 } from "../Redux/features/authslice";
-import { Input, message } from "antd";
+import { Input, App } from "antd";
 import "./Css/OTP.css";
 import FeastLogo from "../assets/logos/Headerlogo.png";
 import Button from "../Props/Button.jsx";
@@ -19,6 +19,7 @@ const OTPVerification = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+  const { message } = App.useApp();
 
   const { isLoading, error } = useSelector((state) => state.auth);
 
