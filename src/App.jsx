@@ -30,6 +30,7 @@ import About from "./Page/About.jsx";
 import Services from "./Page/Services.jsx";
 import WalletLedger from "./Page/Wallet/WalletLedger.jsx";
 import VendorWallet from "./Page/Wallet/VendorWallet.jsx";
+import PaymentCallback from "./Page/Wallet/PaymentCallback.jsx";
 import AllNotifications from "./Page/NotitficationsPages/AllNotifications.jsx";
 import Chat from "./Page/chatPage/Chat.jsx";
 import MediaStep from "./Auth/Vendor/onBoardingFiles/MediaStep.jsx";
@@ -88,15 +89,14 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
-        </Route>
-
-
+        </Route> 
         <Route path="/onboarding" element={<OnBoarding />} />
         <Route path="/login" element={<Login />} />
         <Route path="/verify-otp" element={<OTP />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/vendor/signup" element={<VendorSignUp />} />
+         <Route path="/vendor/:slug" element={<Vendordashboard />} />
         <Route path="/user/signup" element={<UserSignUp />} />
         <Route path="/getStarted" element={<GetStarted />} />
         <Route path="/505" element={<Error505 />} />
@@ -125,37 +125,16 @@ const App = () => {
         </Route>
 
         <Route element={<PrivateRoute allowedRoles={["user", "vendor"]} />}>
-          <Route path="/vendor/:slug" element={<Vendordashboard />} />
+          {/* <Route path="/vendor/:slug" element={<Vendordashboard />} /> */}
           <Route path="/epknorating/:vendorId" element={<Epknorating />} />
           <Route path="/epkrating/:id" element={<Epkrating />} />
           <Route path="/chats" element={<Chat />} />
-          <Route path="/chats/:bookingId" element={<Chat />} />
-        </Route>
-
-
-        <Route element={<PrivateRoute allowedRoles={["user"]} />}>
-          <Route path="/userdashboard" element={<Userdashboard />} />
           <Route path="/bookings" element={<BookingModal />} />
           <Route path="/bookingrequest" element={<BookingRequest />} />
           <Route path="/request/:requestId" element={<BookingRequest />} />
-          <Route path="/ratingreview" element={<RatingReview />} />
-          <Route path="/transaction/histories" element={<WalletLedger />} />
-          <Route path="/inbox" element={<Inbox />} />
-          <Route path="/Settings" element={<Settings />} />
-        </Route>
-
-
-        <Route element={<PrivateRoute allowedRoles={["vendor"]} />}>
-          <Route path="/vendordashboard" element={<Vendordashboard />} />
-          <Route path="/vendordashboardrating" element={<Vendordashboardrating />} />
-          <Route path="/vendor/onboarding" element={<OnboardingPage />} />
-          <Route path="/vendor/kyc" element={<VendorKYC />} />
-          <Route path="/mediastep" element={<MediaStep />} />
-          <Route path="/pricingstep" element={<PricingStep />} />
-          <Route path="/vendormediagallery" element={<Vendormediagallery />} />
-          <Route path="/VendorChat/:Id" element={<VendorChat />} />
-          <Route path="/wallet/transactions" element={<VendorWallet />} />
-          <Route path="/notifications" element={<NotificationsWrapper />}>
+          <Route path="/chats/:bookingId" element={<Chat />} />
+          <Route path="/payment/callback" element={<PaymentCallback />} />
+            <Route path="/notifications" element={<NotificationsWrapper />}>
             <Route index element={<Navigate to="all" replace />} />
             <Route path="all" element={<AllNotifications />} />
             <Route path="booking" element={<BookingNotifications />} />
@@ -164,7 +143,30 @@ const App = () => {
           </Route>
         </Route>
 
-        {/* ── CATCH-ALL ─────────────────────────────────────────────────────── */}
+
+        <Route element={<PrivateRoute allowedRoles={["user"]} />}>
+          <Route path="/userdashboard" element={<Userdashboard />} />
+          <Route path="/ratingreview/:bookingId" element={<RatingReview />} />
+          {/* <Route path="/transaction/histories" element={<WalletLedger />} /> */}
+          <Route path="/inbox" element={<Inbox />} />
+        </Route>
+
+
+        <Route element={<PrivateRoute allowedRoles={["vendor"]} />}>
+          <Route path="/vendordashboard" element={<Vendordashboard />} />
+          <Route path="/vendordashboardrating" element={<Vendordashboardrating />} />
+          <Route path="/vendor/onboarding" element={<OnboardingPage />} />
+          <Route path="/vendor/kyc" element={<VendorKYC />} />
+           <Route path="/transaction/histories" element={<WalletLedger />} />
+          <Route path="/mediastep" element={<MediaStep />} />
+             <Route path="/Settings" element={<Settings />} />
+          <Route path="/pricingstep" element={<PricingStep />} />
+          <Route path="/vendormediagallery" element={<Vendormediagallery />} />
+          <Route path="/VendorChat/:Id" element={<VendorChat />} />
+          <Route path="/wallet/transactions" element={<VendorWallet />} />
+        </Route>
+
+     
         <Route path="*" element={<Error404 />} />
 
       </Routes>

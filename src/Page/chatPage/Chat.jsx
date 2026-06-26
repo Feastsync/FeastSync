@@ -6,6 +6,7 @@ import api from "../../Redux/app/socketAxios";
 import sendIcon from "../../assets/logos/sendicon.png";
 import verifiedIcon from "../../assets/logos/verifiedicon.png";
 import "./Chat.css";
+import { message } from "antd";
 
 function getInitials(name = "") {
   return name
@@ -54,6 +55,7 @@ export default function ChatsPage() {
   const [activeChatName, setActiveChatName] = useState("");
   const [activeChatAvatar, setActiveChatAvatar] = useState(null);
   const [booking, setBooking] = useState(null);
+  const [paymentLoading, setPaymentLoading] = useState(false);
 
   const bodyRef = useRef(null);
   const socketRef = useRef(null);
@@ -77,10 +79,7 @@ export default function ChatsPage() {
 
         const mapped = bookings.map((booking) => {
           const name = isVendor
-            ? `${
-                booking.userId?.firstName || ""
-              } ${booking.userId?.lastName || ""}`.trim() ||
-              "Client"
+            ? `${booking.userId?.firstName || ""} ${booking.userId?.lastName || ""}`.trim() || "Client"
             : booking.vendorId?.stageName || "Vendor";
 
           const avatar = isVendor
@@ -95,14 +94,8 @@ export default function ChatsPage() {
             name,
             avatar,
             eventType: booking.eventType || "",
-            status:
-              booking.bookingStatus ||
-              booking.status ||
-              "pending",
-            time:
-              booking.updatedAt ||
-              booking.createdAt ||
-              null,
+            status: booking.bookingStatus || booking.status || "pending",
+            time: booking.updatedAt || booking.createdAt || null,
           };
         });
 
@@ -121,9 +114,7 @@ export default function ChatsPage() {
   useEffect(() => {
     if (!bookingId || !conversations.length) return;
 
-    const active = conversations.find(
-      (c) => c.bookingId === bookingId
-    );
+    const active = conversations.find((c) => c.bookingId === bookingId);
 
     if (active) {
       setActiveChatName(active.name);
@@ -131,6 +122,7 @@ export default function ChatsPage() {
     }
   }, [bookingId, conversations]);
 
+  // Fetch messages
   useEffect(() => {
     if (!bookingId) return;
 
@@ -138,7 +130,7 @@ export default function ChatsPage() {
       try {
         const res = await api.get(`/api/v1/message/${bookingId}`);
 
-        console.log("MESSAGES RESPONSE:", res.data);
+        // console.log("MESSAGES RESPONSE:", res.data);
 
         setMessages(
           res.data?.messages ||
@@ -185,7 +177,6 @@ export default function ChatsPage() {
         const exists = prev.some(
           (m) => (m._id || m.id) === (msg._id || msg.id)
         );
-
         return exists ? prev : [...prev, msg];
       });
     });
@@ -198,37 +189,73 @@ export default function ChatsPage() {
   // Auto scroll
   useEffect(() => {
     if (bodyRef.current) {
-      bodyRef.current.scrollTop =
-        bodyRef.current.scrollHeight;
+      bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
     }
   }, [messages]);
+
+  const handlePayment = async () => {
+    if (!booking || !bookingId) {
+      message.warning("Booking details not loaded yet");
+      return;
+    }
+    const vendorId = booking.vendorId?._id || booking.vendorId;
+    if (!vendorId) {
+      message.error("Vendor ID missing from booking");
+      return;
+    }
+    setPaymentLoading(true);
+    try {
+      const res = await api.post(
+        `/api/v1/payment/initialize-payment/${vendorId}/${bookingId}`
+      );
+      const paymentData = res.data?.data || res.data;
+      const paymentUrl =
+        paymentData?.checkout_url ||
+        paymentData?.authorization_url ||
+        paymentData?.link;
+
+      if (paymentUrl) {
+        message.loading("Redirecting to KoraPay...", 1);
+        // Store bookingId in sessionStorage for callback
+        sessionStorage.setItem("pendingPaymentBookingId", bookingId);
+        window.location.href = paymentUrl;
+      } else {
+        message.error("Payment link not received from server");
+      }
+    } catch (error) {
+      console.error("Payment initialization failed:", error);
+      message.error(error.response?.data?.message || "Could not start payment");
+    } finally {
+      setPaymentLoading(false);
+    }
+  };
 
   // Send message
   const handleSend = async () => {
     const val = input.trim();
-
     if (!val || !booking) return;
+
+    if (!["accepted", "confirmed"].includes(booking.bookingStatus)) {
+  message.warning(
+    booking.bookingStatus === "rejected"
+      ? "This booking was rejected. You cannot send messages."
+      : "You cannot chat until the vendor accepts your booking."
+  );
+  return;
+}
 
     try {
       const res = await api.post(`/api/v1/message/messages/${bookingId}`, {
         text: val,
-        senderId: isVendor
-          ? booking.vendorId._id
-          : booking.userId._id,
-
-        receiverId: isVendor
-          ? booking.userId._id
-          : booking.vendorId._id,
-
+        senderId: isVendor ? booking.vendorId._id : booking.userId._id,
+        receiverId: isVendor ? booking.userId._id : booking.vendorId._id,
         roomId: booking._id,
         booking: booking._id,
       });
 
-      const newMessage =
-        res.data?.data || res.data;
+      const newMessage = res.data?.data || res.data;
 
       setMessages((prev) => [...prev, newMessage]);
-
       setInput("");
 
       socketRef.current?.emit("send_message", {
@@ -243,16 +270,17 @@ export default function ChatsPage() {
   return (
     <div className="chats-page">
       <aside
-        className={`chats-sidebar ${
-          bookingId
-            ? "chats-sidebar--hidden-mobile"
-            : ""
-        }`}
+        className={`chats-sidebar ${bookingId ? "chats-sidebar--hidden-mobile" : ""}`}
       >
         <div className="chats-sidebar__header">
-          <h2 className="chats-sidebar__title">
-            Messages
-          </h2>
+          <button
+            className="chats-sidebar__back-btn"
+            onClick={() => navigate(-1)}
+            aria-label="Go back"
+          >
+            ‹
+          </button>
+          <h2 className="chats-sidebar__title">Messages</h2>
         </div>
 
         {inboxLoading && (
@@ -269,67 +297,46 @@ export default function ChatsPage() {
           </div>
         )}
 
-        {!inboxLoading &&
-          conversations.length === 0 && (
-            <div className="chats-sidebar__empty">
-              <span>💬</span>
-              <p>No conversations yet</p>
-            </div>
-          )}
+        {!inboxLoading && conversations.length === 0 && (
+          <div className="chats-sidebar__empty">
+            <span>💬</span>
+            <p>No conversations yet</p>
+          </div>
+        )}
 
-        {!inboxLoading &&
-          conversations.length > 0 && (
-            <ul className="cs-list">
-              {conversations.map((conv) => (
-                <li
-                  key={conv.bookingId}
-                  className={`cs-item ${
-                    bookingId === conv.bookingId
-                      ? "cs-item--active"
-                      : ""
-                  }`}
-                  onClick={() =>
-                    navigate(`/chats/${conv.bookingId}`)
-                  }
-                >
-                  <div className="cs-avatar">
-                    {conv.avatar ? (
-                      <img
-                        src={conv.avatar}
-                        alt={conv.name}
-                      />
-                    ) : (
-                      getInitials(conv.name)
-                    )}
+        {!inboxLoading && conversations.length > 0 && (
+          <ul className="cs-list">
+            {conversations.map((conv) => (
+              <li
+                key={conv.bookingId}
+                className={`cs-item ${bookingId === conv.bookingId ? "cs-item--active" : ""}`}
+                onClick={() => navigate(`/chats/${conv.bookingId}`)}
+              >
+                <div className="cs-avatar">
+                  {conv.avatar ? (
+                    <img src={conv.avatar} alt={conv.name} />
+                  ) : (
+                    getInitials(conv.name)
+                  )}
+                </div>
+
+                <div className="cs-item__body">
+                  <div className="cs-item__top">
+                    <span className="cs-item__name">{conv.name}</span>
+                    <span className="cs-item__time">{timeAgo(conv.time)}</span>
                   </div>
 
-                  <div className="cs-item__body">
-                    <div className="cs-item__top">
-                      <span className="cs-item__name">
-                        {conv.name}
-                      </span>
-
-                      <span className="cs-item__time">
-                        {timeAgo(conv.time)}
-                      </span>
-                    </div>
-
-                    <div className="cs-item__bottom">
-                      <span className="cs-item__preview">
-                        {conv.eventType}
-                      </span>
-
-                      <span
-                        className={`cs-item__status cs-item__status--${conv.status?.toLowerCase()}`}
-                      >
-                        {conv.status}
-                      </span>
-                    </div>
+                  <div className="cs-item__bottom">
+                    <span className="cs-item__preview">{conv.eventType}</span>
+                    <span className={`cs-item__status cs-item__status--${conv.status?.toLowerCase()}`}>
+                      {conv.status}
+                    </span>
                   </div>
-                </li>
-              ))}
-            </ul>
-          )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </aside>
 
       <section className="chats-main">
@@ -346,10 +353,7 @@ export default function ChatsPage() {
 
             <div className="chats-chat__avatar">
               {activeChatAvatar ? (
-                <img
-                  src={activeChatAvatar}
-                  alt={activeChatName}
-                />
+                <img src={activeChatAvatar} alt={activeChatName} />
               ) : (
                 getInitials(activeChatName)
               )}
@@ -364,38 +368,33 @@ export default function ChatsPage() {
                 {activeChatName && (
                   <>
                     <span className="chats-badge chats-badge--kyc">
-                      <img
-                        src={verifiedIcon}
-                        alt="verified"
-                        className="chats-badge__icon"
-                      />
+                      <img src={verifiedIcon} alt="verified" className="chats-badge__icon" />
                       KYC Verified
                     </span>
-                    <span className="chats-badge chats-badge--online">
-                      Online
-                    </span>
+                    <span className="chats-badge chats-badge--online">Online</span>
                   </>
                 )}
               </div>
             </div>
 
             <div className="chats-chat__actions">
-<div className="chats-chat__actions">
-  <button
-    className="chats-back-header-btn"
-    onClick={() => navigate("/")}
-  >
-    Back
-  </button>
-  {!isVendor && (
-    <button
-      className="chats-pay-btn"
-      onClick={() => navigate(`/payment/${bookingId}`)}
-    >
-      Proceed to Payment
-    </button>
-  )}
-</div>
+              <button className="chats-back-header-btn" onClick={() => navigate("/")}>
+                Back
+              </button>
+              {!isVendor && (
+                <button
+                  className="chats-pay-btn"
+                  onClick={handlePayment}
+                  disabled={
+  paymentLoading ||
+  !booking ||
+  !["accepted", "confirmed"].includes(booking.bookingStatus)
+}
+
+                >
+                  Proceed to Payment
+                </button>
+              )}
             </div>
           </div>
 
@@ -406,10 +405,7 @@ export default function ChatsPage() {
             </div>
           ) : (
             <>
-              <div
-                className="chats-chat__body"
-                ref={bodyRef}
-              >
+              <div className="chats-chat__body" ref={bodyRef}>
                 <div className="chats-date-divider">
                   <span>Today</span>
                 </div>
@@ -423,20 +419,11 @@ export default function ChatsPage() {
                   return (
                     <div
                       key={msg._id || msg.id}
-                      className={`bubble ${
-                        isMine
-                          ? "bubble--me"
-                          : "bubble--them"
-                      }`}
+                      className={`bubble ${isMine ? "bubble--me" : "bubble--them"}`}
                     >
-                      <p className="bubble__text">
-                        {msg.text || msg.content}
-                      </p>
-
+                      <p className="bubble__text">{msg.text || msg.content}</p>
                       <span className="bubble__time">
-                        {new Date(
-                          msg.createdAt
-                        ).toLocaleTimeString([], {
+                        {new Date(msg.createdAt).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
@@ -449,28 +436,31 @@ export default function ChatsPage() {
               </div>
 
               <div className="chats-chat__input-row">
-                <input
-                  className="chats-chat__input"
-                  value={input}
-                  onChange={(e) =>
-                    setInput(e.target.value)
-                  }
-                  onKeyDown={(e) =>
-                    e.key === "Enter" && handleSend()
-                  }
-                  placeholder="Type your message here"
-                />
+                 {!isVendor && booking && !["accepted", "confirmed"].includes(booking.bookingStatus) ? (
+  <div className="chats-chat__blocked">
+    {booking.bookingStatus === "rejected"
+      ? "❌ Booking rejected. Chat unavailable."
+      : "⏳ Waiting for vendor to accept your booking."}
+  </div>
+) : (
+  <>
+    <input
+      className="chats-chat__input"
+      value={input}
+      onChange={(e) => setInput(e.target.value)}
+      onKeyDown={(e) => e.key === "Enter" && handleSend()}
+      placeholder="Type your message here"
+    />
+    <button
+      className="chats-chat__send-btn"
+      onClick={handleSend}
+      aria-label="Send"
+    >
+      <img src={sendIcon} alt="send" />
+    </button>
+  </>
+)}
 
-                <button
-                  className="chats-chat__send-btn"
-                  onClick={handleSend}
-                  aria-label="Send"
-                >
-                  <img
-                    src={sendIcon}
-                    alt="send"
-                  />
-                </button>
               </div>
             </>
           )}

@@ -1,6 +1,5 @@
 .vendordashboard-vendor-dashboard-container{
     width: 100%;
-    height: 100vh;
     min-height: max-content;
     background-color: white;
 }
@@ -51,6 +50,9 @@
   &:hover {
     border:none
   }
+}
+.vendordashboard-vendor-bio{
+    margin-top: 20px;
 }
 .vendordashboard-vendor-bio h3 {
   font-size: 15px;

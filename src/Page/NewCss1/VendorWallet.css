@@ -14,6 +14,59 @@
   align-items: flex-start;
   margin-bottom: 40px;
 }
+.Vendor_wallet_onboard {
+  text-align: center;
+  padding: 40px 20px;
+  border: 1px dashed #d1d5db;
+  border-radius: 8px;
+  background: #f9fafb;
+}
+
+.Vendor_wallet_onboard_icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.Vendor_wallet_onboard_title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: #111827;
+}
+
+.Vendor_wallet_onboard_text {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0 0 20px;
+}
+
+.Vendor_wallet_onboard_cta {
+  margin: 0 auto;
+}
+
+.Vendor_wallet_action_btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.Vendor_wallet_eye {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 4px;
+  font-size: 16px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  line-height: 1;
+}
+
+.Vendor_wallet_eye:hover {
+  opacity: 1;
+}
+
+.Vendor_wallet_eye:active {
+  transform: scale(0.95);
+}
 
 .Vendor_wallet_header_left {
   display: flex;
@@ -210,6 +263,49 @@
   font-size: 16px;
   color: #666666;
 }
+.withdraw_bank_card {
+  background: var(--background-color);
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.withdraw_bank_info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+}
+
+.withdraw_input_wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.withdraw_currency {
+  position: absolute;
+  left: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #666;
+  z-index: 1;
+}
+
+.withdraw_input_wrap .modal_input {
+  padding-left: 32px;
+}
+
+.Vendor_wallet_empty_state {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.Vendor_wallet_empty_state p {
+  margin-bottom: 16px;
+  color: #666;
+}
 
 @media (max-width: 1024px) {
   .Vendor_wallet_stats {
@@ -295,4 +391,77 @@
   .Vendor_wallet_action_btn.btn {
     width: 100%;
   }
+}
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+
+.skeleton-line {
+  background: #e5e7eb;
+  background-image: linear-gradient(90deg, #e5e7eb 0px, #f3f4f6 40px, #e5e7eb 80px);
+  background-size: 200px 100%;
+  animation: shimmer 1.2s infinite linear;
+  border-radius: 4px;
+}
+
+/* Balance skeleton */
+.skeleton-balance {
+  height: 36px;
+  width: 160px;
+  margin-top: 4px;
+}
+
+/* Stat card skeletons */
+.Vendor_wallet_stat_card--loading .skeleton-stat-label {
+  width: 70%;
+  height: 14px;
+  margin-bottom: 10px;
+}
+
+.Vendor_wallet_stat_card--loading .skeleton-stat-value {
+  width: 60%;
+  height: 28px;
+  margin-bottom: 6px;
+}
+
+.Vendor_wallet_stat_card--loading .skeleton-stat-sub {
+  width: 80%;
+  height: 12px;
+}
+
+/* Transaction skeletons */
+.Vendor_recent_tx--skeleton {
+  pointer-events: none;
+}
+
+.skeleton-tx-title {
+  width: 120px;
+  height: 16px;
+  margin-bottom: 6px;
+}
+
+.skeleton-tx-id {
+  width: 180px;
+  height: 12px;
+}
+
+.skeleton-tx-amount {
+  width: 80px;
+  height: 16px;
+  margin-bottom: 4px;
+  margin-left: auto;
+}
+
+.skeleton-tx-status {
+  width: 60px;
+  height: 14px;
+  margin-bottom: 4px;
+  margin-left: auto;
+}
+
+.skeleton-tx-date {
+  width: 70px;
+  height: 12px;
+  margin-left: auto;
 }

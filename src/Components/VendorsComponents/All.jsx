@@ -32,7 +32,9 @@ const AllVendors = () => {
           name: vendor.stageName || '',
           location: vendor.stateOfResidence || vendor.location || '',
           rating: Math.floor(vendor.averageRating || 0), 
-          price: vendor.bookingFee || 0, 
+            pprice: vendor.pricingId?.find(
+  (p) => p.packageName === "Basic Package"
+         )?.packagePrice || vendor.bookingFee || 0,
           image: vendor.profilePicture?.secureUrl || vendor.profilePicture || ''
         }))
         setVendors(mappedVendors)
@@ -113,7 +115,7 @@ const AllVendors = () => {
                   name={vendor.name}
                   location={vendor.location}
                   rating={vendor.rating}
-                  price={vendor.price}
+                  price={vendor.pprice}
                   image={vendor.image}
                   slug={vendor.slug}
                 />
