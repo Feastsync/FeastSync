@@ -11,7 +11,7 @@ const WhatWeStandFor = () => {
         <div className="wwsf_header">
           <h2 className="wwsf_title">WHAT WE STAND FOR</h2>
           <p className="wwsf_subtitle">
-            A dedicated platform for professional entertainment ecosystems. Discover top-tier event entertainers and<br />
+            A dedicated platform for professional entertainment ecosystems. Discover top-tier event entertainers and
             Choose FeastSync for secure, transparent, and seamless bookings.
           </p>
         </div>

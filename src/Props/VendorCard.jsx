@@ -33,7 +33,7 @@ const handleBookNow = (e) => {
 const handleWishlist = (e) => {
   e.stopPropagation()
   if (!isLoggedInUser) {
-    navigate("/onboarding", { state: { from: `/vendor/${props.slug}` } })
+    navigate("/vendordashboard", { state: { from: `/vendor/${props.slug}` } })
     return
   } 
   setIsLiked(!isLiked)
@@ -60,17 +60,17 @@ const handleWishlist = (e) => {
         <span className="see_more_lnk" onClick={goToVendor}>
           See More
         </span>
-        <Button
-          className="wishlist_btn"
-          onClick={handleWishlist}
-          btnText={isLiked ? <FaHeart size={12} color="#330159" /> : <FiHeart size={12} />}
-        />
       </div>
 
-      <div className="vendor_img_box" onClick={goToVendor}>
-        <img src={props.image} alt={props.name} className="vendor_img" />
-      </div>
-
+<div className="vendor_img_box" onClick={goToVendor}>
+  {props.image ? (
+    <img src={props.image} alt={props.name} className="vendor_img" />
+  ) : (
+    <div className="vendor_avatar_fallback">
+      {props.name?.charAt(0).toUpperCase() || "V"}
+    </div>
+  )}
+</div>
       <div className="vendor_info">
         <h3 className="vendor_name" onClick={goToVendor}>
           {props.name}
@@ -93,7 +93,7 @@ const handleWishlist = (e) => {
 
         <div className="vendor_card_footer">
           <div className="price_box">
-            <p className="price_lbl">Starting Price</p>
+            <p className="price_lbl">Basic Price</p>
             <p className="price_amt">
               ₦{props.price ? props.price.toLocaleString() : 0}
             </p>

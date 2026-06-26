@@ -1,300 +1,442 @@
+/* ── Container ─────────────────────────────────────── */
 .ratingreview-container {
-  width: 100%;
-  height: 100vh;
-  min-height: max-content;
-  background: #ffffff;
+  min-height: 100vh;
+  background: #fff;
 }
 
-.ratingreview-wrapper {
-  width: calc(100% - 80px);
-  margin: 40px;
+/* ── Single top bar ─────────────────────────────────── */
+.ratingreview-topbar {
+  background: #330159;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-.ratingreview-booking-text {
-  text-align: center;
-  font-size: 15px;
+.ratingreview-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ratingreview-topbar-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #6d28d9;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ratingreview-topbar-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ratingreview-topbar-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.ratingreview-topbar-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ratingreview-topbar-status {
+  font-size: 12px;
   font-weight: 600;
-  color: #101010;
-  margin-bottom: 50px;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: #22c55e;
+  color: #fff;
 }
 
-.ratingreview-rating-section {
+.ratingreview-topbar-booking {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.ratingreview-topbar-close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 22px;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.ratingreview-topbar-close:hover {
+  color: #fff;
+}
+
+/* ── Wrapper ────────────────────────────────────────── */
+.ratingreview-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 80px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* ── Booking notice ─────────────────────────────────── */
+.ratingreview-booking-text {
+  font-size: 14px;
+  color: #888;
   text-align: center;
-  margin-bottom: 70px;
+  margin: 0;
+}
+
+/* ── Rating section ─────────────────────────────────── */
+.ratingreview-rating-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
 }
 
 .ratingreview-rating-title {
-  font-size: 13px;
-  color: #101010;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0F0F10;
+  margin: 0;
+}
+.ratingreview-rating-section,
+.ratingreview-note-section {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
   margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
+/* STARS */
 .ratingreview-stars {
   display: flex;
-  justify-content: center;
-  gap: 18px;
+  gap: 12px;
 }
 
-.ratingreview-stars img {
-  width: 35px;
-  height: 35px;
+.ratingreview-star {
+  background: none;
+  border: none;
+  font-size: 42px;
   cursor: pointer;
+  color: #ccc;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.15s ease, transform 0.12s ease;
 }
 
-.ratingreview-note-section {
-  width: 100%;
-  margin-bottom: 40px;
+.ratingreview-star:hover,
+.ratingreview-star--filled {
+  color: #f5a623;
 }
 
-.ratingreview-note-section label {
-  display: block;
-  margin-bottom: 12px;
-  font-size: 17.5px;
-  font-weight: 500;
+.ratingreview-star:hover {
+  transform: scale(1.15);
+}
+
+.ratingreview-rating-label {
+  font-size: 14px;
+  font-weight: 600;
   color: #330159;
 }
 
+/* ── Note / Comment ─────────────────────────────────── */
+.ratingreview-note-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ratingreview-note-section label {
+  font-size: 15px;
+  font-weight: 500;
+  color: #0F0F10;
+}
+
+/* NOTE */
 .ratingreview-note-input {
   width: 100%;
-  height: 223px;
-  border: 1px solid #dcdcdc;
-  border-radius: 2px;
-  padding: 12px;
+  min-height: 160px;
+  padding: 16px 18px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 15px;
+  color: #0F0F10;
+  background: #fff;
   resize: none;
+  font-family: inherit;
+  transition: border-color 0.18s;
+  box-sizing: border-box;
+}
+
+.ratingreview-note-input:focus {
   outline: none;
-  font-size: 14px;
+  border-color: #330159;
 }
 
 .ratingreview-note-input::placeholder {
-  color: #2b2a2a;
+  color: #bbb;
 }
 
+.ratingreview-char-count {
+  font-size: 12px;
+  color: #999;
+  text-align: right;
+}
+
+/* ── Evidence title ─────────────────────────────────── */
+.ratingreview-evidence-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: #0F0F10;
+  margin: 0;
+}
+
+/* ── Evidence layout ────────────────────────────────── */
 .ratingreview-evidence-section {
-  width: 100%;
-  height: 65vh;
   display: flex;
-  margin-top: 20px;
-}
-.ratingreview-evidence-left{
-  width: 50%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ratingreview-evidence-right{
-  width: 50%;
-  height: 100%;
-}
-.ratingreview-evidence-rightup{
-  width: 100%;
-  height: 50%;
-  display: flex;
-}
-.ratingreview-evidence-rightup-left{
-  width: 50%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ratingreview-evidence-rightup-right{
-  width: 50%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ratingreview-evidence-rightup-right h2{
-  display: none;
-}
-.ratingreview-evidence-rightdown{
-  width: 100%;
-  height: 50%;
-  border-radius: var(--radius-xs, 6px);
-  background: var(--Color-2, #4A5565);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ratingreview-evidence-rightdown h2{
-  display: none;
-}
-.ratingreview-submit{
-  width: 100%;
-  height: 15vh;
-  display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 16px;
 }
 
+.ratingreview-evidence-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.ratingreview-media-slot {
+  border: 1.5px dashed #ccc;
+  border-radius: 12px;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #888;
+  transition: border-color 0.18s, background 0.18s, color 0.18s;
+  min-height: 160px;
+  padding: 20px;
+}
+
+.ratingreview-media-slot:hover {
+  border-color: #330159;
+  background: #f5eeff;
+  color: #330159;
+}
+
+.ratingreview-add-icon {
+  font-size: 34px;
+}
+
+/* Bottom preview row */
+.ratingreview-evidence-bottom {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.ratingreview-preview-thumb {
+  width: 110px;
+  height: 110px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  border: 1.5px solid #e0e0e0;
+  background: #f0f0f0;
+  flex-shrink: 0;
+}
+
+.ratingreview-preview-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ratingreview-preview-thumb--video {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px;
+  font-size: 11px;
+  color: #555;
+  text-align: center;
+  word-break: break-all;
+}
+
+.ratingreview-addmore-slot {
+  width: 110px;
+  height: 110px;
+  border: 1.5px dashed #ccc;
+  border-radius: 12px;
+  background: #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #666;
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s;
+  flex-shrink: 0;
+  text-align: center;
+  padding: 8px;
+}
+
+.ratingreview-addmore-slot:hover {
+  border-color: #330159;
+  background: #f5eeff;
+  color: #330159;
+}
+
+.ratingreview-remove-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ratingreview-remove-btn:hover {
+  background: #c64a0c;
+}
+
+/* ── Feedback ───────────────────────────────────────── */
+.ratingreview-error {
+  font-size: 14px;
+  color: #c0392b;
+  background: #fff0ef;
+  border: 1px solid #f5c6c2;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 0;
+}
+
+.ratingreview-success {
+  font-size: 14px;
+  color: #1a7a3c;
+  background: #edfaf3;
+  border: 1px solid #b2e6cb;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 0;
+}
+
+/* ── Submit full width ──────────────────────────────── */
+.ratingreview-submit {
+  width: 100%;
+}
+
+/* CARD (IMAGE + VIDEO SAME SIZE) */
+.ratingreview-card {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px dashed #ccc;
+  background: #fff;
+}
+
+/* INPUT OVER FULL CARD */
+.ratingreview-card input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* IMAGE + VIDEO FULL FIT */
+.ratingreview-card img,
+.ratingreview-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* PLACEHOLDER TEXT */
+.ratingreview-card span {
+  position: absolute;
+  color: #888;
+  font-weight: 500;
+}
+
+/* SUBMIT */
 .ratingreview-submit-btn {
   width: 100%;
-  height: 45px;
+  padding: 18px;
+  background: #330159;
+  color: #fff;
   border: none;
-  background: var(--primary-color);
-  font-size: 17px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 30px;
-  color: #ffffff;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
-  border-radius: 3px;
+  transition: background 0.18s;
+  letter-spacing: 0.2px;
 }
 
-.ratingreview-submit-btn:hover {
-  border: 1px solid var(--primary-color);
-  background: transparent;
-  color: var(--primary-color);
+.ratingreview-submit-btn:hover:not(:disabled) {
+  background: #4a0280;
 }
 
+.ratingreview-submit-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
 
-@media screen and (max-width: 1200px) {
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .ratingreview-topbar {
+    padding: 16px 20px;
+  }
+
   .ratingreview-wrapper {
-    width: calc(100% - 40px);
-    margin: 20px;
+    padding: 32px 20px 60px;
+    gap: 24px;
   }
 
-  .ratingreview-booking-text {
-    margin-bottom: 30px;
-  }
-
-  .ratingreview-rating-section {
-    margin-bottom: 40px;
-  }
- .ratingreview-evidence-rightup-right span{
-  display: none;
-}
- .ratingreview-evidence-rightup-right h2{
-  display: flex;
-  font-size: 16px;
-  font-weight: 500;
-}
-  .ratingreview-evidence-rightdown p{
-  display: none;
-}
-  .ratingreview-evidence-rightdown h2{
-   display: flex;
-   font-size: 16px;
-   font-weight: 500;
- }
-}
-
-@media screen and (max-width: 680px) {
-  .ratingreview-container {
-    height: auto;
-  }
-
-  .ratingreview-evidence-section {
-    flex-direction: column;
-    height: auto;
-    gap: 16px;
-  }
-
-  .ratingreview-evidence-left {
-    width: 100%;
-    height: 200px;
-    border-radius: var(--radius-xs, 6px);
-    background: var(--Color, #EEE);
-  }
-
-  .ratingreview-evidence-right {
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .ratingreview-evidence-rightup {
-    flex-direction: column;
-    height: auto;
-    gap: 16px;
-  }
-
-  .ratingreview-evidence-rightup-left {
-    width: 100%;
-    height: 200px;
-    border-radius: var(--radius-xs, 6px);
-    background: var(--Color, #EEE);
-  }
-
-  .ratingreview-evidence-rightup-right {
-    width: 100%;
-    height: 200px;
-    border-radius: var(--radius-xs, 6px);
-    background: var(--Color, #EEE);
-  }
-.ratingreview-evidence-rightup-right span{
-  display: none;
-}
- .ratingreview-evidence-rightup-right h2{
-  display: flex;
-  font-size: 16px;
-  font-weight: 500;
-}
-  .ratingreview-evidence-rightdown {
-    width: 100%;
-    height: 200px;
-    border-radius: var(--radius-xs, 6px);
-    background: var(--Color, #EEE);   
-  }
-    .ratingreview-evidence-rightdown p{
-  display: none;
-}
-  .ratingreview-evidence-rightdown h2{
-   display: flex;
-   font-size: 16px;
-   font-weight: 500;
- }
-
-  .ratingreview-submit {
-    height: auto;
-    margin-top: 30px;
-    padding-bottom: 20px;
-  }
-}
-
-@media screen and (max-width: 678px) {
-  .ratingreview-wrapper {
-    width: calc(100% - 32px);
-    margin: 16px;
-  }
-
-  .ratingreview-booking-text {
-    font-size: 14px;
-    margin-bottom: 24px;
-  }
-
-  .ratingreview-stars {
-    gap: 12px;
-  }
-
-  .ratingreview-stars img {
-    width: 30px;
-    height: 30px;
-  }
-
-  .ratingreview-note-section label {
-    font-size: 15px;
+  .ratingreview-star {
+    font-size: 34px;
   }
 
   .ratingreview-note-input {
-    height: 160px;
+    min-height: 130px;
   }
-.ratingreview-evidence-rightup-right span{
-  display: none;
-}
- .ratingreview-evidence-rightup-right h2{
-  display: flex;
-  font-size: 16px;
-  font-weight: 500;
-}
-    .ratingreview-evidence-rightdown p{
-  display: none;
-}
-  .ratingreview-evidence-rightdown h2{
-   display: flex;
-   font-size: 16px;
-   font-weight: 500;
- }
+
+  .ratingreview-preview-thumb,
+  .ratingreview-addmore-slot {
+    width: 90px;
+    height: 90px;
+  }
 }

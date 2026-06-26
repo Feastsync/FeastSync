@@ -1,12 +1,13 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser, updateVendorInfo, getAllPricing } from '../../Redux/features/authslice'
 import { message } from 'antd'
 import { persistor } from '../../Redux/app/store'
 import api from '../../Redux/app/axios'
+import { MdLogout } from 'react-icons/md'
 import './Settings.css'
-
+import { nigerianBanks } from '../../mock/moc'
 const Settings = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -18,18 +19,21 @@ const Settings = () => {
   const [updateLoading, setUpdateLoading] = useState(false)
   const [pendingUpdate, setPendingUpdate] = useState({})
 
-  // Field states
   const [phoneNumber, setPhoneNumber] = useState(vendorInfo?.phoneNumber || '')
   const [displayName, setDisplayName] = useState(vendorInfo?.stageName || '')
   const [location, setLocation] = useState(vendorInfo?.stateOfResidence || '')
   const [bio, setBio] = useState(vendorInfo?.bio || '')
-  const [bank, setBank] = useState({ name: '', account: '' })
+  const [bank, setBank] = useState({ name: '', code: '', account: '' })
   const [pricing, setPricing] = useState({
     id: '',
     startingPrice: '',
     packageName: '',
     description: '',
   })
+
+  useEffect(() => {
+    dispatch(getAllPricing())
+  }, [dispatch])
 
   const handleBack = () => {
     if (window.history.length > 1) navigate(-1)
@@ -58,7 +62,6 @@ const Settings = () => {
     }
   }
 
-  // For phone, bio, location, bank — goes through OTP flow
   const handleSaveUpdate = async (fields) => {
     try {
       setUpdateLoading(true)
@@ -73,7 +76,6 @@ const Settings = () => {
     }
   }
 
-  // Confirm OTP → finalize update
   const verifyOtp = async () => {
     const otpString = otp.join('')
     if (otpString.length < 4) {
@@ -93,7 +95,6 @@ const Settings = () => {
     }
   }
 
-  // Pricing uses its own dedicated endpoints — no OTP needed
   const handlePricingSave = async () => {
     if (!pricing.packageName || !pricing.startingPrice) {
       message.error('Please fill in package name and price')
@@ -106,9 +107,14 @@ const Settings = () => {
         packagePrice: pricing.startingPrice,
         packageDescription: pricing.description,
       }
+      console.log('Saving pricing with payload:', payload)
+      console.log('Pricing ID:', pricing.id)
+      
       if (pricing.id) {
+        console.log('Updating existing pricing...')
         await api.put(`/new-pricing/${pricing.id}`, payload)
       } else {
+        console.log('Creating new pricing...')
         await api.post('/pricing', payload)
       }
       dispatch(getAllPricing())
@@ -116,13 +122,14 @@ const Settings = () => {
       closeModal()
       setPricing({ id: '', startingPrice: '', packageName: '', description: '' })
     } catch (err) {
+      console.error('Pricing error:', err)
+      console.error('Error response:', err.response?.data)
       message.error(err.response?.data?.message || 'Failed to save pricing')
     } finally {
       setUpdateLoading(false)
     }
   }
-
-  // Open pricing modal pre-filled with an existing package
+ console.log("object",vendorInfo)
   const handleEditPricing = (pkg) => {
     setPricing({
       id: pkg.id || pkg._id || '',
@@ -138,7 +145,7 @@ const Settings = () => {
       await dispatch(logoutUser()).unwrap()
       message.success('Logged out successfully')
       navigate('/login')
-    } catch (err) {
+    } catch {
       await persistor.purge()
       navigate('/login')
     }
@@ -154,10 +161,11 @@ const Settings = () => {
         <div className="settings_section_header">
           <h3 className="settings_section_title">SETTINGS</h3>
         </div>
-
+{/* 
         <div className="settings_section_header">
           <h4 className="settings_subsection_title">Account</h4>
-        </div>
+          <button className="settings_logout_btn" onClick={() => setModal('logout')}>Logout</button>
+        </div> */}
 
         <div className="settings_profile_card">
           <div className="settings_avatar">
@@ -167,7 +175,7 @@ const Settings = () => {
             <h3 className="settings_profile_name">
               {vendorInfo?.stageName || `${vendorInfo?.firstName} ${vendorInfo?.lastName}`}
             </h3>
-            <p className="settings_profile_role">Vendor — DJ</p>
+            <p className="settings_profile_role">{vendorInfo?.category}</p>
           </div>
         </div>
 
@@ -241,27 +249,6 @@ const Settings = () => {
             <button className="settings_btn">Edit</button>
           </div>
         </div>
-
-        {/* Pricing packages list */}
-        <div className="settings_row">
-          <div className="settings_row_left">
-            <span className="settings_label">Package and Pricing</span>
-            <span className="settings_sublabel">Edit and set pricing</span>
-          </div>
-          <div className="settings_row_right">
-            <button
-              className="settings_btn"
-              onClick={() => {
-                setPricing({ id: '', startingPrice: '', packageName: '', description: '' })
-                setModal('pricing')
-              }}
-            >
-              + Add New
-            </button>
-          </div>
-        </div>
-
-        {/* Show existing pricing packages */}
         {Array.isArray(pricingPackages) && pricingPackages.map((pkg) => (
           <div className="settings_row" key={pkg.id || pkg._id}>
             <div className="settings_row_left">
@@ -297,16 +284,33 @@ const Settings = () => {
             <span className="settings_label">KYC VERIFICATION</span>
           </div>
           <div className="settings_row_right">
-            <div className="settings_badge_approved">✓ Approved</div>
+            {vendorInfo?.isKycVerified ? (
+              <div className="settings_badge_approved">✓ Approved</div>
+            ) : (
+              <div className="settings_badge_pending">⏳ {vendorInfo?.verificationStatus || 'Pending'}</div>
+            )}
           </div>
         </div>
 
-        <div className="settings_logout_section">
-          <button className="settings_logout_btn" onClick={handleLogout}>Logout</button>
-        </div>
       </div>
+      {modal === 'logout' && (
+        <div className="modal_overlay" onClick={closeModal}>
+          <div className="logout_modal_box" onClick={(e) => e.stopPropagation()}>
+            <div className="logout_modal_icon">
+             <MdLogout size={28} />
+            </div>
+            <h3 className="logout_modal_title">Log out?</h3>
+            <p className="logout_modal_subtitle">
+              You'll need to sign in again to access your account.
+            </p>
+            <div className="logout_modal_actions">
+              <button className="logout_modal_cancel" onClick={closeModal}>Cancel</button>
+              <button className="logout_modal_confirm" onClick={handleLogout}>Yes, log out</button>
+            </div>
+          </div>
+        </div>
+      )}
 
-      {/* ── Phone Modal ── */}
       {modal === 'phone' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box" onClick={(e) => e.stopPropagation()}>
@@ -338,7 +342,6 @@ const Settings = () => {
         </div>
       )}
 
-      {/* ── Display Name / Bio Modal ── */}
       {(modal === 'display-name' || modal === 'bio') && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box" onClick={(e) => e.stopPropagation()}>
@@ -383,7 +386,7 @@ const Settings = () => {
         </div>
       )}
 
-      {/* ── Location Modal ── */}
+      
       {modal === 'location' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box" onClick={(e) => e.stopPropagation()}>
@@ -421,7 +424,7 @@ const Settings = () => {
         </div>
       )}
 
-      {/* ── Bank Modal ── */}
+      
       {modal === 'bank' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box" onClick={(e) => e.stopPropagation()}>
@@ -432,18 +435,18 @@ const Settings = () => {
             <div className="modal_body">
               <label className="modal_label">Select Bank</label>
               <select
-                className="modal_select"
-                value={bank.name}
-                onChange={(e) => setBank({ ...bank, name: e.target.value })}
-              >
-                <option value="">Select Bank</option>
-                <option value="GTBank">GTBank</option>
-                <option value="Access Bank">Access Bank</option>
-                <option value="First Bank">First Bank</option>
-                <option value="Zenith Bank">Zenith Bank</option>
-                <option value="UBA">UBA</option>
-                <option value="Opay">Opay</option>
-              </select>
+  className="modal_select"
+  value={bank.code}
+  onChange={(e) => {
+    const selected = nigerianBanks.find(b => b.code === e.target.value);
+    setBank({ ...bank, name: selected?.name || "", code: selected?.code || "" });
+  }}
+>
+  <option value="">Select Bank</option>
+  {nigerianBanks.map((b) => (
+    <option key={b.code} value={b.code}>{b.name}</option>
+  ))}
+</select>
               <label className="modal_label">Account Number</label>
               <input
                 type="text"
@@ -459,9 +462,11 @@ const Settings = () => {
               <button
                 className="modal_btn_primary"
                 disabled={updateLoading}
-                onClick={() =>
-                  handleSaveUpdate({ bankName: bank.name, accountNumber: bank.account })
-                }
+           onClick={() => handleSaveUpdate({ 
+  bankName: bank.name, 
+  bankCode: bank.code, 
+  accountNumber: bank.account 
+})}
               >
                 {updateLoading ? 'Sending...' : 'Continue to Verify'}
               </button>
@@ -470,7 +475,7 @@ const Settings = () => {
         </div>
       )}
 
-      {/* ── Pricing Modal ── */}
+      
       {modal === 'pricing' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box pricing_modal" onClick={(e) => e.stopPropagation()}>
@@ -525,7 +530,7 @@ const Settings = () => {
         </div>
       )}
 
-      {/* ── OTP Verify Modal ── */}
+  
       {modal === 'otp-verify' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box" onClick={(e) => e.stopPropagation()}>

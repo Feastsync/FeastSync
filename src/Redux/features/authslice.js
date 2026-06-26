@@ -3,13 +3,13 @@ import api from "../app/axios";
 import { persistor } from "../app/store";
 
 const STEP_MAP = {
-  1: 'category',
-  2: 'bank',
-  3: 'media',
-  4: 'pricing',
-  5: 'docs',
-  6: 'calendar',
-  7: 'completed'
+  1: "category",
+  2: "bank",
+  3: "media",
+  4: "pricing",
+  5: "docs",
+  6: "calendar",
+  7: "completed",
 };
 
 export const login = createAsyncThunk(
@@ -105,19 +105,17 @@ export const forgotPassword = createAsyncThunk(
 
 export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
-  async ({ email, otp, password, confirmPassword, accountType }, { rejectWithValue }) => {
+  async (
+    { email, password, confirmPassword, accountType },
+    { rejectWithValue },
+  ) => {
     try {
       const endpoint =
         accountType === "user"
           ? "/user/reset-password"
           : "/vendor/reset-password";
 
-      const body =
-        accountType === "vendor"
-          ? { email, password, confirmPassword }
-          : { email, otp, password, confirmPassword };
-
-      const res = await api.post(endpoint, body);
+      const res = await api.post(endpoint, { email, password, confirmPassword });
       return res.data;
     } catch (err) {
       return rejectWithValue(
@@ -131,7 +129,7 @@ export const createPricing = createAsyncThunk(
   "auth/createPricing",
   async (
     { packagePrice, packageDescription, packageName },
-    { rejectWithValue }
+    { rejectWithValue },
   ) => {
     try {
       const res = await api.post("/pricing", {
@@ -143,11 +141,10 @@ export const createPricing = createAsyncThunk(
       return res.data;
     } catch (err) {
       return rejectWithValue(
-        err.response?.data?.message ||
-          "Failed to create pricing package"
+        err.response?.data?.message || "Failed to create pricing package",
       );
     }
-  }
+  },
 );
 
 export const getAllPricing = createAsyncThunk(
@@ -179,9 +176,7 @@ export const updatePricing = createAsyncThunk(
 
       return res.data;
     } catch (err) {
-      return rejectWithValue(
-        err.response?.data?.message,
-      );
+      return rejectWithValue(err.response?.data?.message);
     }
   },
 );
@@ -190,7 +185,10 @@ export const updateVendorProfile = createAsyncThunk(
   "vendor/updateProfile",
   async ({ id, profileData }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/vendor/update-profile/${id}`, profileData);
+      const response = await api.put(
+        `/vendor/update-profile/${id}`,
+        profileData,
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(
@@ -206,26 +204,22 @@ export const replaceVendorMedia = createAsyncThunk(
     try {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("mediaId", mediaId); 
+      formData.append("mediaId", mediaId);
       formData.append("mediaType", mediaType);
 
-      const res = await api.put(
-        `/vendor/replace-media/${vendorId}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const res = await api.put(`/vendor/replace-media/${vendorId}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       return res.data;
     } catch (err) {
       return rejectWithValue(
-        err.response?.data?.message || "Media update failed"
+        err.response?.data?.message || "Media update failed",
       );
     }
-  }
+  },
 );
 
 export const logoutUser = createAsyncThunk(
@@ -247,17 +241,19 @@ export const uploadKyc = createAsyncThunk(
   async (formData, { rejectWithValue, getState }) => {
     try {
       const token = getState().auth.token;
-      const res = await api.post('/kyc/upload-kyc', formData, {
+      const res = await api.post("/kyc/upload-kyc", formData, {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       return res.data;
     } catch (err) {
-      return rejectWithValue(err.response?.data?.message || "KYC upload failed");
+      return rejectWithValue(
+        err.response?.data?.message || "KYC upload failed",
+      );
     }
-  }
+  },
 );
 
 export const getNotifications = createAsyncThunk(
@@ -268,24 +264,26 @@ export const getNotifications = createAsyncThunk(
       return res.data;
     } catch (err) {
       return rejectWithValue(
-        err.response?.data?.message || "Failed to fetch notifications"
+        err.response?.data?.message || "Failed to fetch notifications",
       );
     }
-  }
+  },
 );
 
 export const markNotificationRead = createAsyncThunk(
   "auth/markNotificationRead",
   async (notificationId, { rejectWithValue }) => {
     try {
-      const res = await api.put(`/notification/read-notification/${notificationId}`);
+      const res = await api.put(
+        `/notification/read-notification/${notificationId}`,
+      );
       return res.data;
     } catch (err) {
       return rejectWithValue(
-        err.response?.data?.message || "Failed to mark as read"
+        err.response?.data?.message || "Failed to mark as read",
       );
     }
-  }
+  },
 );
 
 export const markAllNotificationsRead = createAsyncThunk(
@@ -296,35 +294,10 @@ export const markAllNotificationsRead = createAsyncThunk(
       return res.data;
     } catch (err) {
       return rejectWithValue(
-        err.response?.data?.message || "Failed to mark all as read"
+        err.response?.data?.message || "Failed to mark all as read",
       );
     }
-  }
-);
-
-
-export const acceptBooking = createAsyncThunk(
-  "auth/acceptBooking",
-  async (bookingId, { rejectWithValue }) => {
-    try {
-      const res = await api.put(`/bookings/accept/${bookingId}`);
-      return { bookingId, data: res.data };
-    } catch (err) {
-      return rejectWithValue(err.response.data);
-    }
-  }
-);
-
-export const rejectBooking = createAsyncThunk(
-  "auth/rejectBooking",
-  async (bookingId, { rejectWithValue }) => {
-    try {
-      const res = await api.put(`/bookings/reject/${bookingId}`);
-      return { bookingId, data: res.data };
-    } catch (err) {
-      return rejectWithValue(err.response.data);
-    }
-  }
+  },
 );
 
 export const getVendorById = createAsyncThunk(
@@ -345,7 +318,7 @@ export const getVendorById = createAsyncThunk(
         err.response?.data?.message || "Failed to fetch vendor"
       );
     }
-  }
+  },
 );
 
 export const verifyResetOTP = createAsyncThunk(
@@ -353,15 +326,17 @@ export const verifyResetOTP = createAsyncThunk(
   async ({ email, otp, accountType }, { rejectWithValue }) => {
     try {
       const endpoint =
-        accountType === "user" ? "/user/verify-otp" : "/vendor/verify-otp";
+        accountType === "user"
+          ? "/user/verify-reset-otp"
+          : "/vendor/verify-otp";
       const res = await api.post(endpoint, { email, otp });
       return res.data;
     } catch (err) {
       return rejectWithValue(
-        err.response?.data?.message || "OTP verification failed"
+        err.response?.data?.message || "OTP verification failed",
       );
     }
-  }
+  },
 );
 
 export const getCurrentUser = createAsyncThunk(
@@ -369,11 +344,39 @@ export const getCurrentUser = createAsyncThunk(
   async (_, { getState, rejectWithValue }) => {
     try {
       const { accountType } = getState().auth;
-      const endpoint = accountType === "user" ? "/user/me" : "/vendor/me";
+      const endpoint = accountType === "user" ? "/user/user-dashboard" : "/vendor/vendor-dashboard"; 
       const res = await api.get(endpoint);
       return res.data;
     } catch (err) {
-      return rejectWithValue(err.response?.data?.message || "Failed to fetch user");
+      return rejectWithValue(
+        err.response?.data?.message || "Failed to fetch user",
+      );
+    }
+  },
+);
+
+export const createReview = createAsyncThunk(
+  "review/createReview",
+  async ({ bookingId, reviewData }, thunkAPI) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await axios.post(
+        `/review/create-review/${bookingId}`,
+        reviewData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data || error.message
+      );
     }
   }
 );
@@ -410,6 +413,13 @@ const authSlice = createSlice({
     updateVendorInfo: (state, action) => {
       state.vendorInfo = { ...state.vendorInfo, ...action.payload };
     },
+    clearUnreadCount: (state) => {
+      state.unreadCount = 0;
+    },
+      addNotification: (state, action) => {
+    state.notifications = [action.payload, ...state.notifications];
+    state.unreadCount = state.unreadCount + 1;
+      },
   },
   extraReducers: (builder) => {
     builder
@@ -435,10 +445,12 @@ const authSlice = createSlice({
             slug: vendor.slug || null,
             isOnboarded: vendor.isOnboarded ?? false,
             onboardingStep: vendor.onboardingStep || 1,
-            currentStep: STEP_MAP[vendor.onboardingStep] || 'category',
-            verificationStatus: vendor.verificationStatus || 'pending',
-            profilePicture: vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
-            coverPhoto: vendor.coverPhoto?.secureUrl || vendor.coverPhoto || null,
+            currentStep: STEP_MAP[vendor.onboardingStep] || "category",
+            verificationStatus: vendor.verificationStatus || "pending",
+            profilePicture:
+              vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
+            coverPhoto:
+              vendor.coverPhoto?.secureUrl || vendor.coverPhoto || null,
           };
         }
       })
@@ -572,11 +584,20 @@ const authSlice = createSlice({
           ...updatedData,
           _id: updatedData.id || updatedData._id || state.vendorInfo._id,
           id: updatedData.id || updatedData._id || state.vendorInfo.id,
-          profilePicture: updatedData.profilePicture?.secureUrl || updatedData.profilePicture || state.vendorInfo.profilePicture,
-          coverPhoto: updatedData.coverPhoto?.secureUrl || updatedData.coverPhoto || state.vendorInfo.coverPhoto,
-          onboardingStep: updatedData.onboardingStep ?? state.vendorInfo.onboardingStep,
-          currentStep: STEP_MAP[updatedData.onboardingStep] || state.vendorInfo.currentStep,
-          isOnboarded: updatedData.isOnboarded ?? state.vendorInfo.isOnboarded
+          profilePicture:
+            updatedData.profilePicture?.secureUrl ||
+            updatedData.profilePicture ||
+            state.vendorInfo.profilePicture,
+          coverPhoto:
+            updatedData.coverPhoto?.secureUrl ||
+            updatedData.coverPhoto ||
+            state.vendorInfo.coverPhoto,
+          onboardingStep:
+            updatedData.onboardingStep ?? state.vendorInfo.onboardingStep,
+          currentStep:
+            STEP_MAP[updatedData.onboardingStep] ||
+            state.vendorInfo.currentStep,
+          isOnboarded: updatedData.isOnboarded ?? state.vendorInfo.isOnboarded,
         };
       })
       .addCase(updateVendorProfile.rejected, (state, action) => {
@@ -585,16 +606,16 @@ const authSlice = createSlice({
       })
 
       .addCase(replaceVendorMedia.fulfilled, (state, action) => {
-      const updatedVendor = action.payload?.data;
+        const updatedVendor = action.payload?.data;
 
-      if (updatedVendor) {
-        state.currentVendor = {
-          ...state.currentVendor,
-          ...updatedVendor,
-        };
-      }
+        if (updatedVendor) {
+          state.currentVendor = {
+            ...state.currentVendor,
+            ...updatedVendor,
+          };
+        }
       })
-      
+
       .addCase(uploadKyc.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -605,9 +626,10 @@ const authSlice = createSlice({
           ...state.vendorInfo,
           isOnboarded: true,
           onboardingStep: 7,
-          currentStep: 'completed',
+          currentStep: "completed",
           isKycVerified: action.payload.data?.isKycVerified || false,
-          verificationStatus: action.payload.data?.verificationStatus || 'pending'
+          verificationStatus:
+            action.payload.data?.verificationStatus || "pending",
         };
       })
       .addCase(uploadKyc.rejected, (state, action) => {
@@ -615,12 +637,12 @@ const authSlice = createSlice({
         state.error = action.payload;
         if (state.vendorInfo) {
           state.vendorInfo.isOnboarded = false;
-          state.vendorInfo.verificationStatus = 'failed';
-          state.vendorInfo.currentStep = 'docs';
+          state.vendorInfo.verificationStatus = "failed";
+          state.vendorInfo.currentStep = "docs";
           state.vendorInfo.onboardingStep = 5;
         }
       })
-  .addCase(logoutUser.fulfilled, (state) => {
+      .addCase(logoutUser.fulfilled, (state) => {
         localStorage.removeItem("token");
         state.userInfo = null;
         state.vendorInfo = null;
@@ -628,7 +650,7 @@ const authSlice = createSlice({
         state.accountType = null;
         state.isLoggedIn = false;
       })
-    .addCase(logoutUser.rejected, (state) => {
+      .addCase(logoutUser.rejected, (state) => {
         localStorage.removeItem("token");
         state.userInfo = null;
         state.vendorInfo = null;
@@ -642,7 +664,10 @@ const authSlice = createSlice({
       .addCase(getNotifications.fulfilled, (state, action) => {
         state.notificationsLoading = false;
         state.notifications = action.payload.data || [];
-        state.unreadCount = action.payload.count || 0;
+        // state.unreadCount = action.payload.count || action.payload.unreadCount || 0;
+          state.unreadCount = (action.payload.data || []).filter(
+    (n) => !n.isRead && !n.read
+  ).length;
       })
       .addCase(getNotifications.rejected, (state, action) => {
         state.notificationsLoading = false;
@@ -650,22 +675,27 @@ const authSlice = createSlice({
       })
       .addCase(markNotificationRead.fulfilled, (state, action) => {
         const id = action.meta.arg;
-        state.notifications = state.notifications.map(n =>
-          n._id === id ? { ...n, read: true } : n
-        );
+        state.notifications = state.notifications.map((n) =>
+             n._id === id ? { ...n, read: true, isRead: true } : n
+);
         state.unreadCount = Math.max(0, state.unreadCount - 1);
       })
-      .addCase(markAllNotificationsRead.fulfilled, (state) => {
+      .addCase(markAllNotificationsRead.fulfilled, (state, action) => {
         state.unreadCount = 0;
-        state.notifications = state.notifications.map(n => ({ ...n, read: true }));
+        state.notifications = state.notifications.map((n) => ({
+          ...n,
+          read: true,
+          isRead: true,
+        }));
       })
       .addCase(getVendorById.pending, (state) => {
         state.currentVendorLoading = true;
-        state.currentVendor = null;
+        // state.currentVendor = null;
         state.error = null;
       })
       .addCase(getVendorById.fulfilled, (state, action) => {
         state.currentVendorLoading = false;
+
         const vendor = action.payload.data || action.payload;
 
         if (!vendor || !vendor._id) {
@@ -675,16 +705,18 @@ const authSlice = createSlice({
 
         state.currentVendor = {
           ...vendor,
-          profilePicture: vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
+          profilePicture:
+            vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
           coverPhoto: vendor.coverPhoto?.secureUrl || vendor.coverPhoto || null,
         pricingId: vendor.pricingId || [],
         };
+
         state.error = null;
       })
       .addCase(getVendorById.rejected, (state, action) => {
         state.currentVendorLoading = false;
         state.error = action.payload;
-        state.currentVendor = null;
+        // state.currentVendor = null;
       })
       .addCase(getCurrentUser.pending, (state) => {
         state.isLoading = true;
@@ -705,10 +737,12 @@ const authSlice = createSlice({
             slug: vendor.slug || null,
             isOnboarded: vendor.isOnboarded ?? false,
             onboardingStep: vendor.onboardingStep || 1,
-            currentStep: STEP_MAP[vendor.onboardingStep] || 'category',
-            verificationStatus: vendor.verificationStatus || 'pending',
-            profilePicture: vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
-            coverPhoto: vendor.coverPhoto?.secureUrl || vendor.coverPhoto || null,
+            currentStep: STEP_MAP[vendor.onboardingStep] || "category",
+            verificationStatus: vendor.verificationStatus || "pending",
+            profilePicture:
+              vendor.profilePicture?.secureUrl || vendor.profilePicture || null,
+            coverPhoto:
+              vendor.coverPhoto?.secureUrl || vendor.coverPhoto || null,
           };
         }
       })
@@ -719,5 +753,22 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, clearError, updateVendorInfo } = authSlice.actions;
+extraReducers: (builder) => {
+  builder
+    .addCase(createReview.pending, (state) => {
+      state.reviewLoading = true;
+    })
+
+    .addCase(createReview.fulfilled, (state, action) => {
+      state.reviewLoading = false;
+      state.reviewData = action.payload;
+    })
+
+    .addCase(createReview.rejected, (state, action) => {
+      state.reviewLoading = false;
+      state.reviewError = action.payload;
+    });
+}
+
+export const { logout, clearError, updateVendorInfo, addNotification ,clearUnreadCount } = authSlice.actions;
 export default authSlice.reducer;

@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { FaBars, FaTimes } from 'react-icons/fa'
 import { IoChatbubbleEllipsesOutline, IoChevronDownOutline, IoNotificationsOutline } from 'react-icons/io5'
 import { MdDashboard, MdLogout } from 'react-icons/md'
@@ -9,20 +9,22 @@ import Button from '../Props/Button.jsx'
 import "./Css/Header.css"
 import "../Auth/Css/Userheader.css"
 import { persistor } from '../Redux/app/store'
-import { logoutUser } from '../Redux/features/authslice'
+import { logoutUser, getNotifications, markAllNotificationsRead, addNotification } from '../Redux/features/authslice'
+import { socket } from '../Socket.js'
 import useAuth from '../lib/Myauth.jsx'
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [avatarDropdownOpen, setAvatarDropdownOpen] = useState(false)
   const [showLogoutModal, setShowLogoutModal] = useState(false)
+  const [unreadChats, setUnreadChats] = useState(0)
   const dropdownRef = useRef(null)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const { isLoggedIn, activeUser, isVendor } = useAuth()
+  const { notifications = [], unreadCount } = useSelector((state) => state.auth)
 
-  // Close avatar dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -33,7 +35,29 @@ const Header = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (!isLoggedIn) return
+
+    dispatch(getNotifications())
+
+    const user = activeUser
+    socket.connect()
+    socket.emit('join', user?._id || user?.id)
+
+    socket.on('notification', (newNotif) => {
+      dispatch(addNotification(newNotif))
+    })
+
+    socket.on('receive_message', () => {
+      setUnreadChats(prev => prev + 1)
+    })
+
+    return () => {
+      socket.off('notification')
+      socket.off('receive_message')
+    }
+  }, [isLoggedIn, dispatch])
+
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : 'unset'
     return () => { document.body.style.overflow = 'unset' }
@@ -52,6 +76,7 @@ const Header = () => {
     setShowLogoutModal(false)
     setAvatarDropdownOpen(false)
     closeMobile()
+    socket.disconnect()
     await dispatch(logoutUser())
     await persistor.purge()
     navigate('/login')
@@ -60,7 +85,14 @@ const Header = () => {
   const handleDashboard = () => {
     setAvatarDropdownOpen(false)
     closeMobile()
+    setUnreadChats(0)
     navigate(isVendor ? '/vendordashboard' : '/userdashboard')
+  }
+
+  const handleNotificationsClick = () => {
+    setUnreadChats(0)
+    dispatch(markAllNotificationsRead()) // ← marks as read on server + zeros out Redux
+    navigate('/notifications/all')
   }
 
   if (isLoggedIn && !isVendor) {
@@ -69,7 +101,6 @@ const Header = () => {
         <nav className="userheader">
           <div className="userheader_wrapper">
 
-            {/* LEFT: logo */}
             <div className="userheader_left">
               <img
                 src={Headerlogo}
@@ -80,9 +111,7 @@ const Header = () => {
               <span className="userheader_logo_text">FeastSync</span>
             </div>
 
-            {/* MIDDLE: nav links (desktop always visible, mobile inside hamburger) */}
             <div className={`userheader_middle ${mobileOpen ? 'active' : ''}`}>
-              {/* Mobile-only profile card at top of drawer */}
               <div className="userheader_mobile_profile">
                 <div className="userheader_mobile_avatar">
                   {getInitials(activeUser)}
@@ -102,10 +131,8 @@ const Header = () => {
               <NavLink to="/vendors" className="userheader_nav_link" onClick={closeMobile}>Vendors</NavLink>
               <NavLink to="/services" className="userheader_nav_link" onClick={closeMobile}>Services</NavLink>
               <NavLink to="/contact" className="userheader_nav_link" onClick={closeMobile}>Contact</NavLink>
-
-              {/* Mobile-only actions */}
               <div className="userheader_mobile_actions">
-                <button className="userheader_mobile_action_btn" onClick={() => { navigate('/notifications'); closeMobile() }}>
+                <button className="userheader_mobile_action_btn" onClick={() => { handleNotificationsClick(); closeMobile() }}>
                   <IoNotificationsOutline size={20} /> Notifications
                 </button>
                 <button className="userheader_mobile_action_btn" onClick={handleDashboard}>
@@ -120,24 +147,31 @@ const Header = () => {
               </div>
             </div>
 
-            {/* RIGHT: desktop controls + mobile icons */}
             <div className="userheader_right">
-
-              {/* Bell — desktop only */}
-              <button className="userheader_icon_btn userheader_desktop_only" aria-label="Notifications">
+              <button
+                className="userheader_icon_btn userheader_desktop_only"
+                aria-label="Notifications"
+                onClick={handleNotificationsClick}
+              >
                 <IoNotificationsOutline className="userheader_bell_icon" />
+                {unreadCount > 0 && (
+                  <span className="userheader_badge">
+                    {unreadCount > 9 ? '9+' : unreadCount}
+                  </span>
+                )}
               </button>
-
-              {/* Chat — always visible */}
               <button
                 className="userheader_icon_btn"
                 aria-label="Messages"
-                onClick={() => navigate('/chats')}
+                onClick={() => { navigate('/chats'); setUnreadChats(0) }}
               >
                 <IoChatbubbleEllipsesOutline className="userheader_chat_icon" />
+                {unreadChats > 0 && (
+                  <span className="userheader_badge userheader_badge--chat">
+                    {unreadChats > 9 ? '9+' : unreadChats}
+                  </span>
+                )}
               </button>
-
-              {/* Avatar + dropdown — desktop only */}
               <div className="userheader_avatar_wrapper userheader_desktop_only" ref={dropdownRef}>
                 <button
                   className="userheader_avatar_btn"
@@ -157,44 +191,41 @@ const Header = () => {
                 {avatarDropdownOpen && (
                   <div className="userheader_dropdown">
                     <div className="userheader_dropdown_inner">
-                    {/* Profile info */}
-                    <div className="userheader_dropdown_profile">
-                      <div className="userheader_dropdown_avatar">
-                        {getInitials(activeUser)}
-                        <div className="userheader_dropdown_avatar_dot" />
-                      </div>
-                      <div>
-                        <div className="userheader_dropdown_name">
-                          {activeUser?.firstName} {activeUser?.lastName}
+                      <div className="userheader_dropdown_profile">
+                        <div className="userheader_dropdown_avatar">
+                          {getInitials(activeUser)}
+                          <div className="userheader_dropdown_avatar_dot" />
                         </div>
-                        <div className="userheader_dropdown_email">
-                          {activeUser?.email}
+                        <div>
+                          <div className="userheader_dropdown_name">
+                            {activeUser?.firstName} {activeUser?.lastName}
+                          </div>
+                          <div className="userheader_dropdown_email">
+                            {activeUser?.email}
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="userheader_dropdown_divider" />
+                      <div className="userheader_dropdown_divider" />
 
-                    <button className="userheader_dropdown_item" onClick={handleDashboard}>
-                      <MdDashboard size={17} />
-                      My Dashboard
-                    </button>
+                      <button className="userheader_dropdown_item" onClick={handleDashboard}>
+                        <MdDashboard size={17} />
+                        My Dashboard
+                      </button>
 
-                    <div className="userheader_dropdown_divider" />
+                      <div className="userheader_dropdown_divider" />
 
-                    <button
-                      className="userheader_dropdown_item userheader_dropdown_logout"
-                      onClick={() => setShowLogoutModal(true)}
-                    >
-                      <MdLogout size={17} />
-                      Logout
-                    </button>
+                      <button
+                        className="userheader_dropdown_item userheader_dropdown_logout"
+                        onClick={() => setShowLogoutModal(true)}
+                      >
+                        <MdLogout size={17} />
+                        Logout
+                      </button>
                     </div>
                   </div>
                 )}
               </div>
-
-              {/* Hamburger — mobile only */}
               <button
                 className="userheader_hamburger"
                 onClick={() => setMobileOpen(!mobileOpen)}
@@ -206,13 +237,9 @@ const Header = () => {
 
           </div>
         </nav>
-
-        {/* Mobile overlay */}
         {mobileOpen && (
           <div className="userheader_overlay" onClick={closeMobile} />
         )}
-
-        {/* Logout confirmation modal */}
         {showLogoutModal && (
           <div className="userheader_modal_backdrop" onClick={() => setShowLogoutModal(false)}>
             <div className="userheader_modal" onClick={(e) => e.stopPropagation()}>

@@ -33,6 +33,9 @@
 .settings_section_header {
   border-bottom: 1px solid #E5E7EB;
   padding: 16px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .settings_section_title {
@@ -412,30 +415,105 @@
 .pricing_modal .modal_label:first-child {
   margin-top: 0;
 }
-.settings_logout_section {
-  margin-top: 40px;
-  padding-top: 24px;
-  border-top: 1px solid #e5e7eb;
+
+/* Logout button in Account header */
+.settings_logout_btn {
+  padding: 8px 20px;
+  background: #fff;
+  color: #DC2626;
+  border: 1.5px solid #DC2626;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
-.settings_logout_btn {
+.settings_logout_btn:hover {
+  background: #DC2626;
+  color: #fff;
+}
+
+/* Logout confirm modal */
+.logout_modal_box {
+  background: #fff;
+  border-radius: 16px;
   width: 100%;
-  padding: 12px 24px;
-  background: #dc2626;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
+  max-width: 400px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+  padding: 36px 32px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.logout_modal_icon {
+  width: 56px;
+  height: 56px;
+  background: #FEE2E2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.logout_modal_title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 8px 0;
+}
+
+.logout_modal_subtitle {
+  font-size: 14px;
+  color: #6B7280;
+  margin: 0 0 28px 0;
+  line-height: 1.5;
+}
+
+.logout_modal_actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.logout_modal_cancel {
+  flex: 1;
+  padding: 12px;
+  background: #fff;
+  border: 1.5px solid #D1D5DB;
+  border-radius: 10px;
+  font-size: 15px;
   font-weight: 600;
+  color: #111827;
   cursor: pointer;
   transition: background 0.2s;
 }
 
-.settings_logout_btn:hover {
-  background: #b91c1c;
+.logout_modal_cancel:hover {
+  background: #F9FAFB;
 }
 
+.logout_modal_confirm {
+  flex: 1;
+  padding: 12px;
+  background: #DC2626;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
 
+.logout_modal_confirm:hover {
+  background: #B91C1C;
+}
 
 @media (max-width: 768px) {
   .settings_page {
@@ -536,6 +614,16 @@
     max-height: 92vh;
   }
 
+  .logout_modal_box {
+    width: calc(100% - 32px);
+    border-radius: 16px;
+    padding: 28px 20px 24px;
+  }
+
+  .logout_modal_actions {
+    flex-direction: column-reverse;
+  }
+
   .modal_header {
     padding: 20px 20px 12px 20px;
   }
@@ -565,7 +653,7 @@
   .modal_select,
   .modal_textarea {
     padding: 12px;
-    font-size: 16px; /* Prevents iOS zoom */
+    font-size: 16px;
   }
 
   .otp_inputs {

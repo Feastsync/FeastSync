@@ -21,7 +21,6 @@ const ResetPassword = () => {
   const [showConfirm, setShowConfirm] = useState(false)
 
   const email = location.state?.email
-  const otp = location.state?.otp
   const accountType = location.state?.accountType || "user"
 
   useEffect(() => {
@@ -50,13 +49,9 @@ const ResetPassword = () => {
     }
 
     try {
-      // vendor reset doesn't need otp, user reset does
-      const payload =
-        accountType === "vendor"
-          ? { email, password, confirmPassword, accountType }
-          : { email, otp, password, confirmPassword, accountType }
-
-      await dispatch(resetPassword(payload)).unwrap()
+      await dispatch(
+        resetPassword({ email, password, confirmPassword, accountType })
+      ).unwrap()
 
       message.success("Password reset successfully! Please login")
       navigate("/login")

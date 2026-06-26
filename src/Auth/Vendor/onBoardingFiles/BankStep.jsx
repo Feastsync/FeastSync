@@ -1,19 +1,7 @@
 import React from "react";
 import { FiChevronDown } from "react-icons/fi";
 import "./css/BankStep.css";
-
-const nigerianBanks = [
-  "AB Microfinance Bank", "Access Bank", "Accion MFB", "Addosser Microfinance Bank",
-  "ALAT by Wema", "Carbon", "Citibank Nigeria", "Ecobank Nigeria", "Eyowo",
-  "FairMoney MFB", "FCMB", "Fidelity Bank", "First Bank of Nigeria", "Fina Trust MFB",
-  "Globus Bank", "GoMoney", "GTBank", "Heritage Bank", "Jaiz Bank", "Keystone Bank",
-  "Kuda Bank", "LAPO Microfinance Bank", "Lotus Bank", "Mintyn Bank", "Mkobo MFB",
-  "Moniepoint MFB", "OPay", "Optimus Bank", "PalmPay", "Parallex Bank", "Polaris Bank",
-  "Premium Trust Bank", "Providus Bank", "Rubies MFB", "Sparkle", "Stanbic IBTC Bank",
-  "Standard Chartered Bank", "Sterling Bank", "SunTrust Bank", "TAJ Bank",
-  "Titan Trust Bank", "UBA", "Union Bank", "Unity Bank", "VFD Microfinance Bank",
-  "Wema Bank", "Zenith Bank",
-].sort();
+import { nigerianBanks } from "../../../mock/moc";
 
 const BankStep = ({
   onNext,
@@ -29,10 +17,10 @@ const BankStep = ({
     setProfileData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const isFormValid =
-    (safeProfile.stateOfResidence || "").trim() !== "" &&
-    (safeProfile.bankName || "").trim() !== "" &&
-    accountNumberRegex.test(safeProfile.accountNumber || "");
+const isFormValid =
+  (safeProfile.stateOfResidence || "").trim() !== "" &&
+  (safeProfile.bankCode || "").trim() !== "" &&
+  accountNumberRegex.test(safeProfile.accountNumber || "");
 
   const handleContinue = () => {
     if (!isFormValid) return;
@@ -79,21 +67,28 @@ const BankStep = ({
             />
           </div>
 
-          <div className="bank-field">
-            <label>Select Bank</label>
-            <div className="bank-select-wrapper">
-              <select
-                value={safeProfile.bankName || ""}
-                onChange={(e) => updateField("bankName", e.target.value)}
-              >
-                <option value="">Select your bank</option>
-                {nigerianBanks.map((bank) => (
-                  <option key={bank} value={bank}>{bank}</option>
-                ))}
-              </select>
-              <FiChevronDown className="bank-select-icon" />
-            </div>
-          </div>
+<div className="bank-field">
+  <label>Select Bank</label>
+  <div className="bank-select-wrapper">
+    <select
+      value={safeProfile.bankCode || ""}
+      onChange={(e) => {
+        const selected = nigerianBanks.find(b => b.code === e.target.value);
+        setProfileData((prev) => ({
+          ...prev,
+          bankName: selected?.name || "",
+          bankCode: selected?.code || "",
+        }));
+      }}
+    >
+      <option value="">Select your bank</option>
+      {nigerianBanks.map((bank) => (
+        <option key={bank.code} value={bank.code}>{bank.name}</option>
+      ))}
+    </select>
+    <FiChevronDown className="bank-select-icon" />
+  </div>
+</div>
 
           <div className="bank-field">
             <label>Account Number</label>

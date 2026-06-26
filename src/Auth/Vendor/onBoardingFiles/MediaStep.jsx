@@ -24,37 +24,50 @@ const MediaStep = ({
     setProfileData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleFileChange = (field, files, limit, maxSizeMB) => {
-    const currentFiles = profileData?.[field] || [];
-    const remainingSlots = limit - currentFiles.length;
+ const handleFileChange = (field, files, limit, maxSizeMB) => {
+  const currentFiles = profileData?.[field] || [];
+  const remainingSlots = limit - currentFiles.length;
 
-    if (remainingSlots <= 0) {
-      message.warning(`You have already reached the maximum limit of ${limit} files.`);
-      return;
+  if (remainingSlots <= 0) {
+    message.warning(`You have already reached the maximum limit of ${limit} files.`);
+    return;
+  }
+
+  const newlySelected = Array.from(files).slice(0, remainingSlots);
+  const validNewFiles = [];
+
+  for (let file of newlySelected) {
+    if (field === "videoCatalogue" && !file.type.startsWith("video/")) {
+      message.error(`"${file.name}" is not a valid video file.`);
+      continue;
     }
 
-    const newlySelected = Array.from(files).slice(0, remainingSlots);
-    const validNewFiles = [];
-
-    for (let file of newlySelected) {
-      if (file.size > maxSizeMB * 1024 * 1024) {
-        message.error(`"${file.name}" exceeds the ${maxSizeMB}MB limit and was skipped.`);
-        continue;
-      }
-      
-      const isDuplicate = currentFiles.some((f) => f.name === file.name && f.size === file.size);
-      if (!isDuplicate) {
-        validNewFiles.push(file);
-      }
+    if (field === "photoCatalogue" && !file.type.startsWith("image/")) {
+      message.error(`"${file.name}" is not a valid image file.`);
+      continue;
     }
 
-    if (validNewFiles.length === 0) return;
+    if (file.size > maxSizeMB * 1024 * 1024) {
+      message.error(`"${file.name}" exceeds the ${maxSizeMB}MB limit and was skipped.`);
+      continue;
+    }
 
-    setProfileData((prev) => ({
-      ...prev,
-      [field]: [...(prev[field] || []), ...validNewFiles],
-    }));
-  };
+    const isDuplicate = currentFiles.some(
+      (f) => f.name === file.name && f.size === file.size
+    );
+
+    if (!isDuplicate) {
+      validNewFiles.push(file);
+    }
+  }
+
+  if (validNewFiles.length === 0) return;
+
+  setProfileData((prev) => ({
+    ...prev,
+    [field]: [...(prev[field] || []), ...validNewFiles],
+  }));
+};
 
   const handleRemoveFile = (field, indexToRemove) => {
     setProfileData((prev) => ({
@@ -95,6 +108,15 @@ const MediaStep = ({
     setIsSubmitting(false);
   };
 
+  const isDisabled =
+  isSubmitting ||
+  !workExperience.trim() ||
+  wordCount > 500 ||
+  !servicesOffered.trim() ||
+  videoCatalogue.length === 0 ||
+  photoCatalogue.length === 0;
+
+
   return (
     <div className="media-modal">
       <div className="media-header">
@@ -132,84 +154,79 @@ const MediaStep = ({
             onChange={(e) => handleChange("servicesOffered", e.target.value)}
           />
         </div>
-
-        <div className="media-field">
-          <label>Upload video catalog (Max of 2)</label>
-          <div className="media-upload-box video">
-            <input
-              id="video-upload"
-              type="file"
-              accept="video/*"
-              multiple
-              style={{ display: 'none' }}
-              onChange={(e) => handleFileChange("videoCatalogue", e.target.files, 2, 10)}
-            />
-            <FiUpload
-              className="media-upload-files"
-              size={28}
-              style={{ cursor: "pointer" }}
-              onClick={() => document.getElementById("video-upload").click()}
-            />
-            <p className="media-upload-title">Click to upload</p>
-            <p className="media-upload-sub">Each video not more than 10MB</p>
-            {videoCatalogue.length > 0 && (
-              <div className="media-selected-files">
-                <p className="media-file-count">{videoCatalogue.length} / 2 videos selected</p>
-                {videoCatalogue.map((file, index) => (
-                  <div key={index} className="media-file-item" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px", margin: "4px 0" }}>
-                    <p style={{ margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{file.name}</p>
-                    <FiCheck 
-                      size={16} 
-                      style={{ cursor: "pointer", color: "#330159" }} 
-                      onClick={() => handleRemoveFile("videoCatalogue", index)} 
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="media-field">
-          <label>Upload photo catalog (Max of 4)</label>
-          <div className="media-upload-grid">
-            <div className="media-upload-box photo">
-              <input
-                id="photo-upload"
-                type="file"
-                accept="image/*"
-                multiple
-                style={{ display: 'none' }}
-                onChange={(e) => handleFileChange("photoCatalogue", e.target.files, 4, 5)}
-              />
-              <FiUpload
-                size={22}
-                style={{ cursor: "pointer" }}
-                onClick={() => document.getElementById("photo-upload").click()}
-              />
-              <p className="media-upload-title">Add more</p>
-              {photoCatalogue.length > 0 && (
-                <div className="media-selected-files" style={{ width: "100%", marginTop: "10px" }}>
-                  {photoCatalogue.map((file, index) => (
-                    <div key={index} className="media-file-item" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px", margin: "4px 0" }}>
-                      <p style={{ margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{file.name}</p>
-                      <FiCheck 
-                        size={16} 
-                        style={{ cursor: "pointer", color: "#330159" }} 
-                        onClick={() => handleRemoveFile("photoCatalogue", index)} 
-                      />
-                    </div>
-                  ))}
+        <div className="media-upload-box video" 
+          style={{ cursor: "pointer" }}
+          onClick={() => document.getElementById("video-upload").click()}
+        >
+          <input
+            id="video-upload"
+            type="file"
+            accept="video/*"
+            multiple
+            style={{ display: 'none' }}
+            onChange={(e) => handleFileChange("videoCatalogue", e.target.files, 2, 10)}
+          />
+          <FiUpload
+            className="media-upload-files"
+            size={28}
+          />
+          <p className="media-upload-title">Click to upload max of 2 vidoes</p>
+          <p className="media-upload-sub">Each video not more than 10MB</p>
+          {videoCatalogue.length > 0 && (
+            <div className="media-selected-files">
+              <p className="media-file-count">{videoCatalogue.length} / 2 videos selected</p>
+              {videoCatalogue.map((file, index) => (
+                <div key={index} className="media-file-item" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px", margin: "4px 0" }}>
+                  <p style={{ margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{file.name}</p>
+                  <FiCheck 
+                    size={16} 
+                    style={{ cursor: "pointer", color: "#330159" }} 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRemoveFile("videoCatalogue", index);
+                    }} 
+                  />
                 </div>
-              )}
+              ))}
             </div>
-          </div>
-          <p className="media-upload-note">
-            Each photo should not be more than 5MB
-            {photoCatalogue.length > 0 && ` • ${photoCatalogue.length} / 4 selected`}
-          </p>
+          )}
         </div>
-      </div>
+
+
+       <div className="media-upload-box photo"
+          style={{ cursor: "pointer" }}
+          onClick={() => document.getElementById("photo-upload").click()}
+        >
+          <input
+            id="photo-upload"
+            type="file"
+            accept="image/*"
+            multiple
+            style={{ display: 'none' }}
+            onChange={(e) => handleFileChange("photoCatalogue", e.target.files, 4, 5)}
+          />
+          <FiUpload size={22} />
+          <p className="media-upload-title">Click to upload max of 4 photos</p>
+          {photoCatalogue.length > 0 && (
+            <div className="media-selected-files" style={{ width: "100%", marginTop: "10px" }}>
+              {photoCatalogue.map((file, index) => (
+                <div key={index} className="media-file-item" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px", margin: "4px 0" }}>
+                  <p style={{ margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{file.name}</p>
+                  <FiCheck 
+                    size={16} 
+                    style={{ cursor: "pointer", color: "#330159" }} 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRemoveFile("photoCatalogue", index);
+                    }} 
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        
+        </div>
 
       <div className="media-footer">
         <div className="media-footer-right">
@@ -221,14 +238,14 @@ const MediaStep = ({
           >
             Back
           </button>
-          <button
-            className="media-btn-continue"
-            type="button"
-            onClick={handleContinue}
-            disabled={isSubmitting || !workExperience}
-          >
-            {isSubmitting ? "Saving..." : "Continue"}
-          </button>
+         <button
+         className={`media-btn-continue ${isDisabled ? "media-btn-continue--disabled" : ""}`}
+         type="button"
+         onClick={handleContinue}
+         disabled={isDisabled}
+        >
+          {isSubmitting ? "Saving..." : "Continue"}
+        </button>
         </div>
       </div>
     </div>

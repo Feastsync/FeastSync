@@ -11,7 +11,8 @@ import BookingModal from "../../Page/Booking/Booking.jsx";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { getVendorById } from "../../Redux/features/authslice.js";
 import VendorDashboardSkeleton from "../../Props/Vendordashboardskeleton.jsx";
-import {message} from "antd"
+import { message } from "antd";
+
 const Vendordashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,14 +31,12 @@ const Vendordashboard = () => {
     accountType,
   } = useSelector((state) => state.auth);
 
-  
-  const isPublicView =!!slug ||!isLoggedIn;
+  const isPublicView = !!slug || !isLoggedIn;
   const displayVendor = slug
-  ? viewingVendor
-  : viewingVendor?._id === vendorInfo?._id
-  ? viewingVendor
-  : vendorInfo;
-
+    ? viewingVendor
+    : viewingVendor?._id === vendorInfo?._id
+    ? viewingVendor
+    : vendorInfo;
 
   const isOwner =
     accountType === "vendor" &&
@@ -47,31 +46,24 @@ const Vendordashboard = () => {
     vendorInfo._id === displayVendor._id;
 
   const [vendorName, setVendorName] = useState("");
+  const [messageApi, contextHolder] = message.useMessage();
 
-
-useEffect(() => {
-  if (slug) {
-    dispatch(getVendorById(slug));
-  } else if (isLoggedIn && accountType === "vendor" && vendorInfo?.slug) {
-    dispatch(getVendorById(vendorInfo.slug));
-  }
-}, [slug, isLoggedIn, accountType, dispatch, vendorInfo?.slug]);
-
-  // useEffect(() => {
-  //   if (shouldRefreshVendor) {
-  //     dispatch(getCurrentUser());
-  //   }
-  // }, [shouldRefreshVendor, dispatch]);
-
-  
   useEffect(() => {
-    if (!isOwner ||!vendorInfo?._id) {
+    if (slug) {
+      dispatch(getVendorById(slug));
+    } else if (isLoggedIn && accountType === "vendor" && vendorInfo?.slug) {
+      dispatch(getVendorById(vendorInfo.slug));
+    }
+  }, [slug, isLoggedIn, accountType, dispatch, vendorInfo?.slug]);
+
+  useEffect(() => {
+    if (!isOwner || !vendorInfo?._id) {
       setShowOnboarding(false);
       return;
     }
 
     setVendorName(vendorInfo.stageName || vendorInfo.firstName || "");
-    const shouldShow = location.state?.showOnboarding ||!vendorInfo.isOnboarded;
+    const shouldShow = location.state?.showOnboarding || !vendorInfo.isOnboarded;
     setShowOnboarding(shouldShow);
 
     if (location.state?.showOnboarding) {
@@ -79,40 +71,33 @@ useEffect(() => {
     }
   }, [isOwner, vendorInfo, location.state, navigate, location.pathname]);
 
- 
   useEffect(() => {
-    if (!slug &&!isLoggedIn) {
+    if (!slug && !isLoggedIn) {
       navigate("/login");
     }
   }, [slug, isLoggedIn, navigate]);
 
-const handleOnboardingClose = () => {
-  setShowOnboarding(false);
-  if (isOwner && vendorInfo?.slug) {
-    dispatch(getVendorById(vendorInfo.slug));
-  }
-};
+  const handleOnboardingClose = () => {
+    setShowOnboarding(false);
+    if (isOwner && vendorInfo?.slug) {
+      dispatch(getVendorById(vendorInfo.slug));
+    }
+  };
 
   const toggleExpand = (id) => {
-    setExpandedCards((prev) => ({...prev, [id]:!prev[id] }));
+    setExpandedCards((prev) => ({ ...prev, [id]: !prev[id] }));
   };
-const [messageApi, contextHolder] = message.useMessage();
 
-const handleCopyLink = async () => {
-  const link = `https://www.feastsync.com/fs/${displayVendor?.slug}`;
-  try {
-    await navigator.clipboard.writeText(link);
-    messageApi.success('Link copied to clipboard!');
-  } catch (err) {
-    messageApi.error('Failed to copy link');
-  }
-};
-
-console.log("isOwner:", isOwner)
-console.log("isLoggedIn:", isLoggedIn)
-console.log("accountType:", accountType)
-console.log("displayVendor:", displayVendor?._id)
-console.log("vendorInfo:", vendorInfo?._id)
+  const handleCopyLink = async () => {
+    // const link = `https://www.feastsync.com/fs/${displayVendor?.slug}`;
+    const link = displayVendor?.vendorUrl;
+    try {
+      await navigator.clipboard.writeText(link);
+      messageApi.success("Link copied to clipboard!");
+    } catch (err) {
+      messageApi.error("Failed to copy link");
+    }
+  };
 
   const basePackages = [
     { id: "basic", title: "Basic Package", price: "₦0", highlights: [] },
@@ -121,10 +106,9 @@ console.log("vendorInfo:", vendorInfo?._id)
   ];
 
   const displayPackages = basePackages.map((base) => {
-const saved = displayVendor?.pricingId?.find(
-  (p) => p.packageName?.toLowerCase() === base.title.toLowerCase()
-)
-    //  console.log(displayVendor?.pricingPackages)
+    const saved = displayVendor?.pricingId?.find(
+      (p) => p.packageName?.toLowerCase() === base.title.toLowerCase()
+    );
 
     if (!saved) return base;
 
@@ -135,33 +119,30 @@ const saved = displayVendor?.pricingId?.find(
     const highlights = desc ? desc.split("\n").filter((l) => l.trim()) : [];
 
     return {
-     ...base,
+      ...base,
       savedId: saved._id || null,
       price: formattedPrice,
       highlights,
     };
   });
 
-//   console.log("displayVendor", displayVendor)
-// console.log("vendorInfo", vendorInfo)
-
   if (viewingVendorLoading && slug) return <VendorDashboardSkeleton />;
-  if (slug &&!viewingVendor &&!viewingVendorLoading)
+  if (slug && !viewingVendor && !viewingVendorLoading)
     return <div className="vendor-error">Vendor not found</div>;
   if (!displayVendor) return <VendorDashboardSkeleton />;
 
   return (
     <main className="vendordashboard-vendor-dashboard-container">
+      {contextHolder}
       <Vendorheader vendor={displayVendor} isOwner={isOwner} />
       <Vendorhero vendor={displayVendor} isOwner={isOwner} />
 
       <div className="vendordashboard-vendor-details-container">
-   
         <div className="vendordashboard-trust-stats">
           <h4 className="vendordashboard-trust-title">Trust Stats</h4>
           <div className="vendordashboard-stats-row">
             <div className="vendordashboard-stat-item">
-              <h3>{displayVendor?.rating || 4.9}</h3>
+              <h3>{displayVendor?.averageRating || 0}</h3>
               <div className="vendordashboard-stars">★★★★★</div>
               <span>Rating</span>
             </div>
@@ -173,17 +154,9 @@ const saved = displayVendor?.pricingId?.find(
               <h3>{displayVendor?.bookingCount || 0}</h3>
               <span>Bookings</span>
             </div>
-           
-            {isOwner && (
-              <div className="vendordashboard-stat-item">
-                <h3>{displayVendor?.responseRate || 98}%</h3>
-                <span>Response</span>
-              </div>
-            )}
           </div>
         </div>
 
-        
         {!isOwner && isLoggedIn && (
           <button
             className="vendordashboard-send-message-btn"
@@ -200,16 +173,19 @@ const saved = displayVendor?.pricingId?.find(
             {displayVendor?.stateOfResidence || "Lagos"}
           </h4>
           <p>{displayVendor?.bio || "No bio added yet"}</p>
-          <div className="vendordashboard-vendor-link-row">
-            <span>{displayVendor?.vendorUrl}</span>
-            <button
-              className="vendordashboard-vendorcopy-link-btn"
-              onClick={handleCopyLink}
-            >
-              Copy link
-              <img src={Copyicon} alt="" />
-            </button>
-          </div>
+
+          {isOwner && (
+            <div className="vendordashboard-vendor-link-row">
+              <span>{displayVendor?.vendorUrl}</span>
+              <button
+                className="vendordashboard-vendorcopy-link-btn"
+                onClick={handleCopyLink}
+              >
+                Copy link
+                <img src={Copyicon} alt="" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -230,7 +206,7 @@ const saved = displayVendor?.pricingId?.find(
                 <div className="vendordashboard-card-body-wrapper">
                   <div
                     className={`vendordashboard-card-body ${
-                      isExpanded? "vendordashboard-scrollable" : ""
+                      isExpanded ? "vendordashboard-scrollable" : ""
                     }`}
                   >
                     <h4 className="vendordashboard-highlights-heading">
@@ -258,7 +234,7 @@ const saved = displayVendor?.pricingId?.find(
                   >
                     <svg
                       className={`vendordashboard-dropdown-icon ${
-                        isExpanded? "vendordashboard-open" : ""
+                        isExpanded ? "vendordashboard-open" : ""
                       }`}
                       viewBox="0 0 24 24"
                       fill="none"
@@ -271,28 +247,19 @@ const saved = displayVendor?.pricingId?.find(
                 </div>
 
                 <div className="vendordashboard-card-footer">
-                 
-                  {isOwner? (
-                    // <button
-                    //   className="vendordashboard-edit-btn"
-                    //   onClick={() => navigate("/vendor/packages")}
-                    // >
-                    //   Edit Package
-                    // </button>
-                    null
-                  ) : (
+                  {isOwner ? null : (
                     <button
                       className="vendordashboard-book-now-btn"
                       disabled={!item.savedId}
                       onClick={() => {
                         if (!isLoggedIn) {
-                          navigate("/login", { state: { from: location.pathname } });
+                          navigate("/", { state: { from: location.pathname } });
                           return;
                         }
                         setBookingModal({ open: true, pricingId: item.savedId });
                       }}
                     >
-                      {!item.savedId? "Not Available" : "Book Now"}
+                      {!item.savedId ? "Not Available" : "Book Now"}
                     </button>
                   )}
                 </div>
@@ -302,9 +269,9 @@ const saved = displayVendor?.pricingId?.find(
         </div>
       </section>
 
-   
       <Vendorcalendar vendor={displayVendor} isOwner={isOwner} />
       <Vendormediagallery vendor={displayVendor} isOwner={isOwner} />
+
       {isOwner && (
         <VendorOnboarding
           isOpen={showOnboarding}
@@ -312,7 +279,8 @@ const saved = displayVendor?.pricingId?.find(
           vendorName={vendorName}
         />
       )}
-      {bookingModal.open && isLoggedIn &&!isOwner && (
+
+      {bookingModal.open && isLoggedIn && !isOwner && (
         <BookingModal
           vendorName={displayVendor?.stageName || displayVendor?.firstName || "Vendor"}
           vendorId={displayVendor?._id}

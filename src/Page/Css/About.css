@@ -14,7 +14,6 @@
   width: 100%;
   background-position: center;
   background-repeat: no-repeat;
-
   padding-left: 100px;
   background-image: url("../../assets/BackgroundImage/8644f49ca66594465885d8daad5f829d0ff32ee3.png");
 }
@@ -26,6 +25,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+ 
 }
 .aboutInfo {
   font-size: 50px;
@@ -309,7 +309,7 @@
   padding: 5px;
 }
 .btnmore:hover {
-  background: #e748ec;
+  background: var(--primary-color);
   border-radius: 5px;
 }
 

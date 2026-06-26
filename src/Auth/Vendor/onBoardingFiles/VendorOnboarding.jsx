@@ -17,6 +17,7 @@ import {
   createPricing,
   uploadKyc,
   updateVendorInfo,
+  getCurrentUser,
 } from "../../../Redux/features/authslice.js";
 
 const STEP_ORDER = ["category", "bank", "media", "pricing", "docs", "calendar"];
@@ -80,6 +81,7 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
     stateOfResidence: "",
     bankName: "",
     accountNumber: "",
+    bankCode: "",
     bio: "",
     servicesOffered: "",
     profilePicture: null,
@@ -97,14 +99,14 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
     bookedDays: [],
   });
 
-  // ── Sync vendorId into local profile state ────────────────────────
+
   useEffect(() => {
     if (vendorId && !vendorProfile.id) {
       setVendorProfile((prev) => ({ ...prev, id: vendorId }));
     }
   }, [vendorId, vendorProfile.id]);
 
-  // ── Only show success after final submit fully completes ──────────
+  
   useEffect(() => {
     if (
       isFinalSubmitDone.current &&
@@ -116,7 +118,7 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
 
   if (!isOpen && !showSuccess) return null;
 
-  // ── Go back without hitting the API ──────────────────────────────
+ 
   const goToStep = (stepName) => {
     dispatch(
       updateVendorInfo({
@@ -126,26 +128,7 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
     );
   };
 
-  // ── Advance step and save progress to backend ─────────────────────
-  // const completeStep = async (stepName) => {
-  //   // Don't allow step changes while final submit is running
-  //   if (isFinalSubmitting) return;
 
-  //   const nextIndex = STEP_ORDER.indexOf(stepName) + 1;
-  //   const nextStepName =
-  //     nextIndex < STEP_ORDER.length ? STEP_ORDER[nextIndex] : "completed";
-  //   const nextStepNumber = REVERSE_STEP_MAP[nextStepName];
-
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append("onboardingStep", String(nextStepNumber));
-  //     await dispatch(
-  //       updateVendorProfile({ id: vendorId, profileData: formData })
-  //     ).unwrap();
-  //   } catch (e) {
-  //     console.log("Failed to save step", e);
-  //   }
-  // };
 const completeStep = (stepName) => {
   if (isFinalSubmitting) return;
 
@@ -180,7 +163,7 @@ const completeStep = (stepName) => {
       profileFormData.append("onboardingStep", "7");
       profileFormData.append("isProfileCompleted", "true");
       profileFormData.append("pricing", JSON.stringify(vendorProfile.pricing));
-      
+      profileFormData.append("bankCode", vendorProfile.bankCode);
       profileFormData.append(
         "bookedDays",
         JSON.stringify(vendorProfile.bookedDays)
@@ -202,9 +185,12 @@ const completeStep = (stepName) => {
         profileFormData.append("videoCatalogue", f)
       );
 
-      await dispatch(
+      const profileResult = await dispatch(
         updateVendorProfile({ id, profileData: profileFormData })
       ).unwrap();
+      console.log('Profile update result:', profileResult);
+      console.log('Bank code in result:', profileResult?.data?.bankCode || profileResult?.bankCode);
+      await dispatch(getCurrentUser());
 
       const { startingPrice, packageName, packageDescription } = vendorProfile.pricing;
       if (startingPrice && packageName) {
@@ -231,9 +217,13 @@ const completeStep = (stepName) => {
       setShowSuccess(true);
     } catch (err) {
       console.log("FULL ERROR:", JSON.stringify(err, null, 2));
-      setSubmitError(
-        typeof err === "string" ? err : "Something went wrong. Please try again."
-      );
+      const msg =
+        err?.response?.data?.message ||
+        err?.message ||
+        err?.data?.message ||
+        (typeof err === "string" && err) ||
+        "Something went wrong. Please try again.";
+      setSubmitError(msg);
     } finally {
       setIsFinalSubmitting(false);
     }

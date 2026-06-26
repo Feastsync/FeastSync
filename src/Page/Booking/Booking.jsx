@@ -3,20 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import "./Booking.css";
 import { createBooking, resetBooking } from "../../Redux/features/Bookingslice";
 
-import calendarIcon  from "../../assets/logos/calender.png";
-import hourglassIcon from "../../assets/logos/Times.svg";
-import usersIcon     from "../../assets/logos/budget.png";
-import locationIcon  from "../../assets/logos/budget.png";
-import notesIcon     from "../../assets/logos/budget.png";
-import mailIcon      from "../../assets/logos/budget.png";
-import phoneIcon     from "../../assets/logos/budget.png";
-import backIcon      from "../../assets/logos/budget.png";
-import closeIcon     from "../../assets/logos/budget.png";
-import checkIcon     from "../../assets/logos/budget.png";
-import eventIcon     from "../../assets/logos/budget.png";
+import bookinCalender from "../../assets/logos/bookinCalender.png";
+import hourglassIcon  from "../../assets/logos/eventTime.png";
+import closeIcon      from "../../assets/logos/closeIcon.png";
+import backIcon       from "../../assets/logos/backIcon.png";
+import checkIcon      from "../../assets/logos/bookinCalender.png";
+import eventIcon      from "../../assets/logos/bookinCalender.png";
+import usersIcon      from "../../assets/logos/usersIcon.png"
+import locationIcon   from "../../assets/logos/boxicons_location.svg";
+import notesIcon      from "../../assets/logos/noteIcon.png";
+import mailIcon       from "../../assets/logos/Email.svg";
+import phoneIcon      from "../../assets/logos/Phone.svg";
 
 const EVENT_TYPES = [
-'wedding', 'birthday party', 'corporate event', 'product launch', 'cultural festival', 'anniversary', 'graduation', 'burial'
+  'wedding', 'birthday party', 'corporate event', 'product launch',
+  'cultural festival', 'anniversary', 'graduation', 'burial'
 ];
 
 const START_TIMES = [
@@ -27,12 +28,7 @@ const START_TIMES = [
 
 const DURATIONS = ['2 hours', '4 hours', '6 hours', '8 hours', 'full day'];
 
-const GUEST_COUNTS =['50-100', '100-200', '200-300', '300-400', '400-500', '600+'];
-
-const BUDGETS = [
-  "Under ₦50,000","₦50k – ₦100k","₦100k – ₦200k",
-  "₦200k – ₦500k","₦500k – ₦1M","Above ₦1M",
-];
+const GUEST_COUNTS = ['50-100', '100-200', '200-300', '300-400', '400-500', '600+'];
 
 const STEP_LABELS = ["Event Details", "Review", "Confirmed"];
 
@@ -76,64 +72,69 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
   const [step, setStep] = useState(0);
   const [form, setForm] = useState({
     eventType: "", eventDate: "", startTime: "", duration: "",
-    guestCount: "", budget: "", location: "", additionalDetails: "",
+    guestCount: "", location: "", additionalDetails: "",
     firstName: "", lastName: "", email: "", phone: "",
   });
-  const [errors, setErrors] = useState({}); // <-- track errors
+  const [errors, setErrors] = useState({});
 
-  // Autofill user info
   useEffect(() => {
     if (userInfo && accountType === "user") {
       setForm(prev => ({
-       ...prev,
+        ...prev,
         firstName: userInfo.firstName || "",
-        lastName: userInfo.lastName || "",
-        email: userInfo.email || "",
-        phone: userInfo.phoneNumber || ""
+        lastName:  userInfo.lastName  || "",
+        email:     userInfo.email     || "",
+        phone:     userInfo.phoneNumber || ""
       }));
     }
   }, [userInfo, accountType]);
 
   const set = (key) => (e) => {
     setForm((prev) => ({ ...prev, [key]: e.target.value }));
-    // Clear error when user types
-    if (errors[key]) {
-      setErrors(prev => ({ ...prev, [key]: "" }));
-    }
+    if (errors[key]) setErrors(prev => ({ ...prev, [key]: "" }));
   };
 
-  // Validate step 0 fields
+  // ── clears both local error and Redux error (e.g. "vendor already booked") on date change
+  const handleDateChange = (e) => {
+    setForm((prev) => ({ ...prev, eventDate: e.target.value }));
+    if (errors.eventDate) setErrors((prev) => ({ ...prev, eventDate: "" }));
+    dispatch(resetBooking());
+  };
+
   const validateStep0 = () => {
     const newErrors = {};
-    if (!form.eventType) newErrors.eventType = "Event type is required";
-    if (!form.eventDate) newErrors.eventDate = "Event date is required";
-    if (!form.startTime) newErrors.startTime = "Start time is required";
-    if (!form.duration) newErrors.duration = "Duration is required";
-    if (!form.guestCount) newErrors.guestCount = "Guest count is required";
-    if (!form.budget) newErrors.budget = "Budget range is required";
-    if (!form.location.trim()) newErrors.location = "Location is required";
+
+    if (!form.eventType)       newErrors.eventType  = "Event type is required";
+    if (!form.eventDate)       newErrors.eventDate  = "Event date is required";
+
+    const today = new Date().toISOString().split("T")[0];
+    if (form.eventDate && form.eventDate < today) {
+      newErrors.eventDate = "Past dates cannot be selected";
+    }
+
+    if (!form.startTime)       newErrors.startTime  = "Start time is required";
+    if (!form.duration)        newErrors.duration   = "Duration is required";
+    if (!form.guestCount)      newErrors.guestCount = "Guest count is required";
+    if (!form.location.trim()) newErrors.location   = "Location is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  // Validate step 1 contact fields
   const validateStep1 = () => {
     const newErrors = {};
     if (!form.firstName.trim()) newErrors.firstName = "First name is required";
-    if (!form.lastName.trim()) newErrors.lastName = "Last name is required";
-    if (!form.email.trim()) newErrors.email = "Email is required";
+    if (!form.lastName.trim())  newErrors.lastName  = "Last name is required";
+    if (!form.email.trim())     newErrors.email     = "Email is required";
     else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = "Invalid email";
-    if (!form.phone.trim()) newErrors.phone = "Phone number is required";
-
+    if (!form.phone.trim())            newErrors.phone = "Phone number is required";
+    else if (form.phone.length !== 11) newErrors.phone = "Phone number must be 11 digits";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleNextStep = () => {
-    if (validateStep0()) {
-      setStep(1);
-    }
+    if (validateStep0()) setStep(1);
   };
 
   useEffect(() => {
@@ -146,31 +147,27 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
 
   const handleSubmit = () => {
     if (!validateStep1()) return;
-    
 
-
-const payload ={
+    const payload = {
       pricingId,
       vendorId,
-      eventDate: form.eventDate,
-      bookingTitle: `${form.eventType} – ${vendorName}`,
-      eventType: form.eventType,
-      eventLocation: form.location,
-      startTime: form.startTime,
-      duration: form.duration,
-      guestCount: form.guestCount,
-      budget: form.budget,
+      eventDate:        form.eventDate,
+      bookingTitle:     `${form.eventType} – ${vendorName}`,
+      eventType:        form.eventType,
+      eventLocation:    form.location,
+      startTime:        form.startTime,
+      duration:         form.duration,
+      guestCount:       form.guestCount,
       additionalDetails: form.additionalDetails,
       contact: {
         firstName: form.firstName,
-        lastName: form.lastName,
-        email: form.email,
-        phone: form.phone
+        lastName:  form.lastName,
+        email:     form.email,
+        phone:     form.phone
       }
-    }
+    };
 
-    dispatch(createBooking(payload)
-);
+    dispatch(createBooking(payload));
   };
 
   const bookingRef = booking?.bookingRef
@@ -178,12 +175,10 @@ const payload ={
     || "FS-PENDING";
 
   return (
-    <div
-      className="bm-backdrop"
-      // onClick={(e) => e.target === e.currentTarget && onClose?.()}
-    >
+    <div className="bm-backdrop">
       <div className="bm-modal" role="dialog" aria-modal="true" aria-label="Booking modal">
 
+        {/* ── STEP 0: Event Details ── */}
         {step === 0 && (
           <>
             <div className="bm-header">
@@ -210,11 +205,17 @@ const payload ={
                   </div>
                   {errors.eventType && <p className="bm-error-text">{errors.eventType}</p>}
                 </div>
+
                 <div className="bm-field">
                   <label>Event Date *</label>
                   <div className={`bm-input-wrap has-icon ${errors.eventDate ? 'bm-error-field' : ''}`}>
-                    <img src={calendarIcon} alt="" className="bm-input-icon" />
-                    <input type="date" value={form.eventDate} onChange={set("eventDate")} />
+                    <img src={bookinCalender} alt="" className="bm-input-icon" />
+                    <input
+                      type="date"
+                      value={form.eventDate}
+                      onChange={handleDateChange}
+                      min={new Date().toISOString().split("T")[0]}
+                    />
                   </div>
                   {errors.eventDate && <p className="bm-error-text">{errors.eventDate}</p>}
                 </div>
@@ -231,6 +232,7 @@ const payload ={
                   </div>
                   {errors.startTime && <p className="bm-error-text">{errors.startTime}</p>}
                 </div>
+
                 <div className="bm-field">
                   <label>Duration *</label>
                   <div className={`bm-select-wrap ${errors.duration ? 'bm-error-field' : ''}`}>
@@ -253,16 +255,6 @@ const payload ={
                     </select>
                   </div>
                   {errors.guestCount && <p className="bm-error-text">{errors.guestCount}</p>}
-                </div>
-                <div className="bm-field">
-                  <label>Budget Range *</label>
-                  <div className={`bm-select-wrap ${errors.budget ? 'bm-error-field' : ''}`}>
-                    <select value={form.budget} onChange={set("budget")}>
-                      <option value="" disabled>Select budget</option>
-                      {BUDGETS.map((b) => <option key={b}>{b}</option>)}
-                    </select>
-                  </div>
-                  {errors.budget && <p className="bm-error-text">{errors.budget}</p>}
                 </div>
               </div>
 
@@ -290,6 +282,8 @@ const payload ={
                 />
               </div>
 
+              {error && <p className="bm-error">{error}</p>}
+
               <button className="bm-btn-primary" onClick={handleNextStep}>
                 Send to {vendorName}
               </button>
@@ -297,6 +291,7 @@ const payload ={
           </>
         )}
 
+        {/* ── STEP 1: Review ── */}
         {step === 1 && (
           <>
             <div className="bm-header">
@@ -315,11 +310,11 @@ const payload ={
 
               <p className="bm-section-label">EVENT DETAILS</p>
               <div className="bm-review-grid">
-                <ReviewItem icon={eventIcon}    label="Event Type"     value={form.eventType} />
-                <ReviewItem icon={calendarIcon} label="Event Date"     value={form.eventDate} />
-                <ReviewItem icon={hourglassIcon}label="Duration"       value={form.duration} />
-                <ReviewItem icon={usersIcon}    label="Guest Count"    value={form.guestCount} />
-                <ReviewItem icon={locationIcon} label="Location/Venue" value={form.location} full />
+                <ReviewItem icon={eventIcon}      label="Event Type"     value={form.eventType} />
+                <ReviewItem icon={bookinCalender} label="Event Date"     value={form.eventDate} />
+                <ReviewItem icon={hourglassIcon}  label="Duration"       value={form.duration} />
+                <ReviewItem icon={usersIcon}      label="Guest Count"    value={form.guestCount} />
+                <ReviewItem icon={locationIcon}   label="Location/Venue" value={form.location} full />
               </div>
 
               <div className="bm-divider" />
@@ -373,8 +368,14 @@ const payload ={
                   <input
                     type="tel"
                     value={form.phone}
-                    onChange={set("phone")}
+                    onChange={(e) => {
+                      const digits = e.target.value.replace(/\D/g, "").slice(0, 11);
+                      setForm((prev) => ({ ...prev, phone: digits }));
+                      if (errors.phone) setErrors((prev) => ({ ...prev, phone: "" }));
+                    }}
                     placeholder="+234 XXX XXX XXXX"
+                    inputMode="numeric"
+                    maxLength={11}
                   />
                 </div>
                 {errors.phone && <p className="bm-error-text">{errors.phone}</p>}
@@ -403,6 +404,7 @@ const payload ={
           </>
         )}
 
+        {/* ── STEP 2: Confirmed ── */}
         {step === 2 && (
           <>
             <div className="bm-header bm-header-slim">
@@ -429,7 +431,7 @@ const payload ={
               </p>
 
               <button className="bm-btn-primary" onClick={onClose}>
-                Proceed to payment
+                OK
               </button>
             </div>
           </>
