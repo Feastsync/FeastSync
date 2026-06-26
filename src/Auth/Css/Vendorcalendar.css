@@ -21,7 +21,19 @@
   height: 160px;
   margin: 12px auto 0;
   padding: 22px 24px 16px;
-  background: linear-gradient(135deg, #F8F5FF 0%, #F7F3FF 11.11%, #F6F1FF 22.22%, #F4F0FF 33.33%, #F3EEFF 44.44%, #F2ECFF 55.56%, #F1EAFF 66.67%, #EFE9FF 77.78%, #EEE7FF 88.89%, #EDE5FF 100%);
+  background: linear-gradient(
+    135deg,
+    #f8f5ff 0%,
+    #f7f3ff 11.11%,
+    #f6f1ff 22.22%,
+    #f4f0ff 33.33%,
+    #f3eeff 44.44%,
+    #f2ecff 55.56%,
+    #f1eaff 66.67%,
+    #efe9ff 77.78%,
+    #eee7ff 88.89%,
+    #ede5ff 100%
+  );
 }
 
 .vendor-calendar-title-row {
@@ -79,14 +91,18 @@
 
 .vendor-calendar-swatch.available {
   border-radius: 6px;
-  background: #FFF;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 1px 2px -1px rgba(0, 0, 0, 0.10);
+  background: #fff;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1);
 }
 
 .vendor-calendar-swatch.booked {
   border-radius: 6px;
-  background:#C4622D;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 1px 2px -1px rgba(0, 0, 0, 0.10);
+  background: #c4622d;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1);
 }
 
 .vendor-calendar-body {
@@ -110,7 +126,7 @@
   display: grid;
   grid-template-columns: 22px 1fr 22px;
   align-items: center;
-  margin: 0;
+  margin-bottom: 25px; 
   pointer-events: none;
 }
 
@@ -133,6 +149,7 @@
 .vendor-calendar-card .react-calendar__navigation__label {
   color: var(--text-color) !important;
   font-size: 21px !important;
+  margin-bottom: 10px;
   font-weight: 700 !important;
   line-height: 1 !important;
   text-align: center;
@@ -142,7 +159,7 @@
 .vendor-calendar-card .react-calendar__navigation button:enabled:hover,
 .vendor-calendar-card .react-calendar__navigation button:enabled:focus {
   background: transparent;
-  color: #C4622D;
+  color: #c4622d;
 }
 
 .vendor-calendar-card .react-calendar__viewContainer {
@@ -206,7 +223,7 @@
 }
 
 .vendor-calendar-card .react-calendar__month-view__days__day--neighboringMonth {
-  color: var(--Color-3, rgba(58, 56, 53, 0.50));
+  color: var(--Color-3, rgba(58, 56, 53, 0.5));
 }
 
 .vendor-calendar-card .booked-day {
@@ -215,7 +232,7 @@
 }
 
 .vendor-calendar-card .booked-day abbr {
-  background: #C4622D !important;
+  background: #c4622d !important;
   color: #ffffff;
 }
 .vc-skeleton {
@@ -236,7 +253,7 @@
   height: 160px;
   border-radius: 6px;
   padding: 22px 24px 16px;
-  background: linear-gradient(135deg, #F8F5FF 0%, #EDE5FF 100%);
+  background: linear-gradient(135deg, #f8f5ff 0%, #ede5ff 100%);
 }
 
 .vc-skeleton__title {
@@ -329,8 +346,12 @@
 }
 
 @keyframes vc-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 @media (max-width: 720px) {
@@ -391,19 +412,19 @@
   }
 
   .vendor-calendar-card {
-    width: min(100%, 410px); 
+    width: min(100%, 410px);
     min-height: auto;
   }
 
   .vendor-calendar-header {
     width: calc(100% - 16px);
-    height: 125px; 
+    height: 125px;
     margin-top: 8px;
     padding: 16px 20px 12px;
   }
 
   .vendor-calendar-title-row h2 {
-    font-size: 14px; 
+    font-size: 14px;
   }
 
   .vendor-calendar-close {
@@ -414,7 +435,7 @@
 
   .vendor-calendar-legend {
     gap: 16px;
-    margin-top: 35px; 
+    margin-top: 35px;
   }
 
   .vendor-calendar-legend-item {
@@ -432,8 +453,8 @@
   }
 
   .vendor-calendar-card .react-calendar__navigation {
-    top: 52px;
-    left: 20px;
+    top: 5px;
+    left: 5px;
     right: 20px;
     height: 20px;
     grid-template-columns: 20px 1fr 20px;
@@ -453,21 +474,20 @@
   }
 
   .vendor-calendar-card .react-calendar__month-view__weekdays abbr {
-    font-size: 11px; 
+    font-size: 11px;
   }
 
   .vendor-calendar-card .react-calendar__month-view__days {
-    row-gap: 14px; 
+    row-gap: 14px;
   }
 
   .vendor-calendar-card .react-calendar__tile {
     height: 28px;
-    font-size: 11px; 
+    font-size: 11px;
   }
 
-   
   .vendor-calendar-card .react-calendar__tile abbr {
-    width: 85%; 
+    width: 85%;
     height: 28px;
   }
 }
@@ -516,7 +536,7 @@
   }
 
   .vendor-calendar-card .react-calendar__tile abbr {
-    width: 80%; 
+    width: 80%;
     height: 26px;
     border-radius: 6px;
   }
