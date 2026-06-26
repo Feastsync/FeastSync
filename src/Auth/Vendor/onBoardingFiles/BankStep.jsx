@@ -75,7 +75,7 @@ const BankStep = ({
               type="text"
               placeholder="Enter your state of residence"
               value={safeProfile.stateOfResidence || ""}
-              onChange={(e) => updateField("stateOfResidence", e.target.value)}
+              onChange={(e) => updateField("stateOfResidence", e.target.value.replace(/[^a-zA-Z\s]/g, ""))}
             />
           </div>
 
