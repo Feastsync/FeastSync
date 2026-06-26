@@ -94,6 +94,13 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
     if (errors[key]) setErrors(prev => ({ ...prev, [key]: "" }));
   };
 
+  // ── clears both local error and Redux error (e.g. "vendor already booked") on date change
+  const handleDateChange = (e) => {
+    setForm((prev) => ({ ...prev, eventDate: e.target.value }));
+    if (errors.eventDate) setErrors((prev) => ({ ...prev, eventDate: "" }));
+    dispatch(resetBooking());
+  };
+
   const validateStep0 = () => {
     const newErrors = {};
 
@@ -120,7 +127,8 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
     if (!form.lastName.trim())  newErrors.lastName  = "Last name is required";
     if (!form.email.trim())     newErrors.email     = "Email is required";
     else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = "Invalid email";
-    if (!form.phone.trim())     newErrors.phone     = "Phone number is required";
+    if (!form.phone.trim())            newErrors.phone = "Phone number is required";
+    else if (form.phone.length !== 11) newErrors.phone = "Phone number must be 11 digits";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -205,7 +213,7 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
                     <input
                       type="date"
                       value={form.eventDate}
-                      onChange={set("eventDate")}
+                      onChange={handleDateChange}
                       min={new Date().toISOString().split("T")[0]}
                     />
                   </div>
@@ -273,6 +281,8 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
                   rows={4}
                 />
               </div>
+
+              {error && <p className="bm-error">{error}</p>}
 
               <button className="bm-btn-primary" onClick={handleNextStep}>
                 Send to {vendorName}
@@ -358,8 +368,14 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
                   <input
                     type="tel"
                     value={form.phone}
-                    onChange={set("phone")}
+                    onChange={(e) => {
+                      const digits = e.target.value.replace(/\D/g, "").slice(0, 11);
+                      setForm((prev) => ({ ...prev, phone: digits }));
+                      if (errors.phone) setErrors((prev) => ({ ...prev, phone: "" }));
+                    }}
                     placeholder="+234 XXX XXX XXXX"
+                    inputMode="numeric"
+                    maxLength={11}
                   />
                 </div>
                 {errors.phone && <p className="bm-error-text">{errors.phone}</p>}

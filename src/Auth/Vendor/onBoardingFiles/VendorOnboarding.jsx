@@ -81,12 +81,12 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
     stateOfResidence: "",
     bankName: "",
     accountNumber: "",
+    bankCode: "",
     bio: "",
     servicesOffered: "",
     profilePicture: null,
     coverPhoto: null,
     coverVideo: null,
-    bankCode: "",
     photoCatalogue: [],
     videoCatalogue: [],
     pricing: {
@@ -185,9 +185,11 @@ const completeStep = (stepName) => {
         profileFormData.append("videoCatalogue", f)
       );
 
-      await dispatch(
+      const profileResult = await dispatch(
         updateVendorProfile({ id, profileData: profileFormData })
       ).unwrap();
+      console.log('Profile update result:', profileResult);
+      console.log('Bank code in result:', profileResult?.data?.bankCode || profileResult?.bankCode);
       await dispatch(getCurrentUser());
 
       const { startingPrice, packageName, packageDescription } = vendorProfile.pricing;
