@@ -457,9 +457,9 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      .addCase(verifyOTP.fulfilled, (state, action) => {
+      .addCase(verifyOTP.fulfilled, (state) => {
         state.isLoading = false;
-        state.error = action.payload;
+        state.error = null;
       })
       .addCase(verifyOTP.rejected, (state, action) => {
         state.isLoading = false;
@@ -752,22 +752,7 @@ const authSlice = createSlice({
   },
 });
 
-extraReducers: (builder) => {
-  builder
-    .addCase(createReview.pending, (state) => {
-      state.reviewLoading = true;
-    })
 
-    .addCase(createReview.fulfilled, (state, action) => {
-      state.reviewLoading = false;
-      state.reviewData = action.payload;
-    })
-
-    .addCase(createReview.rejected, (state, action) => {
-      state.reviewLoading = false;
-      state.reviewError = action.payload;
-    });
-}
 
 export const { logout, clearError, updateVendorInfo, addNotification ,clearUnreadCount } = authSlice.actions;
 export default authSlice.reducer;

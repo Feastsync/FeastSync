@@ -18,7 +18,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.auth);
   const { message } = App.useApp();
-
   const [showPassword, setShowPassword] = useState(false);
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
   const [accountType, setAccountType] = useState("vendor");
