@@ -50,7 +50,8 @@ const OTPVerification = () => {
 
   useEffect(() => {
     if (error) {
-      message.error(error);
+      const errorText = typeof error === "string" ? error : error?.message || "An error occurred";
+      message.error(errorText);
       dispatch(clearError());
     }
   }, [error, dispatch]);
@@ -177,11 +178,7 @@ const OTPVerification = () => {
             className="otp-verify-btn"
             disabled={isLoading}
           >
-            {isLoading
-              ? "Verifying..."
-              : isForgotPassword
-              ? "Continue"
-              : "Verify OTP"}
+            {isLoading ? "Verifying..." : isForgotPassword ? "Continue" : "Verify OTP"}
           </Button>
 
           <p className="otp-resend">
