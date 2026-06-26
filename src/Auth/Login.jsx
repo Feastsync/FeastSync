@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { login, getCurrentUser } from "../Redux/features/authslice";
-import { message } from "antd";
+import { App } from "antd";
 import Input from "../Props/Imp";
 import Button from "../Props/Button";
 import WelcomeModal from "./Vendor/onBoardingFiles/WelcomeModal.jsx";
@@ -17,6 +17,7 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.auth);
+  const { message } = App.useApp();
 
   const [showPassword, setShowPassword] = useState(false);
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });

@@ -17,6 +17,7 @@ const Settings = () => {
   const [modal, setModal] = useState(null)
   const [otp, setOtp] = useState(['', '', '', ''])
   const [updateLoading, setUpdateLoading] = useState(false)
+  const [logoutLoading, setLogoutLoading] = useState(false)
   const [pendingUpdate, setPendingUpdate] = useState({})
 
   const [phoneNumber, setPhoneNumber] = useState(vendorInfo?.phoneNumber || '')
@@ -141,11 +142,14 @@ const Settings = () => {
   }
 
   const handleLogout = async () => {
+    setLogoutLoading(true)
     try {
       await dispatch(logoutUser()).unwrap()
       message.success('Logged out successfully')
+      setLogoutLoading(false)
       navigate('/login')
     } catch {
+      setLogoutLoading(false)
       await persistor.purge()
       navigate('/login')
     }
@@ -305,7 +309,9 @@ const Settings = () => {
             </p>
             <div className="logout_modal_actions">
               <button className="logout_modal_cancel" onClick={closeModal}>Cancel</button>
-              <button className="logout_modal_confirm" onClick={handleLogout}>Yes, log out</button>
+              <button className="logout_modal_confirm" onClick={handleLogout} disabled={logoutLoading}>
+                {logoutLoading ? "Logging out..." : "Yes, log out"}
+              </button>
             </div>
           </div>
         </div>

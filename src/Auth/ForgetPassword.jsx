@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { forgotPassword } from "../Redux/features/authslice";
-import { message } from "antd";
+import { App } from "antd";
 import Button from "../Props/Button";
 import { FaArrowLeft } from "react-icons/fa6";
 import "../Auth/Css/ForgotPassword.css";
@@ -13,6 +13,7 @@ const ForgetPassword = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const { message } = App.useApp();
 
   const params = new URLSearchParams(location.search);
   const { isLoading } = useSelector((state) => state.auth);

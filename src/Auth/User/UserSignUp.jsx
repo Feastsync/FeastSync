@@ -34,8 +34,17 @@ const UserSignUp = () => {
 
   useEffect(() => {
     if (otpSent && signupEmail) {
-      navigate('/verify-otp', { state: { email: signupEmail, accountType: 'user' } })
-      dispatch(resetSignup())
+      Swal.fire({
+        title: "Success!",
+        text: "OTP has been sent to your email",
+        icon: "success",
+        confirmButtonColor: "#330159",
+        timer: 2000,
+        showConfirmButton: false,
+      }).then(() => {
+        navigate('/verify-otp', { state: { email: signupEmail, accountType: 'user' } })
+        dispatch(resetSignup())
+      })
     }
   }, [otpSent, signupEmail, navigate, dispatch])
 

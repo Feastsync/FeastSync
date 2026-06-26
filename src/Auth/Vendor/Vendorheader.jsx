@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../Css/Vendorheader.css";
 import Headerlogo2 from "../../assets/logos/Headerlogo2.svg";
 import Bellicon2 from "../../assets/logos/Bellicon2.svg";
@@ -18,6 +18,7 @@ const Vendorheader = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const [modal, setModal] = useState(null);
+  const [logoutLoading, setLogoutLoading] = useState(false);
 
   const {
     vendorInfo,
@@ -76,16 +77,20 @@ const Vendorheader = () => {
   const closeMenu = () => setIsOpen(false);
 
   const handleLogout = async () => {
+    setLogoutLoading(true);
     try {
       socket.disconnect();
       await dispatch(logoutUser()).unwrap();
       message.success("Logged out successfully");
+      setLogoutLoading(false);
       closeModal();
       navigate("/login");
     } catch (err) {
+      setLogoutLoading(false);
       await persistor.purge();
       closeModal();
       navigate("/login");
+      console.error("Logout error:", err);
     }
   };
 
@@ -230,7 +235,9 @@ const Vendorheader = () => {
             </p>
             <div className="vendorlogout-actions">
               <button className="vendorlogout-cancel" onClick={closeModal}>Cancel</button>
-              <button className="vendorlogout-confirm" onClick={handleLogout}>Yes, log out</button>
+              <button className="vendorlogout-confirm" onClick={handleLogout} disabled={logoutLoading}>
+                {logoutLoading ? "Logging out..." : "Yes, log out"}
+              </button>
             </div>
           </div>
         </div>
