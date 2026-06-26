@@ -1,0 +1,112 @@
+.sidebar {
+  background: linear-gradient(
+    180deg,
+    #0a0015 0%,
+    #0b0017 8.33%,
+    #0d0119 16.67%,
+    #0e011b 25%,
+    #0f021d 33.33%,
+    #11021f 41.67%,
+    #120321 50%,
+    #130423 58.33%,
+    #150525 66.67%,
+    #160628 75%,
+    #17072a 83.33%,
+    #19092c 91.67%,
+    #1a0a2e 100%
+  );
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 280px;
+  height: 100vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.sidebar .sidebarLogoHolder {
+  background: linear-gradient(
+    180deg,
+    #0a0015 0%,
+    #0b0017 8.33%,
+    #0d0119 16.67%,
+    #0e011b 25%,
+    #0f021d 33.33%,
+    #11021f 41.67%,
+    #120321 50%,
+    #130423 58.33%,
+    #150525 66.67%,
+    #160628 75%,
+    #17072a 83.33%,
+    #19092c 91.67%,
+    #1a0a2e 100%
+  );
+  padding: 26px 0 26px 50px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.sidebar .sidebarLogoHolder img {
+  width: 50px;
+}
+.sidebar .sidebarLogoHolder .logoText {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.adminNavLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 50px;
+  overflow-y: auto;
+}
+.adminNavLinks .adminNavLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.adminNavLinks .adminNavLinkWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  color: #e2d9f3;
+}
+.adminNavLinks .adminNavLink:hover {
+  background-color: #291457;
+  color: #fff;
+}
+
+.icon-rotate {
+  transform: rotate(-90deg);
+  transition: transform 0.3s ease;
+}
+
+.dropdownMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 0 10px 60px;
+  background-color: rgba(41, 20, 87, 0.5);
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.dropdownItem {
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: #c4b5fd;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.dropdownItem:hover {
+  background-color: #291457;
+  color: #fff;
+  padding-left: 16px;
+}

@@ -42,6 +42,11 @@ import Epkrating from "./Auth/Vendor/Epkrating.jsx";
 import BookingModal from "./Page/Booking/Booking.jsx";
 import AdminLayout from "./Page/Admin/AdminLayout.jsx";
 import AdminDashboard from "./Page/Admin/AdminDashboard.jsx"
+import AdminUser from "./Page/Admin/AdminUser.jsx"
+import AdminDispute from "./Page/Admin/AdminDispute.jsx"
+import AdminVendors from "./Page/Admin/AdminVendors.jsx"
+import AdminPayment from "./Page/Admin/AdminPayment.jsx"
+import AdminSetting from "./Page/Admin/AdminSetting.jsx"
 import VendorChat from "./Page/chatPage/VendorChats.jsx";
 import VendorSetting from "./Auth/Vendor/VendorSetting.jsx";
 import Vendormediagallery from "./Auth/Vendor/Vendormediagallery.jsx";
@@ -53,6 +58,7 @@ import ReviewsNotification from "./Page/NotitficationsPages/ReviewsNotifications
 import NotificationsWrapper from "./Page/NotitficationsPages/NotificationsWrapper.jsx";
 import { ScrollToTop, TokenValidator, OnboardingPage } from "./Components/Highfunction.jsx";
 import Inbox from "./Page/Inbox/Inbox.jsx";
+import AdminVerify from "./Page/Admin/AdminVerify.jsx";
 
 
 const PublicLayout = () => {
@@ -110,6 +116,12 @@ const App = () => {
 
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="users" element={<AdminUser />} />
+          <Route path="disputes" element={<AdminDispute />} />
+          <Route path="vendors" element={<AdminVendors />} />
+          <Route path="payments" element={<AdminPayment />} />
+          <Route path="settings" element={<AdminSetting />} />
+          <Route path="verify" element={<AdminVerify />} />
         </Route>
 
         <Route element={<PrivateRoute allowedRoles={["user", "vendor"]} />}>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import "../Admin/AdminSignup.css"
+import "../../Page/Admin/admincss/AdminSignup.css"
 import { Button } from 'antd'
 import { FaArrowLeft } from "react-icons/fa6"
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa"

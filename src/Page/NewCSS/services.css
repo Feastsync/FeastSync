@@ -110,7 +110,10 @@ height: 396px;
   line-height: 25px;
   padding: 20px;
 }
-
+.serviceBrandDivHolder{
+  width: 1000px;
+padding: 0 20px;
+}
 .serviceEntertainment {
   display: flex;
   flex-direction: column;
@@ -233,6 +236,10 @@ height: 396px;
   .serviceContainerTitle {
     font-size: 28px;
   }
+  .serviceBrandDivHolder{
+  width: 400px;
+padding: 0 20px;
+}
   
   .serviceDeliver {
     font-size: 15px;
