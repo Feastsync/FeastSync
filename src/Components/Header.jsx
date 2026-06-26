@@ -23,7 +23,7 @@ const Header = () => {
   const dispatch = useDispatch()
 
   const { isLoggedIn, activeUser, isVendor } = useAuth()
-  const { notifications = [], unreadCount } = useSelector((state) => state.auth)
+  const { unreadCount } = useSelector((state) => state.auth)
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -41,10 +41,20 @@ const Header = () => {
     dispatch(getNotifications())
 
     const user = activeUser
-    socket.connect()
+    
+    // Ensure socket is connected
+    if (!socket.connected) {
+      socket.connect()
+    }
     socket.emit('join', user?._id || user?.id)
 
+    socket.on('connect', () => {
+      console.log('Socket connected for notifications')
+      socket.emit('join', user?._id || user?.id)
+    })
+
     socket.on('notification', (newNotif) => {
+      console.log('New notification received:', newNotif)
       dispatch(addNotification(newNotif))
     })
 
@@ -52,11 +62,23 @@ const Header = () => {
       setUnreadChats(prev => prev + 1)
     })
 
+    socket.on('new_message_notification', () => {
+      setUnreadChats(prev => prev + 1)
+    })
+
+    // Poll for notifications every 5 seconds for live updates
+    const interval = setInterval(() => {
+      dispatch(getNotifications())
+    }, 5000)
+
     return () => {
       socket.off('notification')
       socket.off('receive_message')
+      socket.off('new_message_notification')
+      socket.off('connect')
+      clearInterval(interval)
     }
-  }, [isLoggedIn, dispatch])
+  }, [isLoggedIn, dispatch, activeUser])
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : 'unset'

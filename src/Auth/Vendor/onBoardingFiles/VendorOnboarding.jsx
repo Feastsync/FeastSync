@@ -185,11 +185,9 @@ const completeStep = (stepName) => {
         profileFormData.append("videoCatalogue", f)
       );
 
-      const profileResult = await dispatch(
+      await dispatch(
         updateVendorProfile({ id, profileData: profileFormData })
       ).unwrap();
-      console.log('Profile update result:', profileResult);
-      console.log('Bank code in result:', profileResult?.data?.bankCode || profileResult?.bankCode);
       await dispatch(getCurrentUser());
 
       const { startingPrice, packageName, packageDescription } = vendorProfile.pricing;

@@ -4,74 +4,64 @@ import "react-calendar/dist/Calendar.css";
 import "../Css/Vendorcalendar.css";
 import api from "../../Redux/app/axios";
 
-const CalendarSkeleton = () => (
-  <div className="vc-skeleton">
-    <div className="vc-skeleton__header">
-      <div className="vc-skeleton__title" />
-      <div className="vc-skeleton__legend">
-        <div className="vc-skeleton__swatch" />
-        <div className="vc-skeleton__swatch" />
-      </div>
-    </div>
-    <div className="vc-skeleton__body">
-      <div className="vc-skeleton__nav">
-        <div className="vc-skeleton__nav-btn" />
-        <div className="vc-skeleton__month" />
-        <div className="vc-skeleton__nav-btn" />
-      </div>
-      <div className="vc-skeleton__weekdays">
-        {[...Array(7)].map((_, i) => (
-          <div key={i} className="vc-skeleton__weekday" />
-        ))}
-      </div>
-      <div className="vc-skeleton__days">
-        {[...Array(35)].map((_, i) => (
-          <div key={i} className="vc-skeleton__day" />
-        ))}
-      </div>
-    </div>
-  </div>
-);
-
-const Vendorcalendar = ({ vendor, isOwner, bookingStatus }) => {
+const Vendorcalendar = ({ vendor, bookingStatus }) => {
   const vendorId = vendor?._id;
   const [date, setDate] = useState(new Date());
   const [activeMonth, setActiveMonth] = useState(new Date());
   const [bookedDates, setBookedDates] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchCalendar = async () => {
-      if (!vendorId) return;
+      if (!vendorId) {
+        console.log("No vendorId provided to calendar");
+        return;
+      }
 
       try {
-        setLoading(true);
-
         const year = activeMonth.getFullYear();
         const month = String(activeMonth.getMonth() + 1).padStart(2, "0");
         const monthParam = `${year}-${month}`;
 
+        console.log(`Fetching calendar for vendor ${vendorId}, month ${monthParam}`);
+
         const res = await api.get(
           `/calendar/get-calendar/${vendorId}?month=${monthParam}`
         );
-        console.log("Full response:", JSON.stringify(res.data, null, 2));
-        console.log("First booked item:", res.data?.bookedDates?.[0]);
+
+        console.log("Calendar API response:", res.data);
 
         const dates =
           res.data?.bookedDates?.map((item) =>
             item.date ? item.date.split("T")[0] : item
           ) || [];
 
+        console.log("Booked dates:", dates);
         setBookedDates(dates);
       } catch (error) {
         console.error("Failed to fetch calendar:", error);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchCalendar();
+
+    // Poll for calendar updates every 10 seconds to show newly booked dates
+    const interval = setInterval(fetchCalendar, 10000);
+
+    return () => clearInterval(interval);
   }, [vendorId, activeMonth, bookingStatus]);
+
+  // Always render the calendar, even if there's no vendor data yet
+  if (!vendorId) {
+    return (
+      <section className="vendor-calendar-wrap">
+        <div className="vendor-calendar-card">
+          <div className="vendor-calendar-body">
+            <p style={{ textAlign: 'center', padding: '40px' }}>Loading calendar...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const formatDate = (calendarDate) => {
     const year = calendarDate.getFullYear();
@@ -79,8 +69,6 @@ const Vendorcalendar = ({ vendor, isOwner, bookingStatus }) => {
     const day = String(calendarDate.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
-
-  if (loading) return <CalendarSkeleton />;
 
   return (
     <section className="vendor-calendar-wrap">

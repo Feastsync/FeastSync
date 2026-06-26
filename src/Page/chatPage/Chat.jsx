@@ -1,12 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { io } from "socket.io-client";
 import api from "../../Redux/app/socketAxios";
 import sendIcon from "../../assets/logos/sendicon.png";
 import verifiedIcon from "../../assets/logos/verifiedicon.png";
 import "./Chat.css";
 import { message } from "antd";
+import { getNotifications } from "../../Redux/features/authslice";
 
 function getInitials(name = "") {
   return name
@@ -42,6 +43,7 @@ export default function ChatsPage() {
   const { userInfo, vendorInfo, accountType } = useSelector(
     (state) => state.auth
   );
+  const dispatch = useDispatch();
 
   const isVendor = accountType === "vendor";
   const me = isVendor ? vendorInfo : userInfo;
@@ -52,18 +54,25 @@ export default function ChatsPage() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isTyping] = useState(false);
-  const [activeChatName, setActiveChatName] = useState("");
-  const [activeChatAvatar, setActiveChatAvatar] = useState(null);
   const [booking, setBooking] = useState(null);
   const [paymentLoading, setPaymentLoading] = useState(false);
 
   const bodyRef = useRef(null);
   const socketRef = useRef(null);
+  const initialLoadRef = useRef(true);
+
+  // Derive active chat info from conversations and bookingId
+  const activeChat = conversations.find((c) => c.bookingId === bookingId) || null;
+  const activeChatName = activeChat?.name || "";
+  const activeChatAvatar = activeChat?.avatar || null;
 
   // Fetch inbox
   useEffect(() => {
     const fetchInbox = async () => {
-      setInboxLoading(true);
+      // Only show loading on initial load
+      if (initialLoadRef.current) {
+        setInboxLoading(true);
+      }
 
       try {
         const endpoint = isVendor
@@ -95,6 +104,7 @@ export default function ChatsPage() {
             avatar,
             eventType: booking.eventType || "",
             status: booking.bookingStatus || booking.status || "pending",
+            paymentStatus: booking.paymentStatus || "",
             time: booking.updatedAt || booking.createdAt || null,
           };
         });
@@ -103,24 +113,20 @@ export default function ChatsPage() {
       } catch (error) {
         console.error("Failed to load inbox:", error);
       } finally {
-        setInboxLoading(false);
+        if (initialLoadRef.current) {
+          setInboxLoading(false);
+          initialLoadRef.current = false;
+        }
       }
     };
 
     fetchInbox();
+
+    // Poll for conversation updates every 10 seconds for live status
+    const interval = setInterval(fetchInbox, 10000);
+
+    return () => clearInterval(interval);
   }, [isVendor]);
-
-  // Active chat header
-  useEffect(() => {
-    if (!bookingId || !conversations.length) return;
-
-    const active = conversations.find((c) => c.bookingId === bookingId);
-
-    if (active) {
-      setActiveChatName(active.name);
-      setActiveChatAvatar(active.avatar);
-    }
-  }, [bookingId, conversations]);
 
   // Fetch messages
   useEffect(() => {
@@ -129,8 +135,6 @@ export default function ChatsPage() {
     const fetchMessages = async () => {
       try {
         const res = await api.get(`/api/v1/message/${bookingId}`);
-
-        // console.log("MESSAGES RESPONSE:", res.data);
 
         setMessages(
           res.data?.messages ||
@@ -160,7 +164,70 @@ export default function ChatsPage() {
     };
 
     loadBooking();
+
+    // Poll for booking updates every 10 seconds for live status
+    // This won't affect socket as they use different protocols
+    const interval = setInterval(loadBooking, 10000);
+
+    return () => clearInterval(interval);
   }, [bookingId]);
+
+  // Refresh booking and conversations if returning from payment
+  useEffect(() => {
+    const pendingBookingId = sessionStorage.getItem("pendingPaymentBookingId");
+    
+    if (pendingBookingId && pendingBookingId === bookingId) {
+      // Clear the flag
+      sessionStorage.removeItem("pendingPaymentBookingId");
+      
+      // Refresh booking data after a short delay to ensure server has processed payment
+      const timer = setTimeout(async () => {
+        try {
+          // Refresh booking details
+          const bookingRes = await api.get(`/api/v1/bookings/single/${bookingId}`);
+          setBooking(bookingRes.data?.booking);
+          
+          // Refresh conversations list to get updated status
+          const endpoint = isVendor
+            ? "/api/v1/bookings/vendor"
+            : "/api/v1/bookings/client";
+          const convRes = await api.get(endpoint);
+          
+          const bookings = convRes.data?.bookings || convRes.data?.data || [];
+          const mapped = bookings.map((booking) => {
+            const name = isVendor
+              ? `${booking.userId?.firstName || ""} ${booking.userId?.lastName || ""}`.trim() || "Client"
+              : booking.vendorId?.stageName || "Vendor";
+
+            const avatar = isVendor
+              ? booking.userId?.profilePicture?.secureUrl ||
+                booking.userId?.profilePicture ||
+                null
+              : booking.vendorId?.profilePicture?.secureUrl ||
+                null;
+
+            return {
+              bookingId: booking._id,
+              name,
+              avatar,
+              eventType: booking.eventType || "",
+              status: booking.bookingStatus || booking.status || "pending",
+              time: booking.updatedAt || booking.createdAt || null,
+            };
+          });
+          
+          setConversations(mapped);
+          
+          // Also refresh notifications to get payment confirmation
+          dispatch(getNotifications());
+        } catch (error) {
+          console.error("Failed to refresh data after payment:", error);
+        }
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [bookingId, dispatch, isVendor]);
 
   // Socket connection
   useEffect(() => {
@@ -216,7 +283,6 @@ export default function ChatsPage() {
 
       if (paymentUrl) {
         message.loading("Redirecting to KoraPay...", 1);
-        // Store bookingId in sessionStorage for callback
         sessionStorage.setItem("pendingPaymentBookingId", bookingId);
         window.location.href = paymentUrl;
       } else {
@@ -262,10 +328,34 @@ export default function ChatsPage() {
         roomId: bookingId,
         message: newMessage,
       });
+      
+      // Emit event to trigger unread count on receiver's end
+      socketRef.current?.emit("new_message_notification", {
+        receiverId: isVendor ? booking.userId._id : booking.vendorId._id,
+        bookingId: bookingId,
+        senderName: isVendor ? "Vendor" : "Client",
+      });
     } catch (error) {
       console.error("Failed to send message:", error);
     }
   };
+
+  // Derived state for payment and chat gating
+  // Check both booking object and conversation status
+  const bookingStatus = booking?.bookingStatus || activeChat?.status || "";
+  const isBookingAccepted = ["accepted", "confirmed"].includes(bookingStatus);
+  
+  // If booking is confirmed, payment is considered confirmed
+  const isPaymentConfirmed = (
+    bookingStatus === "confirmed" ||
+    booking?.paymentStatus === "success" || 
+    booking?.paymentStatus === "completed" ||
+    booking?.isPaid === true ||
+    booking?.paid === true
+  );
+  
+  const canProceedToPayment = isBookingAccepted && !isPaymentConfirmed;
+  const canChat = isBookingAccepted && isPaymentConfirmed;
 
   return (
     <div className="chats-page">
@@ -326,12 +416,12 @@ export default function ChatsPage() {
                     <span className="cs-item__time">{timeAgo(conv.time)}</span>
                   </div>
 
-                  <div className="cs-item__bottom">
-                    <span className="cs-item__preview">{conv.eventType}</span>
-                    <span className={`cs-item__status cs-item__status--${conv.status?.toLowerCase()}`}>
-                      {conv.status}
-                    </span>
-                  </div>
+                <div className="cs-item__bottom">
+                  <span className="cs-item__preview">{conv.eventType}</span>
+                  <span className={`cs-item__status cs-item__status--${conv.status?.toLowerCase()}`}>
+                    {conv.status}
+                  </span>
+                </div>
                 </div>
               </li>
             ))}
@@ -383,16 +473,11 @@ export default function ChatsPage() {
               </button>
               {!isVendor && (
                 <button
-                  className="chats-pay-btn"
+                  className={`chats-pay-btn ${isPaymentConfirmed ? "chats-pay-btn--paid" : ""}`}
                   onClick={handlePayment}
-                  disabled={
-  paymentLoading ||
-  !booking ||
-  !["accepted", "confirmed"].includes(booking.bookingStatus)
-}
-
+                  disabled={paymentLoading || !canProceedToPayment}
                 >
-                  Proceed to Payment
+                  {isPaymentConfirmed ? "✓ Paid" : "Proceed to Payment"}
                 </button>
               )}
             </div>
@@ -436,31 +521,32 @@ export default function ChatsPage() {
               </div>
 
               <div className="chats-chat__input-row">
-                 {!isVendor && booking && !["accepted", "confirmed"].includes(booking.bookingStatus) ? (
-  <div className="chats-chat__blocked">
-    {booking.bookingStatus === "rejected"
-      ? "❌ Booking rejected. Chat unavailable."
-      : "⏳ Waiting for vendor to accept your booking."}
-  </div>
-) : (
-  <>
-    <input
-      className="chats-chat__input"
-      value={input}
-      onChange={(e) => setInput(e.target.value)}
-      onKeyDown={(e) => e.key === "Enter" && handleSend()}
-      placeholder="Type your message here"
-    />
-    <button
-      className="chats-chat__send-btn"
-      onClick={handleSend}
-      aria-label="Send"
-    >
-      <img src={sendIcon} alt="send" />
-    </button>
-  </>
-)}
-
+                {!isVendor && !canChat ? (
+                  <div className="chats-chat__blocked">
+                    {!isBookingAccepted
+                      ? booking?.bookingStatus === "rejected"
+                        ? "❌ Booking rejected. Chat unavailable."
+                        : "⏳ Waiting for vendor to accept your booking."
+                      : "💳 Payment must be made to enable conversation."}
+                  </div>
+                ) : (
+                  <>
+                    <input
+                      className="chats-chat__input"
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                      placeholder="Type your message here"
+                    />
+                    <button
+                      className="chats-chat__send-btn"
+                      onClick={handleSend}
+                      aria-label="Send"
+                    >
+                      <img src={sendIcon} alt="send" />
+                    </button>
+                  </>
+                )}
               </div>
             </>
           )}
