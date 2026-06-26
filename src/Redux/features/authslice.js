@@ -8,8 +8,7 @@ const STEP_MAP = {
   3: "media",
   4: "pricing",
   5: "docs",
-  6: "calendar",
-  7: "completed",
+  6: "completed",
 };
 
 export const login = createAsyncThunk(
@@ -625,7 +624,7 @@ const authSlice = createSlice({
         state.vendorInfo = {
           ...state.vendorInfo,
           isOnboarded: true,
-          onboardingStep: 7,
+          onboardingStep: 6,
           currentStep: "completed",
           isKycVerified: action.payload.data?.isKycVerified || false,
           verificationStatus:

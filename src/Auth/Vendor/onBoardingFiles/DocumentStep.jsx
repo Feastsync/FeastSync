@@ -40,6 +40,25 @@ const DocumentStep = ({
       message.warning("Please upload a valid document");
       return;
     }
+    
+    // Validate all required profile data before final submit
+    const requiredFields = [
+      { key: 'category', label: 'Category', value: profileData?.category },
+      { key: 'stateOfResidence', label: 'State of Residence', value: profileData?.stateOfResidence },
+      { key: 'bankName', label: 'Bank Name', value: profileData?.bankName },
+      { key: 'accountNumber', label: 'Account Number', value: profileData?.accountNumber },
+      { key: 'bio', label: 'Bio', value: profileData?.bio },
+      { key: 'servicesOffered', label: 'Services Offered', value: profileData?.servicesOffered },
+      { key: 'pricing', label: 'Pricing', value: profileData?.pricing?.packageName },
+    ];
+
+    const missingFields = requiredFields.filter(field => !field.value || field.value.trim() === '');
+    
+    if (missingFields.length > 0) {
+      message.error(`Please complete the following fields: ${missingFields.map(f => f.label).join(', ')}`);
+      return;
+    }
+    
     setIsSubmitting(true);
     await onNext();
     setIsSubmitting(false);

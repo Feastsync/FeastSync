@@ -9,7 +9,6 @@ import BankStep from "./BankStep.jsx";
 import MediaStep from "./MediaStep.jsx";
 import PricingStep from "./PricingStep.jsx";
 import DocumentStep from "./DocumentStep.jsx";
-import CalendarStep from "./CalendarStep.jsx";
 import SuccessModal from "./SuccessModal.jsx";
 
 import {
@@ -20,7 +19,7 @@ import {
   getCurrentUser,
 } from "../../../Redux/features/authslice.js";
 
-const STEP_ORDER = ["category", "bank", "media", "pricing", "docs", "calendar"];
+const STEP_ORDER = ["category", "bank", "media", "pricing", "docs"];
 
 const STEP_MAP = {
   1: "category",
@@ -28,8 +27,7 @@ const STEP_MAP = {
   3: "media",
   4: "pricing",
   5: "docs",
-  6: "calendar",
-  7: "completed",
+  6: "completed",
 };
 
 const REVERSE_STEP_MAP = {
@@ -38,8 +36,7 @@ const REVERSE_STEP_MAP = {
   media: 3,
   pricing: 4,
   docs: 5,
-  calendar: 6,
-  completed: 7,
+  completed: 6,
 };
 
 const VendorOnboarding = ({ isOpen, onClose }) => {
@@ -49,7 +46,7 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
   const vendorId = vendorInfo?.id || vendorInfo?._id || "";
 
   const onboardingStep = vendorInfo?.isOnboarded
-    ? 7
+    ? 6
     : vendorInfo?.onboardingStep || 1;
   const currentStep = STEP_MAP[onboardingStep] || "category";
 
@@ -59,7 +56,6 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
     media: onboardingStep > 3,
     pricing: onboardingStep > 4,
     docs: onboardingStep > 5,
-    calendar: onboardingStep > 6,
   };
 
   const done = Object.values(completedSteps).filter(Boolean).length;
@@ -110,7 +106,7 @@ const VendorOnboarding = ({ isOpen, onClose }) => {
   useEffect(() => {
     if (
       isFinalSubmitDone.current &&
-      (vendorInfo?.isOnboarded === true || vendorInfo?.onboardingStep === 7)
+      (vendorInfo?.isOnboarded === true || vendorInfo?.onboardingStep === 6)
     ) {
       setShowSuccess(true);
     }
@@ -160,7 +156,7 @@ const completeStep = (stepName) => {
       profileFormData.append("servicesOffered", vendorProfile.servicesOffered);
       profileFormData.append("category", vendorProfile.category);
       profileFormData.append("isOnboarded", "true");
-      profileFormData.append("onboardingStep", "7");
+      profileFormData.append("onboardingStep", "6");
       profileFormData.append("isProfileCompleted", "true");
       profileFormData.append("pricing", JSON.stringify(vendorProfile.pricing));
       profileFormData.append("bankCode", vendorProfile.bankCode);
@@ -326,20 +322,8 @@ if (showSuccess) {
 
     docs: (
       <DocumentStep
-        onNext={() => completeStep("docs")}
-        onBack={() => goToStep("pricing")}
-        onSkip={() => completeStep("docs")}
-        percentComplete={percentComplete}
-        profileData={vendorProfile}
-        setProfileData={setVendorProfile}
-      />
-    ),
-
-    calendar: (
-      <CalendarStep
         onNext={handleFinalSubmit}
-        onBack={() => goToStep("docs")}
-        onSkip={onClose}
+        onBack={() => goToStep("pricing")}
         percentComplete={percentComplete}
         profileData={vendorProfile}
         setProfileData={setVendorProfile}
