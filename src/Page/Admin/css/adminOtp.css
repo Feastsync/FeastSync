@@ -1,0 +1,67 @@
+.adminOtpHolder{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.adminOtpContainer{
+    display: flex;
+    height: 95%;
+    gap: 1px;
+}
+.adminOtpVerfication{
+    background: white;
+    border: 1px solid gray;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    gap: 20px;
+    justify-content: center;
+}
+.adminOtpWrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.adminImage{
+    padding: 10px;
+}
+.adminOtpText{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.otpVerifyText{
+    font-weight: bold;
+}
+.adminOtpInputOTP{
+     display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.adminOtpInput{
+    display: flex;
+    gap: 10px;
+}
+.adminOtpInput input{
+    width: 50px;
+    height: 50px;
+    background: rgb(221, 217, 217);
+    outline: none;
+    border: none;
+    font-size: 30px;
+    text-align: center;
+    border-radius: 5px;
+}
+.adminVerifyOtpButton{
+     background: #300a58;
+  color: white;
+  width: 400px;
+  height: 40px;
+}
+.adminOtpResend{
+    text-align: center;
+}
+.adminOtpResend span{
+     color:  #300a58;
+}

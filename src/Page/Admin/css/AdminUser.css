@@ -1,0 +1,18 @@
+.adminUserHolder{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+      background-color: #F8F7FF;
+    height: 80vh;
+    text-align: center;
+    line-height: 25px;
+}
+.sidebarLink {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

@@ -4,7 +4,6 @@ import { FaArrowRight } from "react-icons/fa6";
 import Footer from '../../Components/Footer';
 import "../Vendor/onBoardingFiles/css/Error.css"
 import { useNavigate } from 'react-router-dom';
-// import { Button } from 'antd';
 
 const Error404 = () => {
   const navigate = useNavigate();

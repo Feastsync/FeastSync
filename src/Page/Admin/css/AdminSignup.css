@@ -1,0 +1,87 @@
+.adminHolder{
+    height: 100vh;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.adminContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 95%;
+    gap: 1px;
+}
+.adminImage{
+     background: linear-gradient(
+    180deg,
+    #0a0015 0%,
+    #0b0017 8.33%,
+    #0d0119 16.67%,
+    #0e011b 25%,
+    #0f021d 33.33%,
+    #11021f 41.67%,
+    #120321 50%,
+    #130423 58.33%,
+    #150525 66.67%,
+    #160628 75%,
+    #17072a 83.33%,
+    #19092c 91.67%,
+    #1a0a2e 100%
+  );
+    width: 45%;
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+}
+.adminImage img{
+    width: 100%;
+}
+.adminForm{
+    background: white;
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+.adminInputHolder{
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+}
+.adminInput{
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 400px;
+    height: 50px;
+    border: 1px solid rgb(184, 184, 184);
+    border-radius: 5px;
+    padding: 5px;
+}
+.adminInput input{
+    border: none;
+    height: 100%;
+    width: 95%;
+    outline: none;
+}
+.adminTerms{
+    color: gray;
+    font-weight: 450;
+}
+.adminTerms span{
+    color:  #300a58;
+}
+.adminButton{
+    background: #300a58;
+  color: white;
+  width: 400px;
+  height: 40px;
+}
+
