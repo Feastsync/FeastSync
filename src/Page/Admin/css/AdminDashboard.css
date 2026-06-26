@@ -1,49 +1,59 @@
-.adminDashboardholder{
-    /* width: 100%; */
-}
 .adminDashboardContainer{
     display: flex;
-    gap: 20px;
-}
-.adminDashboardRight{
-    display: flex;
     flex-direction: column;
-    gap: 20px;
-}
-.adminDashBoardDiv{
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
+    /* gap: 20px; */
+    width: 100%;
 }
 .adminDashboardReview{
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 20px;
+    background-color: #F8F7FF;
+    padding: 30px 50px;
+    width: 100%;
 }
 .adminDashboardGrid{
     display: grid;
+    margin-top: 10px;
     column-gap: 25px;
     row-gap: 25px;
-    grid-template-columns:  repeat(5,200px);
+    grid-template-columns:  repeat(5,1fr);
 }
-.adminDashboardSection{
+.adminDashboardReviewCard{
     background: white;
-    box-shadow: 2px 1px 2px 1px rgb(212, 206, 206);
-    height: 120px;
+    box-shadow: 5px 5px 10px rgb(212, 206, 206);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-     border-radius: 5px;
-     padding:15px;
+    border-radius: 15px;
+    padding:16px;
 }
-.adminDashboardImageWrapper{
+.adminDashboardReviewCardTop{
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    margin-bottom: 12px;
 }
-.adminDashboardNaira{
-    font-size: 25px;
+.adminDashboardReviewCardTop .adminStats{
+    display: flex;
+    align-items: center;
+    gap: 5px;
     font-weight: 700;
+    padding: 1.5px 8px;
+    border-radius: 18px;
+}
+.adminDashboardReviewCardTop .positiveStat{
+    color: #10B981;
+    background-color: rgba(16, 185, 129, 0.15);
+}
+.adminDashboardReviewCardTop .negativestat{
+    color: #eb1b1b;
+    background-color: rgba(235, 27, 27, 0.15);
+}
+
+.adminDashboardNaira{
+    font-size: 22px;
+    font-weight: 800;
 }
 .adminDashboardActivities{
     display: flex;
@@ -53,8 +63,10 @@
 .adminDashboardButtonholder{
     color: #6D28D9;
     display: flex;
+    padding-left: 50px;
     gap: 10px;
       border: none;
+        margin-top: 20px;
 }
 .adminDashboardButton{
     border: none;
@@ -88,16 +100,26 @@
 }
 .adminDashboardAll{
     width: 1050px;
-    height: 100px;
-    border-bottom: 1px solid gray;
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-}
-.adminDashboardAllHolder{
+    /* height: 100px; */
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    justify-content: space-between;
+    gap: 50px;
+     background-color: #F8F7FF;
+     padding: 20px;
+    
+}
+.adminDashboardAllWrapper{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.adminDashboardAllBox{
+    display: flex;
+    gap: 40px;
+    justify-content: space-between;
+      border-bottom: 1px solid gray;
 }
 .adminDashboardVarieties{
     display: flex;
@@ -137,12 +159,14 @@
 .adminRevenueHolder{
     display: flex;
     gap: 80px;
-    padding-left: 20px;
+    padding-left: 50px;
+    background-color: #F8F7FF;
+
 }
 .adminRevenueContainer{
     background: white;
     box-shadow: 1px 1px 1px 1px gray;
-    width: 47%;
+    width: 50%;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -152,7 +176,7 @@
 .adminRevenueContain{
     background: white;
     box-shadow: 1px 1px 1px 1px gray;
-    width: 30%;
+    width: 35%;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -181,6 +205,7 @@
     gap: 5px;
     padding: 5px;
     height: 35px;
+  
 }
 .adminBtn{
     width: auto;
@@ -189,11 +214,103 @@
     border-radius: 20px;
     border: none;
 }
-.adminRevenueButton:hover{
-   
-}
+
 .adminBtn:hover{
     background:white;
      color: purple;
 }
+.disputeHolder{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+}
+/* Enable flex ordering on the button row wrapper */
+.adminDashboardButtonholder {
+    color: #6D28D9;
+    display: flex;
+    padding-left: 50px;
+    gap: 10px;
+    border: none;
+    margin-top: 20px;
+}
 
+/* Explicit layout sequencing */
+.adminDashboardNewUserButton {
+    order: 4; /* Pushes the 'New User' container right before payment */
+}
+
+.adminDashboardButton.category-payment {
+    order: 5; /* Forces the payment button to stay after New User */
+}
+
+/* Center elements perfectly within the text container if it maps to multi-line */
+.disputeHolder {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Clean up borders for the New User specific dashboard cards */
+.adminDashboardAllBox.no-border {
+    border-bottom: none;
+}
+/* Removes the bottom border cleanly for the New User box */
+.adminDashboardAllBox.no-border {
+    border-bottom: none;
+    justify-content: center; /* Centers the remaining layout item horizontally */
+}
+
+/* Forces the checkout container to center its child when everything else is hidden */
+.admindashboardCheckout.center-content {
+    width: 100%;
+    justify-content: center;
+}
+
+/* Explicit layout centering rules for the dispute element contents */
+.disputeHolder {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;      /* Centers items horizontally */
+    justify-content: center;  /* Centers items vertically */
+    text-align: center;       /* Centers the text string natively */
+    width: 100%;
+}
+.adminDashboardAllBox.no-border {
+  border-bottom: none;
+  justify-content: center;
+  align-items: center; /* already there — keep it */
+}
+
+.admindashboardCheckout.center-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.newUserContent{
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+}
+
+.newUserContent img{
+    width: 400px;
+    height: 200px;
+    object-fit: contain;
+}
+
+.adminDashboardAllBox.no-border{
+    border-bottom: none;
+    justify-content: center;
+}

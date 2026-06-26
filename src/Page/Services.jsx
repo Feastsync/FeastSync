@@ -184,14 +184,16 @@ const Services = () => {
           <p>Bundle . Best value</p>
         </div>
         <div className="serviceBrandWrapper">
-          <p className="serviceBrand">
+         <div className="serviceBrandDivHolder">
+           <p className="serviceBrand">
             Why book seperately when you can have it all-perfectly
-            coordinated?FeastSync's entertainment packages 
+            coordinated?FeastSync's entertainment packages
             bundle top-tier vendors into seamless,pre-matched combinations that
             work together fro the first soundcheck 
             to the last song.Book more, spend less and eliminate the
             coordination headache entirely.
           </p>
+         </div>
           {!isLoggedIn ? (
             <Button 
               btnText="Get Started" 

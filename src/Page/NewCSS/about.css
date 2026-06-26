@@ -47,7 +47,7 @@
   grid-template-rows: 200px 250px;
   column-gap: 10px;
   width: 100%;
-  min-height: 130vh;
+  min-height: 100vh;
   row-gap: 30px;
 }
 .aboutWrapperRight img {
@@ -171,7 +171,7 @@
 }
 .aboutValues img {
   width:380px;
-  height: 430px;
+  height: 470px;
   border-radius: 6px;
 }
 .aboutValues p {
@@ -223,16 +223,24 @@
 .aboutTrustinfo {
   line-height: 50px;
 }
+.aboutTeamBox1{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
 .aboutTeamWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
+  gap: 20px;
   width: 100%;
 }
 .aboutTeamTitle {
   font-size: 30px;
   font-weight: bold;
+  line-height: 30px;
   color: #330159;
 }
 .aboutTeamBox {

@@ -18,7 +18,7 @@ const AdminDashboardRevenue = () => {
             </div>
         </section>
          <section className='adminRevenueImage'>
-            <img src="public/admin/Frame.png" alt="" />
+            <img src="/admin/Frame.png" alt="" />
          </section>
       </div>
 
@@ -30,7 +30,7 @@ const AdminDashboardRevenue = () => {
             </div>
         </section>
          <section className='adminRevenueImage'>
-            <img src="public/admin/BarChart.png" alt="" />
+            <img src="/admin/BarChart.png" alt="" />
          </section>
       </div>
     </div>

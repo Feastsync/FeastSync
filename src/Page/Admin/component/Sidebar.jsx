@@ -6,7 +6,7 @@ import { RiArrowDropDownLine, RiVerifiedBadgeLine } from "react-icons/ri";
 import { MdOutlinePayment } from "react-icons/md";
 import { CiWarning, CiSettings } from "react-icons/ci";
 import "../css/sidebar.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -15,13 +15,17 @@ const Sidebar = () => {
   const NAVLINKS = [
     {
       icon: <TbLayoutDashboardFilled />,
-      label: "Dashboard",
+      labels: "Dashboard",
       href: "/admin/dashboard",
     },
-    { icon: <LuUsers />, label: "Users", href: "/admin/users" },
+    { icon: <LuUsers />, 
+      labels: "Users",
+       href: "/admin/users"
+       },
     {
       icon: <AiTwotoneShop />,
-      label: "Vendors",
+      labels: "Vendors",
+        href: "/admin/vendors",
       isdropdown: true,
       dropdownItems: [
         { label: "All Vendors", href: "/admin/vendors/all" },
@@ -32,7 +36,8 @@ const Sidebar = () => {
     },
     {
       icon: <RiVerifiedBadgeLine />,
-      label: "Verification",
+      labels: "Verification",
+        href: "/admin/verify",
       isdropdown: true,
       dropdownItems: [
         { label: "All Requests", href: "/admin/verification/all" },
@@ -43,7 +48,8 @@ const Sidebar = () => {
     },
     { 
         icon: <MdOutlinePayment />, 
-        label: "Payments", 
+        labels: "Payments", 
+          href: "/admin/payments",
         isdropdown: true, 
         dropdownItems: [
             { label: "All Payments", href: "/admin/payments/all" },
@@ -54,7 +60,8 @@ const Sidebar = () => {
     },
     { 
         icon: <CiWarning />, 
-        label: "Disputes", 
+        labels: "Disputes", 
+           href: "/admin/disputes",
         isdropdown: true, 
         dropdownItems: [
             { label: "All Disputes", href: "/admin/disputes/all" },
@@ -62,7 +69,7 @@ const Sidebar = () => {
             { label: "Resolved", href: "/admin/disputes/resolved" },
         ]
     },
-    { icon: <CiSettings />, label: "Settings", href: "/admin/settings" },
+    { icon: <CiSettings />, labels: "Settings", href: "/admin/settings" },
   ];
   return (
     <div className="sidebar">
@@ -89,8 +96,10 @@ const Sidebar = () => {
               className="adminNavLink"
             >
               <section className="adminNavLinkWrapper">
-                {link.icon}
-                <p>{link.label}</p>
+        <Link to={link.href} className="adminNavLinkWrapper sidebarLink">
+  {link.icon}
+  <p>{link.labels}</p>
+</Link>
               </section>
               {link.isdropdown && (
                 <RiArrowDropDownLine
