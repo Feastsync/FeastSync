@@ -2,22 +2,31 @@ import "../Css/Userdashboard.css";
 import { useEffect, useState, useRef } from "react";
 import Header from "../../Components/Header";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import api from "../../Redux/app/socketAxios";
-import { getCurrentUser } from "../../Redux/features/authslice";
 
 const Userdashboard = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { userInfo, dashboardStats } = useSelector((state) => state.auth);
+  const { userInfo } = useSelector((state) => state.auth);
 
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [localDashboardStats, setLocalDashboardStats] = useState(null);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [markingDelivered, setMarkingDelivered] = useState(null);
   const dropdownRefs = useRef({});
 
   useEffect(() => {
+    const fetchDashboard = async () => {
+      try {
+        const res = await api.get("/api/v1/user/user-dashboard");
+        const data = res.data?.data || res.data;
+        setLocalDashboardStats(data?.statistics || null);
+      } catch (err) {
+        console.error("Failed to fetch dashboard stats:", err);
+      }
+    };
+
     const fetchBookings = async () => {
       try {
         const res = await api.get("/api/v1/bookings/client");
@@ -29,16 +38,11 @@ const Userdashboard = () => {
         setLoading(false);
       }
     };
+
+    fetchDashboard();
     fetchBookings();
   }, []);
 
-  useEffect(() => {
-    if (!dashboardStats) {
-      dispatch(getCurrentUser());
-    }
-  }, [dashboardStats, dispatch]);
-
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (openDropdown !== null) {
@@ -76,8 +80,12 @@ const Userdashboard = () => {
     .filter((b) => (b.bookingStatus || b.status)?.toLowerCase() === "completed")
     .reduce((sum, b) => sum + (b.totalAmount || b.amount || b.packagePrice || 0), 0);
 
-  const totalSpent = Number(dashboardStats?.totalSpent ?? computedTotalSpent) || 0;
-  const totalEvents = dashboardStats?.eventCount || dashboardStats?.totalBookings || bookings.length;
+  const totalSpent = Number(localDashboardStats?.totalSpent ?? computedTotalSpent) || 0;
+  const totalEvents =
+    localDashboardStats?.totalEventsHosted ||
+    localDashboardStats?.eventCount ||
+    localDashboardStats?.totalBookings ||
+    bookings.length;
 
   const activeBookings = bookings.filter((b) => {
     const status = (b.bookingStatus || b.status)?.toLowerCase();
@@ -148,59 +156,67 @@ const Userdashboard = () => {
                     className="udb-card"
                     onClick={() => navigate(`/chats/${booking._id}`)}
                   >
-                    {/* Top row: avatar + dropdown */}
+                    {/* Top row: avatar + menu */}
                     <div className="udb-card__top">
                       <div className="udb-card__avatar">
                         {booking.vendorId?.stageName?.charAt(0) || "V"}
                       </div>
 
-                      {/* Delivered dropdown - only show when relevant */}
-                      {canMarkDelivered && (
+                      {(canMarkDelivered || status === "completed") && (
                         <div
                           className="udb-delivered-wrapper"
                           ref={(el) => (dropdownRefs.current[booking._id] = el)}
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <button
-                            className="udb-delivered-trigger"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setOpenDropdown(
-                                openDropdown === booking._id ? null : booking._id
-                              );
-                            }}
-                          >
-                            ••• 
-                          </button>
-
-                          {openDropdown === booking._id && (
-                            <div className="udb-delivered-dropdown">
-                              <p className="udb-delivered-dropdown__label">
-                                Confirm service delivery?
-                              </p>
-                              <p className="udb-delivered-dropdown__sub">
-                                This will release payment to the vendor.
-                              </p>
+                          {status === "completed" ? (
+                            <span className="udb-delivered-badge">✓ Delivered</span>
+                          ) : (
+                            <>
                               <button
-                                className="udb-delivered-dropdown__btn"
-                                disabled={markingDelivered === booking._id}
-                                onClick={(e) => handleMarkDelivered(e, booking._id)}
+                                className="udb-delivered-trigger"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setOpenDropdown(
+                                    openDropdown === booking._id ? null : booking._id
+                                  );
+                                }}
                               >
-                                {markingDelivered === booking._id
-                                  ? "Processing..."
-                                  : "✓ Mark as Delivered"}
+                                •••
                               </button>
-                            </div>
+
+                              {openDropdown === booking._id && (
+                                <div className="udb-delivered-dropdown">
+                                  <p className="udb-delivered-dropdown__label">
+                                    Has the vendor delivered?
+                                  </p>
+                                  <p className="udb-delivered-dropdown__sub">
+                                    Confirming will release payment to the vendor.
+                                  </p>
+                                  <button
+                                    className="udb-delivered-dropdown__btn"
+                                    disabled={markingDelivered === booking._id}
+                                    onClick={(e) => handleMarkDelivered(e, booking._id)}
+                                  >
+                                    {markingDelivered === booking._id
+                                      ? "Processing..."
+                                      : "✓ Mark as Delivered"}
+                                  </button>
+                                </div>
+                              )}
+                            </>
                           )}
                         </div>
                       )}
                     </div>
 
+                    {/* Card body */}
                     <div className="udb-card__body">
                       <h4 className="udb-card__vendor">
                         {booking.vendorId?.stageName || "Vendor"}
                       </h4>
-                      <p className="udb-card__event">{booking.eventType || "Event"}</p>
+                      <p className="udb-card__event">
+                        {booking.eventType || "Event"}
+                      </p>
                       <p className="udb-card__date">
                         📅{" "}
                         {booking.eventDate
@@ -213,6 +229,7 @@ const Userdashboard = () => {
                       </p>
                     </div>
 
+                    {/* Card footer */}
                     <div className="udb-card__footer">
                       <span className={`udb-card__status udb-status--${status}`}>
                         {status}

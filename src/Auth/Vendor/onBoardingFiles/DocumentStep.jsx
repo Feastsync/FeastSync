@@ -49,7 +49,13 @@ const DocumentStep = ({
       { key: 'accountNumber', label: 'Account Number', value: profileData?.accountNumber },
       { key: 'bio', label: 'Bio', value: profileData?.bio },
       { key: 'servicesOffered', label: 'Services Offered', value: profileData?.servicesOffered },
-      { key: 'pricing', label: 'Pricing', value: profileData?.pricing?.packageName },
+      {
+        key: 'pricing',
+        label: 'Pricing',
+        value:
+          profileData?.pricing?.packageName ||
+          (profileData?.pricingPackages?.length > 0 ? 'saved' : ''),
+      },
     ];
 
     const missingFields = requiredFields.filter(field => !field.value || field.value.trim() === '');

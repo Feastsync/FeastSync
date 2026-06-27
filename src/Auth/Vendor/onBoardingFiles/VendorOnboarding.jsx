@@ -333,11 +333,24 @@ if (showSuccess) {
     ),
   };
 
-  return (
-    <div className="vo-overlay">
-      <div className="vo-modal-container">{steps[currentStep]}</div>
+return (
+  <div className="vo-overlay">
+    {isFinalSubmitting && (
+      <div className="vo-submit-overlay">
+        <div className="vo-submit-spinner-wrap">
+          <div className="vo-spinner"></div>
+          <p className="vo-spinner-title">Finishing up your profile...</p>
+          <p className="vo-spinner-sub">
+            Please wait, this might take a moment ✨
+          </p>
+        </div>
+      </div>
+    )}
+    <div className="vo-modal-container">
+      {steps[currentStep]}
     </div>
-  );
+  </div>
+);
 };
 
 export default VendorOnboarding;

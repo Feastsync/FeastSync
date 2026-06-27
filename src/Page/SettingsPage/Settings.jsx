@@ -13,7 +13,6 @@ const Settings = () => {
   const dispatch = useDispatch()
   const { vendorInfo, pricingPackages } = useSelector((s) => s.auth)
 
-  const [copied, setCopied] = useState(false)
   const [modal, setModal] = useState(null)
   const [otp, setOtp] = useState(['', '', '', ''])
   const [updateLoading, setUpdateLoading] = useState(false)
@@ -21,7 +20,6 @@ const Settings = () => {
   const [pendingUpdate, setPendingUpdate] = useState({})
 
   const [phoneNumber, setPhoneNumber] = useState(vendorInfo?.phoneNumber || '')
-  const [displayName, setDisplayName] = useState(vendorInfo?.stageName || '')
   const [location, setLocation] = useState(vendorInfo?.stateOfResidence || '')
   const [bio, setBio] = useState(vendorInfo?.bio || '')
   const [bank, setBank] = useState({ name: '', code: '', account: '' })
@@ -39,13 +37,6 @@ const Settings = () => {
   const handleBack = () => {
     if (window.history.length > 1) navigate(-1)
     else navigate('/dashboard')
-  }
-
-  const handleCopy = () => {
-    const slug = vendorInfo?.slug || vendorInfo?.username || ''
-    navigator.clipboard.writeText(`https://feastsync.com/vendor/${slug}`)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
   }
 
   const closeModal = () => {
@@ -189,7 +180,6 @@ const Settings = () => {
           </div>
           <div className="settings_row_right">
             <span className="settings_value">{vendorInfo?.stageName}</span>
-            <button className="settings_btn" onClick={() => setModal('display-name')}>Edit</button>
           </div>
         </div>
 
@@ -232,27 +222,6 @@ const Settings = () => {
           </div>
         </div>
 
-        <div className="settings_row">
-          <div className="settings_row_left">
-            <span className="settings_label">Public profile link</span>
-          </div>
-          <div className="settings_row_right">
-            <span className="settings_value">{vendorInfo?.stageName || 'Your profile'}</span>
-            <button className="settings_btn copy_btn" onClick={handleCopy}>
-              {copied ? 'Copied!' : 'Copy link'}
-            </button>
-          </div>
-        </div>
-
-        <div className="settings_row">
-          <div className="settings_row_left">
-            <span className="settings_label">Availability Calendar</span>
-            <span className="settings_sublabel">Edit and set date here</span>
-          </div>
-          <div className="settings_row_right">
-            <button className="settings_btn">Edit</button>
-          </div>
-        </div>
         {Array.isArray(pricingPackages) && pricingPackages.map((pkg) => (
           <div className="settings_row" key={pkg.id || pkg._id}>
             <div className="settings_row_left">
@@ -264,6 +233,11 @@ const Settings = () => {
             </div>
           </div>
         ))}
+
+
+
+
+
 
         <div className="settings_section_header">
           <h3 className="settings_section_title">PAYMENT</h3>
@@ -348,42 +322,29 @@ const Settings = () => {
         </div>
       )}
 
-      {(modal === 'display-name' || modal === 'bio') && (
+      {modal === 'bio' && (
         <div className="modal_overlay" onClick={closeModal}>
           <div className="modal_box" onClick={(e) => e.stopPropagation()}>
             <div className="modal_header">
-              <h3>{modal === 'display-name' ? 'Edit Display Name' : 'Edit Bio/Description'}</h3>
+              <h3>Edit Bio/Description</h3>
               <button className="modal_close" onClick={closeModal}>×</button>
             </div>
             <div className="modal_body">
-              <label className="modal_label">
-                {modal === 'display-name' ? 'Display Name' : 'Bio/Description'}
-              </label>
-              {modal === 'display-name' ? (
-                <input
-                  type="text"
-                  className="modal_input"
-                  value={displayName}
-                  onChange={(e) => setDisplayName(e.target.value)}
-                />
-              ) : (
-                <textarea
-                  className="modal_textarea"
-                  placeholder="Tell us about yourself and your services"
-                  value={bio}
-                  onChange={(e) => setBio(e.target.value)}
-                  rows="4"
-                />
-              )}
+              <label className="modal_label">Bio/Description</label>
+              <textarea
+                className="modal_textarea"
+                placeholder="Tell us about yourself and your services"
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+                rows="4"
+              />
             </div>
             <div className="modal_footer">
               <button className="modal_btn_cancel" onClick={closeModal}>Cancel</button>
               <button
                 className="modal_btn_primary"
                 disabled={updateLoading}
-                onClick={() =>
-                  handleSaveUpdate({ bio: modal === 'display-name' ? displayName : bio })
-                }
+                onClick={() => handleSaveUpdate({ bio })}
               >
                 {updateLoading ? 'Saving...' : 'Save'}
               </button>
