@@ -1,34 +1,44 @@
-import { useState, useEffect } from "react"
-import VendorCard from "../../Props/VendorCard"
-import VendorCardSkeleton from "../../Props/VendorSkeleton"
-import "./css/All.css"
-import api from "../../Redux/app/axios"
-import "./css/VendorState.css"
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import VendorCard from "../../Props/VendorCard";
+import VendorCardSkeleton from "../../Props/VendorSkeleton";
+import "./css/All.css";
+import api from "../../Redux/app/axios";
+import "./css/VendorState.css";
 
 const getItemsPerPage = () => {
-  if (window.innerWidth <= 540) return 4
-  if (window.innerWidth <= 860) return 6
-  return 9
-}
+  if (window.innerWidth <= 540) return 4;
+  if (window.innerWidth <= 860) return 6;
+  return 9;
+};
 
 const CategoryVendors = ({ category }) => {
-  const [vendors, setVendors] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage())
+  const [vendors, setVendors]           = useState([]);
+  const [loading, setLoading]           = useState(true);
+  const [error, setError]               = useState(null);
+  const [currentPage, setCurrentPage]   = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage());
+
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get("search") || "";
 
   useEffect(() => {
     const fetchVendors = async () => {
       try {
-        setLoading(true)
-        setError(null)
-        const res = await api.get('/vendor/all-vendors')
-        const all = res.data?.data || []
+        setLoading(true);
+        setError(null);
+        const res = await api.get(`/vendor/all-vendors${search ? `?search=${encodeURIComponent(search)}` : ""}`);
+        const all = res.data?.data || [];
 
-        const filtered = all.filter(v =>
-          v.category?.toLowerCase() === category.toLowerCase()
-        )
+        const filtered = all.filter(v => {
+          const matchesCategory = v.category?.toLowerCase() === category.toLowerCase();
+          const matchesSearch = search
+            ? v.stageName?.toLowerCase().includes(search.toLowerCase()) ||
+              v.firstName?.toLowerCase().includes(search.toLowerCase()) ||
+              v.stateOfResidence?.toLowerCase().includes(search.toLowerCase())
+            : true;
+          return matchesCategory && matchesSearch;
+        });
 
         const mapped = filtered.map(vendor => ({
           _id: vendor._id,
@@ -37,48 +47,49 @@ const CategoryVendors = ({ category }) => {
           location: vendor.stateOfResidence || '',
           rating: Math.floor(vendor.averageRating || 0),
           price: vendor.pricingId?.find((p) =>
-                  p.packageName?.toLowerCase().includes("basic")
-                )?.packagePrice
-                || vendor.pricingId?.[0]?.packagePrice
-                || vendor.bookingFee
-                || 0,
+            p.packageName?.toLowerCase().includes("basic")
+          )?.packagePrice
+            || vendor.pricingId?.[0]?.packagePrice
+            || vendor.bookingFee
+            || 0,
           image: vendor.profilePicture?.secureUrl || '',
-        }))
+        }));
 
-        setVendors(mapped)
+        setVendors(mapped);
       } catch (err) {
-        setError(err.response?.data?.message || 'Failed to fetch vendors')
+        setError(err.response?.data?.message || 'Failed to fetch vendors');
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    fetchVendors()
-  }, [category])
+    };
+
+    fetchVendors();
+  }, [category, search]);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  }, [currentPage])
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
 
   useEffect(() => {
     const handleResize = () => {
-      setItemsPerPage(getItemsPerPage())
-      setCurrentPage(1)
-    }
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
+      setItemsPerPage(getItemsPerPage());
+      setCurrentPage(1);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  const skeletonArray = Array.from({ length: itemsPerPage })
-  const totalPages = Math.ceil(vendors.length / itemsPerPage)
-  const start = (currentPage - 1) * itemsPerPage
-  const currentVendors = vendors.slice(start, start + itemsPerPage)
+  const skeletonArray  = Array.from({ length: itemsPerPage });
+  const totalPages     = Math.ceil(vendors.length / itemsPerPage);
+  const start          = (currentPage - 1) * itemsPerPage;
+  const currentVendors = vendors.slice(start, start + itemsPerPage);
 
   const changePage = (dir) => {
-    const next = currentPage + dir
-    if (next >= 1 && next <= totalPages) setCurrentPage(next)
-  }
+    const next = currentPage + dir;
+    if (next >= 1 && next <= totalPages) setCurrentPage(next);
+  };
 
-  if (error &&!loading) {
+  if (error && !loading) {
     return (
       <div className="vendor-state-wrap">
         <div className="vendor-state-card">
@@ -87,7 +98,7 @@ const CategoryVendors = ({ category }) => {
           <p>{error}</p>
         </div>
       </div>
-    )
+    );
   }
 
   if (!loading && vendors.length === 0) {
@@ -99,14 +110,14 @@ const CategoryVendors = ({ category }) => {
           <p>No {category} vendors available yet. Check back soon!</p>
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <div className="all-vendors-page">
       <div className="category_grid">
         {loading
-      ? skeletonArray.map((_, i) => <VendorCardSkeleton key={`sk-${i}`} />)
+          ? skeletonArray.map((_, i) => <VendorCardSkeleton key={`sk-${i}`} />)
           : currentVendors.map((vendor) => (
               <div key={vendor._id} className="fade-in">
                 <VendorCard
@@ -144,7 +155,7 @@ const CategoryVendors = ({ category }) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default CategoryVendors
+export default CategoryVendors;

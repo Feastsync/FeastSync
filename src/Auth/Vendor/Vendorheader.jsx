@@ -31,9 +31,9 @@ const Vendorheader = () => {
   useEffect(() => {
     if (!isLoggedIn) return;
 
-    if (notifications.length === 0) {
+    
       dispatch(getNotifications());
-    }
+    
 
     socket.connect();
     socket.emit("join", vendorInfo?._id || vendorInfo?.id);
@@ -41,9 +41,13 @@ const Vendorheader = () => {
     socket.on("notification", (newNotif) => {
       dispatch(addNotification(newNotif));
     });
+      const interval = setInterval(() => {
+    dispatch(getNotifications());
+  }, 5000);
 
     return () => {
       socket.off("notification");
+      clearInterval(interval);
     };
   }, [dispatch, isLoggedIn]);
 
@@ -105,6 +109,7 @@ const Vendorheader = () => {
 
         {showFullHeader && (
           <>
+
             <div className="vendorheader-desktop-right">
               <button
                 className="icon-btn vendor-icon-btn"
@@ -184,8 +189,11 @@ const Vendorheader = () => {
               </button>
             </div>
 
+     
             <div className={`vendorheader-drawer ${isOpen ? "active" : ""}`}>
-              <nav className="drawer-nav">
+              
+             
+              <div className="drawer-nav">
                 <button
                   className="drawer-nav-item"
                   onClick={() => { navigate("/wallet/transactions"); closeMenu(); }}
@@ -193,8 +201,27 @@ const Vendorheader = () => {
                   <TbWallet size={20} className="drawer-nav-icon" />
                   <span>Wallet</span>
                 </button>
-              </nav>
 
+                <button
+                  className="drawer-nav-item"
+                  onClick={() => { navigate("/Settings"); closeMenu(); }}
+                >
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className="drawer-nav-icon"
+                  >
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                  </svg>
+                  <span>Edit Profile</span>
+                </button>
+              </div>
+
+              {/* Footer - logout only */}
               <div className="drawer-footer">
                 <div className="drawer-avatar-row" onClick={openLogoutModal}>
                   <div className="avatar-circle drawer-avatar">
@@ -208,13 +235,6 @@ const Vendorheader = () => {
                   </div>
                   <MdLogout size={18} className="drawer-logout-icon" />
                 </div>
-
-                <button
-                  className="edit-profile-btn drawer-edit-btn"
-                  onClick={() => { navigate("/Settings"); closeMenu(); }}
-                >
-                  Edit Profile
-                </button>
               </div>
             </div>
 
@@ -223,6 +243,7 @@ const Vendorheader = () => {
         )}
       </div>
 
+      
       {modal === "logout" && (
         <div className="vendorlogout-overlay" onClick={closeModal}>
           <div className="vendorlogout-modal" onClick={(e) => e.stopPropagation()}>

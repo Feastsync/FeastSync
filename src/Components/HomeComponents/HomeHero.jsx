@@ -13,6 +13,19 @@ const HomeHero = () => {
 
   const isLoggedInUser = isLoggedIn && !isVendor
 
+  const handleSearch = (e) => {
+  if (e.key === "Enter" && searchQuery.trim()) {
+    navigate(`/vendors?search=${encodeURIComponent(searchQuery.trim())}`)
+  }
+}
+
+
+const handleSearchClick = () => {
+  if (searchQuery.trim()) {
+    navigate(`/vendors?search=${encodeURIComponent(searchQuery.trim())}`)
+  }
+}
+
   return (
     <section className="home_hero_container">
       <div className="home_hero_overlay"></div>
@@ -27,14 +40,15 @@ const HomeHero = () => {
         </p>
 
         <div className="home_hero_search_box">
-          <Imp 
-            type="text"
-            placeholder="search all vendors"
-            className="hero_input_txt"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            icon={<LuSearch size={15} color="#333333" />}
-          />
+<Imp
+  type="text" 
+  placeholder="search all vendors"
+  className="hero_input_txt"
+  value={searchQuery}
+  onChange={(e) => setSearchQuery(e.target.value)}
+  onKeyDown={handleSearch}
+  icon={<LuSearch size={15} color="#333333" onClick={handleSearchClick} style={{cursor:"pointer"}} />}
+/>
         </div>
 
         <div className={`home_hero_actions ${isLoggedInUser ? 'centered' : ''}`}>

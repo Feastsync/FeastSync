@@ -1,6 +1,4 @@
-/* ═══════════════════════════════════════════
-   VENDOR MEDIA GALLERY
-═══════════════════════════════════════════ */
+
 
 .vendormediagallery-container {
   width: 100%;
@@ -11,9 +9,98 @@
   box-sizing: border-box;
 }
 
-/* ── VIDEO SECTION ── */
+
 .catalog-wrapper-section {
   margin-bottom: 56px;
+}
+/* ── Section header row ── */
+.vmg-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.vmg-section-header .gallery-subtitle,
+.vmg-section-header .showcase-section-subtitle {
+  margin-bottom: 0;
+}
+
+.vmg-slot-hint {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6e40c9;
+  background: #f3eeff;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* ── Upload slot ── */
+.vmg-upload-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 2px dashed #d4bfff;
+  border-radius: 12px;
+  background: #faf8ff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  height: 100%;
+  min-height: 140px;
+  box-sizing: border-box;
+}
+
+.vmg-upload-slot:hover {
+  border-color: #6e40c9;
+  background: #f3eeff;
+}
+
+.vmg-upload-slot__icon {
+  width: 44px;
+  height: 44px;
+  background: #ede9fe;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6e40c9;
+}
+
+.vmg-upload-slot__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.vmg-upload-slot__label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #330159;
+  margin: 0;
+}
+
+.vmg-upload-slot__sub {
+  font-size: 11px;
+  color: #9ca3af;
+  margin: 0;
+  text-align: center;
+  line-height: 1.4;
+}
+
+
+.vmg-upload-slot__spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #ede9fe;
+  border-top: 3px solid #6e40c9;
+  border-radius: 50%;
+  animation: vmg-spin 0.8s linear infinite;
+}
+
+@keyframes vmg-spin {
+  to { transform: rotate(360deg); }
 }
 
 .gallery-small-label {
@@ -102,7 +189,7 @@
 .detail-card-image-wrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9; 
   border-radius: 12px;
   overflow: hidden;
   background-color: #f4f2fa;
@@ -209,6 +296,7 @@
   .gallery-thumbnail-wrap,
   .detail-card-image-wrap {
     border-radius: 8px;
+     max-height: 200px;
   }
 }
 

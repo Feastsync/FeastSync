@@ -81,7 +81,7 @@ const Vendorcalendar = ({ vendor, bookingStatus }) => {
               aria-label="Close calendar"
               type="button"
             >
-              x
+              
             </button>
           </div>
 

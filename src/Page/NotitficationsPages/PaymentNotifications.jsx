@@ -14,7 +14,13 @@ export default function PaymentNotifications() {
     dispatch(getNotifications());
   }, [dispatch]);
 
-  const payment = notifications.filter((n) => n.type === "payment");
+
+  const payment = notifications.filter((n) =>
+  n.title === "Payment Completed" ||
+  n.title === "Payment Released" ||
+  n.title === "Service Confirmed"
+);
+  // const payment = notifications.filter((n) => n.type === "payment");
   const totalPages = Math.ceil(payment.length / ITEMS_PER_PAGE);
 
   const paginated = payment.slice(
