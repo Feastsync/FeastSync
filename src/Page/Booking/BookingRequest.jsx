@@ -231,12 +231,16 @@ const BookingRequestPage = () => {
 
         
           <div className="profile-actions">
-            <button className="icon-btn" title="Message vendor">
+            <button
+              className="icon-btn"
+              title="Message vendor"
+              onClick={() => navigate(`/chats/${requestId}`)}
+            >
               <ChatIcon />
             </button>
-            <button className="icon-btn" title="View calendar">
+            {/* <button className="icon-btn" title="View calendar">
               <CalendarIcon />
-            </button>
+            </button> */}
           </div>
         </div>
 

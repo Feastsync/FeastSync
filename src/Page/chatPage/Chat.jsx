@@ -469,7 +469,7 @@ export default function ChatsPage() {
 
             <div className="chats-chat__actions">
               <button className="chats-back-header-btn" onClick={() => navigate("/")}>
-                Back
+                Home
               </button>
               {!isVendor && (
                 <button

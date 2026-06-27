@@ -13,9 +13,13 @@ export default function ReviewsNotifications() {
   useEffect(() => {
     dispatch(getNotifications());
   }, [dispatch]);
-
   
-  const reviews = notifications.filter((n) => n.type === "review" || n.type === "reviews");
+  const reviews = notifications.filter((n) =>
+  n.title === "Review Submitted" ||
+  n.title === "New Review Received"
+);
+  
+  // const reviews = notifications.filter((n) => n.type === "review" || n.type === "reviews");
   const totalPages = Math.ceil(reviews.length / ITEMS_PER_PAGE);
 
   const paginated = reviews.slice(

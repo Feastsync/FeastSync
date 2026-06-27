@@ -24,7 +24,7 @@ const About = () => {
             across Nigeria.
           </p>
           <p className="about">
-          Connect with top rated entainers for <br /> your next
+          Connect with top rated entertainers for <br /> your next
           event.Professional service. <br />
           transparent rates.
         </p>
@@ -38,27 +38,24 @@ const About = () => {
           <div className="aboutWrapperHolder">
             <p className="aboutWrapperleftTitle">About Feastsync</p>
             <p className="aboutWrapperTexts">
-              Feastsync is a premium digital booking platform connecting
-              world-class event organisers with Nigeria's finest entertainment
-              talent-backed by secure technology and build for trust
+            FeastSync is a premium digital booking platform connecting world-class
+             event organizers with Nigeria's finest entertainment talent — backed by
+              secure technology and built for trust
             </p>
           </div>
 
           <div className="aboutWrapperleftside">
             <p className="aboutWrapperleftTitle">Our story</p>
             <p className="aboutWrapperTexts">
-              Nigeria's entertainment industry is world-class.The talent is
-              undeniable.But for too long.event entertainers booking has relied
-              on informal networks.Unreliable middlemen and payment system that
-              put both organisers and entertainers at risk.
+            Nigeria's entertainment industry is world-class. The talent is undeniable. 
+            But for too long, event entertainers booking has relied on informal networks,
+             unreliable middlemen, and payment systems that put both organizers and entertainers at risk.
             </p>
             <p className="aboutWrapperTexts">
-              Developed by a specialized team from the seventh cohort of The
-              Curve Africa's tech trainee program, the platform replaces
-              fragmented trust deficient booking processes with a structure
-              secured and fully digital ecosystem- one where every transaction
-              is protected, every profile is verified and every booking has a
-              paper trail.
+          Developed by a specialized team from the seventh cohort of The Curve Africa's tech trainee program, 
+          the platform replaces fragmented, trust-deficient booking processes with a structured, 
+          secure, and fully digital ecosystem — one where every transaction is protected, 
+          every profile is verified, and every booking has a paper trail.
             </p>
           </div>
         </div>
@@ -90,10 +87,9 @@ const About = () => {
         <div className="missionbox">
           <p className="missionQuote">Our Mission</p>
           <p className="missionValueText">
-            Our mission is to take the risk out of booking entertaiment.By
-            connecting host with fully verified top-tier talent through a secure
-            payment system. feastsync guarantees that every event-big or
-            small-is built on absolute trust and professional execution.
+           Our mission is to take the risk out of booking entertainment. 
+           By connecting hosts with fully verified, top-tier talent through a secure payment system, 
+           FeastSync guarantees that every event—big or small—is built on absolute trust and professional execution.
           </p>
         </div>
         <div>
@@ -102,10 +98,9 @@ const About = () => {
         <div className="missionHolder">
           <p className="missionQuote">Our Vision</p>
           <p className="missionValueText">
-            
-            To create a world where booking live entertainment is entirely
-            stress-free, establishing FeastSync as the global benchmark for
-            secure, verified talent and flawless event execution.
+           To create a world where booking live entertainment is entirely stress-free, 
+           establishing FeastSync as the global benchmark for secure,
+            verified talent and flawless event execution.
           </p>
         </div>
       </section>
@@ -146,7 +141,7 @@ const About = () => {
               <span style={{ marginRight: "180px" }}>
                 <TbTargetArrow /> Excellence
               </span>
-              We curate.not aggregate.Every entertainer on feastsync meets a
+              We curate,not aggregate.Every entertainer on feastsync meets a
               professional standard before their profile goes live
             </p>
             <p>
@@ -166,7 +161,7 @@ const About = () => {
           Your protection is built into every booking.
         </p>
         <p className="aboutTrustTitles">
-          Feastsync is designed around one principle no one shoul have to risk
+          Feastsync is designed around one principle no one should have to risk
           to book or perform <br />
           at an event.Our three layer protection system covers identity money
           and fairness-from the <br />

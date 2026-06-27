@@ -8,12 +8,11 @@ export default function BookingNotifications() {
   const { notifications = [] } = useSelector((state) => state.auth);
   const [currentPage, setCurrentPage] = useState(1);
 
-
-const booking = notifications.filter((n) => 
-  n.type === "booking" || 
-  n.type === "booking_request" ||
-  n.title?.toLowerCase().includes("booking")
-);
+const booking = notifications.filter((n) =>
+  n.title === "Booking Accepted" ||
+  n.title === "Booking Declined" ||
+  n.title === "Booking Submitted"
+)
 
   const totalPages = Math.ceil(booking.length / ITEMS_PER_PAGE);
   const paginated = booking.slice(

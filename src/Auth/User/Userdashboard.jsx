@@ -14,6 +14,7 @@ const Userdashboard = () => {
   const [localDashboardStats, setLocalDashboardStats] = useState(null);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [markingDelivered, setMarkingDelivered] = useState(null);
+  
   const dropdownRefs = useRef({});
 
   useEffect(() => {
@@ -91,7 +92,10 @@ const Userdashboard = () => {
     const status = (b.bookingStatus || b.status)?.toLowerCase();
     return status !== "cancelled";
   });
-
+     const reviewsGiven =
+  localDashboardStats?.reviewsGiven ||
+  localDashboardStats?.reviewCount ||
+  0;
   return (
     <main className="user-dashboard-container userdashboard">
       <Header />
@@ -117,10 +121,10 @@ const Userdashboard = () => {
               <p>Total Spent</p>
               <h2>₦{loading ? "..." : totalSpent.toLocaleString()}</h2>
             </div>
-            <div className="user-dashboard-contentright2-right">
-              <p>Review/Rating Given</p>
-              <h2>0</h2>
-            </div>
+          <div className="user-dashboard-contentright2-right">
+  <p>Review/Rating Given</p>
+  <h2>{loading ? "..." : reviewsGiven}</h2>
+</div>
           </section>
         </section>
       </section>

@@ -99,14 +99,14 @@ const Settings = () => {
         packagePrice: pricing.startingPrice,
         packageDescription: pricing.description,
       }
-      console.log('Saving pricing with payload:', payload)
-      console.log('Pricing ID:', pricing.id)
+      // console.log('Saving pricing with payload:', payload)
+      // console.log('Pricing ID:', pricing.id)
       
       if (pricing.id) {
-        console.log('Updating existing pricing...')
+        // console.log('Updating existing pricing...')
         await api.put(`/new-pricing/${pricing.id}`, payload)
       } else {
-        console.log('Creating new pricing...')
+        // console.log('Creating new pricing...')
         await api.post('/pricing', payload)
       }
       dispatch(getAllPricing())
@@ -114,14 +114,14 @@ const Settings = () => {
       closeModal()
       setPricing({ id: '', startingPrice: '', packageName: '', description: '' })
     } catch (err) {
-      console.error('Pricing error:', err)
-      console.error('Error response:', err.response?.data)
+      // console.error('Pricing error:', err)
+      // console.error('Error response:', err.response?.data)
       message.error(err.response?.data?.message || 'Failed to save pricing')
     } finally {
       setUpdateLoading(false)
     }
   }
- console.log("object",vendorInfo)
+ // console.log("object",vendorInfo)
   const handleEditPricing = (pkg) => {
     setPricing({
       id: pkg.id || pkg._id || '',

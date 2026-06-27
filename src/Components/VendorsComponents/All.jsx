@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import VendorCard from "../../Props/VendorCard";
 import VendorCardSkeleton from "../../Props/VendorSkeleton";
 import "./css/All.css";
@@ -11,43 +12,44 @@ const getItemsPerPage = () => {
 };
 
 const AllVendors = () => {
-  const [vendors, setVendors]         = useState([]);
-  const [loading, setLoading]         = useState(true);
-  const [error, setError]             = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [vendors, setVendors]           = useState([]);
+  const [loading, setLoading]           = useState(true);
+  const [error, setError]               = useState(null);
+  const [currentPage, setCurrentPage]   = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage());
 
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get("search") || "";
 
   useEffect(() => {
     const fetchVendors = async () => {
       try {
-        setLoading(true)
-        setError(null)
-        const res = await api.get('/vendor/all-vendors')
-        console.log("First vendor:", res.data?.data?.[0])
+        setLoading(true);
+        setError(null);
+        const res = await api.get(`/vendor/all-vendors${search ? `?search=${encodeURIComponent(search)}` : ""}`);
+        console.log("First vendor:", res.data?.data?.[0]);
         const mappedVendors = (res.data?.data || []).map(vendor => ({
           _id: vendor._id,
-          slug: vendor.slug, 
+          slug: vendor.slug,
           stageName: vendor.stageName || '',
           name: vendor.stageName || '',
           location: vendor.stateOfResidence || vendor.location || '',
-          rating: Math.floor(vendor.averageRating || 0), 
-            pprice: vendor.pricingId?.find(
-  (p) => p.packageName === "Basic Package"
-         )?.packagePrice || vendor.bookingFee || 0,
+          rating: Math.floor(vendor.averageRating || 0),
+          pprice: vendor.pricingId?.find(
+            (p) => p.packageName === "Basic Package"
+          )?.packagePrice || vendor.bookingFee || 0,
           image: vendor.profilePicture?.secureUrl || vendor.profilePicture || ''
-        }))
-        setVendors(mappedVendors)
-    
+        }));
+        setVendors(mappedVendors);
       } catch (err) {
-        setError(err.response?.data?.message || 'Failed to fetch vendors')
+        setError(err.response?.data?.message || 'Failed to fetch vendors');
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchVendors()
-  }, [])
+    fetchVendors();
+  }, [search]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -72,7 +74,6 @@ const AllVendors = () => {
     if (next >= 1 && next <= totalPages) setCurrentPage(next);
   };
 
- 
   if (error && !loading) {
     return (
       <div className="vendor-state-wrap">
@@ -80,14 +81,10 @@ const AllVendors = () => {
           <span className="vendor-state-icon">⚠️</span>
           <h2>Something went wrong</h2>
           <p>{error}</p>
-          <button className="vendor-retry-btn" onClick={fetchVendors}>
-            Retry
-          </button>
         </div>
       </div>
     );
   }
-
 
   if (!loading && vendors.length === 0) {
     return (

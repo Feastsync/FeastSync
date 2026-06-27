@@ -20,17 +20,15 @@
   max-width: 480px;
   z-index: 1;
 }
-/* ── Final Submit Overlay Spinner ─────────────────── */
+
 .vo-submit-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(8px);
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 999999;
-  border-radius: 16px;
 }
 
 .vo-submit-spinner-wrap {
@@ -322,7 +320,7 @@
   inset: 0;
   z-index: 99999;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   padding: 20px;
   background:

@@ -20,7 +20,7 @@ const Services = () => {
           </p>
           <p className="serviceDeliver">
             From initimate birthday dinners to large-scale coperate galas,{" "}
-            feastsync connects you with verified entertainment 
+            \Feastsync connects you with verified entertainment 
             professionals who deliver excellence-everytime.
           </p>
           <div className="serviceRate">
@@ -153,9 +153,8 @@ const Services = () => {
         </div>
         <div>
           <p className="serviceBrand">
-            coperate events demands a different standard-brand appropiate
-            entertainment impeccable professionalism <br />
-            and zero margin for error FeastSync's connect organisation with
+            Corporate events demand a different standard — brand-appropriate entertainment, impeccable professionalism <br />
+            and zero margin for error. FeastSync's connect organisation with
             verified entertainment <br />
             professionals who understand the difference between a party DJ and a
             brand activator DJ, between a wedding <br />
@@ -186,12 +185,10 @@ const Services = () => {
         <div className="serviceBrandWrapper">
          <div className="serviceBrandDivHolder">
            <p className="serviceBrand">
-            Why book seperately when you can have it all-perfectly
-            coordinated?FeastSync's entertainment packages
-            bundle top-tier vendors into seamless,pre-matched combinations that
-            work together fro the first soundcheck 
-            to the last song.Book more, spend less and eliminate the
-            coordination headache entirely.
+        Why book separately when you can have it all — perfectly coordinated? 
+        FeastSync's entertainment packages bundle top-tier vendors into seamless, 
+        pre-matched combinations that work together from the first soundcheck to the last song.
+         Book more, spend less, and eliminate the coordination headache entirely.
           </p>
          </div>
           {!isLoggedIn ? (
