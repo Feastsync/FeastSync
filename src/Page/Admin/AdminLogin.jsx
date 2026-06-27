@@ -1,29 +1,25 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { login} from "../../Redux/features/authslice.js";
+import { adminLogin } from "../../Redux/features/authslice.js";
 import { message } from "antd";
-import Imp from "../../Props/Imp.jsx"
+import Imp from "../../Props/Imp.jsx";
 import Button from "../../Props/Button.jsx";
-import WelcomeModal from "../../Auth/Vendor/onBoardingFiles/WelcomeModal.jsx"
-import "../Admin/admincss/AdminLogin.css"
-// import HeeaderLogo from "../assets/logos/Headerlogo.png";
+import "./css/AdminLogin.css";
 import LoginPic from "/About/Frame 98.png";
-import axios from "axios";
 
 const EmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.auth);
+  const { adminLoading, isAdminLoggedIn, adminError } = useSelector(
+    (state) => state.auth,
+  );
 
   const [showPassword, setShowPassword] = useState(false);
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
-  const [accountType, setAccountType] = useState("vendor"); // Default to vendor like Figma
-  const [showVendorWelcome, setShowVendorWelcome] = useState(false);
-  const [vendorName, setVendorName] = useState("");
   const [EmailErrorMsg, setEmailErrorMsg] = useState({
     err: false,
     msg: "",
@@ -81,6 +77,12 @@ const Login = () => {
       setPasswordErrorMsg({ err: false, name: "", msg: "" });
   };
 
+  useEffect(() => {
+    if (isAdminLoggedIn) {
+      navigate("/admin/dashboard");
+    }
+  }, [isAdminLoggedIn, navigate]);
+
   const handleValidationAndSubmit = async () => {
     const isEmailValid = validateEmail(userInfo.email);
     const isPasswordValid = validatePassword(userInfo.password);
@@ -91,38 +93,19 @@ const Login = () => {
     }
 
     try {
-      const result = await dispatch(
-        login({
+      await dispatch(
+        adminLogin({
           email: userInfo.email,
           password: userInfo.password,
-          accountType: accountType,
         }),
       ).unwrap();
-
-   
-      message.success("Login successful!");
-
-      if (result.accountType === "vendor") {
-        const vendorName =
-          result.vendor?.stageName ||
-          result.vendor?.firstName ||
-          result.vendor?.name ||
-          result.stageName ||
-          result.firstName ||
-          result.name ||
-          "Vendor";
-
-        setVendorName(vendorName.toString());
-        setShowVendorWelcome(true);
-      } else {
-        navigate("/userdashboard");
-      }
+      message.success("Admin login successful!");
+      navigate("/admin/dashboard");
     } catch (err) {
-    
       const errorMessage =
         typeof err === "string"
           ? err
-          : err?.message || "Invalid email or password";
+          : err?.message || "Invalid admin credentials";
       message.error(errorMessage);
     }
   };
@@ -187,57 +170,31 @@ const Login = () => {
             <div className="vl-checkbox-group"> 
             </div>
 
-            <Link
-              to={
-                accountType === "vendor"
-                  ? "/forgot-password?role=vendor"
-                  : "/forgot-password"
-              }
-              className="vl-forgot"
-            >
+            <Link to="/admin/forgot" className="vl-forgot">
               Forgot password?
             </Link>
           </div>
 
           <Button
-            btnText={isLoading ? "Logging in..." : "Login"}
+            btnText={adminLoading ? "Logging in..." : "Login"}
             className="vl-login-btn"
             onClick={handleValidationAndSubmit}
-            disabled={isLoading}
+            disabled={adminLoading}
           />
 
+          {adminError && (
+            <p className="vl-error-text" style={{ marginTop: 12 }}>
+              {typeof adminError === "string" ? adminError : "Admin login failed."}
+            </p>
+          )}
+
           <p className="vl-register-text">
-            Don't have an account yet?{" "}
-            <Link
-              to={accountType === "vendor" ? "/vendor/signup" : "/user/signup"}
-              className="vl-register-link"
-            >
-              REGISTER HERE
+            Forgot your admin password? <Link to="/admin/forgot" className="vl-register-link">
+              Reset here
             </Link>
           </p>
         </div>
       </div>
-
-      {showVendorWelcome && (
-        <div className="vl-popup-overlay">
-          <div className="vl-popup-card">
-            <WelcomeModal
-              vendorName={vendorName}
-              onContinue={() => {
-                setShowVendorWelcome(false);
-                navigate("/vendordashboard", {
-                  state: { showOnboarding: true, vendorName },
-                });
-              }}
-              onSkip={() => {
-                setShowVendorWelcome(false);
-                navigate("/");
-              }}
-            />
-          </div>
-        </div>
-      )}
-
     </div>
   );
 };

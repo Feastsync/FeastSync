@@ -160,6 +160,113 @@ export const getAllPricing = createAsyncThunk(
   },
 );
 
+export const adminLogin = createAsyncThunk(
+  "auth/adminLogin",
+  async ({ email, password }, { rejectWithValue }) => {
+    try {
+      const res = await api.post("/admin/login-admin", { email, password });
+      const token = res.data?.token || res.data?.data?.token;
+      if (!token) {
+        return rejectWithValue("Admin login failed");
+      }
+      localStorage.setItem("adminToken", token);
+      return {
+        token,
+        admin: res.data?.data || res.data,
+      };
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || err.message || "Admin login failed",
+      );
+    }
+  },
+);
+
+export const adminLogout = createAsyncThunk(
+  "auth/adminLogout",
+  async (_, { rejectWithValue }) => {
+    try {
+      await api.post("/admin/logout-admin");
+      localStorage.removeItem("adminToken");
+    } catch (err) {
+      localStorage.removeItem("adminToken");
+      return rejectWithValue(
+        err.response?.data?.message || err.message || "Admin logout failed",
+      );
+    }
+  },
+);
+
+export const getAllVendorsAdmin = createAsyncThunk(
+  "admin/getAllVendors",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await api.get("/admin/all-vendors");
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || err.message || "Failed to load vendors",
+      );
+    }
+  },
+);
+
+export const verifyVendor = createAsyncThunk(
+  "admin/verifyVendor",
+  async ({ vendorId }, { rejectWithValue }) => {
+    try {
+      const res = await api.put(`/admin/verify-vendor/${vendorId}`);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || err.message || "Failed to verify vendor",
+      );
+    }
+  },
+);
+
+export const releaseEscrow = createAsyncThunk(
+  "admin/releaseEscrow",
+  async ({ bookingId }, { rejectWithValue }) => {
+    try {
+      const res = await api.put(`/admin/release-escrow/${bookingId}`);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || err.message || "Failed to release escrow",
+      );
+    }
+  },
+);
+
+export const getPendingEscrows = createAsyncThunk(
+  "admin/getPendingEscrows",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await api.get("/admin/pending-escrow");
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || err.message || "Failed to load pending escrows",
+      );
+    }
+  },
+);
+
+export const getOneVendorAdmin = createAsyncThunk(
+  "admin/getOneVendor",
+  async ({ vendorId }, { rejectWithValue }) => {
+    try {
+      const res = await api.get(`/admin/one-vendor/${vendorId}`);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || err.message || "Failed to load vendor",
+      );
+    }
+  },
+);
+
 export const updatePricing = createAsyncThunk(
   "auth/updatePricing",
   async (
@@ -385,9 +492,9 @@ const authSlice = createSlice({
   initialState: {
     userInfo: null,
     vendorInfo: null,
-    token: null,          
+    token: null,
     accountType: null,
-    isLoggedIn: false,    
+    isLoggedIn: false,
     isLoading: false,
     error: null,
     pricingPackages: [],
@@ -396,6 +503,14 @@ const authSlice = createSlice({
     unreadCount: 0,
     currentVendor: null,
     currentVendorLoading: false,
+    dashboardStats: null,
+    adminInfo: null,
+    adminToken: localStorage.getItem("adminToken") || null,
+    isAdminLoggedIn: !!localStorage.getItem("adminToken"),
+    adminLoading: false,
+    adminError: null,
+    adminVendors: [],
+    adminPendingEscrows: [],
   },
   reducers: {
     logout: (state) => {
@@ -456,6 +571,83 @@ const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      .addCase(adminLogin.pending, (state) => {
+        state.adminLoading = true;
+        state.adminError = null;
+      })
+      .addCase(adminLogin.fulfilled, (state, action) => {
+        state.adminLoading = false;
+        state.isAdminLoggedIn = true;
+        state.adminToken = action.payload.token;
+        state.adminInfo = action.payload.admin;
+      })
+      .addCase(adminLogin.rejected, (state, action) => {
+        state.adminLoading = false;
+        state.adminError = action.payload;
+      })
+      .addCase(adminLogout.fulfilled, (state) => {
+        state.isAdminLoggedIn = false;
+        state.adminToken = null;
+        state.adminInfo = null;
+      })
+      .addCase(getAllVendorsAdmin.pending, (state) => {
+        state.adminLoading = true;
+        state.adminError = null;
+      })
+      .addCase(getAllVendorsAdmin.fulfilled, (state, action) => {
+        state.adminLoading = false;
+        state.adminVendors = action.payload?.data || action.payload || [];
+      })
+      .addCase(getAllVendorsAdmin.rejected, (state, action) => {
+        state.adminLoading = false;
+        state.adminError = action.payload;
+      })
+      .addCase(verifyVendor.fulfilled, (state, action) => {
+        state.adminLoading = false;
+        const updatedVendor = action.payload?.data || action.payload;
+        state.adminVendors = state.adminVendors.map((vendor) =>
+          vendor._id === updatedVendor._id ? updatedVendor : vendor,
+        );
+      })
+      .addCase(releaseEscrow.pending, (state) => {
+        state.adminLoading = true;
+        state.adminError = null;
+      })
+      .addCase(releaseEscrow.fulfilled, (state) => {
+        state.adminLoading = false;
+      })
+      .addCase(releaseEscrow.rejected, (state, action) => {
+        state.adminLoading = false;
+        state.adminError = action.payload;
+      })
+      .addCase(getPendingEscrows.pending, (state) => {
+        state.adminLoading = true;
+        state.adminError = null;
+      })
+      .addCase(getPendingEscrows.fulfilled, (state, action) => {
+        state.adminLoading = false;
+        state.adminPendingEscrows = action.payload?.data || action.payload || [];
+      })
+      .addCase(getPendingEscrows.rejected, (state, action) => {
+        state.adminLoading = false;
+        state.adminError = action.payload;
+      })
+      .addCase(getOneVendorAdmin.pending, (state) => {
+        state.adminLoading = true;
+        state.adminError = null;
+      })
+      .addCase(getOneVendorAdmin.fulfilled, (state, action) => {
+        state.adminLoading = false;
+        state.currentVendor = action.payload?.data || action.payload;
+      })
+      .addCase(getOneVendorAdmin.rejected, (state, action) => {
+        state.adminLoading = false;
+        state.adminError = action.payload;
+      })
+      .addCase(verifyOTP.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
       })
       .addCase(verifyOTP.fulfilled, (state) => {
         state.isLoading = false;
@@ -723,6 +915,8 @@ const authSlice = createSlice({
       .addCase(getCurrentUser.fulfilled, (state, action) => {
         state.isLoading = false;
         const data = action.payload?.data || action.payload;
+
+        state.dashboardStats = data?.statistics || null;
 
         if (state.accountType === "user") {
           state.userInfo = data.user || data;

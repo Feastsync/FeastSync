@@ -25,10 +25,12 @@ const OTPVerification = () => {
 
   const inputs = useRef([]);
   const redirectedRef = useRef(false);
+  const mountedRef = useRef(false);
 
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [countdown, setCountdown] = useState(60);
   const [resendingReset, setResendingReset] = useState(false);
+  const [resendingOtp, setResendingOtp] = useState(false);
 
   const email = location.state?.email;
   const accountType = location.state?.accountType || "user";
@@ -49,6 +51,11 @@ const OTPVerification = () => {
   }, [countdown]);
 
   useEffect(() => {
+    if (!mountedRef.current) {
+      mountedRef.current = true;
+      return;
+    }
+
     if (error) {
       const errorText = typeof error === "string" ? error : error?.message || "An error occurred";
       message.error(errorText);
@@ -114,7 +121,9 @@ const OTPVerification = () => {
         await dispatch(forgotPassword({ email, accountType })).unwrap();
         setResendingReset(false);
       } else {
+        setResendingOtp(true);
         await dispatch(resendOTP({ email, accountType })).unwrap();
+        setResendingOtp(false);
       }
 
       message.success("New OTP sent to your email");
@@ -190,7 +199,7 @@ const OTPVerification = () => {
                 onClick={handleResend}
                 style={{ color: "#330159", cursor: "pointer", fontWeight: 600 }}
               >
-                {resendingReset ? "Sending..." : "Resend"}
+                {resendingReset || resendingOtp ? "Sending..." : "Resend"}
               </span>
             )}
           </p>
