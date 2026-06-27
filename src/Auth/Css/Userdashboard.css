@@ -12,7 +12,139 @@
 .user-dashboard-contetnt-text{
   color: white
 }
+.udb-delivered-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: #059669;
+  background: #ecfdf5;
+  border: 1px solid #6ee7b7;
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+/* ── Delivered Dropdown ───────────────────────────── */
+.udb-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
 
+.udb-delivered-wrapper {
+  position: relative;
+}
+
+.udb-delivered-trigger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #9ca3af;
+  padding: 2px 8px;
+  border-radius: 6px;
+  line-height: 1;
+  transition: background 0.15s;
+  letter-spacing: 1px;
+}
+
+.udb-delivered-trigger:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.udb-delivered-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 260px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.13);
+  padding: 8px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.udb-delivered-dropdown__title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+  padding: 6px 10px 4px;
+}
+
+.udb-delivered-dropdown__action {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  background: none;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-align: left;
+}
+
+.udb-delivered-dropdown__action:hover {
+  background: #f9fafb;
+}
+
+.udb-delivered-dropdown__action:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.udb-action__icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.udb-action__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.udb-action__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+  display: block;
+}
+
+.udb-action__sub {
+  font-size: 11px;
+  color: #6b7280;
+  display: block;
+  line-height: 1.4;
+}
+
+/* Review action - star color */
+.udb-action--review .udb-action__label {
+  color: #330159;
+}
+
+/* Deliver action */
+.udb-action--deliver .udb-action__label {
+  color: #059669;
+}
+
+.udb-action--deliver .udb-action__icon {
+  color: #059669;
+}
+
+.udb-dropdown-divider {
+  height: 1px;
+  background: #f3f4f6;
+  margin: 4px 0;
+}
 
 .user-dashboard-wrapper {
   width: 100%;
