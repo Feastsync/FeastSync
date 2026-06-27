@@ -67,7 +67,18 @@ const ReviewItem = ({ icon, label, value, full }) => (
 const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose }) => {
   const dispatch = useDispatch();
   const { isLoading, error, success, booking } = useSelector((s) => s.booking);
-  const { userInfo, accountType } = useSelector((s) => s.auth);
+  const { userInfo, accountType, vendorInfo, currentVendor } = useSelector((s) => s.auth);
+
+  const vendor = vendorInfo?._id === vendorId ? vendorInfo : currentVendor;
+  const selectedPackage = vendor?.pricingId?.find(
+    (pkg) => pkg?._id === pricingId || pkg?.id === pricingId || pkg?.savedId === pricingId,
+  );
+  const packagePriceValue =
+    selectedPackage?.packagePrice || selectedPackage?.price || selectedPackage?.startingPrice || 0;
+  const packagePrice = packagePriceValue
+    ? `₦${Number(packagePriceValue?.toString().replace(/[^0-9.-]/g, "")).toLocaleString()}`
+    : "—";
+  const packageName = selectedPackage?.packageName || selectedPackage?.title || "Selected package";
 
   const [step, setStep] = useState(0);
   const [form, setForm] = useState({
@@ -313,6 +324,14 @@ const BookingModal = ({ vendorName = "the vendor", vendorId, pricingId, onClose 
                 <ReviewItem icon={hourglassIcon}  label="Duration"       value={form.duration} />
                 <ReviewItem icon={usersIcon}      label="Guest Count"    value={form.guestCount} />
                 <ReviewItem icon={locationIcon}   label="Location/Venue" value={form.location} full />
+              </div>
+
+              <div className="bm-divider" />
+
+              <p className="bm-section-label">PACKAGE DETAILS</p>
+              <div className="bm-review-grid">
+                <ReviewItem icon={eventIcon} label="Package" value={packageName} />
+                <ReviewItem icon={hourglassIcon} label="Price" value={packagePrice} />
               </div>
 
               <div className="bm-divider" />

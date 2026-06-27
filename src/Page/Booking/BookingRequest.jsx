@@ -182,7 +182,7 @@ const BookingRequestPage = () => {
   const duration        = data?.duration ?? "—";
   const services        = data?.services ?? "—";
   const packageName     = data?.packageName ?? data?.package?.name;
-  const packagePrice    = data?.packagePrice ?? data?.package?.price;
+  const amount    = data?.packagePrice ?? data?.amount;
   const packageIncludes = data?.packageIncludes ?? data?.package?.includes;
 
   const isPending   = bookingStatus === "pending";
@@ -263,7 +263,7 @@ const BookingRequestPage = () => {
           <h3>Proposed package</h3>
           <div className="package-main-row">
             <span className="package-name">{packageName ?? "—"}</span>
-            <span className="package-price">{packagePrice ?? "—"}</span>
+            <span className="package-price">{amount ?? "—"}</span>
           </div>
           <p className="package-includes">Includes: {packageIncludes ?? "—"}</p>
         </section>

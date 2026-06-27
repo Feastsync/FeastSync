@@ -1,13 +1,15 @@
 import "../Css/Userdashboard.css";
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import Header from "../../Components/Header";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import api from "../../Redux/app/socketAxios";
+import { getCurrentUser } from "../../Redux/features/authslice";
 
 const Userdashboard = () => {
   const navigate = useNavigate();
-  const { userInfo } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const { userInfo, dashboardStats } = useSelector((state) => state.auth);
 
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,6 +32,12 @@ const Userdashboard = () => {
     fetchBookings();
   }, []);
 
+  useEffect(() => {
+    if (!dashboardStats) {
+      dispatch(getCurrentUser());
+    }
+  }, [dashboardStats, dispatch]);
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -48,7 +56,7 @@ const Userdashboard = () => {
     e.stopPropagation();
     try {
       setMarkingDelivered(bookingId);
-      await api.patch(`/api/v1/bookings/${bookingId}/delivered`);
+      await api.put(`/api/v1/bookings/service-delivered/${bookingId}`);
       setBookings((prev) =>
         prev.map((b) =>
           b._id === bookingId
@@ -64,9 +72,12 @@ const Userdashboard = () => {
     }
   };
 
-  const totalSpent = bookings
+  const computedTotalSpent = bookings
     .filter((b) => (b.bookingStatus || b.status)?.toLowerCase() === "completed")
     .reduce((sum, b) => sum + (b.totalAmount || b.amount || b.packagePrice || 0), 0);
+
+  const totalSpent = Number(dashboardStats?.totalSpent ?? computedTotalSpent) || 0;
+  const totalEvents = dashboardStats?.eventCount || dashboardStats?.totalBookings || bookings.length;
 
   const activeBookings = bookings.filter((b) => {
     const status = (b.bookingStatus || b.status)?.toLowerCase();
@@ -92,7 +103,7 @@ const Userdashboard = () => {
           <section className="user-dashboard-contentright2-wrapper">
             <div className="user-dashboard-contentright2-left">
               <p>Event hosted</p>
-              <h2>{loading ? "..." : bookings.length}</h2>
+              <h2>{loading ? "..." : totalEvents}</h2>
             </div>
             <div className="user-dashboard-contentright2-middle">
               <p>Total Spent</p>

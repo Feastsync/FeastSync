@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { message } from "antd";
 import Button from "../../Props/Button.jsx";
 import { FaArrowLeft } from "react-icons/fa6";
-import "../Admin/admincss/AdminForgot.css";
+// import "../Admin/admincss/AdminForgot.css";
 
 const EmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

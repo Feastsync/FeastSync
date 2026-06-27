@@ -42,12 +42,16 @@ import Epknorating from "./Auth/Vendor/Epknorating.jsx";
 import Epkrating from "./Auth/Vendor/Epkrating.jsx";
 import BookingModal from "./Page/Booking/Booking.jsx";
 import AdminLayout from "./Page/Admin/AdminLayout.jsx";
-import AdminDashboard from "./Page/Admin/AdminDashboard.jsx"
-import AdminUser from "./Page/Admin/AdminUser.jsx"
-import AdminDispute from "./Page/Admin/AdminDispute.jsx"
-import AdminVendors from "./Page/Admin/AdminVendors.jsx"
-import AdminPayment from "./Page/Admin/AdminPayment.jsx"
-import AdminSetting from "./Page/Admin/AdminSetting.jsx"
+import AdminDashboard from "./Page/Admin/AdminDashboard.jsx";
+import AdminUser from "./Page/Admin/AdminUser.jsx";
+import AdminDispute from "./Page/Admin/AdminDispute.jsx";
+import AdminVendors from "./Page/Admin/AdminVendors.jsx";
+import AdminPayment from "./Page/Admin/AdminPayment.jsx";
+import AdminSetting from "./Page/Admin/AdminSetting.jsx";
+import AdminLogin from "./Page/Admin/AdminLogin.jsx";
+import AdminForgot from "./Page/Admin/AdminForgot.jsx";
+import AdminVerify from "./Page/Admin/AdminVerify.jsx";
+import AdminPrivateRoute from "./lib/AdminPrivate.jsx";
 import VendorChat from "./Page/chatPage/VendorChats.jsx";
 import VendorSetting from "./Auth/Vendor/VendorSetting.jsx";
 import Vendormediagallery from "./Auth/Vendor/Vendormediagallery.jsx";
@@ -59,8 +63,6 @@ import ReviewsNotification from "./Page/NotitficationsPages/ReviewsNotifications
 import NotificationsWrapper from "./Page/NotitficationsPages/NotificationsWrapper.jsx";
 import { ScrollToTop, TokenValidator, OnboardingPage } from "./Components/Highfunction.jsx";
 import Inbox from "./Page/Inbox/Inbox.jsx";
-import AdminVerify from "./Page/Admin/AdminVerify.jsx";
-
 
 const PublicLayout = () => {
   const { vendorInfo, token } = useSelector((s) => s.auth);
@@ -101,31 +103,21 @@ const App = () => {
         <Route path="/getStarted" element={<GetStarted />} />
         <Route path="/505" element={<Error505 />} />
 
-        <Route path="/vendordashboard" element={<Vendordashboard />} />
-        <Route path="/vendordashboardrating" element={<Vendordashboardrating />} />
-        <Route path="/userdashboard" element={<Userdashboard />} />
-        <Route path="/bookingrequest" element={<BookingRequest />} />
-        <Route path="/ratingreview" element={<RatingReview />} />
-        <Route path="/wallet/transactions" element={<VendorWallet />} />
-        <Route path="/transaction/histories" element={<WalletLedger />} />
-        <Route path="/notifications/:category?" element={<AllNotifications />} />
-        <Route path="/chats" element={<Chat />} />
-        <Route path="/Settings" element={<Settings />} />
-        <Route path="/vendorsetting" element={<VendorSetting />} />
-        <Route path="/vendor/kyc" element={<VendorKYC />} />
-
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route path="dashboard" element={<AdminDashboard />} />
-          <Route path="users" element={<AdminUser />} />
-          <Route path="disputes" element={<AdminDispute />} />
-          <Route path="vendors" element={<AdminVendors />} />
-          <Route path="payments" element={<AdminPayment />} />
-          <Route path="settings" element={<AdminSetting />} />
-          <Route path="verify" element={<AdminVerify />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/forgot" element={<AdminForgot />} />
+        <Route element={<AdminPrivateRoute />}>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="users" element={<AdminUser />} />
+            <Route path="disputes" element={<AdminDispute />} />
+            <Route path="vendors" element={<AdminVendors />} />
+            <Route path="payments" element={<AdminPayment />} />
+            <Route path="settings" element={<AdminSetting />} />
+            <Route path="verify" element={<AdminVerify />} />
+          </Route>
         </Route>
-
         <Route element={<PrivateRoute allowedRoles={["user", "vendor"]} />}>
-          {/* <Route path="/vendor/:slug" element={<Vendordashboard />} /> */}
+          <Route path="/vendor/:slug" element={<Vendordashboard />} />
           <Route path="/epknorating/:vendorId" element={<Epknorating />} />
           <Route path="/epkrating/:id" element={<Epkrating />} />
           <Route path="/chats" element={<Chat />} />
@@ -163,6 +155,8 @@ const App = () => {
           <Route path="/pricingstep" element={<PricingStep />} />
           <Route path="/vendormediagallery" element={<Vendormediagallery />} />
           <Route path="/VendorChat/:Id" element={<VendorChat />} />
+           <Route path="/wallet/transactions" element={<VendorWallet />} />
+        <Route path="/transaction/histories" element={<WalletLedger />} />
           <Route path="/wallet/transactions" element={<VendorWallet />} />
         </Route>
 

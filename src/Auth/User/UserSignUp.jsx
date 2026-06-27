@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa"
@@ -16,6 +16,7 @@ const UserSignUp = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { isLoading, error, otpSent, signupEmail } = useSelector(state => state.user)
+  const otpNavigationRef = useRef(false)
 
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
@@ -33,7 +34,8 @@ const UserSignUp = () => {
   const [ConfirmPasswordError, setConfirmPasswordError] = useState({ err: false, name: "", msg: "" })
 
   useEffect(() => {
-    if (otpSent && signupEmail) {
+    if (otpSent && signupEmail && !otpNavigationRef.current) {
+      otpNavigationRef.current = true
       Swal.fire({
         title: "Success!",
         text: "OTP has been sent to your email",

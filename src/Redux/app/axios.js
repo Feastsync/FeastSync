@@ -7,7 +7,14 @@ const api = axios.create({
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  const adminToken = localStorage.getItem("adminToken");
+
+  if (config.url?.startsWith("/admin")) {
+    if (adminToken) config.headers.Authorization = `Bearer ${adminToken}`;
+  } else if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
   return config;
 });
 
