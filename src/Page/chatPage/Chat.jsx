@@ -296,25 +296,59 @@ export default function ChatsPage() {
     }
   };
 
+  // Derived state for payment and chat gating
+  // Check both booking object and conversation status
+  const bookingStatus = booking?.bookingStatus || activeChat?.status || "";
+  const isBookingAccepted = ["accepted", "confirmed", "completed"].includes(bookingStatus);
+
+  // If booking is confirmed, payment is considered confirmed
+  const isPaymentConfirmed = (
+    bookingStatus === "confirmed" ||
+    bookingStatus === "completed" ||
+    booking?.paymentStatus === "success" ||
+    booking?.paymentStatus === "completed" ||
+    booking?.paymentStatus === "paid" ||
+    booking?.isPaid === true ||
+    booking?.paid === true
+  );
+
+  const canProceedToPayment = isBookingAccepted && !isPaymentConfirmed;
+
+  // ✅ both vendor and user must meet conditions to chat
+  const canChat = ["confirmed", "completed"].includes(bookingStatus) && isPaymentConfirmed;
+
   // Send message
   const handleSend = async () => {
     const val = input.trim();
     if (!val || !booking) return;
 
-    if (!["accepted", "confirmed"].includes(booking.bookingStatus)) {
-  message.warning(
-    booking.bookingStatus === "rejected"
-      ? "This booking was rejected. You cannot send messages."
-      : "You cannot chat until the vendor accepts your booking."
-  );
-  return;
-}
+    // ✅ vendor and user get their own specific warning messages
+    if (!canChat) {
+      if (bookingStatus === "pending") {
+        message.warning(isVendor
+          ? "Accept this booking to enable chat."
+          : "Waiting for vendor to accept your booking."
+        );
+      } else if (bookingStatus === "accepted") {
+        message.warning(isVendor
+          ? `Waiting for ${activeChatName || "the client"} to complete payment.`
+          : "Please complete payment to enable chat."
+        );
+      } else if (bookingStatus === "rejected") {
+        message.warning("This booking was declined. Chat unavailable.");
+      }
+      return;
+    }
 
     try {
       const res = await api.post(`/api/v1/message/messages/${bookingId}`, {
         text: val,
-        senderId: isVendor ? booking.vendorId._id : booking.userId._id,
-        receiverId: isVendor ? booking.userId._id : booking.vendorId._id,
+        senderId: isVendor
+          ? (booking.vendorId?._id || booking.vendorId)
+          : (booking.userId?._id || booking.userId),
+        receiverId: isVendor
+          ? (booking.userId?._id || booking.userId)
+          : (booking.vendorId?._id || booking.vendorId),
         roomId: booking._id,
         booking: booking._id,
       });
@@ -331,31 +365,17 @@ export default function ChatsPage() {
       
       // Emit event to trigger unread count on receiver's end
       socketRef.current?.emit("new_message_notification", {
-        receiverId: isVendor ? booking.userId._id : booking.vendorId._id,
+        receiverId: isVendor
+          ? (booking.userId?._id || booking.userId)
+          : (booking.vendorId?._id || booking.vendorId),
         bookingId: bookingId,
         senderName: isVendor ? "Vendor" : "Client",
       });
     } catch (error) {
       console.error("Failed to send message:", error);
+      message.error("Failed to send message");
     }
   };
-
-  // Derived state for payment and chat gating
-  // Check both booking object and conversation status
-  const bookingStatus = booking?.bookingStatus || activeChat?.status || "";
-  const isBookingAccepted = ["accepted", "confirmed"].includes(bookingStatus);
-  
-  // If booking is confirmed, payment is considered confirmed
-  const isPaymentConfirmed = (
-    bookingStatus === "confirmed" ||
-    booking?.paymentStatus === "success" || 
-    booking?.paymentStatus === "completed" ||
-    booking?.isPaid === true ||
-    booking?.paid === true
-  );
-  
-  const canProceedToPayment = isBookingAccepted && !isPaymentConfirmed;
-  const canChat = isBookingAccepted && isPaymentConfirmed;
 
   return (
     <div className="chats-page">
@@ -520,14 +540,15 @@ export default function ChatsPage() {
                 {isTyping && <TypingIndicator />}
               </div>
 
+              {/* ✅ both vendor and user now get appropriate blocked messages */}
               <div className="chats-chat__input-row">
-                {!isVendor && !canChat ? (
+                {!canChat ? (
                   <div className="chats-chat__blocked">
-                    {!isBookingAccepted
-                      ? booking?.bookingStatus === "rejected"
-                        ? "❌ Booking rejected. Chat unavailable."
-                        : "⏳ Waiting for vendor to accept your booking."
-                      : "💳 Payment must be made to enable conversation."}
+                    {bookingStatus === "pending" && isVendor && "⏳ Accept this booking to enable chat."}
+                    {bookingStatus === "pending" && !isVendor && "⏳ Waiting for vendor to accept your booking."}
+                    {bookingStatus === "accepted" && isVendor && `⏳ Waiting for ${activeChatName || "the client"} to complete payment.`}
+                    {bookingStatus === "accepted" && !isVendor && "💳 Please complete payment to enable chat."}
+                    {bookingStatus === "rejected" && "❌ Booking declined. Chat unavailable."}
                   </div>
                 ) : (
                   <>
