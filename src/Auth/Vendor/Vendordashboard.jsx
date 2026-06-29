@@ -169,7 +169,7 @@ const Vendordashboard = () => {
         <div className="vendordashboard-vendor-bio">
           <h3>Bio / About</h3>
       <h4>
-          About <span style={{ fontWeight: "5000", color:"var(--primary-color)" }} className="vendordashboard-stage-name">&nbsp;&nbsp;{displayVendor?.stageName}&nbsp;&nbsp;</span>,{" "}
+          About <span style={{ fontWeight: "5000", fontSize:"1rem", color:"var(--primary-color)" }} className="vendordashboard-stage-name">&nbsp;&nbsp;{displayVendor?.stageName}&nbsp;&nbsp;</span>,{" "}
           {displayVendor?.stateOfResidence || "Lagos"}
         </h4>
           <p>{displayVendor?.bio || "No bio added yet"}</p>
