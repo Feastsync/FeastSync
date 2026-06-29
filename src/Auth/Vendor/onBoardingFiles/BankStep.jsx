@@ -56,16 +56,28 @@ const isFormValid =
 
         <div className="bank-form-section">
           <h3>Bank Details</h3>
-
-          <div className="bank-field">
-            <label>State of Residence</label>
-            <input
-              type="text"
-              placeholder="Enter your state of residence"
-              value={safeProfile.stateOfResidence || ""}
-              onChange={(e) => updateField("stateOfResidence", e.target.value.replace(/[^a-zA-Z\s]/g, ""))}
-            />
-          </div>
+<div className="bank-field">
+  <label>State of Residence</label>
+  <div className="bank-select-wrapper">
+    <select
+      value={safeProfile.stateOfResidence || ""}
+      onChange={(e) => updateField("stateOfResidence", e.target.value)}
+    >
+      <option value="">Select your state</option>
+      {[
+        'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa',
+        'Benue', 'Borno', 'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti',
+        'Enugu', 'Gombe', 'Imo', 'Jigawa', 'Kaduna', 'Kano', 'Katsina',
+        'Kebbi', 'Kogi', 'Kwara', 'Lagos', 'Nasarawa', 'Niger', 'Ogun',
+        'Ondo', 'Osun', 'Oyo', 'Plateau', 'Rivers', 'Sokoto', 'Taraba',
+        'Yobe', 'Zamfara', 'Abuja'
+      ].map((state) => (
+        <option key={state} value={state}>{state}</option>
+      ))}
+    </select>
+    <FiChevronDown className="bank-select-icon" />
+  </div>
+</div>
 
 <div className="bank-field">
   <label>Select Bank</label>
