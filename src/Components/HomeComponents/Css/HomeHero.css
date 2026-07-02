@@ -10,12 +10,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   text-align: center;
   padding-top: 60px;
   box-sizing: border-box;
 }
 
+.home_hero_content {
+  position: relative;
+  z-index: 2;
+  width: 90%;
+  max-width: 800px;
+  flex: 1;                      /* fills all space above the banner */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;      /* centers title/desc/search within that space */
+}
 .home_hero_overlay {
   position: absolute;
   top: 0;
@@ -25,7 +35,7 @@
   z-index: 1;
 }
 
-.home_hero_content {
+/* .home_hero_content {
   position: relative;
   z-index: 2;
   width: 90%;
@@ -33,7 +43,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+} */
 
 .home_hero_title {
   color: #ffffff;

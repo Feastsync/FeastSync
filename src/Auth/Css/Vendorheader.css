@@ -2,11 +2,9 @@
   --primary-color: #330159;
 }
 
-/* ─── Container ─────────────────────────────────────────── */
 .vendorheader-container {
   width: 100%;
-  height: 13vh;
-  min-height: 80px;
+  height: 80px;        /* was: 13vh + min-height: 80px */
   background-color: var(--primary-color);
   display: flex;
   justify-content: center;
